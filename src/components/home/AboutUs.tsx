@@ -88,7 +88,7 @@ const AboutUs: React.FC = () => {
                 About <span className="text-[#F49B21]">Code's </span>Thinker
               </h1>
               <p className="py-3 text-gray-800">
-                We redefine excellence in business solutions at Code's Thinker. Our approach 
+                We redefine excellence in business solutions at Codes Thinker. Our approach 
                 combines technical mastery with creative strategy to solve complex problems.
               </p>
               <div className="flex flex-col gap-3 mt-4">
