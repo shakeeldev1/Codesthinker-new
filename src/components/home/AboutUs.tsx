@@ -110,7 +110,7 @@ const AboutUs: React.FC = () => {
           {isAboutPage && (
             <div className="w-full sm:w-6/12 flex flex-col justify-center px-4 gap-3">
               <h1 className="text-start font-bold text-4xl">
-                Building <span className="text-[#0F00AA]">Future-Ready Software</span>
+                Building <span className="text-[#0F00AA]">Future Ready Software</span>
               </h1>
               <p className="w-full text-gray-800 leading-relaxed">
                 We are a team of passionate developers, designers, and thinkers building 
