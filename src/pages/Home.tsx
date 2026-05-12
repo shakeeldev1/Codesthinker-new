@@ -4,7 +4,8 @@ import ClientsMarquee from '../components/home/ClientsMarquee'
 import AboutUs from '../components/home/AboutUs'
 import Services from '../components/home/Services'
 import WorkProcess from '../components/home/WorkProcess'
-import TeamSection from '../components/home/Team'
+import Team from '../components/home/Team'
+import WhyChoose from '../components/home/WhyChoose'
 
 function Home() {
   return (
@@ -13,8 +14,9 @@ function Home() {
       <ClientsMarquee/>
       <AboutUs/>
       <Services/>
+      <WhyChoose/>
       <WorkProcess/>
-      <TeamSection/>
+      <Team/>
     </div>
   )
 }
