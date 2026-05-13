@@ -52,7 +52,7 @@ const teamMembers: TeamMember[] = [
     description: "Frontend specialist with expertise in modern JavaScript frameworks.",
     skills: ["React", "Vue.js", "Tailwind CSS"],
     social: [{ platform: "linkedin", url: "#", icon: "fab fa-linkedin" }],
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=300&h=300&auto=format&fit=crop",
+    avatar: "https://media.licdn.com/dms/image/v2/D4D03AQGL16q3yApdRw/profile-displayphoto-scale_400_400/B4DZj_HCAuHwAk-/0/1756626700731?e=1779926400&v=beta&t=QXh0vzeMcQuFVzAk5hiXcNjZ8A9uefdcMbcxOYR-DCc",
   },
   {
     id: "241807",

@@ -47,7 +47,7 @@ const LogoImage: React.FC<{ src: string }> = ({ src }) => (
 
 const ClientsMarquee: React.FC = () => {
   return (
-    <section className="py-2 bg-transparent overflow-hidden">
+    <section className="py-6 bg-transparent overflow-hidden">
       <style>{`
         @keyframes marquee {
           0% { transform: translateX(0); }

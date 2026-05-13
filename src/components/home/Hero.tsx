@@ -48,8 +48,8 @@ const Hero: React.FC = () => {
                 Your browser does not support the video tag.
             </video>
 
-            {/* OVERLAY - Matches Footer #07051D */}
-            <div className="absolute inset-0 bg-[#07051D]/20 z-10" />
+            {/* OVERLAY - Matches Footer #07051D, with extra opacity for effect */}
+            <div className="absolute inset-0 bg-[#07051D]/40 z-10" />
 
             {/* SWIPER CONTENT */}
             <Swiper
