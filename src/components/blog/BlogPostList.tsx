@@ -97,7 +97,7 @@ const BlogPostList: React.FC = () => {
             <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
             <h2 className="text-2xl font-bold text-amber-500">Latest Articles</h2>
           </div>
-          <p className="text-gray-400 text-sm mt-2">Thoughts, tutorials, and industry insights</p>
+          <p className="text-gray-400 text-sm mt-2">Thoughts, Tutorials, and industry insights</p>
         </div>
         <span className="text-sm font-mono text-gray-500 uppercase tracking-widest mt-4 md:mt-0">
           {posts.length} articles

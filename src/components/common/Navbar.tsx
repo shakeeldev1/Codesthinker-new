@@ -210,7 +210,7 @@ const Navbar: React.FC = () => {
                                 </div>
                             ))}
                             <Button
-                                text="GET IN TOUCH"
+                                text="Get In Touch"
                                 to="/contact"
                                 onClick={handleLinkClick}
                                 className="w-full mt-4 py-2 bg-amber-500 text-[#07051d] rounded-xl font-bold"
