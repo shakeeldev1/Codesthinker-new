@@ -43,7 +43,7 @@ const ApplyNowProjectTraining: React.FC = () => {
                 Elevate Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500">Skills</span>
               </h1>
               <p className="text-gray-300 text-lg lg:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0">
-                Join our elite Project Training program. Gain hands-on experience with industry mentors and cutting-edge tech stacks.
+                Join our elite Project Training program. Gain hands on experience with industry mentors and cutting-edge tech stacks.
               </p>
             </div>
             <ApplyNowProjectTrainingForm />
