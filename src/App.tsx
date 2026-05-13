@@ -8,6 +8,7 @@ import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
+import Whatsapp from './components/common/Whatsapp';
 
 
 
@@ -18,6 +19,7 @@ const MainLayout = () => {
     <>
     <Navbar />
       <Outlet />
+      <Whatsapp/>
       <Footer />
     </>
   );
