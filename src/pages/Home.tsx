@@ -6,6 +6,7 @@ import Services from '../components/home/Services'
 import WorkProcess from '../components/home/WorkProcess'
 import Team from '../components/home/Team'
 import WhyChoose from '../components/home/WhyChoose'
+import FAQ from '../components/home/FAQ'
 
 function Home() {
   return (
@@ -17,6 +18,7 @@ function Home() {
       <WhyChoose/>
       <WorkProcess/>
       <Team/>
+      <FAQ/>
     </div>
   )
 }

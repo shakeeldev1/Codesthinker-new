@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 // Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
+import Button from "../common/Button";
 
 interface SlideContent {
     title: string;
@@ -89,13 +90,12 @@ const Hero: React.FC = () => {
                                     <div className="flex flex-wrap justify-center gap-4 md:gap-6">
 
                                         <Link to="/projects" className="cursor-pointer">
-                                            <button className="px-6 py-2.5 md:px-8 md:py-3 text-sm md:text-base font-bold rounded-full bg-amber-500 text-[#07051D] hover:bg-amber-400 transition-all duration-300 shadow-lg hover:-translate-y-1 transform cursor-pointer">
-                                                View Our Work
-                                            </button>
+
+                                            <Button text="View Our work" />
                                         </Link>
 
                                         <Link to="/contact" className="cursor-pointer">
-                                            <button className="px-6 py-2 md:px-8 text-sm md:text-base font-bold rounded-full bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#07051D] transition-all duration-300 shadow-lg hover:-translate-y-1 transform cursor-pointer">
+                                            <button className="px-6 py-2 md:px-8 text-sm md:text-base font-bold rounded-xl bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#07051D] transition-all duration-300 shadow-lg hover:-translate-y-1 transform cursor-pointer">
                                                 Contact Us
                                             </button>
                                         </Link>
