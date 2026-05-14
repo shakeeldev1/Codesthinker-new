@@ -84,10 +84,10 @@ const GlobalServiceCTA: React.FC<GlobalServiceCTAProps> = ({
   };
 
   return (
-    <section className={`relative py-8 md:py-10 overflow-hidden ${isDark ? 'bg-[#07051d]' : 'bg-white'}`}>
+    <section className="relative py-6 md:py-8 overflow-hidden bg-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className={`
-          relative rounded-3xl p-5 md:p-8 lg:p-10 overflow-hidden border-2 transition-all duration-500
+          relative rounded-3xl p-4 md:p-7 lg:p-9 overflow-hidden border-2 transition-all duration-500
           ${colors.bg} ${colors.borderColor} ${colors.shadow}
           before:absolute before:inset-0 before:bg-gradient-to-br 
           before:from-white/5 before:to-transparent before:opacity-0 
