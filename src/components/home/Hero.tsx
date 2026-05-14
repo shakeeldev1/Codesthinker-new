@@ -7,7 +7,11 @@ import { Link } from "react-router-dom";
 // Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
+<<<<<<< HEAD
 import BusinessFeatures from "./BusinessFeatures";
+=======
+import Button from "../common/Button";
+>>>>>>> fe96871e8e0bd7656f50be25bb0ac8a1115c9b59
 
 interface SlideContent {
     title: string;
@@ -50,8 +54,13 @@ const Hero: React.FC = () => {
                     Your browser does not support the video tag.
                 </video>
 
+<<<<<<< HEAD
                 {/* OVERLAY - Matches Footer #07051D */}
                 <div className="absolute inset-0 bg-[#07051D]/20 z-10" />
+=======
+            {/* OVERLAY - Matches Footer #07051D, with extra opacity for effect */}
+            <div className="absolute inset-0 bg-[#07051D]/40 z-10" />
+>>>>>>> fe96871e8e0bd7656f50be25bb0ac8a1115c9b59
 
                 {/* SWIPER CONTENT */}
                 <Swiper
@@ -90,6 +99,7 @@ const Hero: React.FC = () => {
 
                                         <div className="flex flex-wrap justify-center gap-4 md:gap-6">
 
+<<<<<<< HEAD
                                             <Link to="/projects" className="cursor-pointer">
                                                 <button className="px-6 py-2.5 md:px-8 md:py-3 text-sm md:text-base font-bold rounded-full bg-amber-500 text-[#07051D] hover:bg-amber-400 transition-all duration-300 shadow-lg hover:-translate-y-1 transform cursor-pointer">
                                                     View Our Work
@@ -101,6 +111,18 @@ const Hero: React.FC = () => {
                                                     Contact Us
                                                 </button>
                                             </Link>
+=======
+                                        <Link to="/projects" className="cursor-pointer">
+
+                                            <Button text="View Our work" />
+                                        </Link>
+
+                                        <Link to="/contact" className="cursor-pointer">
+                                            <button className="px-6 py-2 md:px-8 text-sm md:text-base font-bold rounded-xl bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#07051D] transition-all duration-300 shadow-lg hover:-translate-y-1 transform cursor-pointer">
+                                                Contact Us
+                                            </button>
+                                        </Link>
+>>>>>>> fe96871e8e0bd7656f50be25bb0ac8a1115c9b59
 
                                         </div>
                                     </motion.div>

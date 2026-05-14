@@ -6,6 +6,7 @@ import Services from '../components/home/Services'
 // import WorkProcess from '../components/home/WorkProcess'
 import Team from '../components/home/Team'
 import WhyChoose from '../components/home/WhyChoose'
+import FAQ from '../components/home/FAQ'
 import ProcessSection from '../components/home/ProcessSection'
 
 function Home() {
@@ -19,6 +20,7 @@ function Home() {
       <ProcessSection/>
       <ClientsMarquee/>
       <Team/>
+      <FAQ/>
     </div>
   )
 }
