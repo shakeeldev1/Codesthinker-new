@@ -9,7 +9,7 @@ const navLinks = [
     { name: 'About', href: '/about' },
     {
         name: 'Services',
-        href: '#',
+        href: '#', // Placeholder for dropdown trigger
         subLinks: [
             { name: 'Software Development', href: '/services/software', desc: 'Custom enterprise apps' },
             { name: 'Web Development', href: '/services/web', desc: 'Fast, responsive sites' },
@@ -48,12 +48,8 @@ const Navbar: React.FC = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Helper function to scroll to top and close menus
     const handleLinkClick = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth' // Optional: use 'auto' for instant jump
-        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         setIsMobileMenuOpen(false);
         setOpenMobileDropdown(null);
         setActiveDropdown(null);
@@ -86,17 +82,22 @@ const Navbar: React.FC = () => {
                             onMouseEnter={() => setActiveDropdown(link.name)}
                             onMouseLeave={() => setActiveDropdown(null)}
                         >
-                            <Link
-                                to={link.href}
-                                onClick={!link.subLinks ? handleLinkClick : undefined}
-                                className={`px-5 py-2 text-sm font-medium transition-all duration-300 flex items-center gap-1 rounded-full
-                                ${activeDropdown === link.name ? 'text-white bg-white/10' : 'text-white/70 hover:text-white'}`}
-                            >
-                                {link.name}
-                                {link.subLinks && (
+                            {link.subLinks ? (
+                                <div className={`px-5 py-2 text-sm font-medium transition-all duration-300 flex items-center gap-1 rounded-full cursor-pointer
+                                    ${activeDropdown === link.name ? 'text-white bg-white/10' : 'text-white/70 hover:text-white'}`}>
+                                    {link.name}
                                     <HiChevronDown className={`transition-transform duration-300 ${activeDropdown === link.name ? 'rotate-180 text-amber-400' : ''}`} />
-                                )}
-                            </Link>
+                                </div>
+                            ) : (
+                                <Link
+                                    to={link.href}
+                                    onClick={handleLinkClick}
+                                    className={`px-5 py-2 text-sm font-medium transition-all duration-300 block rounded-full
+                                    ${activeDropdown === link.name ? 'text-white bg-white/10' : 'text-white/70 hover:text-white'}`}
+                                >
+                                    {link.name}
+                                </Link>
+                            )}
 
                             {/* Dropdown Menu */}
                             <AnimatePresence>
@@ -167,46 +168,48 @@ const Navbar: React.FC = () => {
                         <div className="p-6 space-y-4">
                             {navLinks.map((link) => (
                                 <div key={link.name} className="border-b border-white/5 last:border-0 pb-2">
-                                    <button
-                                        onClick={() => {
-                                            if (link.subLinks) {
-                                                setOpenMobileDropdown(openMobileDropdown === link.name ? null : link.name);
-                                            } else {
-                                                handleLinkClick();
-                                                // If your Link component is inside this button, use navigate() here
-                                            }
-                                        }}
-                                        className="w-full flex justify-between items-center text-white font-semibold py-2"
-                                    >
-                                        <span className={openMobileDropdown === link.name ? "text-amber-400" : ""}>
-                                            {link.subLinks ? link.name : <Link to={link.href} onClick={handleLinkClick}>{link.name}</Link>}
-                                        </span>
-                                        {link.subLinks && (
-                                            <HiChevronDown className={`transition-transform ${openMobileDropdown === link.name ? 'rotate-180' : ''}`} />
-                                        )}
-                                    </button>
-
-                                    <AnimatePresence>
-                                        {link.subLinks && openMobileDropdown === link.name && (
-                                            <motion.div
-                                                initial={{ height: 0, opacity: 0 }}
-                                                animate={{ height: 'auto', opacity: 1 }}
-                                                exit={{ height: 0, opacity: 0 }}
-                                                className="pl-4 space-y-1 mt-2 overflow-hidden"
+                                    {link.subLinks ? (
+                                        <>
+                                            <button
+                                                onClick={() => setOpenMobileDropdown(openMobileDropdown === link.name ? null : link.name)}
+                                                className="w-full flex justify-between items-center text-white font-semibold py-2"
                                             >
-                                                {link.subLinks.map((sub) => (
-                                                    <Link
-                                                        key={sub.name}
-                                                        to={sub.href}
-                                                        onClick={handleLinkClick}
-                                                        className="block text-white/50 py-2 hover:text-amber-400 transition-colors"
+                                                <span className={openMobileDropdown === link.name ? "text-amber-400" : ""}>
+                                                    {link.name}
+                                                </span>
+                                                <HiChevronDown className={`transition-transform ${openMobileDropdown === link.name ? 'rotate-180' : ''}`} />
+                                            </button>
+                                            <AnimatePresence>
+                                                {openMobileDropdown === link.name && (
+                                                    <motion.div
+                                                        initial={{ height: 0, opacity: 0 }}
+                                                        animate={{ height: 'auto', opacity: 1 }}
+                                                        exit={{ height: 0, opacity: 0 }}
+                                                        className="pl-4 space-y-1 mt-2 overflow-hidden"
                                                     >
-                                                        {sub.name}
-                                                    </Link>
-                                                ))}
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
+                                                        {link.subLinks.map((sub) => (
+                                                            <Link
+                                                                key={sub.name}
+                                                                to={sub.href}
+                                                                onClick={handleLinkClick}
+                                                                className="block text-white/50 py-2 hover:text-amber-400 transition-colors"
+                                                            >
+                                                                {sub.name}
+                                                            </Link>
+                                                        ))}
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </>
+                                    ) : (
+                                        <Link 
+                                            to={link.href} 
+                                            onClick={handleLinkClick}
+                                            className="block w-full text-white font-semibold py-2"
+                                        >
+                                            {link.name}
+                                        </Link>
+                                    )}
                                 </div>
                             ))}
                             <Button
