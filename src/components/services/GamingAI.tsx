@@ -101,7 +101,7 @@ const GamingAI = () => {
         badge="Revolution"
         subtitle="Harness the power of artificial intelligence. We build intelligent systems and engaging games that redefine possibilities."
         images={[
-          "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=2070&auto=format&fit=crop",
+          "https://blogs.cisco.com/gcs/ciscoblogs/1/2024/07/AI_blog.png",
           "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop",
           "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2070&auto=format&fit=crop"
         ]}

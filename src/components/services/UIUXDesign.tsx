@@ -28,13 +28,13 @@ const UIUXDesign = () => {
 
   const technologies = [
     { name: "Figma", category: "Design", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
-    { name: "Adobe XD", category: "Design", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/xd/xd-plain.svg" },
+    { name: "Adobe XD", category: "Design", icon: "https://upload.wikimedia.org/wikipedia/commons/c/c2/Adobe_XD_CC_icon.svg" },
     { name: "Sketch", category: "Prototyping", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sketch/sketch-original.svg" },
     { name: "InVision", category: "Wireframing", icon: "https://cdn.worldvectorlogo.com/logos/invision.svg" },
-    { name: "Framer", category: "Collaboration", icon: "https://cdn.worldvectorlogo.com/logos/framer-1.svg" },
+    { name: "Framer", category: "Collaboration", icon: "https://cdn.simpleicons.org/framer/ffffff" },
     { name: "Tailwind CSS", category: "Styling", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
-    { name: "Photoshop", category: "Image Editing", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg" },
-    { name: "Illustrator", category: "Vector Art", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg" }
+    { name: "Photoshop", category: "Image Editing", icon: "https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg" },
+    { name: "Illustrator", category: "Vector Art", icon: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Adobe_Illustrator_CC_icon.svg" }
   ];
 
   const services = [
