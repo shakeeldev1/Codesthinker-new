@@ -15,6 +15,7 @@ import ApplyNowProjectTraining from './pages/ApplyNowProjectTraining';
 import ApplyForInternship from './pages/ApplyForInternship';
 import JobBoard from './pages/JobBoard';
 import Blog from './pages/Blog';
+import TeamPage from './pages/TeamPage';
 
 
 // Layout
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
       { path: 'apply/projects', element: <ApplyNowProjectTraining /> },
       { path: 'apply/internship', element: <ApplyForInternship /> },
       { path: 'apply/jobs', element: <JobBoard /> },
+      { path: 'team', element: <TeamPage /> },
     ],
   },
 ]);
