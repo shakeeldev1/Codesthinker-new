@@ -170,7 +170,7 @@ const ApplyNowProjectTraining: React.FC = () => {
             <div className="grid grid-cols-2 gap-4">
               {[
                 { icon: "🎓", title: "Expert Mentors", desc: "FAANG engineers", color: "amber" },
-                { icon: "📁", title: "Real Projects", desc: "Portfolio ready", color: "blue" },
+                { icon: "📁", title: "Real Projects", desc: "Portfolio Ready", color: "blue" },
                 { icon: "🤝", title: "Peer Network", desc: "Global community", color: "purple" },
                 { icon: "💼", title: "Job Support", desc: "Resume & interview prep", color: "green" },
               ].map((item, i) => (
