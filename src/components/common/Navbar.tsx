@@ -102,7 +102,7 @@ const Navbar: React.FC = () => {
                                         // "left-0" aligns to start, "-translate-x-1/2" centers it, 
                                         // but for "Show left side" we use left-0 or right-auto
                                         className={`absolute top-full left-0 mt-3 bg-[#0a0826] border border-white/10 rounded-2xl p-3 shadow-2xl
-                                        ${link.name === 'Services' ? 'w-[600px]' : 'w-64'}`}
+                                        ${link.name === 'Services' ? 'w-[490px]' : 'w-64'}`}
                                     >
                                         <div className={`grid gap-1 ${link.name === 'Services' ? 'grid-cols-2' : 'grid-cols-1'}`}>
                                             {link.subLinks.map((sub) => (

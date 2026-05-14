@@ -11,15 +11,13 @@ import About from './pages/About';
 import Whatsapp from './components/common/Whatsapp';
 
 
-
-
 // Layout
 const MainLayout = () => {
   return (
     <>
-    <Navbar />
+      <Navbar />
       <Outlet />
-      <Whatsapp/>
+      <Whatsapp />
       <Footer />
     </>
   );
