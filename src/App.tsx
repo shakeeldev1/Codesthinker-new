@@ -8,6 +8,7 @@ import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
+import ServicePage from './pages/ServicePage';
 import Whatsapp from './components/common/Whatsapp';
 
 
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: 'about', element: <About /> },
+      { path: 'services/:serviceId', element: <ServicePage /> },
     ],
   },
 ]);
