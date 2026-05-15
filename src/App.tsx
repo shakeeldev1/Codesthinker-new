@@ -9,6 +9,7 @@ import Footer from './components/common/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import Whatsapp from './components/common/Whatsapp';
+import Contact from './pages/Contact';
 
 
 
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: 'about', element: <About /> },
+      { path: 'contact', element: <Contact /> },
     ],
   },
 ]);

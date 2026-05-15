@@ -85,25 +85,8 @@ function OurStory() {
         </p>
       </div>
 
-      {/* YEARS TOP */}
-      <div className="flex justify-center gap-8 mt-16 flex-wrap">
-        {storyData.map((item, i) => (
-          <div
-            key={i}
-            onClick={() => setIndex(i)}
-            className={`cursor-pointer text-lg font-semibold transition-all duration-300 ${
-              i === index
-                ? "text-[#07051D] scale-110"
-                : "text-gray-300"
-            }`}
-          >
-            {item.year}
-          </div>
-        ))}
-      </div>
-
       {/* CARDS */}
-      <div className="relative mt-14 flex justify-center items-center h-[520px]">
+      <div className="relative mt-8 flex justify-center items-center h-[520px]">
 
         {storyData.map((item, i) => {
           const pos = getPosition(i);

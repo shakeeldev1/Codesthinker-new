@@ -4,6 +4,7 @@ import OurStory from '../components/about/OurStory'
 import WhyChooseUs from '../components/about/WhyChooseUs'
 import OurMissions from '../components/about/OurMissions'
 import Testimonial from '../components/about/Testemonial'
+import Team from '../components/about/Team'
 
 function About() {
   return (
@@ -12,7 +13,9 @@ function About() {
       <OurStory />
       <WhyChooseUs />
       <OurMissions />
+         <Team />
       <Testimonial />
+   
     </div>
   )
 }
