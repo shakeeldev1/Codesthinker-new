@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
-import { ShoppingBag, Filter, Sparkles, Zap } from 'lucide-react';
+import { ShoppingBag, Filter, Sparkles, Zap, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface GlobalHero2Props {
   title?: string;
@@ -8,6 +9,10 @@ interface GlobalHero2Props {
   subtitle?: string;
   images?: string[];
   theme?: 'light' | 'dark';
+  primaryLink?: string;
+  secondaryLink?: string;
+  primaryBtnText?: string;
+  secondaryBtnText?: string;
 }
 
 const GlobalHero2: React.FC<GlobalHero2Props> = ({
@@ -15,7 +20,11 @@ const GlobalHero2: React.FC<GlobalHero2Props> = ({
   badge = "Selection",
   subtitle = "Explore our curated catalog of high-performance electronics. Engineered for those who demand excellence.",
   images = [],
-  theme = 'light'
+  theme = 'light',
+  primaryLink = '/contact',
+  secondaryLink = '/projects',
+  primaryBtnText = 'Launch Your Project',
+  secondaryBtnText = 'Our Work'
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -50,7 +59,7 @@ const GlobalHero2: React.FC<GlobalHero2Props> = ({
   };
 
   return (
-    <div className={`relative min-h-screen ${isDark ? 'bg-slate-950' : 'bg-white'} overflow-hidden pt-28 pb-12 md:pt-20 flex items-center`}>
+    <div className={`relative min-h-screen ${isDark ? 'bg-[#07051d]' : 'bg-white'} overflow-hidden pt-28 pb-12 md:pt-20 flex items-center`}>
       {/* Unique Tech Dot Pattern */}
       <div className="absolute inset-0 z-0">
         <div className={`absolute inset-0 ${isDark ? 'bg-[radial-gradient(#ffffff10_1px,transparent_1px)]' : 'bg-[radial-gradient(#0f172a10_1px,transparent_1px)]'} [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]`} />
@@ -71,12 +80,12 @@ const GlobalHero2: React.FC<GlobalHero2Props> = ({
         {/* Left Side: Content */}
         <div className="flex flex-col items-center lg:items-start text-center lg:text-left order-2 lg:order-1">
           <motion.div className="max-w-3xl space-y-6" variants={itemVariants}>
-            <h1 className={`text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-light ${isDark ? 'text-white' : 'text-slate-900'} tracking-tighter leading-tight sm:leading-none`}>
+            <h1 className={`text-3xl md:text-5xl font-bold ${isDark ? 'text-white' : 'text-[#07051d]'} leading-tight mb-6`}>
               {title.split(badge).map((part, i, arr) => (
                 <span key={i}>
                   {part}
                   {i < arr.length - 1 && (
-                    <span className="italic font-serif bg-gradient-to-r from-amber-600 to-orange-500 bg-clip-text text-transparent">
+                    <span className="text-amber-500">
                       {badge}
                     </span>
                   )}
@@ -84,25 +93,45 @@ const GlobalHero2: React.FC<GlobalHero2Props> = ({
               ))}
             </h1>
 
-            <p className={`text-base sm:text-lg ${isDark ? 'text-slate-400' : 'text-slate-600'} font-light max-w-xl mx-auto lg:mx-0 leading-relaxed`}>
+            <p className={`text-sm md:text-xl ${isDark ? 'text-gray-200' : 'text-gray-600'} leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8`}>
               {subtitle}
             </p>
+
+            {/* CTA Buttons */}
+            <motion.div variants={itemVariants} className="flex flex-wrap justify-center lg:justify-start gap-4 md:gap-6 mt-4">
+              <Link
+                to={primaryLink}
+                className="relative inline-flex items-center justify-center font-bold rounded-xl transition-all duration-300 cursor-pointer overflow-hidden shadow-lg focus:outline-none px-6 py-2 md:px-8 text-sm md:text-base bg-amber-500 text-[#07051d] hover:bg-amber-400 group"
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  {primaryBtnText}
+                  <ArrowRight className="w-4 h-4" />
+                </span>
+                <span className="absolute inset-0 -translate-x-full bg-white/30 group-hover:translate-x-full transition-transform duration-700 ease-in-out rotate-12"></span>
+              </Link>
+              <Link
+                to={secondaryLink}
+                className={`px-6 py-2 md:px-8 text-sm md:text-base font-bold rounded-xl border-2 transition-all duration-300 shadow-lg cursor-pointer ${isDark ? 'border-white text-white hover:bg-white hover:text-[#07051d]' : 'border-[#07051d] text-[#07051d] hover:bg-[#07051d] hover:text-white'}`}
+              >
+                {secondaryBtnText}
+              </Link>
+            </motion.div>
           </motion.div>
 
-          {/* Feature Tags */}
+              {/* Feature Tags */}
           <motion.div className="mt-8 md:mt-10 flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4" variants={containerVariants}>
             {[
-              { icon: Sparkles, label: 'Latest Design', color: 'text-amber-600', bg: isDark ? 'bg-white/5' : 'bg-amber-50/50', border: isDark ? 'border-white/10' : 'border-amber-100/50' },
-              { icon: ShoppingBag, label: 'User Centric', color: 'text-orange-600', bg: isDark ? 'bg-white/5' : 'bg-orange-50/50', border: isDark ? 'border-white/10' : 'border-orange-100/50' },
-              { icon: Filter, label: 'Pixel Perfect', color: 'text-amber-500', bg: isDark ? 'bg-white/5' : 'bg-amber-50/50', border: isDark ? 'border-white/10' : 'border-amber-100/50' },
+              { icon: Sparkles, label: 'Latest Design', color: 'text-amber-500', bg: isDark ? 'bg-white/5' : 'bg-amber-50', border: isDark ? 'border-white/10' : 'border-amber-200' },
+              { icon: ShoppingBag, label: 'User Centric', color: 'text-amber-500', bg: isDark ? 'bg-white/5' : 'bg-amber-50', border: isDark ? 'border-white/10' : 'border-amber-200' },
+              { icon: Filter, label: 'Pixel Perfect', color: 'text-amber-500', bg: isDark ? 'bg-white/5' : 'bg-amber-50', border: isDark ? 'border-white/10' : 'border-amber-200' },
             ].map((tag, index) => (
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className={`flex items-center gap-2 sm:gap-3 px-4 py-2 sm:px-6 sm:py-3 rounded-2xl ${tag.bg} border ${tag.border} backdrop-blur-md hover:shadow-xl transition-all cursor-default group`}
+                className={`flex items-center gap-2 sm:gap-3 px-4 py-2 sm:px-6 sm:py-3 rounded-xl ${tag.bg} border ${tag.border} backdrop-blur-md hover:shadow-xl transition-all cursor-default group`}
               >
                 <tag.icon size={16} className={`${tag.color} group-hover:scale-110 transition-transform`} />
-                <span className={`text-xs sm:text-sm font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'} tracking-wide`}>{tag.label}</span>
+                <span className={`text-xs sm:text-sm font-medium ${isDark ? 'text-gray-200' : 'text-[#07051d]'} tracking-wide`}>{tag.label}</span>
               </motion.div>
             ))}
           </motion.div>
@@ -113,8 +142,7 @@ const GlobalHero2: React.FC<GlobalHero2Props> = ({
           className="relative flex items-center justify-center order-1 lg:order-2 perspective-1000"
           variants={itemVariants}
         >
-          <div 
-            className={`relative z-20 w-[256px] h-[320px] sm:w-[400px] sm:h-[360px] lg:w-[480px] lg:h-[400px] ${isDark ? 'bg-slate-900' : 'bg-white'} rounded-[32px] sm:rounded-[40px] border ${isDark ? 'border-white/10' : 'border-slate-100'} shadow-2xl ${isDark ? 'shadow-amber-900/40' : 'shadow-amber-200/20'} flex items-center justify-center overflow-hidden transform-gpu rotate-y-[-10deg] rotate-x-[5deg] hover:rotate-y-[0deg] hover:rotate-x-[0deg] transition-transform duration-1000 ease-out`}
+          <div className={`relative z-20 w-[256px] h-[320px] sm:w-[400px] sm:h-[360px] lg:w-[480px] lg:h-[400px] ${isDark ? 'bg-[#07051d]' : 'bg-white'} rounded-[32px] sm:rounded-[40px] border ${isDark ? 'border-white/10' : 'border-slate-100'} shadow-2xl ${isDark ? 'shadow-amber-900/40' : 'shadow-amber-200/20'} flex items-center justify-center overflow-hidden transform-gpu rotate-y-[-10deg] rotate-x-[5deg] hover:rotate-y-[0deg] hover:rotate-x-[0deg] transition-transform duration-1000 ease-out`}
           >
             <AnimatePresence mode="popLayout">
               {images.length > 0 ? (

@@ -26,7 +26,10 @@ const cyberHeroData = [
     title: "Intelligent Cyber Security Solutions",
     description: "Protecting your digital assets with advanced threat intelligence and real-time response capabilities.",
     image: "https://images.unsplash.com/photo-1509956072962-7ff0f36dd7ba?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    color: "from-slate-900/80 to-slate-800/80",
+    primaryLink: "/contact",
+    secondaryLink: "/projects",
+    primaryBtnText: "Secure Your Assets",
+    secondaryBtnText: "View Security Work"
   },
   {
     id: 2,
@@ -34,7 +37,10 @@ const cyberHeroData = [
     title: "Security Without Compromise",
     description: "Implementing mission-critical defense layers that ensure your data remains accessible only to those you trust.",
     image: "https://images.unsplash.com/photo-1498049860654-af1a5c566876?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    color: "from-amber-900/40 to-orange-800/40",
+    primaryLink: "/contact",
+    secondaryLink: "/projects",
+    primaryBtnText: "Get Audit Now",
+    secondaryBtnText: "Security Protocols"
   },
   {
     id: 3,
@@ -42,7 +48,10 @@ const cyberHeroData = [
     title: "Modern Threat Protection",
     description: "Leveraging AI-powered detection to stay steps ahead of evolving digital risks and vulnerabilities.",
     image: "https://images.unsplash.com/photo-1526657782461-9fe13402a841?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDExfHx8ZW58MHx8fHx8",
-    color: "from-slate-900/60 to-amber-900/40",
+    primaryLink: "/contact",
+    secondaryLink: "/projects",
+    primaryBtnText: "Start Free Audit",
+    secondaryBtnText: "Our Methodology"
   },
 ];
 

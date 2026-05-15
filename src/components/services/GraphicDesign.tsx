@@ -18,7 +18,6 @@ import GlobalHero2 from './GlobalHero2';
 import GlobalServiceCTA from './GlobalServiceCTA';
 import GlobalCard from './GlobalServiceCard';
 import GlobalServiceCard1 from './GlobalServiceCard1';
-import Button from '../common/Button';
 
 const ServicesSection = () => {
   const services = [
@@ -60,13 +59,12 @@ const ServicesSection = () => {
         <GlobalHeading
           className="mb-16"
           badge={{ text: "Services" }}
-          title="Our Services"
-          titleHighlight="Services"
+          title="Graphic Design Services"
+          titleHighlight="Design Services"
           subtitle="Comprehensive graphic design solutions tailored to elevate your brand's visual identity."
           alignment="center"
           textColor="dark"
         />
-
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {services.map((service, index) => (
@@ -88,8 +86,8 @@ const ServicesSection = () => {
 const GraphicDesign = () => {
   const heroImages = [
     "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=2071&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1964&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=2000&auto=format&fit=crop"
+    "https://images.unsplash.com/photo-1545235617-9465d2a55698?q=80&w=2080&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=2070&auto=format&fit=crop"
   ];
 
   const technologies = [
@@ -110,22 +108,12 @@ const GraphicDesign = () => {
         badge="Impactful Brands"
         subtitle="Elevate your brand with our professional graphic design services. We create compelling visuals that tell your story and resonate with your audience."
         images={heroImages}
+        primaryLink="/contact"
+        secondaryLink="/projects"
+        primaryBtnText="Get Creative Now"
+        secondaryBtnText="View Designs"
       />
-
       <ServicesSection />
-
-      <section className="py-12 flex justify-center bg-[#07051D]">
-        <div className="text-center">
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white">
-            Ready to Transform Your <span className="text-amber-500">Brand Identity?</span>
-          </h2>
-          <p className="text-lg text-gray-200 mb-6 max-w-2xl mx-auto">
-            Elevate your brand with professional graphic design services that make a lasting impression.
-          </p>
-          <Button text="Start Your Project" variant="primary" size="md" showArrow className="mx-2" />
-          <Button text="Book a Consultation" variant="outline" size="md" className="mx-2" />
-        </div>
-      </section>
 
       {/* Tech Stack Section */}
       <section className="py-16 sm:py-24 px-4 sm:px-6">

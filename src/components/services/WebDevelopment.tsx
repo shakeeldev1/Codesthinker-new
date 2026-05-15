@@ -14,7 +14,6 @@ import {
   ShieldCheck
 } from 'lucide-react';
 import GlobalHero1 from './GlobalHero1';
-import Button from '../common/Button';
 import GlobalHeading from './GlobalHeading';
 import GlobalServiceCTA from './GlobalServiceCTA';
 import GlobalCard from './GlobalServiceCard';
@@ -93,6 +92,10 @@ const WebDevelopment = () => {
           "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2070&auto=format&fit=crop",
           "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop"
         ]}
+        primaryLink="/contact"
+        secondaryLink="/projects"
+        primaryBtnText="Start Your Project"
+        secondaryBtnText="View Our Work"
       />
 
       {/* Services Grid Section */}
@@ -154,18 +157,12 @@ const WebDevelopment = () => {
         </div>
       </section>
 
-      <section className="py-12 flex justify-center bg-[#07051D]">
-        <div className="text-center">
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white">
-            Ready to Build Your <span className="text-amber-500">Next-Gen Website?</span>
-          </h2>
-          <p className="text-lg text-gray-200 mb-6 max-w-2xl mx-auto">
-            From complex web apps to stunning landing pages, we build high-performance solutions tailored to your business.
-          </p>
-          <Button text="Start Your Project" variant="primary" size="md" showArrow className="mx-2" />
-          <Button text="Book a Consultation" variant="outline" size="md" className="mx-2" />
-        </div>
-      </section>
+      <GlobalServiceCTA 
+        theme="light" 
+        title="Ready to Build Your"
+        highlightText="Next-Gen Website?"
+        subtitle="From complex web apps to stunning landing pages, we build high-performance solutions tailored to your business."
+      />
     </div>
   );
 };

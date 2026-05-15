@@ -45,6 +45,10 @@ const RemoteITResources = () => {
           "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop",
           "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop"
         ]}
+        primaryLink="/contact"
+        secondaryLink="/projects"
+        primaryBtnText="Hire Developers"
+        secondaryBtnText="How It Works"
       />
 
       {/* Services Section */}
@@ -54,8 +58,8 @@ const RemoteITResources = () => {
             <GlobalHeading
               className="mb-16"
               badge={{ text: "Services" }}
-              title="Our Services"
-              titleHighlight="Services"
+              title="Remote IT Services"
+              titleHighlight="IT Services"
               subtitle="Flexible engagement models for every need"
               alignment="center"
               textColor="dark"
