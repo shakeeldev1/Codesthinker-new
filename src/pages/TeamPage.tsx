@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
-import Team from '../components/home/Team';
+import Team from '../components/about/Team';
 import Hero from '../components/team/Hero';
+
 
 // --- Scroll Progress Indicator Component ---
 const ScrollProgress: React.FC = () => {
@@ -131,7 +132,7 @@ function TeamPage() {
       <PageTransition>
         {/* Hero Section */}
         <div className="relative z-10">
-          <Hero />
+          <Hero/>
         </div>
 
         {/* Divider with Animation */}
