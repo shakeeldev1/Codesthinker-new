@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { FaFire, FaStar, FaUsers, FaRocket, FaGraduationCap, FaFolderOpen, FaHandshake, FaBriefcase, FaCheckCircle, FaBullseye, FaCalendarAlt } from 'react-icons/fa';
 import ApplyNowProjectTrainingForm from '../components/apply/ApplyNowProjectTrainingForm';
 
 // --- Modern Layout with mouse tracking, particle effects, and advanced animations ---
@@ -75,7 +76,7 @@ const ApplyNowProjectTraining: React.FC = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-500 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500"></span>
               </span>
-              <span className="text-sm font-bold text-amber-400 uppercase tracking-wider">🔥 Only 12 Seats Left</span>
+              <span className="text-sm font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1"><FaFire className="inline" /> Only 12 Seats Left</span>
             </div>
             
             {/* Main heading with gradient and animation */}
@@ -112,7 +113,7 @@ const ApplyNowProjectTraining: React.FC = () => {
             <div className="flex flex-wrap gap-8 pt-4">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/20 flex items-center justify-center">
-                  <span className="text-2xl">⭐</span>
+                  <FaStar className="text-2xl text-amber-400" />
                 </div>
                 <div>
                   <div className="text-2xl font-bold">4.96</div>
@@ -121,7 +122,7 @@ const ApplyNowProjectTraining: React.FC = () => {
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center">
-                  <span className="text-2xl">👥</span>
+                  <FaUsers className="text-2xl text-blue-400" />
                 </div>
                 <div>
                   <div className="text-2xl font-bold">3,200+</div>
@@ -130,7 +131,7 @@ const ApplyNowProjectTraining: React.FC = () => {
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/20 flex items-center justify-center">
-                  <span className="text-2xl">🚀</span>
+                  <FaRocket className="text-2xl text-purple-400" />
                 </div>
                 <div>
                   <div className="text-2xl font-bold">94%</div>
@@ -168,28 +169,45 @@ const ApplyNowProjectTraining: React.FC = () => {
 
             {/* Feature grid with modern cards */}
             <div className="grid grid-cols-2 gap-4">
-              {[
-                { icon: "🎓", title: "Expert Mentors", desc: "FAANG engineers", color: "amber" },
-                { icon: "📁", title: "Real Projects", desc: "Portfolio Ready", color: "blue" },
-                { icon: "🤝", title: "Peer Network", desc: "Global community", color: "purple" },
-                { icon: "💼", title: "Job Support", desc: "Resume & interview prep", color: "green" },
-              ].map((item, i) => (
-                <div key={i} className="group relative bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl p-5 hover:bg-white/10 hover:border-amber-500/30 transition-all duration-300 cursor-pointer">
-                  <div className={`absolute inset-0 bg-gradient-to-br from-${item.color}-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl`} />
-                  <div className="relative">
-                    <div className="text-3xl mb-3 group-hover:scale-110 transition-transform">{item.icon}</div>
-                    <h4 className="font-semibold text-sm mb-1">{item.title}</h4>
-                    <p className="text-white/40 text-xs">{item.desc}</p>
-                  </div>
+              <div className="group relative bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl p-5 hover:bg-white/10 hover:border-amber-500/30 transition-all duration-300 cursor-pointer">
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
+                <div className="relative">
+                  <FaGraduationCap className="text-3xl mb-3 text-amber-400 group-hover:scale-110 transition-transform" />
+                  <h4 className="font-semibold text-sm mb-1">Expert Mentors</h4>
+                  <p className="text-white/40 text-xs">FAANG engineers</p>
                 </div>
-              ))}
+              </div>
+              <div className="group relative bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl p-5 hover:bg-white/10 hover:border-blue-500/30 transition-all duration-300 cursor-pointer">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
+                <div className="relative">
+                  <FaFolderOpen className="text-3xl mb-3 text-blue-400 group-hover:scale-110 transition-transform" />
+                  <h4 className="font-semibold text-sm mb-1">Real Projects</h4>
+                  <p className="text-white/40 text-xs">Portfolio Ready</p>
+                </div>
+              </div>
+              <div className="group relative bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl p-5 hover:bg-white/10 hover:border-purple-500/30 transition-all duration-300 cursor-pointer">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
+                <div className="relative">
+                  <FaHandshake className="text-3xl mb-3 text-purple-400 group-hover:scale-110 transition-transform" />
+                  <h4 className="font-semibold text-sm mb-1">Peer Network</h4>
+                  <p className="text-white/40 text-xs">Global community</p>
+                </div>
+              </div>
+              <div className="group relative bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl p-5 hover:bg-white/10 hover:border-green-500/30 transition-all duration-300 cursor-pointer">
+                <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
+                <div className="relative">
+                  <FaBriefcase className="text-3xl mb-3 text-green-400 group-hover:scale-110 transition-transform" />
+                  <h4 className="font-semibold text-sm mb-1">Job Support</h4>
+                  <p className="text-white/40 text-xs">Resume & interview prep</p>
+                </div>
+              </div>
             </div>
             
             {/* Trust badge */}
             <div className="flex items-center justify-center gap-4 py-4 text-xs text-white/40 border-t border-white/5">
-              <span>✨ No upfront payment</span>
-              <span>🎯 Money-back guarantee</span>
-              <span>📅 Start in 2 weeks</span>
+              <span className="flex items-center gap-1"><FaCheckCircle /> No upfront payment</span>
+              <span className="flex items-center gap-1"><FaBullseye /> Money-back guarantee</span>
+              <span className="flex items-center gap-1"><FaCalendarAlt /> Start in 2 weeks</span>
             </div>
           </div>
           
