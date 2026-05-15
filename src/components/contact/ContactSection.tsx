@@ -87,7 +87,7 @@ export default function ContactSection() {
           <div className="flex flex-col justify-between py-4">
             <div className="space-y-8">
               <h3 className="text-3xl font-extrabold leading-tight max-w-md">
-                Ready To Turn Your Vision into Reality?
+                Ready To Turn Your Vision Into Reality?
               </h3>
               
               <div className="grid gap-8">
