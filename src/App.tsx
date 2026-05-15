@@ -6,21 +6,26 @@ import {
 } from 'react-router-dom';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
+
 import Home from './pages/Home';
 import About from './pages/About';
+import ServicePage from './pages/ServicePage';
 import Whatsapp from './components/common/Whatsapp';
 import Contact from './pages/Contact';
-
-
+import ApplyNowProjectTraining from './pages/ApplyNowProjectTraining';
+import ApplyForInternship from './pages/ApplyForInternship';
+import JobBoard from './pages/JobBoard';
+import Blog from './pages/Blog';
+import TeamPage from './pages/TeamPage';
 
 
 // Layout
 const MainLayout = () => {
   return (
     <>
-    <Navbar />
+      <Navbar />
       <Outlet />
-      <Whatsapp/>
+      <Whatsapp />
       <Footer />
     </>
   );
@@ -34,7 +39,13 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: 'about', element: <About /> },
+      { path: 'services/:serviceId', element: <ServicePage /> },
+      { path: 'blog', element: <Blog /> },
       { path: 'contact', element: <Contact /> },
+      { path: 'apply/projects', element: <ApplyNowProjectTraining /> },
+      { path: 'apply/internship', element: <ApplyForInternship /> },
+      { path: 'apply/jobs', element: <JobBoard /> },
+      { path: 'team', element: <TeamPage /> },
     ],
   },
 ]);
