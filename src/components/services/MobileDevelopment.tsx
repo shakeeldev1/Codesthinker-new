@@ -23,7 +23,7 @@ import {
   Wifi
 } from 'lucide-react';
 import GlobalHeading from './GlobalHeading';
-import GlobalServiceCTA from './GlobalServiceCTA';
+import Button from '../common/Button';
 import GlobalCard from './GlobalServiceCard';
 import GlobalServiceCard1 from './GlobalServiceCard1';
 
@@ -219,12 +219,18 @@ const MobileDevelopment = () => {
         </div>
       </section>
 
-      <GlobalServiceCTA 
-        theme="light" 
-        title="Ready to Launch Your"
-        highlightText="Dream Mobile App?"
-        subtitle="We transform your ideas into powerful, high-performance iOS and Android applications for the global market."
-      />
+      <section className="py-12 flex justify-center bg-[#07051D]">
+        <div className="text-center">
+          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white">
+            Ready to Launch Your <span className="text-amber-500">Dream Mobile App?</span>
+          </h2>
+          <p className="text-lg text-gray-200 mb-6 max-w-2xl mx-auto">
+            We transform your ideas into powerful, high-performance iOS and Android applications for the global market.
+          </p>
+          <Button text="Start Your Project" variant="primary" size="md" showArrow className="mx-2" />
+          <Button text="Book a Consultation" variant="outline" size="md" className="mx-2" />
+        </div>
+      </section>
     </div>
   );
 };

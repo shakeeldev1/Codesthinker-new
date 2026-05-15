@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import GlobalHero from './GlobalHero';
+import Button from '../common/Button';
 import {
   Zap,
   Shield,
@@ -197,12 +198,18 @@ const SoftwareDevelopment = () => {
 
 
 
-      <GlobalServiceCTA 
-        theme="dark" 
-        title="Ready to Build Custom"
-        highlightText="Enterprise Software?"
-        subtitle="Solve complex business challenges with custom-built software solutions engineered for performance and scale."
-      />
+      <section className="py-12 flex justify-center bg-[#07051D]">
+        <div className="text-center">
+          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white">
+            Ready to Build Custom <span className="text-amber-500">Enterprise Software?</span>
+          </h2>
+          <p className="text-lg text-gray-200 mb-6 max-w-2xl mx-auto">
+            Solve complex business challenges with custom-built software solutions engineered for performance and scale.
+          </p>
+          <Button text="Start Your Project" variant="primary" size="md" showArrow className="mx-2" />
+          <Button text="Book a Consultation" variant="outline" size="md" className="mx-2" />
+        </div>
+      </section>
     </div>
   );
 };

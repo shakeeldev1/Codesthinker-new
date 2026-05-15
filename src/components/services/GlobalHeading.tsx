@@ -22,7 +22,7 @@ const GlobalHeading: React.FC<GlobalHeadingProps> = ({
   title,
   titleHighlight,
   subtitle,
-  size = 'lg',
+  size = 'md',
   alignment = 'left',
   gradientColors = { from: 'from-amber-400', to: 'to-orange-600' },
   textColor = 'dark',
@@ -35,7 +35,7 @@ const GlobalHeading: React.FC<GlobalHeadingProps> = ({
   // Fluid high-end typography scaling
   const sizeClasses = {
     sm: 'text-[1.75rem] md:text-[2.25rem] leading-[1.15] tracking-tight font-light',
-    md: 'text-[2.25rem] md:text-[3.25rem] leading-[1.1] tracking-tighter font-light',
+    md:'text-5xl font-bold',
     lg: 'text-[2.75rem] md:text-[4.25rem] leading-[1.05] tracking-tighter font-light',
     xl: 'text-[3.25rem] md:text-[5.5rem] leading-[1] tracking-tighter font-light'
   };

@@ -66,8 +66,8 @@ const GlobalHero1: React.FC<GlobalHero1Props> = ({
 
       {/* Animated Background Blobs */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        <div className={`absolute -top-20 -right-20 md:-top-40 md:-right-40 w-[300px] h-[300px] md:w-[600px] md:h-[600px] ${isDark ? 'bg-amber-500/10' : 'bg-blue-100/40'} rounded-full blur-[60px] md:blur-[100px] animate-blob`}></div>
-        <div className={`absolute -bottom-20 -left-20 md:-bottom-40 md:-left-40 w-[300px] h-[300px] md:w-[600px] md:h-[600px] ${isDark ? 'bg-orange-500/10' : 'bg-indigo-100/30'} rounded-full blur-[60px] md:blur-[100px] animate-blob animation-delay-2000`}></div>
+        <div className={`absolute -top-20 -right-20 md:-top-40 md:-right-40 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-[#F49B1F]/10 rounded-full blur-[60px] md:blur-[100px] animate-blob`}></div>
+        <div className={`absolute -bottom-20 -left-20 md:-bottom-40 md:-left-40 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-[#F49B1F]/10 rounded-full blur-[60px] md:blur-[100px] animate-blob animation-delay-2000`}></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full">
@@ -81,7 +81,7 @@ const GlobalHero1: React.FC<GlobalHero1Props> = ({
                   <React.Fragment key={i}>
                     {part}
                     {i < arr.length - 1 && (
-                      <span className="italic font-serif bg-gradient-to-r from-amber-600 to-orange-500 bg-clip-text text-transparent">
+                      <span className="italic font-serif text-[#F49B1F]">
                         {badge}
                       </span>
                     )}
@@ -101,13 +101,13 @@ const GlobalHero1: React.FC<GlobalHero1Props> = ({
             <motion.div variants={itemVariants} className="pt-4 md:pt-8 flex justify-center md:justify-start">
               <motion.button
                 whileTap={{ scale: 0.98 }}
-                className="group relative px-7 py-3.5 sm:px-8 sm:py-4 overflow-hidden rounded-xl bg-gradient-to-r from-amber-600 to-orange-500 text-white font-bold text-sm sm:text-base flex items-center gap-3 transition-all duration-500"
+                className="group relative px-7 py-3.5 sm:px-8 sm:py-4 overflow-hidden rounded-xl bg-[#F49B1F] text-white font-bold text-sm sm:text-base flex items-center gap-3 transition-all duration-500"
               >
                 <span className="relative z-10 flex items-center gap-3">
                   Explore Our Mission
                   <ArrowRight className="w-4 h-4" />
                 </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-[#F49B1F]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </motion.button>
             </motion.div>
           </motion.div>
@@ -143,7 +143,7 @@ const GlobalHero1: React.FC<GlobalHero1Props> = ({
                   <div 
                     key={idx}
                     className={`h-1 rounded-full transition-all duration-500 ${
-                      idx === currentImageIndex ? "w-8 bg-amber-500" : isDark ? "w-2 bg-white/20" : "w-2 bg-white/40"
+                      idx === currentImageIndex ? "w-8 bg-[#F49B1F]" : isDark ? "w-2 bg-white/20" : "w-2 bg-white/40"
                     }`}
                   />
                 ))}

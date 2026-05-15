@@ -104,7 +104,7 @@ const GlobalHero = ({ data, height = "h-screen" }) => {
                       </p>
                     </motion.div>
                     <motion.h1
-                      className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-light leading-[1.1] text-white mb-4 sm:mb-8 tracking-tight"
+                      className="text-5xl font-bold text-white mb-4 sm:mb-8 tracking-tight"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
@@ -149,11 +149,11 @@ const GlobalHero = ({ data, height = "h-screen" }) => {
                         <span className="relative z-10 flex items-center justify-center gap-2 text-slate-900 group-hover:text-white transition-colors duration-500 ease-in-out">
                           Explore Now
                         </span>
-                        <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-orange-500 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out" />
+                        <div className="absolute inset-0 bg-[#F49B1F] opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out" />
                       </motion.button>
                       <motion.button
                         whileTap={{ scale: 0.98 }}
-                        className="px-6 py-2.5 sm:px-8 sm:py-3.5 border border-white/30 text-white font-semibold text-xs sm:text-sm uppercase tracking-widest rounded-lg hover:bg-gradient-to-r hover:from-amber-600 hover:to-orange-500 hover:border-transparent transition-all duration-500 ease-in-out backdrop-blur-sm w-1/2 sm:w-auto"
+                        className="px-6 py-2.5 sm:px-8 sm:py-3.5 border border-white/30 text-white font-semibold text-xs sm:text-sm uppercase tracking-widest rounded-lg hover:bg-[#F49B1F] hover:border-transparent transition-all duration-500 ease-in-out backdrop-blur-sm w-1/2 sm:w-auto"
                       >
                         Learn More
                       </motion.button>

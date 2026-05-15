@@ -22,6 +22,7 @@ import GlobalHeading from './GlobalHeading';
 import GlobalServiceCTA from './GlobalServiceCTA';
 import GlobalCard from './GlobalServiceCard';
 import GlobalServiceCard1 from './GlobalServiceCard1';
+import Button from '../common/Button';
 
 const UIUXDesign = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -110,6 +111,19 @@ const UIUXDesign = () => {
               />
             ))}
           </div>
+
+          <section className="py-12 flex justify-center bg-[#07051D]">
+            <div className="text-center">
+              <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white">
+                Ready to Elevate Your <span className="text-amber-500">User Experience?</span>
+              </h2>
+              <p className="text-lg text-gray-200 mb-6 max-w-2xl mx-auto">
+                Transform your digital products with stunning, user-centric UI/UX design that drives engagement and results.
+              </p>
+              <Button text="Start Your Project" variant="primary" size="md" showArrow className="mx-2" />
+              <Button text="Book a Consultation" variant="outline" size="md" className="mx-2" />
+            </div>
+          </section>
         </div>
       </section>
 

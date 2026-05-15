@@ -19,26 +19,26 @@ const GlobalCard = ({
       border: 'border-gray-200',
       text: 'text-[#07051d]',
       subtext: 'text-gray-600',
-      iconBg: 'bg-amber-50',
-      iconColor: 'text-amber-600',
-      hoverIconBg: 'group-hover:bg-gradient-to-br group-hover:from-amber-400 group-hover:to-amber-500',
+      iconBg: 'bg-[#F49B1F] bg-opacity-10',
+      iconColor: 'text-[#F49B1F]',
+      hoverIconBg: 'group-hover:bg-[#F49B1F]',
       hoverIconColor: 'group-hover:text-white',
-      shadow: 'shadow-sm group-hover:shadow-xl group-hover:shadow-amber-500/20',
-      hoverBorder: 'group-hover:border-amber-300',
-      hoverText: 'group-hover:text-amber-600',
+      shadow: 'shadow-sm group-hover:shadow-xl group-hover:shadow-[#F49B1F]/20',
+      hoverBorder: 'group-hover:border-[#F49B1F]',
+      hoverText: 'group-hover:text-[#F49B1F]',
     },
     dark: {
       bg: 'bg-[#07051d]',
       border: 'border-gray-800',
       text: 'text-slate-50',
       subtext: 'text-slate-400',
-      iconBg: 'bg-amber-950/30',
-      iconColor: 'text-amber-400',
-      hoverIconBg: 'group-hover:bg-gradient-to-br group-hover:from-amber-500 group-hover:to-amber-600',
+      iconBg: 'bg-[#F49B1F] bg-opacity-10',
+      iconColor: 'text-[#F49B1F]',
+      hoverIconBg: 'group-hover:bg-[#F49B1F]',
       hoverIconColor: 'group-hover:text-[#07051d]',
-      shadow: 'shadow-lg group-hover:shadow-2xl group-hover:shadow-amber-500/30',
-      hoverBorder: 'group-hover:border-amber-500/60',
-      hoverText: 'group-hover:text-amber-400',
+      shadow: 'shadow-lg group-hover:shadow-2xl group-hover:shadow-[#F49B1F]/30',
+      hoverBorder: 'group-hover:border-[#F49B1F]',
+      hoverText: 'group-hover:text-[#F49B1F]',
     },
   };
 
@@ -67,7 +67,7 @@ const GlobalCard = ({
       <div className={`
         absolute -inset-20 opacity-0 group-hover:opacity-100 
         transition-opacity duration-500 pointer-events-none
-        ${isDark ? 'bg-amber-500/10' : 'bg-amber-400/5'}
+        bg-[#F49B1F]/10
         blur-3xl
       `}></div>
 
@@ -132,7 +132,7 @@ const GlobalCard = ({
         absolute top-0 right-0 w-24 h-24 -mr-12 -mt-12
         rounded-full opacity-0 group-hover:opacity-20
         transition-opacity duration-500
-        ${isDark ? 'bg-amber-400' : 'bg-amber-500'}
+        bg-[#F49B1F]
         blur-2xl pointer-events-none
       `}></div>
     </motion.div>

@@ -18,6 +18,7 @@ import GlobalHero2 from './GlobalHero2';
 import GlobalServiceCTA from './GlobalServiceCTA';
 import GlobalCard from './GlobalServiceCard';
 import GlobalServiceCard1 from './GlobalServiceCard1';
+import Button from '../common/Button';
 
 const ServicesSection = () => {
   const services = [
@@ -66,6 +67,7 @@ const ServicesSection = () => {
           textColor="dark"
         />
 
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {services.map((service, index) => (
             <GlobalCard
@@ -109,7 +111,21 @@ const GraphicDesign = () => {
         subtitle="Elevate your brand with our professional graphic design services. We create compelling visuals that tell your story and resonate with your audience."
         images={heroImages}
       />
+
       <ServicesSection />
+
+      <section className="py-12 flex justify-center bg-[#07051D]">
+        <div className="text-center">
+          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white">
+            Ready to Transform Your <span className="text-amber-500">Brand Identity?</span>
+          </h2>
+          <p className="text-lg text-gray-200 mb-6 max-w-2xl mx-auto">
+            Elevate your brand with professional graphic design services that make a lasting impression.
+          </p>
+          <Button text="Start Your Project" variant="primary" size="md" showArrow className="mx-2" />
+          <Button text="Book a Consultation" variant="outline" size="md" className="mx-2" />
+        </div>
+      </section>
 
       {/* Tech Stack Section */}
       <section className="py-16 sm:py-24 px-4 sm:px-6">
