@@ -17,7 +17,7 @@ const BlogPostList: React.FC = () => {
     {
       id: 1,
       title: 'Mastering Modern React Patterns',
-      excerpt: 'Explore the latest React patterns including hooks, server components, and state management best practices for building scalable applications.',
+      excerpt: 'Explore the latest React patterns including hook, server components, and state management best practices for building scalable applications.',
       category: 'Development',
       author: 'Sarah Chen',
       date: 'May 10, 2024',
