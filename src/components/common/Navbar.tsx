@@ -9,7 +9,7 @@ const navLinks = [
     { name: 'About', to: '/about' },
     {
         name: 'Services',
-        to: '#',
+        to: '/services',
         subLinks: [
             { name: 'Software Development', to: '/services/software' },
             { name: 'Web Development', to: '/services/web' },
@@ -107,17 +107,21 @@ const Navbar: React.FC = () => {
                                 onMouseLeave={() => setActiveDropdown(null)}
                             >
                                 {link.subLinks ? (
-                                    <button
-                                        className={`px-3 xl:px-4 py-2 text-sm font-medium transition-all duration-300 flex items-center gap-1 rounded-full whitespace-nowrap cursor-pointer
-                                        ${activeDropdown === link.name || link.subLinks.some(s => isActive(s.to)) 
-                                            ? 'text-white bg-white/10' 
-                                            : 'text-white/70 hover:text-white hover:bg-white/5'}`}
-                                        aria-expanded={activeDropdown === link.name}
-                                        aria-haspopup="true"
-                                    >
-                                        {link.name}
-                                        <HiChevronDown className={`transition-transform duration-300 text-xs ${activeDropdown === link.name ? 'rotate-180 text-amber-400' : ''}`} />
-                                    </button>
+                                    <div className="flex items-center">
+                                        <Link
+                                            to={link.to}
+                                            onClick={handleLinkClick}
+                                            className={`px-3 xl:px-4 py-2 text-sm font-medium transition-all duration-300 flex items-center gap-1 rounded-full whitespace-nowrap cursor-pointer
+                                            ${activeDropdown === link.name || link.subLinks.some(s => isActive(s.to)) || isActive(link.to)
+                                                ? 'text-white bg-white/10' 
+                                                : 'text-white/70 hover:text-white hover:bg-white/5'}`}
+                                            aria-expanded={activeDropdown === link.name}
+                                            aria-haspopup="true"
+                                        >
+                                            {link.name}
+                                            <HiChevronDown className={`transition-transform duration-300 text-xs ${activeDropdown === link.name ? 'rotate-180 text-amber-400' : ''}`} />
+                                        </Link>
+                                    </div>
                                 ) : (
                                     <Link
                                         to={link.to}
@@ -200,18 +204,24 @@ const Navbar: React.FC = () => {
                                 <div key={link.name} className="border-b border-white/5 last:border-0">
                                     {link.subLinks ? (
                                         <>
-                                            <button
-                                                onClick={() => setOpenMobileDropdown(openMobileDropdown === link.name ? null : link.name)}
-                                                className="w-full flex justify-between items-center text-white font-semibold py-4 hover:text-amber-400 transition-colors duration-200"
-                                                aria-expanded={openMobileDropdown === link.name}
-                                            >
-                                                <span className={openMobileDropdown === link.name ? "text-amber-400" : ""}>
+                                            <div className="w-full flex justify-between items-center">
+                                                <Link
+                                                    to={link.to}
+                                                    onClick={handleLinkClick}
+                                                    className={`flex-1 text-left font-semibold py-4 transition-colors duration-200 ${isActive(link.to) || openMobileDropdown === link.name ? "text-amber-400" : "text-white hover:text-amber-400"}`}
+                                                >
                                                     {link.name}
-                                                </span>
-                                                <HiChevronDown 
-                                                    className={`transition-all duration-300 text-lg ${openMobileDropdown === link.name ? 'rotate-180 text-amber-400' : ''}`} 
-                                                />
-                                            </button>
+                                                </Link>
+                                                <button
+                                                    onClick={() => setOpenMobileDropdown(openMobileDropdown === link.name ? null : link.name)}
+                                                    className="p-4 pr-0"
+                                                    aria-expanded={openMobileDropdown === link.name}
+                                                >
+                                                    <HiChevronDown 
+                                                        className={`transition-all duration-300 text-lg text-white hover:text-amber-400 ${openMobileDropdown === link.name ? 'rotate-180 text-amber-400' : ''}`} 
+                                                    />
+                                                </button>
+                                            </div>
                                             <AnimatePresence mode="wait">
                                                 {openMobileDropdown === link.name && (
                                                     <motion.div 

@@ -10,6 +10,7 @@ import Footer from './components/common/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import ServicePage from './pages/ServicePage';
+import ServicesPage from './pages/ServicesPage';
 import Whatsapp from './components/common/Whatsapp';
 import Contact from './pages/Contact';
 import ApplyNowProjectTraining from './pages/ApplyNowProjectTraining';
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: 'about', element: <About /> },
+      { path: 'services', element: <ServicesPage /> },
       { path: 'services/:serviceId', element: <ServicePage /> },
       { path: 'blog', element: <Blog /> },
       { path: 'contact', element: <Contact /> },
