@@ -1,4 +1,3 @@
-import React from "react";
 import ContactHeader from "../components/contact/Hero";
 import ContactSection from "../components/contact/ContactSection";
 

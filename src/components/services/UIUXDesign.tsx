@@ -1,21 +1,10 @@
-import React, { useState } from 'react';
 import {
   Palette,
   Users,
   Zap,
   Target,
-  Code2,
-  ArrowRight,
-  CheckCircle,
   Smartphone,
-  Layout,
-  Brain,
-  Lightbulb,
-  TrendingUp,
-  Shield,
-  Infinity,
-  Star,
-  Layers
+  Brain
 } from 'lucide-react';
 import GlobalHero2 from './GlobalHero2';
 import GlobalHeading from './GlobalHeading';
@@ -24,7 +13,6 @@ import GlobalCard from './GlobalServiceCard';
 import GlobalServiceCard1 from './GlobalServiceCard1';
 
 const UIUXDesign = () => {
-  const [activeTab, setActiveTab] = useState(0);
 
   const technologies = [
     { name: "Figma", category: "Design", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },

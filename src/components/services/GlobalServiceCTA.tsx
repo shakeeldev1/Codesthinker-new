@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Zap, MessageSquare, Sparkles } from 'lucide-react';

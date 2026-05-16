@@ -1,19 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import GlobalHero from './GlobalHero';
 import {
   Zap,
-  Shield,
-  TrendingUp,
-  Users,
-  Code2,
-  ArrowRight,
-  CheckCircle2,
-  Database,
-  Cpu,
-  Globe,
   Layers,
+  Database,
+  Globe,
+  Cpu,
   Rocket
 } from 'lucide-react';
 import GlobalHeading from './GlobalHeading';
@@ -22,8 +16,6 @@ import GlobalCard from './GlobalServiceCard';
 import GlobalServiceCard1 from './GlobalServiceCard1';
 
 const SoftwareDevelopment = () => {
-  const [activeService, setActiveService] = useState(0);
-  const [scrollY, setScrollY] = useState(0);
 
   const softwareHeroData = [
     {
@@ -60,12 +52,6 @@ const SoftwareDevelopment = () => {
       secondaryBtnText: "Our Tech Stack"
     },
   ];
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     AOS.init({
@@ -131,14 +117,6 @@ const SoftwareDevelopment = () => {
     { name: "AWS", category: "Cloud", icon: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" },
     { name: "PostgreSQL", category: "Database", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
     { name: "Kubernetes", category: "Orchestration", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" }
-  ];
-
-  
-  const processSteps = [
-    { step: "01", title: "Discovery", description: "We analyze your requirements, constraints, and goals to create a comprehensive roadmap." },
-    { step: "02", title: "Architecture", description: "Design scalable, maintainable systems using industry best practices and proven patterns." },
-    { step: "03", title: "Development", description: "Build with precision, following strict quality standards and continuous integration practices." },
-    { step: "04", title: "Deployment", description: "Launch with confidence using automated testing, monitoring, and staged rollouts." }
   ];
 
   return (

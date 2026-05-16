@@ -1,17 +1,11 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import {
   Code2,
   Smartphone,
   Zap,
   ShoppingCart,
   Globe,
-  CheckCircle2,
-  ArrowRight,
-  Layers,
-  Cpu,
-  Database,
-  Layout,
-  ShieldCheck
+  Layers
 } from 'lucide-react';
 import GlobalHero1 from './GlobalHero1';
 import GlobalHeading from './GlobalHeading';

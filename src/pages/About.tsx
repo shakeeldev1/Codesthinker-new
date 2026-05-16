@@ -1,4 +1,3 @@
-import React from 'react'
 import AboutHead from '../components/about/AboutHead'
 import OurStory from '../components/about/OurStory'
 import WhyChooseUs from '../components/about/WhyChooseUs'

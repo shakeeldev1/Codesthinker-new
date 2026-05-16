@@ -3,6 +3,7 @@ import React from 'react';
 interface GlobalServiceCard1Props {
   icon?: string;
   name?: string;
+  category?: string;
   theme?: 'light' | 'dark' | string;
   variant?: string;
 }

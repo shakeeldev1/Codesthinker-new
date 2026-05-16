@@ -86,13 +86,6 @@ const PageTransition: React.FC<{ children: React.ReactNode }> = ({ children }) =
 // --- Main TeamPage Component ---
 function TeamPage() {
   const shouldReduceMotion = useReducedMotion();
-  const [isPageLoaded, setIsPageLoaded] = useState(false);
-
-  useEffect(() => {
-    // Trigger entrance animation after mount
-    const timer = setTimeout(() => setIsPageLoaded(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <div className="relative bg-gradient-to-b from-[#02010a] via-[#030211] to-[#02010a] overflow-x-hidden">
@@ -194,7 +187,7 @@ function TeamPage() {
       )}
 
       {/* Add custom styles for smooth scrolling */}
-      <style jsx global>{`
+      <style>{`
         html {
           scroll-behavior: smooth;
         }
