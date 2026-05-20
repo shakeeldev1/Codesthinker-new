@@ -42,7 +42,7 @@ function ContactHead() {
             data-aos="zoom-in"
             className="text-4xl sm:text-5xl md:text-5xl font-extrabold leading-tight"
           >
-            Let’s Build Something <br />
+            Let's Build Something <br />
             <span className="text-[#FDBE00]">Amazing Together</span>
           </h1>
 
