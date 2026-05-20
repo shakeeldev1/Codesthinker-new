@@ -32,7 +32,6 @@ const MainLayout = () => {
       <ScrollRestoration /> 
       <Navbar />
       <ScrollToTop />
-      <Outlet />
       <main>
         <Outlet />
       </main>
