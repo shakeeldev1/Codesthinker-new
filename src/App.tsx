@@ -17,6 +17,7 @@ import ApplyForInternship from './pages/ApplyForInternship';
 import JobBoard from './pages/JobBoard';
 import Blog from './pages/Blog';
 import TeamPage from './pages/TeamPage';
+import ScrollToTop from './components/common/ScrollToTop';
 
 
 // Layout
@@ -24,6 +25,7 @@ const MainLayout = () => {
   return (
     <>
       <Navbar />
+      <ScrollToTop/>
       <Outlet />
       <Whatsapp />
       <Footer />
