@@ -21,6 +21,8 @@ import JobBoard from './pages/JobBoard';
 import Blog from './pages/Blog';
 import TeamPage from './pages/TeamPage';
 import ProjectsPage from './pages/ProjectsPage';
+import ScrollToTop from './components/common/ScrollToTop';
+
 
 // Layout
 const MainLayout = () => {
@@ -29,6 +31,8 @@ const MainLayout = () => {
       {/* This component ensures the page scrolls to top on every navigation */}
       <ScrollRestoration /> 
       <Navbar />
+      <ScrollToTop />
+      <Outlet />
       <main>
         <Outlet />
       </main>

@@ -48,7 +48,7 @@ export default function ContactSection() {
     },
     {
       icon: <MdLocationOn className="text-white text-xl" />,
-      text: "Bahawalpur (Global Center)",
+      text: "Bhawalpur (Global Center)",
       label: "Location",
     },
   ];
