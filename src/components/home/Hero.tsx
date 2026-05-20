@@ -9,6 +9,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import Button from "../common/Button";
 import BusinessFeatures from "./BusinessFeatures";
+import video from "../../../public/video.mp4"
 
 interface SlideContent {
     title: string;
@@ -37,7 +38,7 @@ const slides: SlideContent[] = [
 const Hero: React.FC = () => {
     return (
         <>
-            <div className="w-full h-screen max-h-[550px] relative overflow-hidden bg-[#07051D]">
+            <div className="w-full h-screen  relative overflow-hidden bg-[#07051D]">
 
                 {/* SINGLE PERMANENT BACKGROUND VIDEO */}
                 <video
@@ -46,7 +47,7 @@ const Hero: React.FC = () => {
                     muted
                     playsInline
                     className="absolute inset-0 w-full h-full object-cover z-0"
-                    src="https://www.pexels.com/download/video/6804114/"
+                    src={video}
                 >
                     Your browser does not support the video tag.
                 </video>
@@ -95,11 +96,11 @@ const Hero: React.FC = () => {
 
                                         <Link to="/projects" className="cursor-pointer">
 
-                                            <Button text="View Our work" />
+                                            <button className="bg-white px-4 py-2 text-black rounded-full font-semibold cursor-pointer">View Our work</button>
                                         </Link>
 
                                         <Link to="/contact" className="cursor-pointer">
-                                            <button className="px-6 py-2 md:px-8 text-sm md:text-base font-bold rounded-xl bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#07051D] transition-all duration-300 shadow-lg hover:-translate-y-1 transform cursor-pointer">
+                                            <button className="bg-[#c17a18] px-5 py-2 rounded-full">
                                                 Contact Us
                                             </button>
                                         </Link>
@@ -113,7 +114,7 @@ const Hero: React.FC = () => {
                 </Swiper>
 
             </div>
-            <div className=" pb-4 hidden md:flex max-w-6xl  mx-auto -mt-6">
+            <div className="p-6">
                 <BusinessFeatures />
             </div>
 

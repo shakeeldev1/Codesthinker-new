@@ -1,224 +1,136 @@
 import React from "react";
-import { motion, useReducedMotion } from "framer-motion";
-
-const textVariant = {
-  hidden: { opacity: 0, x: -30 },
-  show: { opacity: 1, x: 0 }
-};
-
-const imageVariant = {
-  hidden: { opacity: 0, scale: 0.9 },
-  show: { opacity: 1, scale: 1 }
-};
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Users, Globe, Rocket, Sparkles, ChevronRight } from "lucide-react";
+import video from "../../../public/video.mp4";
 
 const Hero: React.FC = () => {
-  const shouldReduceMotion = useReducedMotion();
+  const { scrollY } = useScroll();
+  const videoScale = useTransform(scrollY, [0, 500], [1, 1.1]);
+  const videoOpacity = useTransform(scrollY, [0, 500], [1, 0.4]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  };
 
   return (
-    <section
-      aria-label="Team hero section"
-      className="relative w-full min-h-[70vh] flex items-center overflow-hidden"
-    >
-      {/* Enhanced Background Effects */}
-      <div className="absolute inset-0 z-0">
-        {/* Gradient Orbs */}
-        <motion.div 
-          animate={{ 
-            scale: shouldReduceMotion ? 1 : [1, 1.2, 1],
-            opacity: shouldReduceMotion ? 0.15 : [0.1, 0.2, 0.1]
-          }}
-          transition={{ duration: 8, repeat: Infinity }}
-          className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-gradient-radial from-amber-500/20 to-transparent rounded-full blur-[120px]" 
-        />
-        <motion.div 
-          animate={{ 
-            scale: shouldReduceMotion ? 1 : [1, 1.1, 1],
-            opacity: shouldReduceMotion ? 0.1 : [0.05, 0.15, 0.05]
-          }}
-          transition={{ duration: 10, repeat: Infinity, delay: 2 }}
-          className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] bg-gradient-radial from-blue-500/15 to-transparent rounded-full blur-[100px]" 
-        />
-        
-        {/* Grid Overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:60px_60px]" />
-      </div>
+    <section className="relative w-full min-h-[90vh] lg:min-h-screen flex items-center overflow-hidden font-sans bg-[#07051D]">
+      {/* Background Video Layer */}
+      <motion.div style={{ scale: videoScale, opacity: videoOpacity }} className="absolute inset-0 z-0">
+        <video autoPlay loop muted playsInline className="w-full h-full object-cover" src={video}>
+          <source src={video} type="video/mp4" />
+        </video>
+      </motion.div>
 
-      {/* Main Content */}
-      <div className="container mx-auto px-6 relative z-10 pt-20 pb-32">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-14">
+      {/* Modern Gradient Overlays */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#07051D] via-[#07051D]/80 to-transparent z-10" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#07051D] via-transparent to-transparent z-10" />
+
+      <div className="container mx-auto px-6 relative z-30">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
           
           {/* LEFT CONTENT */}
           <motion.div
-            variants={textVariant}
+            variants={containerVariants}
             initial="hidden"
-            animate="show"
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="w-full lg:w-3/5 space-y-7 text-center lg:text-left"
+            animate="visible"
+            className="w-full lg:w-3/5 space-y-8 text-center lg:text-left"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-500/5 border border-amber-500/20 backdrop-blur-sm">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-500 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
+            {/* Badge */}
+            <motion.div variants={itemVariants} className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-4 py-1.5 shadow-2xl">
+              <Sparkles className="w-4 h-4 text-amber-400" />
+              <span className="text-[10px] font-bold text-gray-200 uppercase tracking-[0.2em]">Meet Our Experts</span>
+            </motion.div>
+
+            <motion.h1 variants={itemVariants} className="text-5xl font-bold text-white leading-[1.05] tracking-tight">
+              Design the  Future<br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400  to-yellow-500">
+                With
               </span>
-              <span className="text-xs font-bold text-amber-500 uppercase tracking-[0.2em]">Meet Our Experts</span>
-            </div>
+               Our Team
+            </motion.h1>
 
-            <h1 className="text-5xl  font-bold text-white leading-[1.1] tracking-tight">
-              Meet Our{' '}
-              <span className="relative inline-block">
-                <span className="bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500 bg-clip-text text-transparent">
-                  Brilliant Team
-                </span>
-                {/* Animated underline */}
-                <svg className="absolute -bottom-3 left-0 w-full h-4" viewBox="0 0 400 20" fill="none">
-                  <path d="M0 10 Q100 20 200 10 Q300 0 400 10" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round">
-                    <animate attributeName="stroke-dasharray" from="0 800" to="800 800" dur="2s" fill="freeze" />
-                  </path>
-                  <defs>
-                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#F59E0B" />
-                      <stop offset="50%" stopColor="#F97316" />
-                      <stop offset="100%" stopColor="#F59E0B" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </span>
-            </h1>
+            <motion.p variants={itemVariants} className="text-gray-400 text-lg md:text-xl max-w-xl mx-auto lg:mx-0 leading-relaxed font-light">
+              We bridge the gap between complex strategy and human-centric execution. 
+              Join a global network of innovators dedicated to your growth.
+            </motion.p>
 
-            <p className="text-gray-400 text-lg md:text-xl max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              Our team of passionate and experienced professionals is dedicated to driving your success. 
-              From strategy to execution, we combine creativity, innovation, and insight to deliver exceptional results.
-            </p>
+            {/* Stats Row */}
+            <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6">
+              {[
+                { label: "Team Members", val: "50+", icon: <Users className="w-5 h-5 text-amber-400" /> },
+                { label: "Global Reach", val: "8+ Nations", icon: <Globe className="w-5 h-5 text-orange-400" /> },
+                { label: "Success Rate", val: "99%", icon: <Rocket className="w-5 h-5 text-yellow-400" /> }
+              ].map((stat, i) => (
+                <div key={i} className="flex items-center gap-4 group cursor-default">
+                  <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-300 group-hover:bg-white/10 group-hover:border-amber-500/50">
+                    {stat.icon}
+                  </div>
+                  <div className="text-left">
+                    <div className="text-lg font-bold text-white leading-none">{stat.val}</div>
+                    <div className="text-[10px] text-gray-500 uppercase tracking-wider mt-1">{stat.label}</div>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
 
-            {/* Stats */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-6 pt-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
-                  <span className="text-xl">⭐</span>
-                </div>
-                <div>
-                  <div className="text-sm font-bold text-white">50+</div>
-                  <div className="text-[10px] text-white/40">Team Members</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
-                  <span className="text-xl">🌍</span>
-                </div>
-                <div>
-                  <div className="text-sm font-bold text-white">8+</div>
-                  <div className="text-[10px] text-white/40">Countries</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
-                  <span className="text-xl">🚀</span>
-                </div>
-                <div>
-                  <div className="text-sm font-bold text-white">200+</div>
-                  <div className="text-[10px] text-white/40">Projects Delivered</div>
-                </div>
-              </div>
-            </div>
+            {/* CTA Button */}
+            <motion.div variants={itemVariants} className="pt-4">
+              <button className="group relative flex items-center gap-2 bg-white text-[#07051D] font-bold px-5 py-2 rounded-full transition-all hover:bg-amber-400 hover:scale-105">
+                Start Collaborating
+                <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              </button>
+            </motion.div>
           </motion.div>
 
-          {/* RIGHT IMAGE */}
+          {/* RIGHT IMAGE SECTION */}
           <motion.div
-            variants={imageVariant}
-            initial="hidden"
-            animate="show"
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="w-full lg:w-2/5 flex justify-center lg:justify-end"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full lg:w-2/5 flex justify-center lg:justify-end relative"
           >
-            <motion.div
-              animate={shouldReduceMotion ? {} : { y: [0, -10, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="relative group"
+            {/* Background SVG Decoration */}
+            <motion.svg 
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="absolute -top-10 -right-10 w-64 h-64 opacity-20 pointer-events-none" 
+              viewBox="0 0 200 200"
             >
-              {/* Decorative Rings */}
-              <div className="absolute -inset-4 border border-amber-500/20 rounded-[2.5rem] animate-spin-slow" />
-              <div className="absolute -inset-8 border border-white/10 rounded-[2.5rem] animate-spin-slower" />
+              <path fill="#F59E0B" d="M44.7,-76.4C58.3,-69.2,70,-57.9,78.7,-44.5C87.4,-31.1,93,-15.5,91.2,-0.9C89.4,13.6,80.1,27.2,69.5,37.9C58.9,48.7,46.9,56.5,34.4,63.1C21.9,69.7,8.8,75,-4.4,82.7C-17.7,90.4,-31.1,100.4,-43.3,98.2C-55.5,96.1,-66.4,81.7,-74.6,67.6C-82.7,53.4,-88.1,39.6,-91,25.4C-93.9,11.2,-94.3,-3.3,-89.7,-16.5C-85.2,-29.7,-75.7,-41.5,-64.3,-51.1C-52.9,-60.7,-39.7,-68.1,-26.4,-75.4C-13.1,-82.7,0.3,-89.9,13.7,-88.5C27.1,-87.1,40.4,-77.2,44.7,-76.4Z" transform="translate(100 100)" />
+            </motion.svg>
 
-              {/* Image Container */}
-              <div className="relative overflow-hidden rounded-[2rem] border border-white/15 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-2 shadow-2xl transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-[0_0_60px_rgba(245,156,36,0.2)]">
+            <div className="relative z-10 group">
+              <div className="relative rounded-[2.5rem] overflow-hidden border border-white/20 bg-white/5 backdrop-blur-3xl p-3 shadow-[0_0_50px_rgba(245,158,11,0.1)] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(245,158,11,0.2)]">
                 <img
-                  alt="Our talented team collaborating"
+                  alt="Team collaboration"
                   src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800"
-                  className="w-[320px] md:w-[450px] rounded-[1.8rem] object-cover"
-                  loading="eager"
-                  decoding="async"
+                  className="w-[320px] md:w-[420px] h-[350px] rounded-[2.1rem] object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 
-                {/* Overlay Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                {/* Badge */}
-                <div className="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-md rounded-xl p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                  <p className="text-xs text-white/90">✨ Building the future together</p>
+                {/* Float Badge */}
+                <div className="absolute top-8 -left-8 bg-white/95 backdrop-blur-xl p-4 rounded-2xl shadow-2xl border border-white flex items-center gap-3">
+                  <div className="w-10 h-10 bg-[#07051D] rounded-xl flex items-center justify-center">
+                    <Sparkles className="w-5 h-5 text-amber-400" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-black text-[#07051D] uppercase">Innovation Hub</p>
+                    <p className="text-[10px] text-gray-500">2024 Design Winner</p>
+                  </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
       </div>
-
-      {/* Enhanced Wavy Divider */}
-      <div className="absolute bottom-0 left-0 w-full leading-[0] z-20">
-        <svg
-          aria-hidden="true"
-          className="relative block w-full h-[60px] md:h-[80px]"
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#F59C20" stopOpacity="0.6" />
-              <stop offset="50%" stopColor="#F59C20" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="#F59C20" stopOpacity="0.6" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28
-            c70.36-5.37,136.33-33.31,206.8-37.5
-            c73.84-4.36,147.54,16.88,218.2,35.26
-            c69.27,18,138.3,24.88,209.4,13.08
-            c36.15-6,69.85-17.84,104.45-29.34
-            C989.49,25,1113-14.29,1200,52.47V0Z"
-            fill="url(#waveGradient)"
-          />
-          <path
-            d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05
-            C99.41,111.27,165,111,224.58,91.58
-            c31.15-10.15,60.09-26.07,89.67-39.8
-            c40.92-19,84.73-46,130.83-49.67
-            c36.26-2.85,70.9,9.42,98.6,31.56
-            c31.77,25.39,62.32,62,103.63,73
-            c40.44,10.79,81.35-6.69,119.13-24.28
-            s75.16-39,116.92-43.05
-            c59.73-5.85,113.28,22.88,168.9,38.84
-            c30.2,8.66,59,6.17,87.09-7.5
-            c22.43-10.89,48-26.93,60.65-49.24V0Z"
-            fill="#030211"
-          />
-        </svg>
-      </div>
-
-      <style>{`
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        @keyframes spin-slower {
-          from { transform: rotate(360deg); }
-          to { transform: rotate(0deg); }
-        }
-        .animate-spin-slow {
-          animation: spin-slow 25s linear infinite;
-        }
-        .animate-spin-slower {
-          animation: spin-slower 35s linear infinite;
-        }
-      `}</style>
     </section>
   );
 };

@@ -37,49 +37,71 @@ const Footer: React.FC = () => {
         }
     ];
 
+    const socialLinks = [
+        { icon: <FaFacebookF />, href: "#" },
+        { icon: <FaTwitter />, href: "#" },
+        { icon: <FaInstagram />, href: "#" },
+        { icon: <FaLinkedinIn />, href: "#" },
+    ];
+
     return (
-        <footer className="bg-[#07051d] text-white pt-16 pb-2 border-t border-white/5">
-            <div className="container mx-auto px-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-14">
+        <footer className="bg-[#07051d] text-gray-300 pt-16 pb-6 border-t border-gray-800/60 font-sans">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                {/* Main Links Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
                     
-                    {/* Brand Section */}
-                    <div className="space-y-6">
-                        <Link to="/" className="inline-block">
-                            <img 
-                                src="https://codesthinker.com/companylogo.png" 
-                                alt="CodesThinker Logo" 
-                                className="h-12 w-auto"
-                            />
-                        </Link>
-                        <p className="text-white">
-                            CodesThinker is a leading software development company dedicated to delivering innovative solutions that empower businesses worldwide. With a focus on quality, creativity, and customer satisfaction, we strive to transform ideas into reality through cutting-edge technology and expert craftsmanship.
-                        </p>
-                        <div className="flex gap-4">
-                            {[<FaFacebookF />, <FaTwitter />, <FaInstagram />, <FaLinkedinIn />].map((icon, index) => (
-                                <motion.a
-                                    key={index}
-                                    href="#"
-                                    whileHover={{ y: -5, scale: 1.1 }}
-                                    className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-amber-500 hover:text-[#07051d] transition-all duration-300"
-                                >
-                                    {icon}
-                                </motion.a>
-                            ))}
-                        </div>
-                    </div>
+                 {/* Brand Section */}
+<div className="space-y-6 max-w-md">
+    <Link to="/" className="inline-block group">
+        <img
+            src="https://codesthinker.com/companylogo.png"
+            alt="CodesThinker Logo"
+            className="h-11 w-auto transition-all duration-300 group-hover:scale-105"
+        />
+    </Link>
+
+    {/* Description */}
+    <div className="relative">
+        <div className="absolute -left-3 top-1 h-16 w-1 rounded-full bg-[#F69A20]" />
+
+        <p className="text-sm leading-7 text-gray-400 tracking-wide pl-4">
+            <span className="text-white font-semibold">CodesThinker</span> is a
+         leading software development company delivering innovative digital solutions that help businesses grow, scale, and succeed through cutting edge technology and expert developmen
+        </p>
+    </div>
+
+    {/* Social Icons */}
+    <div className="flex items-center gap-3 pt-2">
+        {socialLinks.map((social, index) => (
+            <motion.a
+                key={index}
+                href={social.href}
+                whileHover={{ y: -5, scale: 1.08 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-10 h-10 rounded-2xl bg-white/[0.04] backdrop-blur-md border border-white/[0.08] flex items-center justify-center text-gray-400 hover:bg-[#F69A20] hover:text-[#07051d] hover:border-[#F69A20] hover:shadow-[0_0_20px_rgba(246,154,32,0.35)] transition-all duration-300"
+            >
+                <span className="text-sm">{social.icon}</span>
+            </motion.a>
+        ))}
+    </div>
+</div>
 
                     {/* Dynamic Link Sections */}
                     {footerSections.map((section) => (
-                        <div key={section.title}>
-                            <h4 className="text-lg font-bold mb-6 text-white border-l-4 border-amber-500 pl-3">
-                                {section.title}
-                            </h4>
-                            <ul className="space-y-4">
+                        <div key={section.title} className="space-y-5">
+                            <div className="flex items-center gap-2">
+                                <div className="w-1.5 h-1.5 rounded-full bg-[#F69A20]" />
+                                <h4 className="text-sm font-bold uppercase tracking-wider text-white">
+                                    {section.title}
+                                </h4>
+                            </div>
+                            <ul className="space-y-3.5">
                                 {section.links.map((link) => (
                                     <li key={link.name}>
                                         <Link 
                                             to={link.href} 
-                                            className="text-white hover:text-amber-400  transition-colors duration-300"
+                                            className="inline-block text-sm text-gray-400 hover:text-[#F69A20] transition-all duration-300 hover:translate-x-1"
                                         >
                                             {link.name}
                                         </Link>
@@ -90,35 +112,49 @@ const Footer: React.FC = () => {
                     ))}
 
                     {/* Contact Info Section */}
-                    <div>
-                        <h4 className="text-lg font-bold mb-6 text-white border-l-4 border-amber-500 pl-3">
-                            Contact Info
-                        </h4>
-                        <div className="space-y-5">
+                    <div className="space-y-5">
+                        <div className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 rounded-full bg-[#F69A20]" />
+                            <h4 className="text-sm font-bold uppercase tracking-wider text-white">
+                                Contact Info
+                            </h4>
+                        </div>
+                        <div className="space-y-4 text-sm">
                             <div className="flex items-center gap-3 group">
-                                <FaPhoneAlt className="text-amber-400 shrink-0" />
-                                <a href="tel:+447470103120" className=" text-white group-hover:text-white transition-colors">
+                                <div className="w-8 h-8 rounded-lg bg-white/[0.02] border border-white/[0.05] flex items-center justify-center text-[#F69A20] shrink-0">
+                                    <FaPhoneAlt className="text-xs" />
+                                </div>
+                                <a href="tel:+447470103120" className="text-gray-400 group-hover:text-white transition-colors">
                                     +44 7470 103120
                                 </a>
                             </div>
+                            
                             <div className="flex items-center gap-3 group">
-                                <FaEnvelope className="text-amber-400 shrink-0" />
-                                <a href="mailto:info@codesthinker.com" className=" text-white group-hover:text-white transition-colors">
+                                <div className="w-8 h-8 rounded-lg bg-white/[0.02] border border-white/[0.05] flex items-center justify-center text-[#F69A20] shrink-0">
+                                    <FaEnvelope className="text-xs" />
+                                </div>
+                                <a href="mailto:info@codesthinker.com" className="text-gray-400 group-hover:text-white transition-colors">
                                     info@codesthinker.com
                                 </a>
                             </div>
-                            <div className="flex items-start gap-3 group">
-                                <FaMapMarkerAlt className="text-amber-400 mt-1 shrink-0" />
-                                <div className=" text-white group-hover:text-white transition-colors">
-                                    <p className="font-semibold text-amber-400/80 mb-1">Regional Office</p>
-                                    <p>Bartle House 9 Oxford Court, Manchester M23WQ United Kingdom</p>
+
+                            <div className="flex items-start gap-3 pt-1">
+                                <div className="w-8 h-8 rounded-lg bg-white/[0.02] border border-white/[0.05] flex items-center justify-center text-[#F69A20] shrink-0 mt-0.5">
+                                    <FaMapMarkerAlt className="text-xs" />
+                                </div>
+                                <div className="text-gray-400">
+                                    <p className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-0.5">Regional Office</p>
+                                    <p className="text-xs leading-relaxed">Bartle House 9 Oxford Court, Manchester M23WQ United Kingdom</p>
                                 </div>
                             </div>
-                            <div className="flex items-start gap-3 group">
-                                <FaMapMarkerAlt className="text-amber-400 mt-1 shrink-0" />
-                                <div className=" text-white group-hover:text-white transition-colors">
-                                    <p className="font-semibold text-amber-400/80 mb-1">Global Delivery Center</p>
-                                    <p>Hassan Manzil Basement Goheer Town Bahawalpur</p>
+
+                            <div className="flex items-start gap-3">
+                                <div className="w-8 h-8 rounded-lg bg-white/[0.02] border border-white/[0.05] flex items-center justify-center text-[#F69A20] shrink-0 mt-0.5">
+                                    <FaMapMarkerAlt className="text-xs" />
+                                </div>
+                                <div className="text-gray-400">
+                                    <p className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-0.5">Global Delivery Center</p>
+                                    <p className="text-xs leading-relaxed">Hassan Manzil Basement Goheer Town Bahawalpur</p>
                                 </div>
                             </div>
                         </div>
@@ -126,15 +162,16 @@ const Footer: React.FC = () => {
                 </div>
 
                 {/* Bottom Copyright Bar */}
-                <div className="pt-4 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p className="text-white text-md">
-                        © {currentYear} CodesThinker. All rights reserved.
+                <div className="pt-6 border-t border-white/[0.05] flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <p className="text-xs text-gray-500 text-center sm:text-left">
+                        &copy; {currentYear} CodesThinker. All rights reserved.
                     </p>
-                    <div className="flex gap-6 text-md text-white/">
-                        <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-                        <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+                    <div className="flex gap-6 text-xs text-gray-500">
+                        <Link to="/privacy" className="hover:text-gray-300 transition-colors">Privacy Policy</Link>
+                        <Link to="/terms" className="hover:text-gray-300 transition-colors">Terms of Service</Link>
                     </div>
                 </div>
+                
             </div>
         </footer>
     );

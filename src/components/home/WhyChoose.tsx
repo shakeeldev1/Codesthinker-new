@@ -7,12 +7,19 @@ import {
   Award,
   Briefcase,
   Users,
-  ChevronRight,
 } from "lucide-react";
-
-// --- Interfaces ---
 import type { LucideProps } from "lucide-react";
-import Button from "../common/Button";
+import video from "../../../public/video.mp4"
+
+// --- Components ---
+const Button = ({ text }: { text: string }) => (
+  <button className="relative group overflow-hidden bg-white text-gray-900 font-semibold px-5 py-2 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_4px_20px_rgba(255,255,255,0.15)]">
+    <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
+      {text}
+    </span>
+    <span className="absolute inset-0 bg-gradient-to-r from-[#F69A20] to-[#ffb44c] scale-x-0 origin-left transition-transform duration-300 ease-out group-hover:scale-x-100" />
+  </button>
+);
 
 interface Feature {
   title: string;
@@ -20,228 +27,152 @@ interface Feature {
   icon: React.ComponentType<LucideProps>;
 }
 
-interface FeatureItemProps {
-  feature: Feature;
-  index: number;
-  align?: "left" | "right";
-}
-
-// --- Sub-Component with Icons Outside ---
-const FeatureItem: React.FC<FeatureItemProps> = ({ feature, index, align = "left" }) => {
+const FeatureItem: React.FC<{ feature: Feature; index: number; align?: "left" | "right" }> = ({
+  feature,
+  index,
+  align = "left",
+}) => {
   const isLeft = align === "left";
+  const Icon = feature.icon;
 
   return (
-    <motion.div
+    <motion.article
       initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className={`flex items-start gap-5 group ${isLeft ? "flex-row" : "flex-row-reverse text-right"
-        }`}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6, delay: index * 0.12, ease: "easeOut" }}
+      className={`flex items-start gap-4 group ${isLeft ? "flex-row text-left" : "flex-row-reverse text-right"}`}
     >
-      {/* Icon - Outside on the side, not inside a hover circle */}
-      <motion.div
-        whileHover={{
-          scale: 1.15,
-          rotate: 8,
-        }}
-        transition={{ type: "spring", stiffness: 300, damping: 15 }}
-        className="relative shrink-0 mt-1"
-      >
-        <div className="w-12 h-12 rounded-xl bg-[#0A1F3D] border border-[#F49B21]/30 flex items-center justify-center text-[#F49B21] transition-all duration-300 group-hover:border-[#F49B21] group-hover:shadow-lg group-hover:shadow-[#F49B21]/10">
-          <feature.icon size={22} strokeWidth={1.7} />
-        </div>
-        {/* Decorative accent line */}
-        <div className={`absolute top-1/2 -translate-y-1/2 w-4 h-0.5 bg-gradient-to-r from-[#F49B21] to-transparent ${isLeft ? '-left-6' : '-right-6'} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-      </motion.div>
+      {/* Icon Wrapper */}
+      <div className="shrink-0 mt-1 p-3 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 text-gray-300 group-hover:text-white group-hover:bg-[#F69A20] group-hover:border-[#F69A20] group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(246,154,32,0.4)] transition-all duration-300">
+        <Icon size={24} strokeWidth={1.75} />
+      </div>
 
       {/* Content */}
-      <div className={`flex-1 ${isLeft ? "text-left" : "text-right"}`}>
-        <h3 className="text-xl font-bold text-white group-hover:text-[#F49B21] transition-colors duration-300 flex items-center gap-2">
+      <div className="space-y-1">
+        <h3 className="font-semibold text-white text-lg lg:text-xl tracking-wide group-hover:text-[#F69A20] transition-colors duration-300">
           {feature.title}
-          {isLeft && <ChevronRight size={18} className="text-[#F49B21] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1" />}
         </h3>
-        <p className="text-gray-400 text-sm md:text-base mt-2 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
+        <p className="text-sm text-gray-400 leading-relaxed max-w-sm group-hover:text-gray-300 transition-colors duration-300">
           {feature.description}
         </p>
       </div>
-    </motion.div>
-  );
-};
-
-// --- Center Image Component ---
-const CenterImage: React.FC = () => {
-  return (
-    <motion.div
-      initial={{ scale: 0.85, opacity: 0, y: 20 }}
-      whileInView={{ scale: 1, opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-      className="relative"
-    >
-      {/* Outer decorative rings */}
-      <div className="absolute -inset-4 rounded-full border border-[#F49B21]/15 animate-[spin_25s_linear_infinite]" />
-      <div className="absolute -inset-10 rounded-full border border-[#F49B21]/8 animate-[spin_35s_linear_infinite_reverse]" />
-      <div className="absolute -inset-16 rounded-full border border-[#F49B21]/4 animate-[spin_45s_linear_infinite]" />
-
-      {/* Glow effect */}
-      <div className="absolute -inset-8 rounded-full bg-[#F49B21]/5 blur-2xl animate-pulse" />
-
-      {/* Main Image */}
-      <div className="relative rounded-full overflow-hidden ring-4 ring-[#F49B21]/20 shadow-2xl">
-        <img
-          src="https://aliveinc.in/images/why-choose-section-1%20.webp"
-          alt="Codes Thinker Team Collaboration"
-          className="w-64 h-64 md:w-80 md:h-80 object-cover"
-        />
-
-        {/* Overlay gradient */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#07051D]/30 via-transparent to-[#F49B21]/10" />
-      </div>
-
-      {/* Decorative dots around the image */}
-      <div className="absolute -top-3 -right-3 w-4 h-4 bg-[#F49B21] rounded-full animate-ping opacity-60" />
-      <div className="absolute -bottom-3 -left-3 w-3 h-3 bg-[#F49B21] rounded-full animate-pulse opacity-40" />
-      <div className="absolute top-1/2 -right-6 w-2 h-2 bg-[#F49B21] rounded-full animate-pulse opacity-50" />
-      <div className="absolute top-1/2 -left-6 w-2 h-2 bg-[#F49B21] rounded-full animate-pulse opacity-50" />
-    </motion.div>
+    </motion.article>
   );
 };
 
 // --- Main Component ---
 const WhyChoose: React.FC = () => {
-  const featuresLeft: Feature[] = [
-    {
-      title: "Live Project Tracking",
-      description: "Track your code deployments and project milestones in real-time with our intuitive dashboard.",
-      icon: Clock,
-    },
-    {
-      title: "Insightful Analytics",
-      description: "Leverage data-driven insights to optimize your development process and business growth.",
-      icon: TrendingUp,
-    },
-    {
-      title: "Learning Hub",
-      description: "Access curated resources, guides, and tutorials to empower your coding journey.",
-      icon: BookOpen,
-    },
-  ];
-
-  const featuresRight: Feature[] = [
-    {
-      title: "Award-Winning Solutions",
-      description: "Delivering innovative and reliable software recognized by industry leaders.",
-      icon: Award,
-    },
-    {
-      title: "Scalable Architecture",
-      description: "Flexible systems designed to scale with your business and technical needs.",
-      icon: Briefcase,
-    },
-    {
-      title: "Vibrant Community",
-      description: "Connect with passionate developers and experts in the Codes Thinker network.",
-      icon: Users,
-    },
+  const features = [
+    { title: "Live Project Tracking", description: "Real-time updates on milestones and deployments.", icon: Clock },
+    { title: "Insightful Analytics", description: "Data-driven insights to optimize your growth.", icon: TrendingUp },
+    { title: "Learning Hub", description: "Curated resources for your success.", icon: BookOpen },
+    { title: "Award-Winning Solutions", description: "Innovative software recognized by experts.", icon: Award },
+    { title: "Scalable Architecture", description: "Flexible systems built for the future.", icon: Briefcase },
+    { title: "Vibrant Community", description: "Join a network of passionate developers.", icon: Users },
   ];
 
   return (
-    <section className="relative py-20 bg-[#07051D] overflow-hidden font-sans">
-      {/* Background Pattern - Subtle grid */}
-      <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-10"
-          style={{
-            backgroundImage: "url('https://codesthinker.com/about/about2.jpg')",
-          }}
-        />
-        {/* Gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#07051D] via-[#07051D]/95 to-[#07051D]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#F49B21_0%,_transparent_70%)] opacity-[0.03]" />
-
-        {/* Grid pattern */}
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(244, 155, 33, 0.05) 1px, transparent 1px)`,
-          backgroundSize: '40px 40px'
-        }} />
+    <section className="relative py-12 bg-[#050414] overflow-hidden">
+      {/* Background Video Media */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover  scale-105"
+        >
+          {/* Replaced broken Pexels download link with a verified fallback stream asset */}
+          <source src={video} type="video/mp4" />
+        </video>
+        {/* Complex Overlay Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050414] via-[#050414]/70 to-[#050414]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(246,154,32,0.08)_0%,transparent_60%)]" />
       </div>
 
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
-        {/* Header */}
-        <div className="text-center mb-16 md:mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Header Section */}
+        <div className="text-center mb-20 max-w-3xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 bg-white/5 backdrop-blur-lg ring-1 ring-white/10 rounded-full px-4 py-1.5 mb-6"
           >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-[#F49B21]/10 border border-[#F49B21]/20 text-[#F49B21] text-sm font-medium mb-4">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F69A20] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#F69A20]"></span>
+            </span>
+            <span className="text-[10px] font-bold text-gray-300 uppercase tracking-[0.2em]">
               Why Choose Us
             </span>
           </motion.div>
 
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+          <motion.h2 
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4"
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight"
           >
-            Why Choose{" "}
-            <span className="relative inline-block">
-              <span className="text-[#F49B21] relative z-10">Codes Thinker</span>
-              <svg className="absolute -bottom-2 left-0 w-full h-2" viewBox="0 0 200 8">
-                <path d="M0,4 Q50,8 100,4 T200,4" stroke="#F49B21" fill="none" strokeWidth="2" strokeOpacity="0.5" />
-              </svg>
-            </span>
+            Why Choose <span className="text-[#F69A20] bg-clip-text bg-gradient-to-r from-[#F69A20] to-[#ffb44c]">Code's</span> Thinker
           </motion.h2>
+        </div>
 
-          <motion.div
-            initial={{ opacity: 0, scaleX: 0 }}
-            whileInView={{ opacity: 1, scaleX: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="w-20 h-1 bg-gradient-to-r from-[#F49B21] to-[#D4B86A] mx-auto rounded-full mb-6"
-          />
+        {/* Features Content Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 lg:gap-8 items-center">
+          
+          {/* Left Column */}
+          <div className="flex flex-col gap-12 sm:gap-14 order-2 lg:order-1">
+            {features.slice(0, 3).map((f, i) => (
+              <FeatureItem key={f.title} feature={f} index={i} align="left" />
+            ))}
+          </div>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-gray-400 max-w-2xl mx-auto text-base md:text-lg italic"
+          {/* Center Graphic */}
+          <motion.div 
+            initial={{ scale: 0.85, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ type: "spring", stiffness: 60, delay: 0.2 }}
+            className="relative mx-auto order-1 lg:order-2 my-4 lg:my-0"
           >
-            "Empowering your ideas with code, creativity, and community."
-          </motion.p>
-        </div>
+            {/* Ambient Background Glow */}
+            <div className="absolute inset-0 bg-[#050414] rounded-full filter blur-[60px] opacity-20 animate-pulse duration-[6s]" />
+            
+            {/* Border Shield Ring */}
+            <div className="relative p-3 rounded-full border border-white/5 bg-white/[0.02] backdrop-blur-sm">
+              <div className="w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden shadow-[0_0_60px_rgba(246,154,32,0.15)] border-2 border-white/10 group">
+                <img 
+                  src="/why.png" 
+                  alt="Team collaboration showcase" 
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out hover:scale-110" 
+                  loading="lazy" 
+                />
+              </div>
+            </div>
+          </motion.div>
 
-        {/* Main Grid Layout */}
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-8 xl:gap-16">
-          {/* Left Features */}
-          <div className="flex flex-col gap-12 w-full lg:w-[30%]">
-            {featuresLeft.map((feature, index) => (
-              <FeatureItem key={`left-${index}`} feature={feature} index={index} align="left" />
+          {/* Right Column */}
+          <div className="flex flex-col gap-12 sm:gap-14 order-3">
+            {features.slice(3, 6).map((f, i) => (
+              // Passing updated sequence index (i + 3) to keep smooth step delays across grids
+              <FeatureItem key={f.title} feature={f} index={i + 3} align="right" />
             ))}
           </div>
-
-          {/* Center Image */}
-          <div className="flex justify-center items-center w-full lg:w-auto">
-            <CenterImage />
-          </div>
-
-          {/* Right Features */}
-          <div className="flex flex-col gap-12 w-full lg:w-[30%]">
-            {featuresRight.map((feature, index) => (
-              <FeatureItem key={`right-${index}`} feature={feature} index={index} align="right" />
-            ))}
-          </div>
         </div>
 
-        {/* Bottom Call to Action */}
-        <motion.div
+        {/* Footer CTA */}
+        <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          className="text-center mt-16 pt-8 border-t border-[#F49B21]/10"
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+          className="text-center mt-20 sm:mt-24"
         >
-         
-          <Button text="Start Now" />
+          <Button text="More About Us" />
         </motion.div>
       </div>
     </section>

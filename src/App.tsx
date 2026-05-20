@@ -3,10 +3,12 @@ import {
   createBrowserRouter,
   RouterProvider,
   Outlet,
+  ScrollRestoration, // <-- Add this import
 } from 'react-router-dom';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 
+// Pages
 import Home from './pages/Home';
 import About from './pages/About';
 import ServicePage from './pages/ServicePage';
@@ -20,13 +22,16 @@ import Blog from './pages/Blog';
 import TeamPage from './pages/TeamPage';
 import ProjectsPage from './pages/ProjectsPage';
 
-
 // Layout
 const MainLayout = () => {
   return (
     <>
+      {/* This component ensures the page scrolls to top on every navigation */}
+      <ScrollRestoration /> 
       <Navbar />
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
       <Whatsapp />
       <Footer />
     </>

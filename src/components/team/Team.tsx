@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 // --- Types ---
 interface TeamMember {
@@ -160,95 +160,13 @@ const teamMembers: TeamMember[] = [
   },
 ];
 
-// --- Particle Background Component ---
-const ParticleBackground: React.FC = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const shouldReduceMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (shouldReduceMotion) return;
-
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let animationFrameId: number;
-    let particles: Array<{
-      x: number;
-      y: number;
-      radius: number;
-      vx: number;
-      vy: number;
-      alpha: number;
-    }> = [];
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      initParticles();
-    };
-
-    const initParticles = () => {
-      particles = [];
-      const particleCount = Math.min(100, Math.floor(window.innerWidth / 20));
-      for (let i = 0; i < particleCount; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          radius: Math.random() * 2 + 1,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5,
-          alpha: Math.random() * 0.3 + 0.1,
-        });
-      }
-    };
-
-    const draw = () => {
-      if (!ctx || !canvas) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      particles.forEach(particle => {
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(245, 156, 36, ${particle.alpha})`;
-        ctx.fill();
-        
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-        
-        if (particle.x < 0) particle.x = canvas.width;
-        if (particle.x > canvas.width) particle.x = 0;
-        if (particle.y < 0) particle.y = canvas.height;
-        if (particle.y > canvas.height) particle.y = 0;
-      });
-      
-      animationFrameId = requestAnimationFrame(draw);
-    };
-
-    window.addEventListener('resize', resize);
-    resize();
-    draw();
-
-    return () => {
-      window.removeEventListener('resize', resize);
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, [shouldReduceMotion]);
-
-  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none" style={{ opacity: 0.4 }} />;
-};
-
-// --- Main Team Component ---
 const Team: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const shouldReduceMotion = useReducedMotion();
 
   if (!teamMembers || teamMembers.length === 0) {
     return (
-      <div className="min-h-screen bg-[#030211] flex items-center justify-center text-white">
+      <div className="min-h-screen bg-white flex items-center justify-center text-gray-900">
         No team members found.
       </div>
     );
@@ -274,28 +192,12 @@ const Team: React.FC = () => {
   };
 
   return (
-    <section className="relative min-h-screen bg-[#030211] text-white py-16 md:py-24 px-6 overflow-hidden">
-      <ParticleBackground />
+    <section className="relative min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 text-gray-900 py-16 md:py-24 px-6 overflow-hidden font-sans">
       
-      {/* Dynamic Background Orbs */}
+      {/* Background Decor matching home page style */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div 
-          animate={{ 
-            scale: shouldReduceMotion ? 1 : [1, 1.2, 1], 
-            opacity: shouldReduceMotion ? 0.15 : [0.1, 0.2, 0.1] 
-          }}
-          transition={{ duration: 10, repeat: Infinity }}
-          className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-gradient-radial from-[#F59C24]/20 to-transparent rounded-full blur-[120px]" 
-        />
-        <motion.div 
-          animate={{ 
-            scale: shouldReduceMotion ? 1 : [1, 1.1, 1], 
-            opacity: shouldReduceMotion ? 0.1 : [0.05, 0.15, 0.05] 
-          }}
-          transition={{ duration: 12, repeat: Infinity, delay: 2 }}
-          className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-600/10 rounded-full blur-[140px]" 
-        />
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[80%] h-[80%] bg-purple-500/5 rounded-full blur-[100px]" />
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-gray-400 rounded-full mix-blend-multiply filter blur-[100px] opacity-15"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-slate-500 rounded-full mix-blend-multiply filter blur-[100px] opacity-15"></div>
       </div>
 
       <div className="container mx-auto max-w-7xl relative z-10">
@@ -305,24 +207,21 @@ const Team: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-500/5 border border-amber-500/20 mb-6"
+            className="inline-flex items-center gap-2 bg-white ring-1 ring-gray-200 shadow-sm rounded-full px-4 py-1.5 mb-6"
           >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-500 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
-            </span>
-            <span className="text-xs font-bold text-amber-500 uppercase tracking-[0.2em]">Meet Our Leadership</span>
+            <div className="w-2 h-2 rounded-full bg-[#F69A20]"></div>
+            <span className="text-xs font-bold text-gray-700 uppercase tracking-widest">Meet Our Leadership</span>
           </motion.div>
           
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-7xl font-bold tracking-tight"
+            className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight"
           >
             The Minds Behind{' '}
-            <span className="bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500 bg-clip-text text-transparent">
-              Innovation
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-800">
+              <span className="text-[#F69A20]">Innovation</span>
             </span>
           </motion.h2>
           
@@ -330,7 +229,7 @@ const Team: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-gray-400 text-lg max-w-2xl mx-auto mt-4"
+            className="text-gray-600 text-lg max-w-2xl mx-auto mt-4"
           >
             A collective of passionate experts dedicated to transforming ideas into reality
           </motion.p>
@@ -341,9 +240,9 @@ const Team: React.FC = () => {
           {/* LEFT: Advanced Orbit System */}
           <div className="relative h-[450px] md:h-[600px] w-full flex items-center justify-center">
             {/* Orbit Rings */}
-            <div className="absolute border border-white/5 rounded-full" style={{ width: RADIUS * 2, height: RADIUS * 2 }} />
-            <div className="absolute border border-white/3 rounded-full" style={{ width: RADIUS * 1.5, height: RADIUS * 1.5 }} />
-            <div className="absolute border border-white/2 rounded-full" style={{ width: RADIUS * 0.8, height: RADIUS * 0.8 }} />
+            <div className="absolute border border-gray-200 rounded-full" style={{ width: RADIUS * 2, height: RADIUS * 2 }} />
+            <div className="absolute border border-gray-300 rounded-full" style={{ width: RADIUS * 1.5, height: RADIUS * 1.5 }} />
+            <div className="absolute border border-gray-300 rounded-full" style={{ width: RADIUS * 0.8, height: RADIUS * 0.8 }} />
 
             {/* Central Avatar */}
             <AnimatePresence mode="wait">
@@ -355,8 +254,8 @@ const Team: React.FC = () => {
                 transition={{ type: "spring", damping: 25, stiffness: 120 }}
                 className="relative z-20 w-56 h-56 md:w-72 md:h-72"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full blur-[40px] opacity-30 animate-pulse" />
-                <div className="relative w-full h-full rounded-full border-4 border-white/10 p-1.5 backdrop-blur-sm shadow-2xl overflow-hidden bg-gradient-to-br from-white/10 to-transparent">
+                <div className="absolute inset-0 bg-[#F69A20]/20 rounded-full blur-[40px] opacity-30 animate-pulse" />
+                <div className="relative w-full h-full rounded-full border-4 border-gray-200 p-1.5 shadow-2xl overflow-hidden bg-white">
                   <img 
                     src={activeMember.avatar} 
                     alt={activeMember.name} 
@@ -387,11 +286,11 @@ const Team: React.FC = () => {
                     <motion.div
                       animate={{ 
                         scale: isActive ? 1.3 : 1,
-                        borderColor: isActive ? "#F59C24" : "rgba(255,255,255,0.2)"
+                        borderColor: isActive ? "#F69A20" : "rgba(200,200,200,0.5)"
                       }}
                       className={`w-12 h-12 md:w-16 md:h-16 rounded-full overflow-hidden border-2 transition-all duration-300 ${
                         isActive 
-                          ? 'opacity-100 shadow-[0_0_25px_rgba(245,156,36,0.6)] ring-2 ring-amber-500/50' 
+                          ? 'opacity-100 shadow-[0_0_25px_rgba(246,154,32,0.6)] ring-2 ring-amber-500/50' 
                           : 'opacity-50 hover:opacity-100 hover:grayscale-0 grayscale'
                       }`}
                     >
@@ -399,7 +298,7 @@ const Team: React.FC = () => {
                     </motion.div>
                     {isActive && (
                       <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap">
-                        <div className="text-[10px] font-bold text-amber-400 bg-black/50 backdrop-blur-sm px-2 py-1 rounded-full">
+                        <div className="text-[10px] font-bold text-[#F69A20] bg-white px-2 py-1 rounded-full shadow-md">
                           {member.name.split(' ')[0]}
                         </div>
                       </div>
@@ -419,11 +318,8 @@ const Team: React.FC = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -40 }}
                 transition={{ duration: 0.5, type: "spring", damping: 20 }}
-                className="bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-2xl border border-white/10 p-8 md:p-10 rounded-3xl shadow-2xl relative overflow-hidden group hover:border-amber-500/30 transition-all duration-500"
+                className="bg-white border border-gray-200 p-8 md:p-10 rounded-3xl shadow-lg relative overflow-hidden group hover:shadow-xl transition-all duration-500"
               >
-                {/* Animated gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                
                 {/* Decorative line */}
                 <motion.div 
                   initial={{ width: 0 }} 
@@ -433,34 +329,34 @@ const Team: React.FC = () => {
                 />
 
                 <div className="relative z-10">
-                  <h2 className="text-4xl md:text-5xl font-bold mb-2 tracking-tight">
+                  <h2 className="text-4xl md:text-5xl font-bold mb-2 tracking-tight text-gray-900">
                     {activeMember.name}
                   </h2>
                   <div className="flex items-center gap-3 mb-6">
-                    <p className="text-amber-400 font-semibold text-sm uppercase tracking-wider">
+                    <p className="text-[#F69A20] font-semibold text-sm uppercase tracking-wider">
                       {activeMember.role}
                     </p>
                     {activeMember.experience && (
                       <>
-                        <span className="w-1 h-1 bg-white/20 rounded-full" />
-                        <p className="text-white/40 text-xs">📅 {activeMember.experience} exp</p>
+                        <span className="w-1 h-1 bg-gray-300 rounded-full" />
+                        <p className="text-gray-500 text-xs">📅 {activeMember.experience} exp</p>
                       </>
                     )}
                     {activeMember.location && (
                       <>
-                        <span className="w-1 h-1 bg-white/20 rounded-full" />
-                        <p className="text-white/40 text-xs">📍 {activeMember.location}</p>
+                        <span className="w-1 h-1 bg-gray-300 rounded-full" />
+                        <p className="text-gray-500 text-xs">📍 {activeMember.location}</p>
                       </>
                     )}
                   </div>
 
-                  <p className="text-gray-300 text-base md:text-lg leading-relaxed mb-8 font-light">
+                  <p className="text-gray-600 text-base md:text-lg leading-relaxed mb-8">
                     {activeMember.description}
                   </p>
 
                   {/* Skills Section */}
                   <div className="mb-8">
-                    <h4 className="text-[10px] uppercase text-white/40 tracking-[0.2em] font-bold mb-4">
+                    <h4 className="text-[10px] uppercase text-gray-500 tracking-[0.2em] font-bold mb-4">
                       Core Expertise
                     </h4>
                     <div className="flex flex-wrap gap-2">
@@ -470,7 +366,7 @@ const Team: React.FC = () => {
                           animate={{ opacity: 1, scale: 1 }} 
                           transition={{ delay: i * 0.05 }}
                           key={skill} 
-                          className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-white/70 hover:bg-amber-500/20 hover:border-amber-500/30 hover:text-amber-300 transition-all duration-300 cursor-default"
+                          className="px-3 py-1.5 rounded-full bg-gray-100 border border-gray-200 text-xs font-medium text-gray-700 hover:bg-amber-500/10 hover:border-amber-500/30 hover:text-amber-700 transition-all duration-300 cursor-default"
                         >
                           {skill}
                         </motion.span>
@@ -479,7 +375,7 @@ const Team: React.FC = () => {
                   </div>
 
                   {/* Social Links */}
-                  <div className="flex gap-3 pt-6 border-t border-white/10">
+                  <div className="flex gap-3 pt-6 border-t border-gray-200">
                     {activeMember.social.map((social, i) => (
                       <motion.a 
                         key={i} 
@@ -489,16 +385,13 @@ const Team: React.FC = () => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 + i * 0.1 }}
-                        className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-gradient-to-r hover:from-amber-500 hover:to-orange-500 hover:text-white transition-all duration-300 text-white/60 hover:shadow-lg hover:shadow-amber-500/25"
+                        className="w-10 h-10 rounded-xl bg-gray-100 border border-gray-200 flex items-center justify-center hover:bg-gradient-to-r hover:from-amber-500 hover:to-orange-500 hover:text-white transition-all duration-300 text-gray-600 hover:shadow-lg hover:shadow-amber-500/25"
                       >
                         <i className={social.icon}></i>
                       </motion.a>
                     ))}
                   </div>
                 </div>
-
-                {/* Corner decoration */}
-                <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-gradient-to-br from-amber-500/10 to-transparent rounded-full blur-2xl" />
               </motion.div>
             </AnimatePresence>
 
@@ -511,7 +404,7 @@ const Team: React.FC = () => {
                   className={`transition-all duration-300 rounded-full ${
                     safeIndex === idx 
                       ? 'w-8 h-2 bg-amber-500' 
-                      : 'w-2 h-2 bg-white/20 hover:bg-white/40'
+                      : 'w-2 h-2 bg-gray-300 hover:bg-gray-400'
                   }`}
                   aria-label={`View ${teamMembers[idx].name}`}
                 />
@@ -520,16 +413,6 @@ const Team: React.FC = () => {
           </div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes float-slow {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(3deg); }
-        }
-        .animate-float-slow {
-          animation: float-slow 12s ease-in-out infinite;
-        }
-      `}</style>
     </section>
   );
 };

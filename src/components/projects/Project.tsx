@@ -66,13 +66,24 @@ export default function ProjectHome() {
   };
 
   return (
-    <div className='p-4'>
-      <div>
-        <h1 className='text-center sm:text-3xl p-3 font-semibold'>Project Section</h1>
-        <p className='text-center w-full mx-auto font-semibold mb-3 sm:w-7/12'>
-          Explore a range of projects we’ve worked on across web, mobile, and design.
-        </p>
-      </div>
+    <div className='p-4 pt-24'>
+      <div className="flex flex-col items-center text-center space-y-4"> 
+  {/* The badge/pill */}
+  <div className="inline-flex items-center gap-2 bg-white ring-1 ring-gray-200 shadow-sm rounded-full px-4 py-1.5">
+    <div className="w-2 h-2 rounded-full bg-[#F69A20]"></div>
+    <span className="text-xs font-bold text-gray-700 uppercase tracking-widest">
+       Our Projects
+    </span>
+  </div>
+
+  {/* The Heading */}
+  <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">
+    View{" "}
+    <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-800">
+      <span className="text-[#F69A20]">Our</span> Projects
+    </span>
+  </h2>
+</div>
 
       {/* Category Buttons */}
       <div className='flex justify-center items-center flex-wrap'>

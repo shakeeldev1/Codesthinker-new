@@ -6,7 +6,7 @@ import Testimonial from '../components/about/Testemonial'
 
 function About() {
   return (
-    <div>
+    <div className='overflow-x-hidden'>
       <AboutHead />
       <OurStory />
       <WhyChooseUs />

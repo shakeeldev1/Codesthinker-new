@@ -1,13 +1,15 @@
-// @ts-nocheck
 import React from 'react';
 import { motion } from 'framer-motion';
+import img from "../../../public/process.webp"
 
+// --- Types ---
 interface ProcessPoint {
   id: string;
   title: string;
   description: string;
 }
 
+// --- Static Data ---
 const processPoints: ProcessPoint[] = [
   {
     id: '01',
@@ -55,9 +57,15 @@ const ProcessSection: React.FC = () => {
   };
 
   return (
-    <section className="bg-white py-16 px-6 lg:py-24 overflow-hidden">
+    <section className="relative w-full min-h-[600px] bg-gradient-to-br from-slate-50 to-gray-100 py-16 px-4 sm:px-6 lg:py-24 lg:px-8 overflow-hidden font-sans">
+      {/* Background Decor matching AboutUs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -left-40 w-96 h-96 bg-gray-400 rounded-full mix-blend-multiply filter blur-[100px] opacity-10"></div>
+        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-slate-500 rounded-full mix-blend-multiply filter blur-[100px] opacity-10"></div>
+      </div>
+
       <motion.div 
-        className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 items-stretch"
+        className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-16"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
@@ -65,33 +73,42 @@ const ProcessSection: React.FC = () => {
       >
         
         {/* Left Side: Points */}
-        <motion.div variants={fadeInLeft} className="flex flex-col justify-center pr-0 lg:pr-12 space-y-10">
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-[#FE9E00] font-bold tracking-widest text-xs uppercase">
+        <motion.div variants={fadeInLeft} className="flex flex-col justify-center space-y-10 order-2 lg:order-1">
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 bg-white ring-1 ring-gray-200 shadow-sm rounded-full px-4 py-1.5 w-fit">
+              <div className="w-2 h-2 rounded-full bg-[#F69A20]"></div>
+              <span className="text-xs font-bold text-gray-700 uppercase tracking-widest">
                 Execution Process
               </span>
-              <div className="h-[2px] w-10 bg-[#FE9E00]"></div>
             </div>
-            <h2 className="text-2xl md:text-start text-center md:text-4xl font-extrabold text-[#0C1F3D] leading-tight">
-              Always <span className='bg-gradient-to-r from-amber-500 to-yellow-400 text-[#07051d]c     ' style={{color:'transparent',backgroundClip:'text'}}>Deliver More</span> <br className='flex md:hidden'/> than you Expected
+            
+            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">
+              Always{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-800">
+                <span className="text-[#F69A20]">Deliver </span>
+              </span>{' '}
+            
+              More than you Expected
             </h2>
           </div>
 
-          <div className="space-y-12">
+          <div className="space-y-6">
             {processPoints.map((point) => (
-              <div key={point.id} className="flex gap-6 group">
+              <div 
+                key={point.id} 
+                className="flex items-start gap-5 p-5 bg-white rounded-2xl shadow-sm ring-1 ring-gray-100 hover:shadow-md hover:ring-gray-200 transition-all duration-300 hover:-translate-y-1 group"
+              >
                 <div className="flex-shrink-0">
-                  {/* Square Box for Number */}
-                  <div className="w-14 h-14 bg-[#0C1F3D] text-white flex items-center justify-center font-bold text-lg shadow-lg">
+                  {/* Digital Rounded Box for Number matching AboutUs feature patterns */}
+                  <div className="w-12 h-12 bg-gray-50 text-gray-900 group-hover:bg-gray-900 group-hover:text-white rounded-xl flex items-center justify-center font-extrabold text-base transition-colors duration-300 ring-1 ring-gray-200/50 group-hover:ring-gray-900 shadow-sm">
                     {point.id}
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-[#0C1F3D] mb-2">
+                  <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-gray-900 transition-colors">
                     {point.title}
                   </h3>
-                  <p className="text-slate-500 text-sm leading-relaxed max-w-sm">
+                  <p className="text-gray-500 text-sm leading-relaxed max-w-md">
                     {point.description}
                   </p>
                 </div>
@@ -101,25 +118,35 @@ const ProcessSection: React.FC = () => {
         </motion.div>
 
         {/* Right Side: Image & Call to Action */}
-        <motion.div variants={fadeInRight} className="relative md:mt-12 mt-26 lg:mt-0 flex flex-col">
-          <div className="flex-grow overflow-hidden shadow-xl">
+        <motion.div variants={fadeInRight} className="relative w-full order-1 lg:order-2 flex flex-col">
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl ring-1 ring-gray-900/5 group aspect-[4/3] lg:aspect-auto lg:h-[550px]">
             <img 
-              src="https://img.magnific.com/premium-vector/scrum-agile-framework-plan-as-software-development-method-effective-teamwork-project-sprint-adaptive-programming-rule-cycle-process-managing-strategy-flat-vector-modern-illustration_566886-15875.jpg?ga=GA1.1.1217937454.1777963358&semt=ais_hybrid&w=740&q=80" 
+              src={img}
               alt="How we work" 
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-102"
+              loading="lazy"
             />
+            
+            {/* Overlay Gradient matching AboutUs */}
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 via-transparent to-transparent opacity-80 transition-opacity duration-500"></div>
+            
+            {/* Call to Action Box inside corner layout */}
+            <div className="absolute bottom-6 left-6 right-6 sm:right-auto bg-white/95 backdrop-blur-md rounded-xl p-6 shadow-xl ring-1 ring-black/5 max-w-xs transform translate-y-0 group-hover:-translate-y-1 transition-transform duration-300">
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="flex h-2 w-2 relative">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F69A20] opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#F69A20]"></span>
+                  </span>
+                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Our Mission</span>
+                </div>
+                <p className="text-gray-900 font-extrabold text-xl leading-tight">
+                  Execute your <br /> 
+                  <span className="text-[#F69A20]">Ideas from start</span>
+                </p>
+              </div>
+            </div>
           </div>
-          
-          {/* Call to Action Box in the Corner */}
-          <div className="absolute bottom-0 left-0 bg-[#FE9E00] p-8 w-full max-w-[320px] shadow-2xl">
-            <p className="text-[#0C1F3D] font-black text-2xl lg:text-3xl leading-tight">
-              Execute your <br /> 
-              <span className="text-white">Ideas from start</span>
-            </p>
-          </div>
-          
-          {/* Subtle Yellow accent border/background behind image if needed */}
-          <div className="absolute top-0 right-0 w-24 h-full bg-[#FDC400] -z-10 translate-x-12 opacity-10"></div>
         </motion.div>
 
       </motion.div>

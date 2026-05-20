@@ -40,12 +40,16 @@ function OurMissions() {
 
       {/* Heading */}
       <div data-aos="fade-down" className="text-center max-w-3xl mx-auto mb-16">
-        <p className="text-[#FEA800] uppercase tracking-[4px] text-sm font-semibold">
-          Our Mission
-        </p>
+       <div className="inline-flex items-center gap-2 bg-white ring-1 ring-gray-200 shadow-sm rounded-full px-4 py-1.5">
+          <div className="w-2 h-2 rounded-full bg-[#F69A20] "></div>
+          <span className="text-xs font-bold text-gray-700 uppercase tracking-widest"> Our Mission</span>
+        </div>
 
-        <h2 className="text-4xl sm:text-5xl md:text-5xl font-extrabold text-gray-900 mt-4">
-          What We Aim For
+        <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">
+           What We  {" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-800">
+            <span className="text-[#F69A20] ">Aim</span> For
+          </span>
         </h2>
 
         <p className="text-gray-500 mt-5 text-lg">

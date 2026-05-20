@@ -1,12 +1,6 @@
-import React from 'react';
+import React from "react";
 
-/**
- * Technical Fixes included for sharp images:
- * 1. transform-gpu: Forces hardware acceleration to keep images crisp during motion.
- * 2. -50% Translation: Standard practice for seamless looping with doubled arrays.
- * 3. backface-visibility: Prevents the "shimmer" or "blur" effect in WebKit browsers.
- */
-
+// --- Static Data ---
 const LOGO_SET_1 = [
   "https://cdn.prod.website-files.com/6719ad0ceed6d5aa24a83d61/685ab00f71b4404c713d8c89_logos-01.webp",
   "https://cdn.prod.website-files.com/6719ad0ceed6d5aa24a83d61/685ab02c9fab945df8ecd652_logos-02.webp",
@@ -29,72 +23,89 @@ const LOGO_SET_2 = [
   "https://cdn.prod.website-files.com/6719ad0ceed6d5aa24a83d61/685ab4dbbfe90b70d91933ac_logos-25.webp",
 ];
 
+// --- Sub-Component ---
 const LogoImage: React.FC<{ src: string }> = ({ src }) => (
   <img
     src={src}
-    alt="Client Logo"
+    alt="Trusted Client Logo"
     loading="lazy"
-    /* REMOVED: grayscale, opacity-60, hover effects */
-    /* ADDED: contrast-[1.05] for a slight extra sharpness boost */
-    className="h-12 md:h-18 w-auto flex-shrink-0 object-contain mx-8  transform-gpu contrast-[1.05]"
+    className="h-10 md:h-14 w-auto flex-shrink-0 object-contain mx-10 transform-gpu contrast-[1.02] brightness-95 filter transition-all duration-300 hover:scale-105"
     style={{ 
-        WebkitBackfaceVisibility: 'hidden',
-        backfaceVisibility: 'hidden',
-        transform: 'translateZ(0)' 
+      WebkitBackfaceVisibility: 'hidden',
+      backfaceVisibility: 'hidden',
+      transform: 'translateZ(0)' 
     }}
   />
 );
 
+// --- Main Component ---
 const ClientsMarquee: React.FC = () => {
   return (
-    <section className="py-6 bg-transparent overflow-hidden">
+    <section className="relative w-full bg-gradient-to-br from-gray-200 to-gray-200 py-12 overflow-hidden font-sans">
+      
+      {/* Background Decor Layer matching core design layout */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/2 left-1/4 w-72 h-72 bg-gray-300 rounded-full mix-blend-multiply filter blur-[80px] opacity-15"></div>
+      </div>
+
+      {/* Styled Brand Header Block */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
+        <div className="inline-flex items-center gap-2 bg-white ring-1 ring-gray-200 shadow-sm rounded-full px-4 py-1.5 mb-4">
+          <div className="w-2 h-2 rounded-full bg-[#F69A20]"></div>
+          <span className="text-xs font-bold text-gray-700 uppercase tracking-widest">
+            Our Ecosystem
+          </span>
+        </div>
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
+          Trusted by Innovative Market Leaders
+        </h2>
+      </div>
+
+      {/* Global CSS injection for hardware smooth infinite animation loops */}
       <style>{`
         @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          0% { transform: translate3d(0, 0, 0); }
+          100% { transform: translate3d(-50%, 0, 0); }
         }
-
-        .animate-marquee {
-          animation: marquee 10s linear infinite;
+        .animate-marquee-loop {
+          animation: marquee 25s linear infinite;
         }
-
-        .animate-marquee-reverse {
-          animation: marquee 10s linear infinite reverse;
+        .animate-marquee-loop-reverse {
+          animation: marquee 25s linear infinite reverse;
         }
-
-        /* Stop animation on hover for better UX */
-        .marquee-container:hover .animate-marquee,
-        .marquee-container:hover .animate-marquee-reverse {
+        .marquee-group-container:hover .animate-marquee-loop,
+        .marquee-group-container:hover .animate-marquee-loop-reverse {
           animation-play-state: paused;
         }
       `}</style>
 
-      <div className="relative flex flex-col gap-16 marquee-container">
+      {/* Marquee Body Layout Wrapper */}
+      <div className="relative flex flex-col gap-10 marquee-group-container z-10">
         
-        {/* First Row: Left to Right */}
-        <div className="relative flex overflow-hidden">
-          <div className="flex animate-marquee whitespace-nowrap will-change-transform">
-            {/* We double the array to ensure the end of the first set meets the start of the second seamlessly */}
+        {/* Row 1: Left to Right movement */}
+        <div className="relative flex w-full overflow-hidden items-center">
+          <div className="flex animate-marquee-loop whitespace-nowrap will-change-transform py-2">
             {[...LOGO_SET_1, ...LOGO_SET_1].map((src, idx) => (
               <LogoImage key={`row1-${idx}`} src={src} />
             ))}
           </div>
           
-          {/* Side Fades for that premium "vanishing" look */}
-          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+          {/* Edge Fades perfectly mixed into background gradient layers */}
+          <div className="absolute inset-y-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-slate-50 via-slate-50/70 to-transparent z-20 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-24 sm:w-40 bg-gradient-to-l from-gray-100 via-gray-100/70 to-transparent z-20 pointer-events-none" />
         </div>
 
-        {/* Second Row: Right to Left */}
-        <div className="relative flex overflow-hidden">
-          <div className="flex animate-marquee-reverse whitespace-nowrap will-change-transform">
+        {/* Row 2: Right to Left movement */}
+        <div className="relative flex w-full overflow-hidden items-center">
+          <div className="flex animate-marquee-loop-reverse whitespace-nowrap will-change-transform py-2">
             {[...LOGO_SET_2, ...LOGO_SET_2].map((src, idx) => (
               <LogoImage key={`row2-${idx}`} src={src} />
             ))}
           </div>
           
-          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+          {/* Edge Fades perfectly mixed into background gradient layers */}
+          <div className="absolute inset-y-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-slate-50 via-slate-50/70 to-transparent z-20 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-24 sm:w-40 bg-gradient-to-l from-gray-100 via-gray-100/70 to-transparent z-20 pointer-events-none" />
         </div>
 
       </div>

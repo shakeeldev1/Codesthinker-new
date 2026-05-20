@@ -10,9 +10,9 @@ import {
   Sparkles,
   Search,
   Shield,
-  Clock,
   Code2,
   Zap,
+  Clock,
 } from "lucide-react";
 
 interface FAQItem {
@@ -59,6 +59,18 @@ const FAQ: React.FC = () => {
       answer: "Yes! We provide comprehensive post-launch support including 24/7 monitoring, security updates, and performance optimization to ensure your solution stays ahead of the curve.",
       category: "services",
     },
+    {
+  id: 5,
+  question: "Do you work with startups or only large businesses?",
+  answer: "We work with startups, SMEs, and enterprise clients. Whether you're building your first MVP or scaling an existing platform, we tailor our solutions to match your business stage and goals.",
+  category: "general",
+},
+{
+  id: 6,
+  question: "Can you help improve or upgrade an existing application?",
+  answer: "Yes, we specialize in modernizing legacy systems and improving existing applications by enhancing performance, updating technology stacks, improving UI/UX, and adding new features.",
+  category: "services",
+},
   ];
 
   const filteredFaqs = faqs.filter((faq) => {
@@ -69,59 +81,70 @@ const FAQ: React.FC = () => {
   });
 
   return (
-    <section className="relative py-20 bg-[#F8FAFC] overflow-hidden">
-      {/* Background Decor */}
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-[#07051D]/[0.02] -skew-x-12 transform origin-top" />
-      
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-12 gap-8 items-center">
+    <section className="relative w-full min-h-[600px] bg-gradient-to-br from-slate-50 to-gray-100 py-12 px-4 sm:px-6 lg:py-12 lg:px-8 overflow-hidden font-sans">
+      {/* Background Decor matching system layout */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-gray-400 rounded-full mix-blend-multiply filter blur-[100px] opacity-15"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-slate-500 rounded-full mix-blend-multiply filter blur-[100px] opacity-15"></div>
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           
           {/* Left Column: FAQ Content */}
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-7 space-y-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="mb-10"
+              className="space-y-4"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#07051D]/5 border border-[#07051D]/10 mb-4">
-                <HelpCircle className="w-4 h-4 text-[#07051D]" />
-                <span className="text-[#07051D] font-bold text-xs uppercase tracking-wider">Help Center</span>
+              <div className="inline-flex items-center gap-2 bg-white ring-1 ring-gray-200 shadow-sm rounded-full px-4 py-1.5">
+                <div className="w-2 h-2 rounded-full bg-[#F69A20]"></div>
+                <span className="text-xs font-bold text-gray-700 uppercase tracking-widest">Help Center</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-[#07051D] mb-6 leading-tight">
-                Frequently Asked <br />
-                <span className="text-[#F59C20]">Questions</span>
+              
+              <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">
+                Frequently 
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-800">
+                  <span className="text-[#F69A20]"> Asked </span>
+                  Questions
+                </span>
               </h2>
 
               {/* Search Bar */}
-              <div className="relative max-w-md group">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-[#07051D] transition-colors" />
+              <div className="relative max-w-md group pt-2">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-[#F69A20] transition-colors" />
                 <input
                   type="text"
                   placeholder="Search for answers..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-2 bg-white border border-gray-200 rounded-2xl focus:border-[#07051D] focus:ring-4 focus:ring-[#07051D]/5 transition-all outline-none text-gray-800"
+                  className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-2xl focus:border-gray-400 focus:ring-4 focus:ring-gray-200/50 transition-all outline-none text-gray-800 shadow-sm"
                 />
               </div>
             </motion.div>
 
             {/* Category Filter */}
-            <div className="flex flex-wrap gap-2 mb-8">
-              {categories.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => setActiveCategory(cat.id)}
-                  className={`px-5 py-2 rounded-xl text-sm font-semibold transition-all ${
-                    activeCategory === cat.id
-                      ? "bg-[#07051D] text-white shadow-lg shadow-[#07051D]/20"
-                      : "bg-white text-gray-500 hover:bg-gray-100 border border-gray-100"
-                  }`}
-                >
-                  {cat.name}
-                </button>
-              ))}
+            <div className="flex flex-wrap gap-2.5">
+              {categories.map((cat) => {
+                const IconComponent = cat.icon;
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveCategory(cat.id)}
+                    className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                      activeCategory === cat.id
+                        ? "bg-gray-900 text-white shadow-md ring-1 ring-gray-900"
+                        : "bg-white text-gray-600 hover:bg-gray-50 border border-gray-200/60 shadow-sm"
+                    }`}
+                  >
+                    <IconComponent className="w-3.5 h-3.5" />
+                    {cat.name}
+                  </button>
+                );
+              })}
             </div>
 
             {/* Accordion List */}
@@ -135,24 +158,24 @@ const FAQ: React.FC = () => {
                       initial={{ opacity: 0, scale: 0.98 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.98 }}
-                      className={`group border rounded-2xl transition-all duration-300 ${
+                      className={`group rounded transition-all duration-300 bg-white ring-1 ${
                         activeId === faq.id 
-                          ? "border-indigo-200 bg-white shadow-xl shadow-indigo-500/5" 
-                          : "border-gray-200 bg-transparent hover:border-gray-300"
+                          ? "ring-gray-300 shadow-md" 
+                          : "ring-gray-200/60 shadow-sm hover:ring-gray-300"
                       }`}
                     >
                       <button
                         onClick={() => setActiveId(activeId === faq.id ? null : faq.id)}
-                        className="w-full px-6 py-5 flex items-center justify-between text-left"
+                        className="w-full px-5 py-2 flex items-center justify-between text-left"
                       >
-                        <span className={`text-lg font-bold transition-colors ${activeId === faq.id ? "text-[#07051D]" : "text-gray-700 group-hover:text-[#07051D]"}`}>
+                        <span className="text-base sm:text-lg font-bold text-gray-900 tracking-tight">
                           {faq.question}
                         </span>
-                        <div className={`flex-shrink-0 ml-4 transition-transform duration-300 ${activeId === faq.id ? "rotate-180" : ""}`}>
+                        <div className="flex-shrink-0 ml-4 p-1 bg-gray-50 rounded-lg text-gray-500 group-hover:bg-gray-900 group-hover:text-white transition-colors duration-300">
                           {activeId === faq.id ? (
-                            <Minus className="w-5 h-5 text-[#F59C20]" />
+                            <Minus className="w-4 h-4 text-[#F69A20]" />
                           ) : (
-                            <Plus className="w-5 h-5 text-gray-400" />
+                            <Plus className="w-4 h-4" />
                           )}
                         </div>
                       </button>
@@ -163,10 +186,10 @@ const FAQ: React.FC = () => {
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
+                            transition={{ duration: 0.25, ease: "easeInOut" }}
                             className="overflow-hidden"
                           >
-                            <div className="px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-50 pt-4">
+                            <div className="px-6 pb-6 text-gray-500 text-sm leading-relaxed border-t border-gray-100 pt-4">
                               {faq.answer}
                             </div>
                           </motion.div>
@@ -175,59 +198,67 @@ const FAQ: React.FC = () => {
                     </motion.div>
                   ))
                 ) : (
-                  <div className="text-center py-10 text-gray-400">No results found for your search.</div>
+                  <div className="text-center py-10 text-sm font-medium text-gray-400 bg-white rounded-2xl border border-dashed border-gray-200">
+                    No results found matching your search term.
+                  </div>
                 )}
               </AnimatePresence>
             </div>
           </div>
 
           {/* Right Column: Image Section */}
-          <div className="lg:col-span-5 flex flex-col items-center justify-center">
+          <div className="lg:col-span-5 flex flex-col items-center justify-center lg:pt-12">
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="relative w-full max-w-full"
+              className="relative w-full"
             >
-              {/* Decorative Blur Backgrounds */}
-              <div className="absolute -top-10 -right-10 w-full h-full bg-[#F59C20]/10 rounded-full blur-3xl" />
-              <div className="absolute -bottom-10 -left-10 w-full h-full bg-indigo-500/10 rounded-full blur-3xl" />
-
-              {/* Main Image with Floating Motion */}
+              {/* Main Image Base Frame */}
               <motion.div
-                animate={{ y: [0, -15, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className="relative z-10"
+                animate={{ y: [0, -12, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                className="relative z-10 rounded-2xl overflow-hidden shadow-2xl ring-1 ring-gray-900/5 group"
               >
                 <img
-                  src="public/ct.png" 
-                  alt="Customer Support Illustration"
-                  className="w-full h-auto drop-shadow-2xl"
+                  src="/ct.png" 
+                  alt="Code's Thinker Support Team"
+                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-102"
+                  loading="lazy"
                 />
+                
+                {/* Overlay Screen Shader */}
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/30 via-transparent to-transparent opacity-80" />
 
-                {/* Floating Support Badge */}
+                {/* Floating Support Dynamic Badge */}
                 <motion.div 
-                  initial={{ opacity: 0, x: 30 }}
+                  initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.6 }}
-                  className="absolute top-1/4 -right-4 md:-right-8 bg-white p-4 rounded-2xl shadow-2xl border border-gray-100 flex items-center gap-4"
+                  transition={{ delay: 0.4 }}
+                  className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-xl ring-1 ring-black/5 flex items-center gap-4"
                 >
-                  <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
-                    <MessageCircle className="w-6 h-6 text-green-600" />
+                  <div className="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <MessageCircle className="w-5 h-5 text-emerald-600" />
                   </div>
                   <div>
-                    <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Status</p>
-                    <p className="text-sm font-bold text-[#07051D]">Agents Online</p>
+                    <div className="flex items-center gap-1.5">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                      </span>
+                      <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Live System</p>
+                    </div>
+                    <p className="text-sm font-bold text-gray-900">Support Engineers Online</p>
                   </div>
                 </motion.div>
               </motion.div>
 
-              {/* Minimalist Footer Badges for Right Column */}
-              <div className="mt-16 flex items-center justify-center gap-10 opacity-30 grayscale hover:grayscale-0 transition-all duration-500">
-                <Shield className="w-8 h-8 text-[#07051D]" />
-                <Zap className="w-8 h-8 text-[#07051D]" />
-                <Sparkles className="w-8 h-8 text-[#07051D]" />
+              {/* Brand Accent Identity Badges */}
+              <div className="mt-10 flex items-center justify-center gap-12 text-gray-400 opacity-40 hover:opacity-70 transition-opacity duration-300">
+                <Shield className="w-6 h-6" />
+                <Zap className="w-6 h-6" />
+                <Sparkles className="w-6 h-6" />
               </div>
             </motion.div>
           </div>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import ParticleBackground from "../home/ParticleBackground";
 
 // --- Types ---
 interface TeamMember {
@@ -152,7 +151,6 @@ const Team: React.FC = () => {
 
   return (
     <section className="relative min-h-screen bg-[#030211] text-white py-24 px-6 overflow-hidden flex items-center">
-      <ParticleBackground />
       
       {/* Dynamic Background Blurs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
