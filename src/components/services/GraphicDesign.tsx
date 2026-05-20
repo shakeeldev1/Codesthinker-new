@@ -59,8 +59,8 @@ const ServicesSection = () => {
         <GlobalHeading
           className="mb-16"
           badge={{ text: "Services" }}
-          title="Our Services"
-          titleHighlight="Services"
+          title="Graphic Design Services"
+          titleHighlight="Design Services"
           subtitle="Comprehensive graphic design solutions tailored to elevate your brand's visual identity."
           alignment="center"
           textColor="dark"
@@ -86,8 +86,8 @@ const ServicesSection = () => {
 const GraphicDesign = () => {
   const heroImages = [
     "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=2071&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1964&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=2000&auto=format&fit=crop"
+    "https://images.unsplash.com/photo-1545235617-9465d2a55698?q=80&w=2080&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=2070&auto=format&fit=crop"
   ];
 
   const technologies = [
@@ -108,6 +108,10 @@ const GraphicDesign = () => {
         badge="Impactful Brands"
         subtitle="Elevate your brand with our professional graphic design services. We create compelling visuals that tell your story and resonate with your audience."
         images={heroImages}
+        primaryLink="/contact"
+        secondaryLink="/projects"
+        primaryBtnText="Get Creative Now"
+        secondaryBtnText="View Designs"
       />
       <ServicesSection />
 

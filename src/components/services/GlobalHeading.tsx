@@ -34,10 +34,10 @@ const GlobalHeading: React.FC<GlobalHeadingProps> = ({
 
   // Fluid high-end typography scaling
   const sizeClasses = {
-    sm: 'text-[1.75rem] md:text-[2.25rem] leading-[1.15] tracking-tight font-light',
-    md: 'text-[2.25rem] md:text-[3.25rem] leading-[1.1] tracking-tighter font-light',
-    lg: 'text-[2.75rem] md:text-[4.25rem] leading-[1.05] tracking-tighter font-light',
-    xl: 'text-[3.25rem] md:text-[5.5rem] leading-[1] tracking-tighter font-light'
+    sm: 'text-2xl md:text-3xl font-bold leading-tight',
+    md: 'text-3xl md:text-4xl font-bold leading-tight',
+    lg: 'text-3xl md:text-5xl font-bold leading-tight',
+    xl: 'text-4xl md:text-6xl font-bold leading-tight'
   };
 
   const alignmentClasses = {
@@ -47,12 +47,12 @@ const GlobalHeading: React.FC<GlobalHeadingProps> = ({
 
   const themeClasses = {
     dark: {
-      title: 'text-slate-950',
-      subtitle: 'text-slate-500 font-light'
+      title: 'text-[#07051d]',
+      subtitle: 'text-gray-600 font-normal'
     },
     light: {
       title: 'text-white',
-      subtitle: 'text-zinc-400 font-light'
+      subtitle: 'text-gray-200 font-normal'
     }
   };
 
@@ -80,7 +80,7 @@ const GlobalHeading: React.FC<GlobalHeadingProps> = ({
           {titleHighlight && title.includes(titleHighlight) ? (
             <>
               {title.split(titleHighlight)[0]}
-              <span className="italic font-serif bg-gradient-to-r from-amber-400 via-orange-500 to-amber-600 bg-clip-text text-transparent px-1">
+              <span className="text-amber-500">
                 {titleHighlight}
               </span>
               {title.split(titleHighlight)[1]}
@@ -89,16 +89,13 @@ const GlobalHeading: React.FC<GlobalHeadingProps> = ({
             title
           )}
         </Component>
-        
-        {/* Professional Underline */}
-        <div className={`h-[2px] w-24 mt-4 bg-gradient-to-r from-amber-500 via-orange-500 to-transparent rounded-full ${alignment === 'center' ? 'mx-auto' : ''}`} />
       </div>
 
       {/* Refined Subtitle */}
       {subtitle && (
         <p className={`
           max-w-[65ch] 
-          text-base md:text-lg 
+          text-sm md:text-xl 
           leading-relaxed 
           ${themeClasses[textColor].subtitle} 
           ${alignment === 'center' ? 'mx-auto' : ''}

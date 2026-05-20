@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay, EffectFade } from 'swiper/modules';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -16,7 +17,7 @@ const GlobalHero = ({ data, height = "h-screen" }) => {
 
   return (
     <main 
-      className={`relative w-full bg-slate-950 overflow-hidden ${!height.includes('vh') && !height.includes('px') ? height : ''}`}
+      className={`relative w-full bg-[#07051d] overflow-hidden ${!height.includes('vh') && !height.includes('px') ? height : ''}`}
       style={{ height: height.includes('vh') || height.includes('px') ? height : undefined }}
     >
       <Swiper
@@ -57,9 +58,7 @@ const GlobalHero = ({ data, height = "h-screen" }) => {
           [&_.swiper-pagination-bullet]:!duration-700
           [&_.swiper-pagination-bullet-active]:!w-10
           sm:[&_.swiper-pagination-bullet-active]:!w-16 
-          [&_.swiper-pagination-bullet-active]:!bg-gradient-to-r 
-          [&_.swiper-pagination-bullet-active]:!from-amber-600 
-          [&_.swiper-pagination-bullet-active]:!to-orange-500
+          [&_.swiper-pagination-bullet-active]:!bg-amber-500
           [&_.swiper-pagination-bullet-active]:!shadow-lg"
       >
         {data.map((slide, index) => (
@@ -75,7 +74,7 @@ const GlobalHero = ({ data, height = "h-screen" }) => {
                 backgroundPosition: 'center',
               }}
             />
-            <div className="absolute inset-0 z-1 bg-gradient-to-r from-slate-950/80 via-slate-950/40 to-transparent" />
+            <div className="absolute inset-0 z-1 bg-gradient-to-r from-[#07051d]/80 via-[#07051d]/40 to-transparent" />
             <div className="relative z-10 h-full flex items-center px-6 sm:px-12 md:px-20 lg:px-32">
               <AnimatePresence mode="wait">
                 {activeIndex === index && (
@@ -104,7 +103,7 @@ const GlobalHero = ({ data, height = "h-screen" }) => {
                       </p>
                     </motion.div>
                     <motion.h1
-                      className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-light leading-[1.1] text-white mb-4 sm:mb-8 tracking-tight"
+                      className="text-3xl md:text-5xl font-bold mb-6 leading-tight text-white"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
@@ -127,7 +126,7 @@ const GlobalHero = ({ data, height = "h-screen" }) => {
                       ))}
                     </motion.h1>
                     <motion.p
-                      className="text-sm sm:text-lg text-white/70 font-light mb-12 sm:mb-20 md:mb-32 max-w-2xl leading-relaxed"
+                      className="text-sm md:text-xl mb-8 max-w-2xl text-gray-200 leading-relaxed"
                       initial={{ opacity: 0, y: 15 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -15 }}
@@ -136,27 +135,27 @@ const GlobalHero = ({ data, height = "h-screen" }) => {
                       {slide.description}
                     </motion.p>
                     <motion.div
-                      className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4 justify-center sm:justify-start items-center"
+                      className="flex flex-wrap justify-start gap-4 md:gap-6 mt-4 items-center"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
                       transition={{ duration: 0.6, delay: 0.8 }}
                     >
-                      <motion.button
-                        whileTap={{ scale: 0.98 }}
-                        className="group relative px-6 py-2.5 sm:px-8 sm:py-3.5 overflow-hidden rounded-lg bg-slate-100 font-semibold text-xs sm:text-sm uppercase tracking-widest shadow-xl transition-all duration-500 ease-in-out w-1/2 sm:w-auto"
+                      <Link 
+                        to={slide.primaryLink || '/contact'}
+                        className="relative inline-flex items-center justify-center font-bold rounded-xl transition-all duration-300 cursor-pointer overflow-hidden shadow-lg focus:outline-none px-6 py-2 md:px-8 text-sm md:text-base bg-amber-500 text-[#07051d] hover:bg-amber-400 group"
                       >
-                        <span className="relative z-10 flex items-center justify-center gap-2 text-slate-900 group-hover:text-white transition-colors duration-500 ease-in-out">
-                          Explore Now
+                        <span className="relative z-10 flex items-center justify-center gap-2">
+                          {slide.primaryBtnText || 'Explore Now'}
                         </span>
-                        <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-orange-500 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out" />
-                      </motion.button>
-                      <motion.button
-                        whileTap={{ scale: 0.98 }}
-                        className="px-6 py-2.5 sm:px-8 sm:py-3.5 border border-white/30 text-white font-semibold text-xs sm:text-sm uppercase tracking-widest rounded-lg hover:bg-gradient-to-r hover:from-amber-600 hover:to-orange-500 hover:border-transparent transition-all duration-500 ease-in-out backdrop-blur-sm w-1/2 sm:w-auto"
+                        <span className="absolute inset-0 -translate-x-full bg-white/30 group-hover:translate-x-full transition-transform duration-700 ease-in-out rotate-12"></span>
+                      </Link>
+                      <Link 
+                        to={slide.secondaryLink || '/contact'}
+                        className="px-6 py-2 md:px-8 text-sm md:text-base font-bold rounded-xl bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#07051d] transition-all duration-300 shadow-lg cursor-pointer"
                       >
-                        Learn More
-                      </motion.button>
+                        {slide.secondaryBtnText || 'Learn More'}
+                      </Link>
                     </motion.div>
                   </motion.div>
                 )}
@@ -165,7 +164,7 @@ const GlobalHero = ({ data, height = "h-screen" }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="absolute bottom-0 left-0 right-0 h-24 sm:h-32 bg-gradient-to-t from-slate-950 to-transparent z-5 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-24 sm:h-32 bg-gradient-to-t from-[#07051d] to-transparent z-5 pointer-events-none" />
     </main>
   );
 };

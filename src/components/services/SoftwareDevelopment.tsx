@@ -1,19 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import GlobalHero from './GlobalHero';
 import {
   Zap,
-  Shield,
-  TrendingUp,
-  Users,
-  Code2,
-  ArrowRight,
-  CheckCircle2,
-  Database,
-  Cpu,
-  Globe,
   Layers,
+  Database,
+  Globe,
+  Cpu,
   Rocket
 } from 'lucide-react';
 import GlobalHeading from './GlobalHeading';
@@ -22,41 +16,42 @@ import GlobalCard from './GlobalServiceCard';
 import GlobalServiceCard1 from './GlobalServiceCard1';
 
 const SoftwareDevelopment = () => {
-  const [activeService, setActiveService] = useState(0);
-  const [scrollY, setScrollY] = useState(0);
 
   const softwareHeroData = [
     {
       id: 1,
-      subtitle: "Enterprise Engineering",
-      title: "Solutions Built for Scale",
-      description: "Developing mission-critical software architectures that power modern industry leaders.",
-      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop",
-      color: "from-amber-600/40 to-orange-500/40",
+      subtitle: "Custom Solutions",
+      title: "Building Software That Scales",
+      description: "We deliver high-quality, scalable software solutions tailored to your unique business needs and challenges.",
+      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop",
+      primaryLink: "/contact",
+      secondaryLink: "/projects",
+      primaryBtnText: "Start Your Project",
+      secondaryBtnText: "View Our Work"
     },
     {
       id: 2,
-      subtitle: "Cloud Innovation",
-      title: "The Future of Development",
-      description: "Leveraging cloud-native technologies to build resilient and adaptable digital products.",
-      image: "https://images.unsplash.com/photo-1492138786289-d35ea832da43?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      color: "from-orange-600/40 to-amber-500/40",
+      subtitle: "Enterprise Grade",
+      title: "Modernizing Your Business Infrastructure",
+      description: "From legacy system migration to cloud-native architecture, we help you stay ahead in the digital era.",
+      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop",
+      primaryLink: "/contact",
+      secondaryLink: "/projects",
+      primaryBtnText: "Consult Our Experts",
+      secondaryBtnText: "Case Studies"
     },
     {
       id: 3,
-      subtitle: "Full-Stack Mastery",
-      title: "Crafting Complex Systems",
-      description: "Where technical excellence meets business logic in every line of code.",
-      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2070&auto=format&fit=crop",
-      color: "from-yellow-600/40 to-orange-500/40",
+      subtitle: "Innovation First",
+      title: "Pioneering Future-Ready Applications",
+      description: "Leveraging AI, IoT, and Blockchain to build applications that redefine industry standards.",
+      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop",
+      primaryLink: "/contact",
+      secondaryLink: "/projects",
+      primaryBtnText: "Explore Innovation",
+      secondaryBtnText: "Our Tech Stack"
     },
   ];
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     AOS.init({
@@ -122,14 +117,6 @@ const SoftwareDevelopment = () => {
     { name: "AWS", category: "Cloud", icon: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" },
     { name: "PostgreSQL", category: "Database", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
     { name: "Kubernetes", category: "Orchestration", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" }
-  ];
-
-  
-  const processSteps = [
-    { step: "01", title: "Discovery", description: "We analyze your requirements, constraints, and goals to create a comprehensive roadmap." },
-    { step: "02", title: "Architecture", description: "Design scalable, maintainable systems using industry best practices and proven patterns." },
-    { step: "03", title: "Development", description: "Build with precision, following strict quality standards and continuous integration practices." },
-    { step: "04", title: "Deployment", description: "Launch with confidence using automated testing, monitoring, and staged rollouts." }
   ];
 
   return (

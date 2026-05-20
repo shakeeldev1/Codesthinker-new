@@ -1,6 +1,8 @@
+// @ts-nocheck
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface GlobalHero1Props {
   title?: string;
@@ -8,6 +10,10 @@ interface GlobalHero1Props {
   images?: string[];
   badge?: string;
   theme?: 'light' | 'dark';
+  primaryLink?: string;
+  secondaryLink?: string;
+  primaryBtnText?: string;
+  secondaryBtnText?: string;
 }
 
 const GlobalHero1: React.FC<GlobalHero1Props> = ({ 
@@ -15,7 +21,11 @@ const GlobalHero1: React.FC<GlobalHero1Props> = ({
   subtitle, 
   images = [],
   badge,
-  theme = 'light'
+  theme = 'light',
+  primaryLink = '/contact',
+  secondaryLink = '/projects',
+  primaryBtnText = 'Explore Our Mission',
+  secondaryBtnText = 'Learn More'
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
 
@@ -54,7 +64,7 @@ const GlobalHero1: React.FC<GlobalHero1Props> = ({
   return (
     <motion.section
       id="hero"
-      className={`relative min-h-screen ${isDark ? 'bg-slate-950' : 'bg-white'} overflow-hidden pt-28 pb-12 md:pt-20 flex items-center`}
+      className={`relative min-h-screen ${isDark ? 'bg-[#07051d]' : 'bg-white'} overflow-hidden pt-28 pb-12 md:pt-20 flex items-center`}
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -76,12 +86,12 @@ const GlobalHero1: React.FC<GlobalHero1Props> = ({
           {/* Left Column - Content */}
           <motion.div className="space-y-6 text-center md:text-left" variants={containerVariants}>
             <motion.div variants={itemVariants}>
-              <h1 className={`text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-light ${isDark ? 'text-white' : 'text-slate-900'} leading-[1.1] mb-6 tracking-tighter`}>
+              <h1 className={`text-3xl md:text-5xl font-bold ${isDark ? 'text-white' : 'text-[#07051d]'} leading-tight mb-6`}>
                 {title.split(badge).map((part, i, arr) => (
                   <React.Fragment key={i}>
                     {part}
                     {i < arr.length - 1 && (
-                      <span className="italic font-serif bg-gradient-to-r from-amber-600 to-orange-500 bg-clip-text text-transparent">
+                      <span className="text-amber-500">
                         {badge}
                       </span>
                     )}
@@ -93,22 +103,28 @@ const GlobalHero1: React.FC<GlobalHero1Props> = ({
             <motion.p
               id="reach"
               variants={itemVariants}
-              className={`text-base sm:text-lg ${isDark ? 'text-slate-400' : 'text-slate-600'} font-light leading-relaxed max-w-xl mx-auto md:mx-0`}
+              className={`text-sm md:text-xl ${isDark ? 'text-gray-200' : 'text-gray-600'} leading-relaxed max-w-xl mx-auto md:mx-0 mb-8`}
             >
               {subtitle}
             </motion.p>
 
-            <motion.div variants={itemVariants} className="pt-4 md:pt-8 flex justify-center md:justify-start">
-              <motion.button
-                whileTap={{ scale: 0.98 }}
-                className="group relative px-7 py-3.5 sm:px-8 sm:py-4 overflow-hidden rounded-xl bg-gradient-to-r from-amber-600 to-orange-500 text-white font-bold text-sm sm:text-base flex items-center gap-3 transition-all duration-500"
+            <motion.div variants={itemVariants} className="pt-4 md:pt-8 flex flex-wrap justify-center md:justify-start gap-4">
+              <Link
+                to={primaryLink}
+                className="relative inline-flex items-center justify-center font-bold rounded-xl transition-all duration-300 cursor-pointer overflow-hidden shadow-lg focus:outline-none px-6 py-2 md:px-8 text-sm md:text-base bg-amber-500 text-[#07051d] hover:bg-amber-400 group"
               >
-                <span className="relative z-10 flex items-center gap-3">
-                  Explore Our Mission
+                <span className="relative z-10 flex items-center gap-2">
+                  {primaryBtnText}
                   <ArrowRight className="w-4 h-4" />
                 </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </motion.button>
+                <span className="absolute inset-0 -translate-x-full bg-white/30 group-hover:translate-x-full transition-transform duration-700 ease-in-out rotate-12"></span>
+              </Link>
+              <Link
+                to={secondaryLink}
+                className={`px-6 py-2 md:px-8 text-sm md:text-base font-bold rounded-xl border-2 transition-all duration-300 shadow-lg cursor-pointer ${isDark ? 'border-white text-white hover:bg-white hover:text-[#07051d]' : 'border-[#07051d] text-[#07051d] hover:bg-[#07051d] hover:text-white'}`}
+              >
+                {secondaryBtnText}
+              </Link>
             </motion.div>
           </motion.div>
 

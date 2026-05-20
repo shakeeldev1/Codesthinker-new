@@ -105,6 +105,10 @@ const GamingAI = () => {
           "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop",
           "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2070&auto=format&fit=crop"
         ]}
+        primaryLink="/contact"
+        secondaryLink="/projects"
+        primaryBtnText="Build the Future"
+        secondaryBtnText="Explore Tech"
       />
       {/* Features Grid */}
       <section className="relative py-20 sm:py-32 px-4 sm:px-6 md:px-8 bg-white overflow-hidden">

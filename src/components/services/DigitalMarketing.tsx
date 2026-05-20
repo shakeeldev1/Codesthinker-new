@@ -44,15 +44,21 @@ const DigitalMarketing = () => {
       title: "Drive Growth with Data-Driven Strategies",
       description: "Scale your business with expert-led digital marketing campaigns that deliver measurable ROI and brand authority.",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop",
-      color: "from-amber-600/40 to-orange-500/40",
+      primaryLink: "/contact",
+      secondaryLink: "/projects",
+      primaryBtnText: "Boost Your Sales",
+      secondaryBtnText: "Case Studies"
     },
     {
       id: 2,
       subtitle: "Social Commerce",
       title: "Connect with Your Ideal Audience",
       description: "Building loyal communities and driving engagement across all platforms where your customers live and shop.",
-      image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=2074&auto=format&fit=crop",
-      color: "from-orange-600/40 to-amber-500/40",
+      image: "https://images.unsplash.com/photo-1557838923-2985c318be48?q=80&w=2062&auto=format&fit=crop",
+      primaryLink: "/contact",
+      secondaryLink: "/projects",
+      primaryBtnText: "Get Social Now",
+      secondaryBtnText: "Our Approach"
     },
     {
       id: 3,
@@ -60,7 +66,10 @@ const DigitalMarketing = () => {
       title: "Rank High, Grow Faster",
       description: "Dominating search results with advanced SEO and targeted SEM strategies tailored for your industry.",
       image: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?q=80&w=2074&auto=format&fit=crop",
-      color: "from-yellow-600/40 to-orange-500/40",
+      primaryLink: "/contact",
+      secondaryLink: "/projects",
+      primaryBtnText: "Start SEO Audit",
+      secondaryBtnText: "View Results"
     },
   ];
 
@@ -154,8 +163,8 @@ const DigitalMarketing = () => {
           <GlobalHeading
             className="mb-16"
             badge={{ text: "Services" }}
-            title="Our Services"
-            titleHighlight="Services"
+            title="Digital Marketing Services"
+            titleHighlight="Marketing Services"
             subtitle="End-to-end digital marketing solutions designed to maximize your online visibility and revenue."
             alignment="center"
             textColor="dark"

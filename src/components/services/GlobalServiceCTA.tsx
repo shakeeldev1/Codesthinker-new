@@ -1,6 +1,8 @@
+// @ts-nocheck
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Zap, MessageSquare, Sparkles } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface GlobalServiceCTAProps {
   theme?: 'light' | 'dark';
@@ -9,6 +11,8 @@ interface GlobalServiceCTAProps {
   subtitle?: string;
   primaryBtnText?: string;
   secondaryBtnText?: string;
+  primaryLink?: string;
+  secondaryLink?: string;
 }
 
 const GlobalServiceCTA: React.FC<GlobalServiceCTAProps> = ({
@@ -17,7 +21,9 @@ const GlobalServiceCTA: React.FC<GlobalServiceCTAProps> = ({
   highlightText = "Digital Presence?",
   subtitle = "Join hundreds of successful businesses that have scaled with our innovative solutions and expert team.",
   primaryBtnText = "Start Your Project",
-  secondaryBtnText = "Book a Consultation"
+  secondaryBtnText = "Book a Consultation",
+  primaryLink = "/contact",
+  secondaryLink = "/contact"
 }) => {
   const isDark = theme === 'dark';
 
@@ -27,37 +33,37 @@ const GlobalServiceCTA: React.FC<GlobalServiceCTAProps> = ({
       bg: 'bg-white',
       borderColor: 'border-gray-200',
       glowTop: 'bg-amber-200',
-      glowBottom: 'bg-orange-100',
+      glowBottom: 'bg-amber-100',
       textPrimary: 'text-[#07051d]',
       textSecondary: 'text-gray-600',
-      highlightGradient: 'from-amber-500 via-orange-500 to-amber-600',
+      highlightText: 'text-amber-500',
       badgeBg: 'bg-amber-50',
       badgeBorder: 'border-amber-200',
       badgeText: 'text-amber-700',
       badgeIcon: 'text-amber-600',
-      secondaryBtnBg: 'bg-gray-50',
-      secondaryBtnBorder: 'border-gray-200',
+      secondaryBtnBg: 'bg-transparent',
+      secondaryBtnBorder: 'border-[#07051d]',
       secondaryBtnText: 'text-[#07051d]',
-      secondaryBtnHover: 'hover:border-amber-400 hover:bg-amber-50',
+      secondaryBtnHover: 'hover:bg-[#07051d] hover:text-white',
       shadow: 'shadow-xl',
     },
     dark: {
       bg: 'bg-[#07051d]',
-      borderColor: 'border-gray-800',
-      glowTop: 'bg-amber-600/20',
-      glowBottom: 'bg-orange-600/10',
-      textPrimary: 'text-slate-50',
-      textSecondary: 'text-slate-400',
-      highlightGradient: 'from-amber-400 via-orange-400 to-amber-500',
-      badgeBg: 'bg-amber-950/50',
-      badgeBorder: 'border-amber-800/50',
-      badgeText: 'text-amber-300',
-      badgeIcon: 'text-amber-400',
-      secondaryBtnBg: 'bg-[#0f0b29]/50',
-      secondaryBtnBorder: 'border-gray-800',
-      secondaryBtnText: 'text-slate-50',
-      secondaryBtnHover: 'hover:border-amber-500/60 hover:bg-[#07051d]',
-      shadow: 'shadow-2xl shadow-amber-500/20',
+      borderColor: 'border-white/10',
+      glowTop: 'bg-amber-500/10',
+      glowBottom: 'bg-amber-500/5',
+      textPrimary: 'text-white',
+      textSecondary: 'text-gray-200',
+      highlightText: 'text-amber-500',
+      badgeBg: 'bg-white/5',
+      badgeBorder: 'border-white/10',
+      badgeText: 'text-gray-200',
+      badgeIcon: 'text-amber-500',
+      secondaryBtnBg: 'bg-transparent',
+      secondaryBtnBorder: 'border-white',
+      secondaryBtnText: 'text-white',
+      secondaryBtnHover: 'hover:bg-white hover:text-[#07051d]',
+      shadow: 'shadow-2xl shadow-amber-500/10',
     }
   };
 
@@ -123,14 +129,14 @@ const GlobalServiceCTA: React.FC<GlobalServiceCTAProps> = ({
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center"
+            className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8"
           >
             {/* Left content */}
-            <div className="space-y-4 text-center lg:text-left">
+            <div className="space-y-4 text-center lg:text-left flex flex-col justify-center">
               {/* Badge */}
               <motion.div
                 variants={itemVariants}
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300 ${colors.badgeBg} ${colors.badgeBorder} group hover:scale-105`}
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300 ${colors.badgeBg} ${colors.badgeBorder} group hover:scale-105 w-fit mx-auto lg:mx-0`}
               >
                 <Sparkles className={`w-4 h-4 ${colors.badgeIcon}`} />
                 <span className={`text-xs font-bold uppercase tracking-widest ${colors.badgeText}`}>
@@ -141,10 +147,10 @@ const GlobalServiceCTA: React.FC<GlobalServiceCTAProps> = ({
               {/* Heading */}
               <motion.h2
                 variants={itemVariants}
-                className={`text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight ${colors.textPrimary}`}
+                className={`text-3xl md:text-5xl font-bold leading-tight ${colors.textPrimary} mb-6`}
               >
                 {title}{' '}
-                <span className={`inline-block bg-gradient-to-r ${colors.highlightGradient} bg-clip-text text-transparent font-serif italic mt-2`}>
+                <span className={`${colors.highlightText}`}>
                   {highlightText}
                 </span>
               </motion.h2>
@@ -152,7 +158,7 @@ const GlobalServiceCTA: React.FC<GlobalServiceCTAProps> = ({
               {/* Subtitle */}
               <motion.p
                 variants={itemVariants}
-                className={`text-base md:text-lg leading-relaxed max-w-md mx-auto lg:mx-0 ${colors.textSecondary}`}
+                className={`text-sm md:text-xl leading-relaxed max-w-2xl mx-auto lg:mx-0 ${colors.textSecondary} mb-8`}
               >
                 {subtitle}
               </motion.p>
@@ -161,46 +167,26 @@ const GlobalServiceCTA: React.FC<GlobalServiceCTAProps> = ({
             {/* Right actions */}
             <motion.div 
               variants={itemVariants}
-              className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-4 justify-center lg:justify-end items-center"
+              className="flex flex-col gap-4 justify-center lg:justify-center items-center lg:items-center h-full w-full"
             >
               {/* Primary button */}
-              <motion.button
-                whileTap={{ scale: 0.98 }}
-                className={`
-                  group relative px-6 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 
-                  text-white font-semibold rounded-full overflow-hidden transition-all duration-300
-                  shadow-lg hover:shadow-2xl hover:shadow-amber-500/40
-                  flex items-center justify-center gap-2 w-max
-                `}
+              <Link
+                to={primaryLink}
+                className="relative inline-flex items-center justify-center font-bold rounded-xl transition-all duration-300 cursor-pointer overflow-hidden shadow-lg focus:outline-none px-6 py-2 md:px-8 text-sm md:text-base bg-amber-500 text-[#07051d] hover:bg-amber-400 group"
               >
-                <span className="relative z-10 flex items-center gap-2 text-sm md:text-base">
+                <span className="relative z-10 flex items-center justify-center gap-2">
                   {primaryBtnText}
-                  <motion.div
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    <ArrowRight className="w-4 h-4" />
-                  </motion.div>
                 </span>
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  initial={false}
-                />
-              </motion.button>
+                <span className="absolute inset-0 -translate-x-full bg-white/30 group-hover:translate-x-full transition-transform duration-700 ease-in-out rotate-12"></span>
+              </Link>
 
               {/* Secondary button */}
-              <motion.button
-                whileTap={{ scale: 0.98 }}
-                className={`
-                  flex items-center justify-center gap-2 px-6 py-2.5 font-semibold rounded-full 
-                  border-2 transition-all duration-300 text-sm md:text-base w-max
-                  ${colors.secondaryBtnBg} ${colors.secondaryBtnBorder} ${colors.secondaryBtnText} ${colors.secondaryBtnHover}
-                  backdrop-blur-sm
-                `}
+              <Link
+                to={secondaryLink}
+                className={`px-6 py-2 md:px-8 text-sm md:text-base font-bold rounded-xl border-2 transition-all duration-300 shadow-lg cursor-pointer ${colors.secondaryBtnBg} ${colors.secondaryBtnBorder} ${colors.secondaryBtnText} ${colors.secondaryBtnHover}`}
               >
-                <MessageSquare className="w-4 h-4" />
                 {secondaryBtnText}
-              </motion.button>
+              </Link>
             </motion.div>
           </motion.div>
         </div>

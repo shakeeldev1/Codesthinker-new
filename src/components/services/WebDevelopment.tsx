@@ -1,17 +1,11 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import {
   Code2,
   Smartphone,
   Zap,
   ShoppingCart,
   Globe,
-  CheckCircle2,
-  ArrowRight,
-  Layers,
-  Cpu,
-  Database,
-  Layout,
-  ShieldCheck
+  Layers
 } from 'lucide-react';
 import GlobalHero1 from './GlobalHero1';
 import GlobalHeading from './GlobalHeading';
@@ -92,6 +86,10 @@ const WebDevelopment = () => {
           "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2070&auto=format&fit=crop",
           "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop"
         ]}
+        primaryLink="/contact"
+        secondaryLink="/projects"
+        primaryBtnText="Start Your Project"
+        secondaryBtnText="View Our Work"
       />
 
       {/* Services Grid Section */}

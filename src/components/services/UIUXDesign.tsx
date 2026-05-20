@@ -1,21 +1,10 @@
-import React, { useState } from 'react';
 import {
   Palette,
   Users,
   Zap,
   Target,
-  Code2,
-  ArrowRight,
-  CheckCircle,
   Smartphone,
-  Layout,
-  Brain,
-  Lightbulb,
-  TrendingUp,
-  Shield,
-  Infinity,
-  Star,
-  Layers
+  Brain
 } from 'lucide-react';
 import GlobalHero2 from './GlobalHero2';
 import GlobalHeading from './GlobalHeading';
@@ -24,7 +13,6 @@ import GlobalCard from './GlobalServiceCard';
 import GlobalServiceCard1 from './GlobalServiceCard1';
 
 const UIUXDesign = () => {
-  const [activeTab, setActiveTab] = useState(0);
 
   const technologies = [
     { name: "Figma", category: "Design", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
@@ -79,10 +67,14 @@ const UIUXDesign = () => {
         subtitle="We blend creativity with user-centric data to design intuitive interfaces that drive engagement and business growth."
         theme="dark"
         images={[
-          "https://images.unsplash.com/photo-1586717791821-3f44a563dc4c?q=80&w=2070&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=2000&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1964&auto=format&fit=crop"
+          "https://images.unsplash.com/photo-1545235617-9465d2a55698?q=80&w=2080&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=2071&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=2070&auto=format&fit=crop"
         ]}
+        primaryLink="/contact"
+        secondaryLink="/projects"
+        primaryBtnText="Start Designing"
+        secondaryBtnText="Our Portfolio"
       />
 
       {/* Services Section */}
@@ -91,8 +83,8 @@ const UIUXDesign = () => {
           <GlobalHeading
             className="mb-16"
             badge={{ text: "Services" }}
-            title="Our Services"
-            titleHighlight="Services"
+            title="UI/UX Design Services"
+            titleHighlight="Design Services"
             subtitle="Transformative design solutions tailored to your unique needs and goals"
             alignment="center"
             textColor="dark"

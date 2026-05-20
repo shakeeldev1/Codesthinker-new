@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import ParticleBackground from "./ParticleBackground";
+import ParticleBackground from "../home/ParticleBackground";
 
 // --- Types ---
 interface TeamMember {

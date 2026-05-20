@@ -10,6 +10,7 @@ import Footer from './components/common/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import ServicePage from './pages/ServicePage';
+import ServicesPage from './pages/ServicesPage';
 import Whatsapp from './components/common/Whatsapp';
 import Contact from './pages/Contact';
 import ApplyNowProjectTraining from './pages/ApplyNowProjectTraining';
@@ -17,6 +18,7 @@ import ApplyForInternship from './pages/ApplyForInternship';
 import JobBoard from './pages/JobBoard';
 import Blog from './pages/Blog';
 import TeamPage from './pages/TeamPage';
+import ProjectsPage from './pages/ProjectsPage';
 import ScrollToTop from './components/common/ScrollToTop';
 
 
@@ -25,7 +27,7 @@ const MainLayout = () => {
   return (
     <>
       <Navbar />
-      <ScrollToTop/>
+      <ScrollToTop />
       <Outlet />
       <Whatsapp />
       <Footer />
@@ -41,6 +43,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: 'about', element: <About /> },
+      { path: 'services', element: <ServicesPage /> },
       { path: 'services/:serviceId', element: <ServicePage /> },
       { path: 'blog', element: <Blog /> },
       { path: 'contact', element: <Contact /> },
@@ -48,6 +51,7 @@ const router = createBrowserRouter([
       { path: 'apply/internship', element: <ApplyForInternship /> },
       { path: 'apply/jobs', element: <JobBoard /> },
       { path: 'team', element: <TeamPage /> },
+      { path: 'projects', element: <ProjectsPage /> },
     ],
   },
 ]);
