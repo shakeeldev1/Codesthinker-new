@@ -20,11 +20,11 @@ const featuresData: FeatureCard[] = [
     id: 2,
     icon: <Rocket className="w-7 h-7 md:w-8 md:h-8 transition-transform duration-300 group-hover:scale-110" />,
     title: 'Growth Strategy & Scale',
-    description: 'Accelerate your roadmap with high-performing dedicated development frameworks.',
+    description: 'Accelerate your roadmap with high performing dedicated development frameworks.',
   },
   {
     id: 3,
-    icon: <ThumbsUp className="w-7 h-7 md:w-8 md:h-8 transition-transform duration-300 group-hover:scale-110" />,
+    icon: <ThumbsUp className="w-7 h-7 md:w-8 md:h-8 transition transform duration-300 group-hover:scale-110" />,
     title: 'Top Tier Quality Assurance',
     description: 'Delivering pixel-perfect products optimized for conversions and stability.',
   },
