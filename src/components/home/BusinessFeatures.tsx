@@ -24,9 +24,9 @@ const featuresData: FeatureCard[] = [
   },
   {
     id: 3,
-    icon: <ThumbsUp className="w-7 h-7 md:w-8 md:h-8 transition transform duration-300 group-hover:scale-110" />,
+    icon: <ThumbsUp className="w-7 h-7 md:w-8 md:h-8 transition-transform duration-300 group-hover:scale-110" />,
     title: 'Top Tier Quality Assurance',
-    description: 'Delivering pixel-perfect products optimized for conversions and stability.',
+    description: 'Delivering pixel perfect products optimized for Conversions and Stability.',
   },
 ];
 
