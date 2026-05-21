@@ -32,7 +32,7 @@ const MainLayout = () => {
       <ScrollRestoration /> 
       <Navbar />
       <ScrollToTop />
-      <Outlet />
+      {/* <Outlet /> */}
       <main>
         <Outlet />
       </main>
