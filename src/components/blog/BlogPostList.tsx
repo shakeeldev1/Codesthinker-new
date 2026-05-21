@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import BlogPostCard from './BlogPostCard';
 
 interface BlogPost {
@@ -60,7 +60,7 @@ const BlogPostList: React.FC = () => {
     {
       id: 4,
       title: 'Career Growth in Tech',
-      excerpt: 'Navigate your tech career path with proven strategies for skill development, networking, and landing your dream role.',
+      excerpt: 'Navigate your tech career path with proven strategies for skills development, networking, and landing your dream role.',
       category: 'Career',
       author: 'Emily Park',
       date: 'May 2, 2024',
@@ -98,126 +98,38 @@ const BlogPostList: React.FC = () => {
     },
   ];
 
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % posts.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [isAutoPlaying, posts.length]);
-
-  const handleCardClick = (index: number) => {
-    setIsAutoPlaying(false);
-    setActiveIndex(index);
-    setTimeout(() => setIsAutoPlaying(true), 10000);
-  };
-
   return (
-    <div className="relative w-full overflow-hidden py-8">
-      {/* Stack Container */}
-      <div className="relative flex flex-col items-center justify-center min-h-[600px]">
-        {posts.map((post, index) => {
-          const isActive = activeIndex === index;
-          const offset = index - activeIndex;
-          const isVisible = Math.abs(offset) <= 2;
-          
-          if (!isVisible) return null;
-          
-          return (
-            <motion.div
-              key={post.id}
-              initial={false}
-              animate={{
-                y: offset * 20,
-                scale: isActive ? 1 : 0.95,
-                opacity: isActive ? 1 : 0.4,
-                zIndex: posts.length - Math.abs(offset),
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 30,
-              }}
-              className="absolute cursor-pointer"
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-              }}
-              onClick={() => handleCardClick(index)}
-            >
-              <BlogPostCard 
-                post={post} 
-                index={index} 
-                isActive={isActive}
-                onClick={() => handleCardClick(index)}
-              />
-            </motion.div>
-          );
-        })}
-      </div>
-
-      {/* Navigation Dots */}
-      <div className="flex justify-center gap-2 mt-8 pt-8">
-        {posts.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => handleCardClick(idx)}
-            className={`transition-all duration-300 rounded-full ${
-              activeIndex === idx 
-                ? 'w-8 h-2 bg-gradient-to-r from-amber-500 to-orange-500' 
-                : 'w-2 h-2 bg-white/20 hover:bg-white/40'
-            }`}
-            aria-label={`View post ${idx + 1}`}
-          />
+    <div className="relative w-full py-8">
+      {/* Grid Container */}
+      <motion.div 
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+        initial="hidden"
+        animate="visible"
+        variants={{
+          visible: {
+            transition: {
+              staggerChildren: 0.1
+            }
+          }
+        }}
+      >
+        {posts.map((post, index) => (
+          <motion.div
+            key={post.id}
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 }
+            }}
+            transition={{ duration: 0.5 }}
+          >
+            <BlogPostCard 
+              post={post} 
+              index={index} 
+              isActive={false}
+            />
+          </motion.div>
         ))}
-      </div>
-
-      {/* Navigation Arrows */}
-      <div className="absolute left-4 top-1/2 -translate-y-1/2 hidden lg:block">
-        <button
-          onClick={() => handleCardClick((activeIndex - 1 + posts.length) % posts.length)}
-          className="w-10 h-10 rounded-full bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 hover:text-amber-400 transition-all duration-300 flex items-center justify-center"
-          aria-label="Previous post"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-      </div>
-      
-      <div className="absolute right-4 top-1/2 -translate-y-1/2 hidden lg:block">
-        <button
-          onClick={() => handleCardClick((activeIndex + 1) % posts.length)}
-          className="w-10 h-10 rounded-full bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 hover:text-amber-400 transition-all duration-300 flex items-center justify-center"
-          aria-label="Next post"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
-
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-8px) rotate(3deg); }
-        }
-        @keyframes float-reverse {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(8px) rotate(-3deg); }
-        }
-        .animate-float {
-          animation: float 3s ease-in-out infinite;
-        }
-        .animate-float-reverse {
-          animation: float-reverse 4s ease-in-out infinite;
-        }
-      `}</style>
+      </motion.div>
     </div>
   );
 };

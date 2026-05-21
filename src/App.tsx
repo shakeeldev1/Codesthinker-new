@@ -15,9 +15,9 @@ import ServicePage from './pages/ServicePage';
 import ServicesPage from './pages/ServicesPage';
 import Whatsapp from './components/common/Whatsapp';
 import Contact from './pages/Contact';
-import ApplyNowProjectTraining from './pages/ApplyNowProjectTraining';
 import ApplyForInternship from './pages/ApplyForInternship';
-import JobBoard from './pages/JobBoard';
+import ApplyForJob from './pages/ApplyForJob';
+import GetOurServices from './pages/GetOurServices';
 import Blog from './pages/Blog';
 import TeamPage from './pages/TeamPage';
 import ProjectsPage from './pages/ProjectsPage';
@@ -32,7 +32,6 @@ const MainLayout = () => {
       <ScrollRestoration /> 
       <Navbar />
       <ScrollToTop />
-      {/* <Outlet /> */}
       <main>
         <Outlet />
       </main>
@@ -54,9 +53,9 @@ const router = createBrowserRouter([
       { path: 'services/:serviceId', element: <ServicePage /> },
       { path: 'blog', element: <Blog /> },
       { path: 'contact', element: <Contact /> },
-      { path: 'apply/projects', element: <ApplyNowProjectTraining /> },
       { path: 'apply/internship', element: <ApplyForInternship /> },
-      { path: 'apply/jobs', element: <JobBoard /> },
+      { path: 'apply/job', element: <ApplyForJob /> },
+      { path: 'apply/get-services', element: <GetOurServices /> },
       { path: 'team', element: <TeamPage /> },
       { path: 'projects', element: <ProjectsPage /> },
     ],

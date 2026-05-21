@@ -39,9 +39,9 @@ const navLinks: NavLink[] = [
         name: 'Apply Now',
         to: '#',
         subLinks: [
-            { name: 'Project Training', to: '/apply/projects' },
+            { name: 'Get Our Services', to: '/apply/get-services' },
             { name: 'Apply for Internship', to: '/apply/internship' },
-            { name: 'Job Board', to: '/apply/jobs' },
+            { name: 'Apply For Job', to: '/apply/job' },
         ]
     },
     { name: 'Team', to: '/team' },

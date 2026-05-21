@@ -35,11 +35,11 @@ const BlogFilters: React.FC<BlogFiltersProps> = ({
                 placeholder="Search articles..."
                 value={searchTerm}
                 onChange={(e) => onSearchChange(e.target.value)}
-                className="w-full px-6 py-3 pl-12 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/25 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition-all backdrop-blur-sm"
+                className="w-full px-6 py-3 pl-12 rounded-xl bg-white border border-gray-200 text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
                 autoFocus
               />
-              <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 1114 0z" />
               </svg>
             </motion.div>
           )}
@@ -48,10 +48,10 @@ const BlogFilters: React.FC<BlogFiltersProps> = ({
         {!isSearchOpen && (
           <button
             onClick={() => setIsSearchOpen(true)}
-            className="w-full max-w-md mx-auto flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 hover:text-white transition-all duration-300"
+            className="w-full max-w-md mx-auto flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-300"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 1114 0z" />
             </svg>
             <span className="text-sm">Search articles...</span>
           </button>
@@ -64,8 +64,8 @@ const BlogFilters: React.FC<BlogFiltersProps> = ({
           onClick={() => onCategoryChange('All')}
           className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
             selectedCategory === 'All'
-              ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg shadow-amber-500/30'
-              : 'bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 hover:text-white'
+              ? 'bg-gray-900 text-white shadow-md'
+              : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
           }`}
         >
           All
@@ -76,8 +76,8 @@ const BlogFilters: React.FC<BlogFiltersProps> = ({
             onClick={() => onCategoryChange(category)}
             className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
               selectedCategory === category
-                ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg shadow-amber-500/30'
-                : 'bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 hover:text-white'
+                ? 'bg-gray-900 text-white shadow-md'
+                : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
             }`}
           >
             {category}

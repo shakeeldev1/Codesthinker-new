@@ -17,12 +17,12 @@ interface FormErrors {
   resume?: string;
 }
 
-const ApplyForInternshipForm: React.FC = () => {
+const ApplyForJobForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
     email: '',
     phone: '',
-    position: 'Frontend Developer',
+    position: 'Software Engineer',
     resume: null,
   });
 
@@ -52,10 +52,10 @@ const ApplyForInternshipForm: React.FC = () => {
       <div className="mb-8">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-100 mb-4">
           <span className="w-2 h-2 rounded-full bg-[#F69A20]"></span>
-          <span className="text-[10px] font-bold text-[#F69A20] uppercase tracking-wider">Summer 2026 Program</span>
+          <span className="text-[10px] font-bold text-[#F69A20] uppercase tracking-wider">Career Opportunity</span>
         </div>
-        <h2 className="text-3xl font-bold text-gray-900">Shape Your Future</h2>
-        <p className="text-gray-500 text-sm mt-2">Join our internship program and kickstart your career.</p>
+        <h2 className="text-3xl font-bold text-gray-900">Build Your Career</h2>
+        <p className="text-gray-500 text-sm mt-2">Join our team and work on exciting projects.</p>
       </div>
 
       <form className="space-y-5" onSubmit={() => {}}>
@@ -77,24 +77,21 @@ const ApplyForInternshipForm: React.FC = () => {
           <div>
             <label className={labelBase}>Position *</label>
            <select className={`${inputBase} cursor-pointer`}>
-  {/* Development */}
-  <option>Frontend Developer</option>
-  <option>Backend Developer</option>
+  {/* Engineering/Dev Roles */}
+  <option>Software Engineer</option>
   <option>Web Development</option>
   <option>App Development</option>
   <option>DevOps Engineer</option>
-
-  {/* Design & Product */}
+  
+  {/* Design & Product Roles */}
+  <option>Product Manager</option>
   <option>UX/UI Designer</option>
   <option>Graphic Design</option>
-  <option>Product Manager</option>
-
-  {/* Business & Growth */}
+  
+  {/* Data & Business Roles */}
+  <option>Data Scientist</option>
   <option>Business Development</option>
   <option>Digital Marketing</option>
-
-  {/* Data */}
-  <option>Data Scientist</option>
 </select>
           </div>
         </div>
@@ -112,11 +109,11 @@ const ApplyForInternshipForm: React.FC = () => {
         </div>
 
         <button className="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition-colors">
-          Apply for Internship →
+          Apply for Job →
         </button>
       </form>
     </div>
   );
 };
 
-export default ApplyForInternshipForm;
+export default ApplyForJobForm;
