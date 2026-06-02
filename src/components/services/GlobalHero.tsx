@@ -66,7 +66,7 @@ const GlobalHero = ({ data, height = "h-screen" }) => {
             <motion.div
               initial={{ scale: 1.1 }}
               animate={{ scale: activeIndex === index ? 1 : 1.1 }}
-              transition={{ duration: 7, ease: "easeOut" }}
+              transition={{ duration: 7, ease: [0.22, 1, 0.36, 1] }}
               className="absolute inset-0 z-0"
               style={{
                 backgroundImage: `url(${slide.image})`,

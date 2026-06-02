@@ -3,8 +3,6 @@ import BlogHeader from '../components/blog/BlogHeader';
 import BlogPostList from '../components/blog/BlogPostList';
 
 const Blog: React.FC = () => {
-  const totalPosts = 6;
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 text-gray-900 relative overflow-hidden font-sans">
       
@@ -15,8 +13,8 @@ const Blog: React.FC = () => {
       </div>
 
       <div >
-        <BlogHeader totalPosts={totalPosts} />
-      <div className='px-12'>  <BlogPostList /></div>
+        <BlogHeader />
+        <div className='px-12'>  <BlogPostList /></div>
       </div>
     </div>
   );

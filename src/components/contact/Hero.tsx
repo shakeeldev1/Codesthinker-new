@@ -68,7 +68,7 @@ const ContactHeader: React.FC = () => {
             variants={textVariant}
             initial="hidden"
             animate="show"
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="w-full lg:w-3/5 space-y-7 text-center lg:text-left"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-500/5 border border-amber-500/20 backdrop-blur-sm">
@@ -136,12 +136,12 @@ const ContactHeader: React.FC = () => {
             variants={imageVariant}
             initial="hidden"
             animate="show"
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="w-full lg:w-2/5 flex justify-center lg:justify-end"
           >
             <motion.div
               animate={shouldReduceMotion ? {} : { y: [0, -10, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 6, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
               className="relative group"
             >
               {/* Decorative Rings */}

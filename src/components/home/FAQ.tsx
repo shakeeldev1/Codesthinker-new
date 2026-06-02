@@ -186,7 +186,7 @@ const FAQ: React.FC = () => {
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.25, ease: "easeInOut" }}
+                            transition={{ duration: 0.25, ease: [0.42, 0, 0.58, 1] }}
                             className="overflow-hidden"
                           >
                             <div className="px-6 pb-6 text-gray-500 text-sm leading-relaxed border-t border-gray-100 pt-4">
@@ -218,7 +218,7 @@ const FAQ: React.FC = () => {
               {/* Main Image Base Frame */}
               <motion.div
                 animate={{ y: [0, -12, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                transition={{ duration: 6, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
                 className="relative z-10 rounded-2xl overflow-hidden shadow-2xl ring-1 ring-gray-900/5 group"
               >
                 <img

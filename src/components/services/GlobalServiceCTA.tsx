@@ -85,7 +85,7 @@ const GlobalServiceCTA: React.FC<GlobalServiceCTAProps> = ({
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
     },
   };
 
@@ -108,7 +108,7 @@ const GlobalServiceCTA: React.FC<GlobalServiceCTAProps> = ({
                 opacity: [0.4, 0.7, 0.4],
                 scale: [1, 1.2, 1],
               }}
-              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 10, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
               className={`absolute -top-1/3 -left-1/4 w-96 h-96 rounded-full ${colors.glowTop} blur-[120px]`}
             />
             
@@ -118,7 +118,7 @@ const GlobalServiceCTA: React.FC<GlobalServiceCTAProps> = ({
                 opacity: [0.3, 0.6, 0.3],
                 scale: [1, 1.15, 1],
               }}
-              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              transition={{ duration: 12, repeat: Infinity, ease: [0.42, 0, 0.58, 1], delay: 1 }}
               className={`absolute -bottom-1/3 -right-1/4 w-96 h-96 rounded-full ${colors.glowBottom} blur-[120px]`}
             />
           </div>

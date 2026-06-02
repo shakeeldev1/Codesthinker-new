@@ -7,6 +7,8 @@ import {
 } from 'react-router-dom';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 // Pages
 import Home from './pages/Home';
@@ -26,6 +28,12 @@ import ScrollToTop from './components/common/ScrollToTop';
 
 // Layout
 const MainLayout = () => {
+  // Log location changes for debugging navigation issues
+  const location = useLocation();
+  useEffect(() => {
+    console.log('[MainLayout] mounted or location changed ->', location.pathname);
+  }, [location.pathname]);
+
   return (
     <>
       {/* This component ensures the page scrolls to top on every navigation */}

@@ -18,7 +18,7 @@ const Hero: React.FC = () => {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 15 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
   };
 
   return (
@@ -101,7 +101,7 @@ const Hero: React.FC = () => {
             {/* Background SVG Decoration */}
             <motion.svg 
               animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 20, repeat: Infinity, ease: [0,0,1,1] }}
               className="absolute -top-10 -right-10 w-64 h-64 opacity-20 pointer-events-none" 
               viewBox="0 0 200 200"
             >

@@ -180,12 +180,20 @@ gradient: "from-[#08061E] to-[#08061E]",    },
     if (activeButton && containerRef.current) {
       const containerRect = containerRef.current.getBoundingClientRect();
       const buttonRect = activeButton.getBoundingClientRect();
-      setSliderStyle({
+      const newStyle = {
         width: `${buttonRect.width}px`,
         transform: `translateX(${buttonRect.left - containerRect.left}px)`
+      };
+
+      // Only update state if slider style actually changes to avoid render loops
+      setSliderStyle(prev => {
+        if (prev.width === newStyle.width && prev.transform === newStyle.transform) return prev;
+        return newStyle;
       });
     }
-  }, [activeTab, tabs]);
+    // Note: intentionally only depend on activeTab. `tabs` is a locally recreated array
+    // and would trigger this effect every render causing a potential update loop.
+  }, [activeTab]);
 
   // Intersection Observer for lazy loading
   useEffect(() => {

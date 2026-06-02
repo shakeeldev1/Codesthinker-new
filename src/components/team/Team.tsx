@@ -189,7 +189,7 @@ const Team: React.FC = () => {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [hoveredOrb, setHoveredOrb] = useState<number | null>(null);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
-  const autoPlayTimeoutRef = useRef<NodeJS.Timeout>();
+  const autoPlayTimeoutRef = useRef<number | undefined>(undefined);
   
   const TOTAL_ITEMS = teamMembers.length;
   const RADIUS = windowSize.width < 768 ? 160 : 260;
@@ -218,12 +218,12 @@ const Team: React.FC = () => {
     setActiveIndex(index);
     
     // Clear existing timeout
-    if (autoPlayTimeoutRef.current) {
+    if (autoPlayTimeoutRef.current !== undefined) {
       clearTimeout(autoPlayTimeoutRef.current);
     }
-    
+
     // Resume autoplay after 10 seconds of inactivity
-    autoPlayTimeoutRef.current = setTimeout(() => setIsAutoPlaying(true), 10000);
+    autoPlayTimeoutRef.current = window.setTimeout(() => setIsAutoPlaying(true), 10000);
   }, []);
 
   // Cleanup timeout on unmount
@@ -298,13 +298,13 @@ const Team: React.FC = () => {
               className="absolute border border-gray-200 rounded-full"
               style={{ width: RADIUS * 2, height: RADIUS * 2 }}
               animate={{ rotate: 360 }}
-              transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 60, repeat: Infinity, ease: [0,0,1,1] }}
             />
             <motion.div 
               className="absolute border border-gray-300/50 rounded-full border-dashed"
               style={{ width: RADIUS * 1.5, height: RADIUS * 1.5 }}
               animate={{ rotate: -360 }}
-              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 40, repeat: Infinity, ease: [0,0,1,1] }}
             />
 
             {/* Central Hero Avatar */}

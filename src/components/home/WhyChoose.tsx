@@ -40,7 +40,7 @@ const FeatureItem: React.FC<{ feature: Feature; index: number; align?: "left" | 
       initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.6, delay: index * 0.12, ease: "easeOut" }}
+      transition={{ duration: 0.6, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
       className={`flex items-start gap-4 group ${isLeft ? "flex-row text-left" : "flex-row-reverse text-right"}`}
     >
       {/* Icon Wrapper */}

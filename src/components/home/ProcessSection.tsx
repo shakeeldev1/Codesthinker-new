@@ -38,23 +38,23 @@ const ProcessSection: React.FC = () => {
     },
   };
 
-  const fadeInLeft = {
-    hidden: { opacity: 0, x: -40 },
-    visible: { 
-      opacity: 1, 
-      x: 0, 
-      transition: { duration: 0.7, ease: "easeOut" } 
-    },
-  };
+   const fadeInLeft = {
+     hidden: { opacity: 0, x: -40 },
+     visible: { 
+       opacity: 1, 
+       x: 0, 
+       transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } 
+     },
+   };
 
-  const fadeInRight = {
-    hidden: { opacity: 0, x: 40 },
-    visible: { 
-      opacity: 1, 
-      x: 0, 
-      transition: { duration: 0.8, ease: "easeOut" } 
-    },
-  };
+   const fadeInRight = {
+     hidden: { opacity: 0, x: 40 },
+     visible: { 
+       opacity: 1, 
+       x: 0, 
+       transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } 
+     },
+   };
 
   return (
     <section className="relative w-full min-h-[600px] bg-gradient-to-br from-slate-50 to-gray-100 py-16 px-4 sm:px-6 lg:py-24 lg:px-8 overflow-hidden font-sans">

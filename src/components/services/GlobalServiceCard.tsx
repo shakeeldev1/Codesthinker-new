@@ -49,9 +49,9 @@ const GlobalServiceCard = ({
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0, transition: { delay: index * 0.1, duration: 0.5, ease: "easeOut" } }}
+      whileInView={{ opacity: 1, y: 0, transition: { delay: index * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] } }}
       viewport={{ once: true }}
-      whileHover={{ y: -8, transition: { duration: 0.2, ease: "easeOut" } }}
+      whileHover={{ y: -8, transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] } }}
       className={`
         group relative overflow-hidden rounded-2xl border-2
         transition-all duration-500 cursor-pointer

@@ -69,16 +69,25 @@ const Navbar: React.FC = () => {
         return () => { document.body.style.overflow = 'unset'; };
     }, [isMobileMenuOpen]);
 
-    // 3. Reset states on route change
+    // 3. Reset states on route change (also log for debugging)
     useEffect(() => {
+        console.log('[Navbar] route change detected:', location.pathname);
         setIsMobileMenuOpen(false);
         setOpenMobileDropdown(null);
         setActiveHover(null);
     }, [location.pathname]);
 
-    const handleLinkClick = useCallback(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, []);
+        const handleLinkClick = useCallback((e?: React.MouseEvent) => {
+                // Debug helper: log what was clicked and current location
+                try {
+                    const target = (e && (e.currentTarget as HTMLElement)) || null;
+                    console.log('[Navbar] link clicked:', target?.getAttribute('href') || target?.getAttribute('to') || 'unknown', 'locationBefore:', location.pathname);
+                } catch (err) {
+                    console.warn('[Navbar] link click log failed', err);
+                }
+                // Keep previous behavior: scroll to top smoothly on navigation
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, [location.pathname]);
 
     const isActive = (path: string) => location.pathname === path;
 

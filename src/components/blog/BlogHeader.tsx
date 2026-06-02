@@ -4,7 +4,9 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { BookOpen, Newspaper, Zap, Sparkles, ArrowRight, Rss } from "lucide-react";
 import video from "../../../public/video.mp4";
 
-const BlogHero: React.FC = () => {
+interface BlogHeaderProps { totalPosts?: number }
+
+const BlogHero: React.FC<BlogHeaderProps> = ({ totalPosts }) => {
   const { scrollY } = useScroll();
   const videoScale = useTransform(scrollY, [0, 500], [1, 1.1]);
   const videoOpacity = useTransform(scrollY, [0, 500], [1, 0.4]);
@@ -17,10 +19,10 @@ const BlogHero: React.FC = () => {
     },
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 15 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-  };
+   const itemVariants = {
+     hidden: { opacity: 0, y: 15 },
+     visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easing.easeOut } },
+   };
 
   return (
     <section className="relative w-full min-h-[90vh] pt-12 lg:min-h-screen flex items-center overflow-hidden font-sans bg-[#07051D]">
@@ -93,12 +95,12 @@ const BlogHero: React.FC = () => {
             className="w-full lg:w-2/5 flex justify-center lg:justify-end relative"
           >
             {/* Background SVG Decoration */}
-            <motion.svg 
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="absolute -top-10 -right-10 w-64 h-64 opacity-20 pointer-events-none" 
-              viewBox="0 0 200 200"
-            >
+             <motion.svg 
+               animate={{ rotate: 360 }}
+               transition={{ duration: 20, repeat: Infinity, ease: easing.linear }}
+               className="absolute -top-10 -right-10 w-64 h-64 opacity-20 pointer-events-none" 
+               viewBox="0 0 200 200"
+             >
               <path fill="#F59E0B" d="M44.7,-76.4C58.3,-69.2,70,-57.9,78.7,-44.5C87.4,-31.1,93,-15.5,91.2,-0.9C89.4,13.6,80.1,27.2,69.5,37.9C58.9,48.7,46.9,56.5,34.4,63.1C21.9,69.7,8.8,75,-4.4,82.7C-17.7,90.4,-31.1,100.4,-43.3,98.2C-55.5,96.1,-66.4,81.7,-74.6,67.6C-82.7,53.4,-88.1,39.6,-91,25.4C-93.9,11.2,-94.3,-3.3,-89.7,-16.5C-85.2,-29.7,-75.7,-41.5,-64.3,-51.1C-52.9,-60.7,-39.7,-68.1,-26.4,-75.4C-13.1,-82.7,0.3,-89.9,13.7,-88.5C27.1,-87.1,40.4,-77.2,44.7,-76.4Z" transform="translate(100 100)" />
             </motion.svg>
 
