@@ -142,7 +142,7 @@ const ProcessSection: React.FC = () => {
                 </div>
                 <p className="text-gray-900 font-extrabold text-xl leading-tight">
                   Execute your <br /> 
-                  <span className="text-[#F69A20]">Ideas from start</span>
+                  <span className="text-[#F69A20]">Ideas From Start</span>
                 </p>
               </div>
             </div>
