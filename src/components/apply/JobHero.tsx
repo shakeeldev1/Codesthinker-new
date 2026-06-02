@@ -3,7 +3,19 @@ import { motion } from "framer-motion";
 import { Users, Globe, Rocket, Sparkles, ChevronRight } from "lucide-react";
 import video from "../../../public/video.mp4"; // Ensure this path is correct
 
+interface StatItem {
+    label: string;
+    val: string;
+    icon: React.ReactElement<{ className?: string }>;
+}
+
 const JobHero: React.FC = () => {
+    const stats: StatItem[] = [
+        { label: "Team Members", val: "50+", icon: <Users className="w-5 h-5 text-[#F69A20]" /> },
+        { label: "Global Reach", val: "8+ Nations", icon: <Globe className="w-5 h-5 text-[#F69A20]" /> },
+        { label: "Success Rate", val: "99%", icon: <Rocket className="w-5 h-5 text-[#F69A20]" /> },
+    ];
+
     return (
         <section className="relative w-full h-screen pt-12 flex items-center overflow-hidden font-sans">
 
@@ -44,14 +56,10 @@ const JobHero: React.FC = () => {
                         </p>
 
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6">
-                            {[
-                                { label: "Team Members", val: "50+", icon: <Users className="w-5 h-5 text-[#F69A20]" /> },
-                                { label: "Global Reach", val: "8+ Nations", icon: <Globe className="w-5 h-5 text-[#F69A20]" /> },
-                                { label: "Success Rate", val: "99%", icon: <Rocket className="w-5 h-5 text-[#F69A20]" /> }
-                            ].map((stat, i) => (
+                            {stats.map((stat, i) => (
                                 <div key={i} className="flex flex-col items-center lg:items-start gap-2">
                                     <div className="p-3 bg-white/10 backdrop-blur-md rounded-xl ring-1 ring-white/10 w-fit">
-                                        {React.cloneElement(stat.icon as React.ReactElement, { className: "w-5 h-5 text-white" })}
+                                        {React.cloneElement(stat.icon, { className: "w-5 h-5 text-white" })}
                                     </div>
                                     <div className="text-xl font-bold text-white leading-none">{stat.val}</div>
                                     <div className="text-[10px] font-bold text-gray-300 uppercase tracking-wider">{stat.label}</div>
@@ -75,7 +83,7 @@ const JobHero: React.FC = () => {
                             <img
                                 src="https://images.pexels.com/photos/16323454/pexels-photo-16323454.jpeg"
                                 alt="Team"
-                                className="w-[500px] h-[400px] object-cover rounded-2xl"
+                                className="w-125 h-100 object-cover rounded-2xl"
                             />
                         </div>
                     </motion.div>

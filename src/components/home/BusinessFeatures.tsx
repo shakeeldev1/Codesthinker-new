@@ -44,7 +44,7 @@ const BusinessFeatures: React.FC = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+      transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
     },
   };
 
@@ -69,11 +69,11 @@ const BusinessFeatures: React.FC = () => {
               <div className="absolute inset-0 bg-[#08061E] translate-y-[101%] transition-transform duration-500 ease-in-out delay-100 group-hover:translate-y-0 group-hover:delay-150 z-0" />
               
               {/* Layer 2: Navy Wipe. Delays 250ms on enter, drops instantly on exit */}
-              <div className="absolute inset-0 bg-[black] translate-y-[101%] transition-transform duration-500 ease-in-out delay-0 group-hover:translate-y-0 group-hover:delay-[250ms] z-10" />
+              <div className="absolute inset-0 bg-[black] translate-y-[101%] transition-transform duration-500 ease-in-out delay-0 group-hover:translate-y-0 group-hover:delay-250 z-10" />
               {/* --------------------------- */}
 
               {/* Icon Container */}
-              <div className="flex-shrink-0 bg-[#08061E]/10 group-hover:bg-[#ffffff] text-[#08061E] group-hover:text-[#08061E] p-3.5 md:p-4 rounded-xl shadow-sm relative z-20 transition-colors duration-300 delay-0 group-hover:delay-300">
+              <div className="shrink-0 bg-[#08061E]/10 group-hover:bg-[#ffffff] text-[#08061E] group-hover:text-[#08061E] p-3.5 md:p-4 rounded-xl shadow-sm relative z-20 transition-colors duration-300 delay-0 group-hover:delay-300">
                 {feature.icon}
               </div>
 

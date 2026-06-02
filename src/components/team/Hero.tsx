@@ -7,6 +7,7 @@ const Hero: React.FC = () => {
   const { scrollY } = useScroll();
   const videoScale = useTransform(scrollY, [0, 500], [1, 1.1]);
   const videoOpacity = useTransform(scrollY, [0, 500], [1, 0.4]);
+  const easeOutCubic = [0.22, 1, 0.36, 1] as const;
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -18,7 +19,7 @@ const Hero: React.FC = () => {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 15 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOutCubic } },
   };
 
   return (
@@ -31,8 +32,8 @@ const Hero: React.FC = () => {
       </motion.div>
 
       {/* Modern Gradient Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#07051D] via-[#07051D]/80 to-transparent z-10" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#07051D] via-transparent to-transparent z-10" />
+      <div className="absolute inset-0 bg-linear-to-r from-[#07051D] via-[#07051D]/80 to-transparent z-10" />
+      <div className="absolute inset-0 bg-linear-to-t from-[#07051D] via-transparent to-transparent z-10" />
 
       <div className="container mx-auto px-6 relative z-30">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
@@ -52,7 +53,7 @@ const Hero: React.FC = () => {
 
             <motion.h1 variants={itemVariants} className="text-5xl font-bold text-white leading-[1.05] tracking-tight">
               Design the  Future<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400  to-yellow-500">
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-400  to-yellow-500">
                 With
               </span>
                Our Team
@@ -95,13 +96,13 @@ const Hero: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as const }}
             className="w-full lg:w-2/5 flex justify-center lg:justify-end relative"
           >
             {/* Background SVG Decoration */}
             <motion.svg 
               animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: [0,0,1,1] }}
+              transition={{ duration: 20, repeat: Infinity, ease: [0, 0, 1, 1] as const }}
               className="absolute -top-10 -right-10 w-64 h-64 opacity-20 pointer-events-none" 
               viewBox="0 0 200 200"
             >
@@ -113,7 +114,7 @@ const Hero: React.FC = () => {
                 <img
                   alt="Team collaboration"
                   src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800"
-                  className="w-[320px] md:w-[420px] h-[350px] rounded-[2.1rem] object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-[320px] md:w-105 h-87.5 rounded-[2.1rem] object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 
                 {/* Float Badge */}
