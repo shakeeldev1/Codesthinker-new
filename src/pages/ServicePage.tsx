@@ -9,6 +9,9 @@ import RemoteITResources from '../components/services/RemoteITResources';
 import UIUXDesign from '../components/services/UIUXDesign';
 import GraphicDesign from '../components/services/GraphicDesign';
 import DigitalMarketing from '../components/services/DigitalMarketing';
+import BlockchainDevelopment from '../components/services/BlockchainDevelopment';
+import DataAnalytics from '../components/services/DataAnalytics';
+import WordPressDevelopment from '../components/services/WordPressDevelopment';
 
 const ServicePage = () => {
   const { serviceId } = useParams<{ serviceId: string }>();
@@ -32,6 +35,12 @@ const ServicePage = () => {
       return <GraphicDesign />;
     case 'marketing':
       return <DigitalMarketing />;
+    case 'blockchain':
+      return <BlockchainDevelopment />;
+    case 'data-analytics':
+      return <DataAnalytics />;
+    case 'wordpress':
+      return <WordPressDevelopment />;
     default:
       // Redirect to home if the service route is invalid
       return <Navigate to="/" replace />;

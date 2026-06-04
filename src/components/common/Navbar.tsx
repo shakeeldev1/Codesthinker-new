@@ -31,7 +31,10 @@ const navLinks: NavLink[] = [
             { name: 'Remote IT Resources', to: '/services/resources' },
             { name: 'UI/UX Design', to: '/services/ui-ux' },
             { name: 'Graphic Design', to: '/services/graphic-design' },
-            { name: 'Digital Marketing', to: '/services/marketing' },
+                { name: 'Digital Marketing', to: '/services/marketing' },
+                { name: 'Blockchain Development', to: '/services/blockchain' },
+                { name: 'Data Analytics', to: '/services/data-analytics' },
+                { name: 'WordPress Development', to: '/services/wordpress' },
         ]
     },
     { name: 'Projects', to: '/projects' },

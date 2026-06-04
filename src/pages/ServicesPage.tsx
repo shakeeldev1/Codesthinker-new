@@ -11,6 +11,9 @@ import {
   Palette, 
   PenTool, 
   TrendingUp 
+  ,
+  Server,
+  BarChart
 } from 'lucide-react';
 import GlobalHero from '../components/services/GlobalHero';
 import GlobalHeading from '../components/services/GlobalHeading';
@@ -106,6 +109,28 @@ const servicesData = [
     description: 'Data-driven marketing strategies to boost your online presence and drive growth.',
     icon: TrendingUp,
     link: '/services/marketing'
+  }
+  ,
+  {
+    id: 'blockchain',
+    title: 'Blockchain Development',
+    description: 'Build secure, scalable blockchain applications, smart contracts, and DApps.',
+    icon: Server,
+    link: '/services/blockchain'
+  },
+  {
+    id: 'data-analytics',
+    title: 'Data Analytics',
+    description: 'Transform data into actionable insights with analytics and BI solutions.',
+    icon: BarChart,
+    link: '/services/data-analytics'
+  },
+  {
+    id: 'wordpress',
+    title: 'WordPress Development',
+    description: 'Custom WordPress themes, plugins and performant CMS-driven sites.',
+    icon: Globe,
+    link: '/services/wordpress'
   }
 ];
 

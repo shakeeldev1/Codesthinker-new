@@ -116,14 +116,18 @@ const GlobalServiceCard = ({
         </h3>
       )}
 
-      {/* Description */}
+      {/* Description (clamped to keep cards uniform) */}
       {description && (
-        <p className={`
-          leading-relaxed pointer-events-none
-          transition-colors duration-500
-          ${compact ? 'text-sm' : 'text-base'}
-          ${t.subtext}
-        `}>
+        <p
+          className={`leading-relaxed pointer-events-none transition-colors duration-500 ${compact ? 'text-sm' : 'text-base'} ${t.subtext}`}
+          style={{
+            display: '-webkit-box',
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+            minHeight: compact ? 48 : 72,
+          }}
+        >
           {description}
         </p>
       )}
