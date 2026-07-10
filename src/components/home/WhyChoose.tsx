@@ -9,15 +9,12 @@ import {
   Users,
 } from "lucide-react";
 import type { LucideProps } from "lucide-react";
-import video from "../../../public/video.mp4"
+import { SectionBadge } from "../ui/SectionBadge";
 
 // --- Components ---
 const Button = ({ text }: { text: string }) => (
-  <button className="relative group overflow-hidden bg-white text-gray-900 font-semibold px-5 py-2 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_4px_20px_rgba(255,255,255,0.15)]">
-    <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
-      {text}
-    </span>
-    <span className="absolute inset-0 bg-gradient-to-r from-[#F69A20] to-[#ffb44c] scale-x-0 origin-left transition-transform duration-300 ease-out group-hover:scale-x-100" />
+  <button className="inline-flex items-center justify-center bg-white text-[#08061E] font-semibold px-6 py-2.5 rounded-full transition-all duration-300 hover:bg-gray-100 hover:scale-105 active:scale-95 shadow-lg">
+    {text}
   </button>
 );
 
@@ -41,19 +38,19 @@ const FeatureItem: React.FC<{ feature: Feature; index: number; align?: "left" | 
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
-      className={`flex items-start gap-4 group ${isLeft ? "flex-row text-left" : "flex-row-reverse text-right"}`}
+      className={`flex items-start gap-5 group ${isLeft ? "flex-row text-left" : "flex-row-reverse text-right"}`}
     >
       {/* Icon Wrapper */}
-      <div className="shrink-0 mt-1 p-3 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 text-gray-300 group-hover:text-white group-hover:bg-[#F69A20] group-hover:border-[#F69A20] group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(246,154,32,0.4)] transition-all duration-300">
-        <Icon size={24} strokeWidth={1.75} />
+      <div className="shrink-0 mt-1 p-4 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 text-white/70 group-hover:text-white group-hover:bg-white/10 group-hover:border-white/20 group-hover:scale-110 shadow-lg transition-all duration-500">
+        <Icon size={24} strokeWidth={2} />
       </div>
 
       {/* Content */}
-      <div className="space-y-1">
-        <h3 className="font-semibold text-white text-lg lg:text-xl tracking-wide group-hover:text-[#F69A20] transition-colors duration-300">
+      <div className="space-y-2">
+        <h3 className="font-bold text-white/90 text-xl tracking-wide group-hover:text-white transition-colors duration-500">
           {feature.title}
         </h3>
-        <p className="text-sm text-gray-400 leading-relaxed max-w-sm group-hover:text-gray-300 transition-colors duration-300">
+        <p className="text-sm text-gray-400 leading-relaxed max-w-sm group-hover:text-gray-300 transition-colors duration-500">
           {feature.description}
         </p>
       </div>
@@ -73,41 +70,30 @@ const WhyChoose: React.FC = () => {
   ];
 
   return (
-    <section className="relative py-12 bg-[#050414] overflow-hidden">
-      {/* Background Video Media */}
+    <section className="relative py-16 bg-[#08061E] overflow-hidden font-sans">
+      {/* Premium Tech Grid Background & Ambient Glows */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover  scale-105"
-        >
-          {/* Replaced broken Pexels download link with a verified fallback stream asset */}
-          <source src={video} type="video/mp4" />
-        </video>
-        {/* Complex Overlay Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050414] via-[#050414]/70 to-[#050414]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(246,154,32,0.08)_0%,transparent_60%)]" />
+        {/* Ambient Corner Glows */}
+        <div className="absolute -top-[20%] -left-[10%] w-[500px] h-[500px] bg-[#F69A20] opacity-[0.06] rounded-full blur-[120px]"></div>
+        <div className="absolute -bottom-[20%] -right-[10%] w-[600px] h-[600px] bg-[#4F46E5] opacity-[0.05] rounded-full blur-[150px]"></div>
+        
+        {/* Grid */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-white opacity-[0.03] blur-[100px]"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#08061E] via-transparent to-[#08061E]" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header Section */}
-        <div className="text-center mb-20 max-w-3xl mx-auto">
+        <div className="text-center mb-8 max-w-3xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 bg-white/5 backdrop-blur-lg ring-1 ring-white/10 rounded-full px-4 py-1.5 mb-6"
+            className="flex justify-center mb-6"
           >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F69A20] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#F69A20]"></span>
-            </span>
-            <span className="text-[10px] font-bold text-gray-300 uppercase tracking-[0.2em]">
-              Why Choose Us
-            </span>
+            <SectionBadge text="Why Choose Us" theme="dark" />
           </motion.div>
 
           <motion.h2 
@@ -115,53 +101,123 @@ const WhyChoose: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight"
+            className="text-4xl md:text-5xl font-bold text-white tracking-tight leading-tight"
           >
-            Why Choose <span className="text-[#F69A20] bg-clip-text bg-gradient-to-r from-[#F69A20] to-[#ffb44c]">Code's</span> Thinker
+            <span className="text-2xl md:text-3xl font-semibold text-white/90 block mb-1">Why Choose</span>
+            <span className="relative inline-block">
+              Code's Thinker.
+              <span
+                className="absolute -bottom-1 left-0 h-[4px] bg-[#F69A20]/60 rounded-full w-full"
+              />
+            </span>
           </motion.h2>
         </div>
 
-        {/* Features Content Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 lg:gap-8 items-center">
-          
-          {/* Left Column */}
-          <div className="flex flex-col gap-12 sm:gap-14 order-2 lg:order-1">
-            {features.slice(0, 3).map((f, i) => (
-              <FeatureItem key={f.title} feature={f} index={i} align="left" />
-            ))}
-          </div>
+        {/* Circular Orbit Layout (Desktop Only) */}
+        <div className="relative mt-16 hidden lg:flex justify-center items-center h-[650px] w-full max-w-[1200px] mx-auto">
+          {/* Central Core */}
+          <div className="absolute z-20 w-[300px] h-[300px] flex items-center justify-center">
+            {/* Ambient Glow */}
+            <div className="absolute inset-0 rounded-full filter blur-[80px] opacity-20 animate-pulse"
+              style={{ background: 'radial-gradient(circle, #F69A20 0%, #ffffff 60%, transparent 100%)' }}
+            />
 
-          {/* Center Graphic */}
-          <motion.div 
-            initial={{ scale: 0.85, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 60, delay: 0.2 }}
-            className="relative mx-auto order-1 lg:order-2 my-4 lg:my-0"
-          >
-            {/* Ambient Background Glow */}
-            <div className="absolute inset-0 bg-[#050414] rounded-full filter blur-[60px] opacity-20 animate-pulse duration-[6s]" />
-            
-            {/* Border Shield Ring */}
-            <div className="relative p-3 rounded-full border border-white/5 bg-white/[0.02] backdrop-blur-sm">
-              <div className="w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden shadow-[0_0_60px_rgba(246,154,32,0.15)] border-2 border-white/10 group">
-                <img 
-                  src="/why.png" 
-                  alt="Team collaboration showcase" 
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out hover:scale-110" 
-                  loading="lazy" 
-                />
-              </div>
+            {/* Outer Orbital Rings */}
+            <div className="absolute w-[120%] h-[120%] border border-white/10 rounded-full animate-[spin_40s_linear_infinite]" />
+            <div className="absolute w-[90%] h-[90%] border border-white/[0.05] rounded-full animate-[spin_30s_linear_infinite_reverse]" />
+
+            {/* Glowing Hexagon Core */}
+            <div className="relative z-10 w-40 h-40 flex items-center justify-center transform transition-transform duration-700 hover:scale-110 hover:rotate-12">
+              {/* Outer Hexagon */}
+              <svg viewBox="0 0 200 200" className="absolute w-full h-full drop-shadow-[0_0_30px_rgba(246,154,32,0.5)] animate-[spin_20s_linear_infinite]" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="hexGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#F69A20" stopOpacity="0.9"/>
+                    <stop offset="100%" stopColor="#ffffff" stopOpacity="0.9"/>
+                  </linearGradient>
+                </defs>
+                <polygon points="100,15 178,57.5 178,142.5 100,185 22,142.5 22,57.5" fill="none" stroke="url(#hexGrad1)" strokeWidth="2" />
+              </svg>
+              {/* Inner Hexagon (counter-spin) */}
+              <svg viewBox="0 0 200 200" className="absolute w-[70%] h-[70%] drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] animate-[spin_15s_linear_infinite_reverse]" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="hexGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#ffffff" stopOpacity="0.8"/>
+                    <stop offset="100%" stopColor="#F69A20" stopOpacity="0.8"/>
+                  </linearGradient>
+                </defs>
+                <polygon points="100,15 178,57.5 178,142.5 100,185 22,142.5 22,57.5" fill="url(#hexGrad2)" fillOpacity="0.15" stroke="url(#hexGrad2)" strokeWidth="2" />
+              </svg>
+              {/* Center Diamond */}
+              <svg viewBox="0 0 80 80" className="relative z-10 w-12 h-12 drop-shadow-[0_0_15px_rgba(246,154,32,0.8)]" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="diamondGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#F69A20"/>
+                    <stop offset="100%" stopColor="#ffffff"/>
+                  </linearGradient>
+                </defs>
+                <polygon points="40,5 75,40 40,75 5,40" fill="url(#diamondGrad)" />
+              </svg>
             </div>
-          </motion.div>
-
-          {/* Right Column */}
-          <div className="flex flex-col gap-12 sm:gap-14 order-3">
-            {features.slice(3, 6).map((f, i) => (
-              // Passing updated sequence index (i + 3) to keep smooth step delays across grids
-              <FeatureItem key={f.title} feature={f} index={i + 3} align="right" />
-            ))}
           </div>
+
+          {/* Orbiting Feature Nodes */}
+          {features.map((feature, i) => {
+            // 6 features -> 60 degrees apart (Math.PI / 3)
+            // Offset by -90 degrees (-Math.PI / 2) so the first item is at the top
+            const angle = (i * 60 - 90) * (Math.PI / 180);
+            
+            // CREATIVE FIX: Use an Elliptical Orbit!
+            // Wide horizontally to fill blank space, short vertically to prevent excessive height
+            const xRadius = 520; 
+            const yRadius = 260; 
+            
+            const x = Math.cos(angle) * xRadius;
+            const y = Math.sin(angle) * yRadius;
+            
+            const isLeft = x < -10;
+            const Icon = feature.icon;
+
+            return (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, scale: 0.8, x: 0, y: 0 }}
+                whileInView={{ opacity: 1, scale: 1, x: x, y: y }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute w-[300px] z-30 group"
+                style={{
+                  left: "calc(50% - 150px)",
+                  top: "calc(50% - 40px)",
+                }}
+              >
+                <div className={`flex items-center gap-4 ${isLeft ? 'flex-row-reverse text-right' : 'flex-row text-left'}`}>
+                  {/* Glowing Icon Container */}
+                  <div className="shrink-0 p-4 bg-[#08061E] backdrop-blur-md rounded-2xl border border-white/10 text-white/70 group-hover:text-white group-hover:border-white/30 group-hover:scale-110 shadow-2xl transition-all duration-500 relative overflow-hidden">
+                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.08] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                     <Icon size={28} strokeWidth={1.5} className="relative z-10" />
+                  </div>
+
+                  {/* Text Content */}
+                  <div className="space-y-1">
+                    <h3 className="font-bold text-white/90 text-lg tracking-wide group-hover:text-white transition-colors duration-500 leading-tight">
+                      {feature.title}
+                    </h3>
+                    <p className="text-xs text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors duration-500 line-clamp-2">
+                      {feature.description}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            )
+          })}
+        </div>
+
+        {/* Mobile/Tablet Grid View (Hidden on Desktop) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:hidden mt-16">
+          {features.map((f, i) => (
+            <FeatureItem key={f.title} feature={f} index={i} align="left" />
+          ))}
         </div>
 
         {/* Footer CTA */}
@@ -170,7 +226,7 @@ const WhyChoose: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="text-center mt-20 sm:mt-24"
+          className="text-center mt-12"
         >
           <Button text="More About Us" />
         </motion.div>

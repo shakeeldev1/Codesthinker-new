@@ -1,4 +1,5 @@
 import Hero from '../components/home/Hero'
+import BusinessFeatures from '../components/home/BusinessFeatures'
 import ClientsMarquee from '../components/home/ClientsMarquee'
 import AboutUs from '../components/home/AboutUs'
 import Services from '../components/home/Services'

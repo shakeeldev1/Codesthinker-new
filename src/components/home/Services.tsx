@@ -19,6 +19,7 @@ import {
   Briefcase,
 } from "lucide-react";
 import Button from "../common/Button";
+import { SectionBadge } from "../ui/SectionBadge";
 
 const ServicesSection = () => {
   const [activeTab, setActiveTab] = useState("All");
@@ -245,10 +246,7 @@ gradient: "from-[#08061E] to-[#08061E]",    },
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 bg-white ring-1 ring-gray-200 shadow-sm rounded-full px-4 py-1.5">
-                  <div className="w-2 h-2 rounded-full bg-[#F69A20] "></div>
-                  <span className="text-xs font-bold text-gray-700 uppercase tracking-widest">Our Services</span>
-                </div>
+          <SectionBadge text="Our Services" theme="light" className="mb-2" />
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-800">
             Turning <span className="text-[#F69A20] relative inline-block">
               Vision
@@ -427,43 +425,58 @@ gradient: "from-[#08061E] to-[#08061E]",    },
           >
             <button
               onClick={loadMore}
-              className="inline-flex items-center gap-2 px-5 py-2  border-2 border-[#08061E]  rounded-full font-semibold bg-[#08061E] text-white hover:bg-white hover:text-[#08061E] transition-all duration-300 shadow-md hover:shadow-xl"
+              className="inline-flex items-center gap-2 px-5 py-2 border-2 border-[#08061E] rounded-full font-semibold bg-[#08061E] text-white hover:bg-white hover:text-[#08061E] transition-all duration-300 shadow-md hover:shadow-xl"
             >
-            More Services
+              More Services
               <ArrowRight className="w-4 h-4" />
             </button>
           </motion.div>
         )}
 
-        {/* Enhanced Stats Section */}
+        {/* Enhanced Stats Section - Compact Unified Design */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="mt-16"
+          className="mt-16 relative"
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {[
-              { val: "500+", label: "Projects Completed", icon: Briefcase, color: "from-blue-500 to-cyan-500" },
-              { val: "98%", label: "Client Satisfaction", icon: TrendingUp, color: "from-green-500 to-teal-500" },
-              { val: "12+", label: "Industries Served", icon: Layers, color: "from-purple-500 to-pink-500" },
-              { val: "24/7", label: "Support Available", icon: Clock, color: "from-orange-500 to-red-500" }
-            ].map((stat, i) => {
-              const Icon = stat.icon;
-              return (
-                <motion.div
-                  key={i}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  className="group relative bg-[#08061E] rounded-xl px-5 py-2 shadow-lg overflow-hidden"
-                >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
-                  <Icon className="w-8 h-8 text-[#ffffff] mb-3 mx-auto" />
-                  <div className="text-3xl md:text-4xl font-bold mb-2 text-white text-center">{stat.val}</div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-gray-300 text-center">{stat.label}</div>
-                </motion.div>
-              );
-            })}
+          <div className="relative bg-[#0B0929] rounded-2xl shadow-xl overflow-hidden border border-white/5">
+            <div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-white/5">
+              {[
+                { val: "500+", label: "PROJECTS COMPLETED", icon: Briefcase },
+                { val: "98%", label: "CLIENT SATISFACTION", icon: TrendingUp },
+                { val: "12+", label: "INDUSTRIES SERVED", icon: Layers },
+                { val: "24/7", label: "SUPPORT AVAILABLE", icon: Clock }
+              ].map((stat, i) => {
+                const Icon = stat.icon;
+                return (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                    className="group relative px-4 py-8 flex flex-col items-center justify-center overflow-hidden transition-all duration-500"
+                  >
+                    {/* Elegant animated top accent line */}
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-[#F69A20] group-hover:w-full transition-all duration-500 ease-out opacity-0 group-hover:opacity-100" />
+                    
+                    {/* Subtle soft gradient background on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#F69A20]/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                    {/* Icon container with lift and soft glow */}
+                    <div className="mb-4 text-white/70 group-hover:text-[#F69A20] group-hover:-translate-y-1 transition-all duration-500 relative">
+                      <div className="absolute inset-0 bg-[#F69A20] blur-md opacity-0 group-hover:opacity-30 transition-opacity duration-500 rounded-full scale-150" />
+                      <Icon className="w-6 h-6 stroke-[1.5] relative z-10" />
+                    </div>
+                    
+                    <div className="text-3xl font-extrabold mb-1.5 text-white/90 group-hover:text-white transition-colors duration-300 tracking-tight relative z-10">{stat.val}</div>
+                    <div className="text-[9px] font-bold text-gray-500 group-hover:text-gray-300 tracking-[0.15em] uppercase transition-colors duration-300 relative z-10">{stat.label}</div>
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
         </motion.div>
 
