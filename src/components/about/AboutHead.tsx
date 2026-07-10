@@ -18,7 +18,7 @@ function AboutHead() {
   }, []);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-[#07051D]">
+    <div className="relative w-full min-h-screen md:h-screen md:overflow-hidden bg-[#07051D]">
       {/* Background Image */}
       <img
         src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop"
@@ -37,7 +37,7 @@ function AboutHead() {
       <div className="absolute inset-0 opacity-10 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
 
       {/* Main Content */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen pt-28 pb-16 px-6">
+      <div className="relative z-10 flex items-center justify-center min-h-screen pt-28 pb-28 md:pb-16 px-4 sm:px-6">
         <div className="max-w-7xl text-center text-white">
 
           {/* Badge Tag */}
@@ -47,7 +47,7 @@ function AboutHead() {
           <h1
             data-aos="zoom-in"
             data-aos-delay="100"
-            className="text-5xl font-bold leading-tight drop-shadow-lg"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight drop-shadow-lg"
           >
             Delivering World Class Software for{" "}
             <span className="text-[#F49B21]">Global Clients</span>
@@ -57,7 +57,7 @@ function AboutHead() {
           <p
             data-aos="fade-up"
             data-aos-delay="200"
-            className="mt-6 text-gray-200 text-base sm:text-lg md:text-xl leading-relaxed max-w-4xl mx-auto drop-shadow-md"
+            className="mt-6 text-gray-200 text-lg sm:text-xl md:text-xl leading-relaxed max-w-4xl mx-auto drop-shadow-md"
           >
             Codes Thinker is a high end digital company that delivers scalable, professional software solutions. We specialize in modern architecture, AI development, and seamless UI/UX transforming complex business challenges into high performance digital products.
           </p>
@@ -139,7 +139,7 @@ function AboutHead() {
       {/* Bottom Wave */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
         <svg
-          className="relative block w-full h-[120px]"
+          className="relative block w-full h-[60px] sm:h-[90px] md:h-[120px]"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1440 320"
         >
