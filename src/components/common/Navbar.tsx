@@ -118,7 +118,7 @@ const Navbar: React.FC = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [location.pathname]);
 
-    const useWhiteLinks = (scrolled && !activeHover) || (!scrolled && !activeHover && location.pathname !== '/');
+    const useWhiteLinks = (scrolled && !activeHover) || (!scrolled && !activeHover && location.pathname !== '/' && location.pathname !== '/projects');
 
     const isActive = (path: string) => location.pathname === path;
 

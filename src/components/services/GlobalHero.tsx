@@ -75,7 +75,7 @@ const GlobalHero = ({ data, height = "h-screen" }) => {
               }}
             />
             <div className="absolute inset-0 z-1 bg-gradient-to-r from-[#07051d]/80 via-[#07051d]/40 to-transparent" />
-            <div className="relative z-10 h-full flex items-center px-6 sm:px-12 md:px-20 lg:px-32">
+            <div className="relative z-10 h-full flex items-center pt-28 md:pt-0 px-6 sm:px-12 md:px-20 lg:px-32">
               <AnimatePresence mode="wait">
                 {activeIndex === index && (
                   <motion.div

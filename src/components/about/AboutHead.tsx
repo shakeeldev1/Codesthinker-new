@@ -3,7 +3,9 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { useNavigate } from "react-router-dom";
 import Button from "../common/Button";
-
+import { SectionBadge } from "../ui/SectionBadge";
+import { motion } from "framer-motion";
+import { HiArrowRight } from "react-icons/hi";
 function AboutHead() {
   const navigate = useNavigate();
 
@@ -35,14 +37,11 @@ function AboutHead() {
       <div className="absolute inset-0 opacity-10 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
 
       {/* Main Content */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen px-6">
+      <div className="relative z-10 flex items-center justify-center min-h-screen pt-28 pb-16 px-6">
         <div className="max-w-7xl text-center text-white">
 
           {/* Badge Tag */}
-          <div data-aos="zoom-in" className="inline-flex items-center gap-2 bg-[#F49B21]/20 border border-[#F49B21]/40 text-[#F49B21] text-xs font-semibold px-5 py-2 rounded-full mb-6 uppercase tracking-wider">
-            <span className="w-2 h-2 bg-[#F49B21] rounded-full animate-pulse"></span>
-            Trusted Software Partner
-          </div>
+          <SectionBadge text="Trusted Software Partner" theme="dark" className="mb-4" />
 
           {/* Main Heading with text drop shadow */}
           <h1
@@ -91,15 +90,47 @@ function AboutHead() {
           <div
             data-aos="fade-up"
             data-aos-delay="400"
-            className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-5"
+            className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-5 w-full sm:w-auto"
           >
-            <Button text="View Our Projects" onClick={() => navigate("/projects")} />
-            <button
-              onClick={() => navigate("/contact")}
-              className="min-w-[180px] px-5 py-1.5 rounded-full border border-[#F49B21]/60 text-[#F49B21] hover:bg-[#F49B21]/10 transition-all duration-300 font-semibold hover:scale-105 text-sm backdrop-blur-sm"
+            {/* Primary CTA — View Projects */}
+            <motion.button
+              whileHover={{ scale: 1.02, boxShadow: '0 20px 40px rgba(244,155,33,0.25)' }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => navigate("/projects")}
+              className="relative overflow-hidden group flex items-center justify-center gap-2.5 w-full sm:w-auto px-8 py-4 bg-[#F49B21] text-[#08061E] font-bold rounded-2xl shadow-xl text-[15px]"
             >
-              Get in Touch
-            </button>
+              <span className="relative z-10 flex items-center gap-2 transition-colors duration-300 group-hover:text-white">
+                View Our Projects
+                <motion.span
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  <HiArrowRight className="w-5 h-5" />
+                </motion.span>
+              </span>
+              {/* Slide up dark navy layer */}
+              <div className="absolute inset-0 bg-[#08061E] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
+              {/* Shine sweep */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 z-10"
+                animate={{ x: ['-150%', '250%'] }}
+                transition={{ duration: 2, repeat: Infinity, repeatDelay: 2, ease: 'easeInOut' }}
+              />
+            </motion.button>
+
+            {/* Secondary CTA — Get in Touch */}
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => navigate("/contact")}
+              className="relative overflow-hidden group w-full sm:w-auto px-8 py-4 bg-transparent text-white font-bold rounded-2xl border-2 border-white/20 hover:border-[#F49B21] transition-colors duration-300 text-[15px]"
+            >
+              <span className="relative z-10 transition-colors duration-300 group-hover:text-[#08061E]">
+                Get in Touch
+              </span>
+              {/* Slide up amber layer */}
+              <div className="absolute inset-0 bg-[#F49B21] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
+            </motion.button>
           </div>
 
         </div>

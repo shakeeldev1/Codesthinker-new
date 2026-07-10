@@ -64,9 +64,8 @@ const Contact: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       
-      {/* 1. Hero Section with Overlay, Increased Height, and Wave */}
       <div 
-        className="relative w-full min-h-[550px] flex flex-col items-center justify-center px-6 text-center text-white pb-20" 
+        className="relative w-full min-h-[550px] flex flex-col items-center justify-center pt-28 pb-20 px-6 text-center text-white" 
         style={{
           /* Linear gradient acts as the blue overlay on top of the image */
           backgroundImage: `linear-gradient(to bottom right, rgba(23, 37, 84, 0.85), rgba(30, 58, 138, 0.75)), url('https://img.magnific.com/free-photo/portrait-asian-girl-works-cafe-uses-laptop-sits-outdoors-street-digital-nomad_1258-189137.jpg?t=st=1779271721~exp=1779275321~hmac=0414f66be79b44de3b4d1f10d999dbddb842f84853f44cc5451ebfe852905373&w=1480')`,

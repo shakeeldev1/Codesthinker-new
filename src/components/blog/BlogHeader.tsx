@@ -25,7 +25,7 @@ const BlogHero: React.FC<BlogHeaderProps> = ({ totalPosts }) => {
   };
 
   return (
-    <section className="relative w-full min-h-[90vh] pt-12 lg:min-h-screen flex items-center overflow-hidden font-sans bg-[#07051D]">
+    <section className="relative w-full min-h-[90vh] pt-28 md:pt-0 lg:min-h-screen flex items-center overflow-hidden font-sans bg-[#07051D]">
       {/* Background Video Layer */}
       <motion.div style={{ scale: videoScale, opacity: videoOpacity }} className="absolute inset-0 z-0">
         <video autoPlay loop muted playsInline className="w-full h-full object-cover" src={video}>
