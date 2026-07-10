@@ -238,14 +238,16 @@ const Navbar: React.FC = () => {
 
                 {/* Desktop Action & Mobile Toggle */}
                 <div className="flex items-center gap-3">
-                    <Link to="/contact" onClick={handleLinkClick} className="hidden sm:block">
-                        <button className={`px-6 py-2.5 text-[13px] font-bold transition-all active:scale-95 shadow-md rounded-2xl border ${
+                    <Link 
+                        to="/contact" 
+                        onClick={handleLinkClick} 
+                        className={`hidden sm:flex items-center justify-center px-6 py-2.5 text-[13px] font-bold transition-all active:scale-95 shadow-md rounded-2xl border select-none ${
                             useWhiteLinks
                                 ? 'bg-white text-[#08061E] border-transparent hover:bg-gray-100 shadow-white/10'
                                 : 'bg-[#08061E] text-white hover:bg-gray-900 shadow-[#08061E]/10 border-[#08061E]'
-                        }`}>
-                            Get in Touch
-                        </button>
+                        }`}
+                    >
+                        Get in Touch
                     </Link>
 
                     <button

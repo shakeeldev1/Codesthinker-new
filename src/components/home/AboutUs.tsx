@@ -17,6 +17,7 @@ import {
   LuStar,
 } from "react-icons/lu";
 import { LucideCheckCircle } from "lucide-react";
+import { SectionBadge } from "../ui/SectionBadge";
 
 // --- Types ---
 interface Feature {
@@ -151,10 +152,7 @@ const AboutUs: React.FC = () => {
           {isHomePage && (
             <div className="w-full lg:w-1/2 order-1 lg:order-2 space-y-8" data-aos="fade-left">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-2 bg-white ring-1 ring-gray-200 shadow-sm rounded-full px-4 py-1.5">
-                  <div className="w-2 h-2 rounded-full bg-[#F69A20] "></div>
-                  <span className="text-xs font-bold text-gray-700 uppercase tracking-widest">Who We Are</span>
-                </div>
+                <SectionBadge text="Who We Are" theme="light" />
 
                 <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">
                   About{" "}
@@ -206,10 +204,7 @@ const AboutUs: React.FC = () => {
           {isAboutPage && (
             <div className="w-full lg:w-1/2 order-1 lg:order-2 flex flex-col justify-center gap-8" data-aos="fade-left">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-2 bg-white ring-1 ring-gray-200 shadow-sm rounded-full px-4 py-1.5 w-fit">
-                  <div className="w-2 h-2 rounded-full bg-blue-600"></div>
-                  <span className="text-xs font-bold text-gray-700 uppercase tracking-widest">Our Story</span>
-                </div>
+                <SectionBadge text="Our Story" theme="light" />
 
                 <h1 className="font-extrabold text-4xl lg:text-5xl text-gray-900 leading-tight tracking-tight">
                   Building{" "}
