@@ -120,7 +120,13 @@ const Navbar: React.FC = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [location.pathname]);
 
-    const useWhiteLinks = !activeHover;
+    // Check if current page starts with a white/light background
+    const isLightHeroPage = ['/projects'].some(path => location.pathname.startsWith(path));
+
+    // Active dropdowns force a white navbar -> dark links.
+    // Scrolled forces a dark navy navbar -> white links.
+    // Otherwise (at top), depend on whether the page has a light or dark hero.
+    const useWhiteLinks = activeHover ? false : (scrolled ? true : !isLightHeroPage);
 
     const isActive = (path: string) => location.pathname === path;
 
@@ -145,7 +151,7 @@ const Navbar: React.FC = () => {
                     <motion.img
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        src={activeHover ? "/logo-blue.png" : "https://codesthinker.com/companylogo.png"}
+                        src={useWhiteLinks ? "https://codesthinker.com/companylogo.png" : "/logo-blue.png"}
                         alt="CodesThinker Logo"
                         className="h-7 sm:h-9 w-auto object-contain transition-all duration-300"
                     />
@@ -243,8 +249,8 @@ const Navbar: React.FC = () => {
                         onClick={handleLinkClick} 
                         className={`hidden sm:flex items-center justify-center px-6 py-2.5 text-[13px] font-bold transition-all active:scale-95 shadow-md rounded-2xl border select-none ${
                             useWhiteLinks
-                                ? 'bg-white text-[#08061E] border-transparent hover:bg-gray-100 shadow-white/10'
-                                : 'bg-[#08061E] text-white hover:bg-gray-900 shadow-[#08061E]/10 border-[#08061E]'
+                                ? 'bg-white text-[#08061E] border-white hover:bg-amber-500 hover:text-white hover:border-amber-500 shadow-white/10'
+                                : 'bg-white text-[#08061E] border-gray-200 hover:bg-amber-500 hover:text-white hover:border-amber-500 shadow-sm'
                         }`}
                     >
                         Get in Touch
@@ -417,7 +423,8 @@ const Navbar: React.FC = () => {
                             <div className="w-1/4 bg-gradient-to-br from-gray-50 to-white py-8 px-8 border-l border-gray-100 flex flex-col">
                                 <span className="text-xs font-bold tracking-widest text-[#08061E]/40 uppercase mb-4">Spotlight</span>
                                 <div className="flex-1 overflow-hidden relative group cursor-pointer border border-gray-200 rounded-2xl shadow-sm">
-                                    <div className="absolute inset-0 bg-gradient-to-tr from-[#08061E] to-[#1a1440] opacity-90 mix-blend-multiply group-hover:scale-105 transition-transform duration-700" />
+                                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" alt="Spotlight" className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                    <div className="absolute inset-0 bg-gradient-to-tr from-[#08061E]/80 to-[#1a1440]/90 z-0" />
                                     <div className="relative h-full p-6 flex flex-col justify-end z-10">
                                         <h4 className="text-white font-bold text-lg mb-2">Digital Transformation</h4>
                                         <p className="text-white/80 text-xs mb-4">Strategies for scaling your business in the modern digital era.</p>
