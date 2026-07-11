@@ -1,4 +1,5 @@
 import React from "react";
+import { SectionBadge } from "../ui/SectionBadge";
 
 // --- Static Data ---
 const LOGO_SET_1 = [
@@ -29,7 +30,7 @@ const LogoImage: React.FC<{ src: string }> = ({ src }) => (
     src={src}
     alt="Trusted Client Logo"
     loading="lazy"
-    className="h-10 md:h-14 w-auto flex-shrink-0 object-contain mx-10 transform-gpu contrast-[1.02] brightness-95 filter transition-all duration-300 hover:scale-105"
+    className="h-14 md:h-20 lg:h-24 w-auto flex-shrink-0 object-contain mx-10 transform-gpu contrast-[1.02] brightness-95 filter transition-all duration-300 hover:scale-105"
     style={{ 
       WebkitBackfaceVisibility: 'hidden',
       backfaceVisibility: 'hidden',
@@ -50,12 +51,7 @@ const ClientsMarquee: React.FC = () => {
 
       {/* Styled Brand Header Block */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
-        <div className="inline-flex items-center gap-2 bg-white ring-1 ring-gray-200 shadow-sm rounded-full px-4 py-1.5 mb-4">
-          <div className="w-2 h-2 rounded-full bg-[#F69A20]"></div>
-          <span className="text-xs font-bold text-gray-700 uppercase tracking-widest">
-            Our Ecosystem
-          </span>
-        </div>
+        <SectionBadge text="Our Ecosystem" theme="light" className="mb-4" />
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
           Trusted by Innovative Market Leaders
         </h2>

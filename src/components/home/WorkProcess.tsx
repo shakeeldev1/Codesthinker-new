@@ -7,6 +7,7 @@ import {
   FaArrowRight,
 } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
+import { SectionBadge } from '../ui/SectionBadge';
 
 const WorkProcess: React.FC = () => {
   const steps = [
@@ -51,7 +52,7 @@ const WorkProcess: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6  text-center">
         {/* Section Header */}
         <div className="mb-24">
-          <span className="text-amber-600 font-bold tracking-widest uppercase text-sm">Process</span>
+          <SectionBadge text="Process" theme="light" />
           <h2 className="mt-4 text-4xl md:text-5xl font-bold text-[#07051d] leading-tight">
             How We Bring Your <br />
             <span className="text-amber-500">Ideas to Life</span>

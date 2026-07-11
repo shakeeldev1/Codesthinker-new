@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import img from "../../../public/process.webp"
+import { SectionBadge } from "../ui/SectionBadge";
 
 // --- Types ---
 interface ProcessPoint {
@@ -75,12 +76,7 @@ const ProcessSection: React.FC = () => {
         {/* Left Side: Points */}
         <motion.div variants={fadeInLeft} className="flex flex-col justify-center space-y-10 order-2 lg:order-1">
           <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 bg-white ring-1 ring-gray-200 shadow-sm rounded-full px-4 py-1.5 w-fit">
-              <div className="w-2 h-2 rounded-full bg-[#F69A20]"></div>
-              <span className="text-xs font-bold text-gray-700 uppercase tracking-widest">
-                Execution Process
-              </span>
-            </div>
+            <SectionBadge text="Execution Process" theme="light" />
             
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">
               Always{' '}
