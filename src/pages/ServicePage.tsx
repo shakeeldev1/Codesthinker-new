@@ -12,6 +12,7 @@ import DigitalMarketing from '../components/services/DigitalMarketing';
 import BlockchainDevelopment from '../components/services/BlockchainDevelopment';
 import DataAnalytics from '../components/services/DataAnalytics';
 import WordPressDevelopment from '../components/services/WordPressDevelopment';
+import ShopifyDevelopment from '../components/services/ShopifyDevelopment';
 
 const ServicePage = () => {
   const { serviceId } = useParams<{ serviceId: string }>();
@@ -41,6 +42,10 @@ const ServicePage = () => {
       return <DataAnalytics />;
     case 'wordpress':
       return <WordPressDevelopment />;
+    case 'shopify':
+      return <ShopifyDevelopment />;
+    case 'ebay':
+      return <Navigate to="/contact" replace />;
     default:
       // Redirect to home if the service route is invalid
       return <Navigate to="/" replace />;

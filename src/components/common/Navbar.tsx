@@ -36,6 +36,8 @@ const navLinks: NavLink[] = [
                     { name: 'Web Development', to: '/services/web', desc: 'Modern, scalable, and high-performance web applications.' },
                     { name: 'Mobile App Dev', to: '/services/mobile', desc: 'Native and cross-platform mobile experiences.' },
                     { name: 'WordPress Dev', to: '/services/wordpress', desc: 'Custom themes, plugins, and CMS solutions.' },
+                    { name: 'Shopify Dev', to: '/services/shopify', desc: 'High-converting custom e-commerce stores.' },
+                    { name: 'eBay Integration', to: '/services/ebay', desc: 'Professional eBay store setup and product syncing.' },
                     { name: 'Blockchain Dev', to: '/services/blockchain', desc: 'Secure decentralized apps and smart contracts.' },
                 ]
             },
@@ -118,7 +120,7 @@ const Navbar: React.FC = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [location.pathname]);
 
-    const useWhiteLinks = (scrolled && !activeHover) || (!scrolled && !activeHover && location.pathname !== '/' && location.pathname !== '/projects');
+    const useWhiteLinks = !activeHover;
 
     const isActive = (path: string) => location.pathname === path;
 
@@ -138,16 +140,14 @@ const Navbar: React.FC = () => {
                 <Link
                     to="/"
                     onClick={handleLinkClick}
-                    className={`flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#08061E] rounded-xl px-4 py-1.5 shadow-md transition-colors ${
-                        useWhiteLinks ? 'bg-white/10 border border-white/5' : 'bg-[#08061E]'
-                    }`}
+                    className="flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded-xl transition-all duration-300"
                 >
                     <motion.img
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        src="https://codesthinker.com/companylogo.png"
+                        src={activeHover ? "/logo-blue.png" : "https://codesthinker.com/companylogo.png"}
                         alt="CodesThinker Logo"
-                        className="h-7 sm:h-9 w-auto object-contain"
+                        className="h-7 sm:h-9 w-auto object-contain transition-all duration-300"
                     />
                 </Link>
 

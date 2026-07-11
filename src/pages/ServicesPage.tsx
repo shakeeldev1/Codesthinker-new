@@ -10,10 +10,10 @@ import {
   Users, 
   Palette, 
   PenTool, 
-  TrendingUp 
-  ,
+  TrendingUp,
   Server,
-  BarChart
+  BarChart,
+  ShoppingCart
 } from 'lucide-react';
 import GlobalHero from '../components/services/GlobalHero';
 import GlobalHeading from '../components/services/GlobalHeading';
@@ -131,6 +131,13 @@ const servicesData = [
     description: 'Custom WordPress themes, plugins and performant CMS-driven sites.',
     icon: Globe,
     link: '/services/wordpress'
+  },
+  {
+    id: 'shopify',
+    title: 'Shopify Development',
+    description: 'High-converting custom Shopify stores, Liquid custom themes, apps and integrations.',
+    icon: ShoppingCart,
+    link: '/services/shopify'
   }
 ];
 
