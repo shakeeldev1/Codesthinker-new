@@ -1,125 +1,187 @@
-"use client";
-import React from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { BookOpen, Newspaper, Zap, Sparkles, ArrowRight, Rss } from "lucide-react";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Sparkles, Search, ArrowRight, BookOpen, Clock, User } from "lucide-react";
 import video from "../../../public/video.mp4";
+import { posts } from "../../data/blogData";
+import { Link } from "react-router-dom";
+import { SectionBadge } from "../ui/SectionBadge";
 
-interface BlogHeaderProps { totalPosts?: number }
+const BlogHeader: React.FC = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  
+  // Find the first post to show as the featured spotlight in the header
+  const featuredPost = posts[0];
 
-const BlogHero: React.FC<BlogHeaderProps> = ({ totalPosts }) => {
-  const { scrollY } = useScroll();
-  const videoScale = useTransform(scrollY, [0, 500], [1, 1.1]);
-  const videoOpacity = useTransform(scrollY, [0, 500], [1, 0.4]);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 15 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const } },
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Search function can be wired up if needed, or it can scroll to list and filter
+    const blogListSection = document.getElementById("blog-posts-list");
+    if (blogListSection) {
+      blogListSection.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
-    <section className="relative w-full min-h-[90vh] pt-28 md:pt-0 lg:min-h-screen flex items-center overflow-hidden font-sans bg-[#07051D]">
-      {/* Background Video Layer */}
-      <motion.div style={{ scale: videoScale, opacity: videoOpacity }} className="absolute inset-0 z-0">
-        <video autoPlay loop muted playsInline className="w-full h-full object-cover" src={video}>
-          <source src={video} type="video/mp4" />
-        </video>
-      </motion.div>
+    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-[#07051D] pt-24 pb-16">
+      
+      {/* Background Video Layer - 100% Matching Website Hero Theme */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+        src={video}
+      >
+        <source src={video} type="video/mp4" />
+      </video>
 
-      {/* Modern Gradient Overlays */}
-      <div className="absolute inset-0 bg-linear-to-r from-[#07051D] via-[#07051D]/80 to-transparent z-10" />
-      <div className="absolute inset-0 bg-linear-to-t from-[#07051D] via-transparent to-transparent z-10" />
+      {/* Dark Navy Overlay - Matching homepage contrast */}
+      <div className="absolute inset-0 bg-[#07051D]/80 z-10 pointer-events-none" />
 
-      <div className="container mx-auto px-6 relative z-30">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
+      {/* Modern Gradient Overlays for smooth visual blending */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#07051D] via-transparent to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#07051D]/90 via-[#07051D]/50 to-transparent z-10 pointer-events-none" />
+
+      <div className="container mx-10 px-6 relative z-20 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           
-          {/* LEFT CONTENT: Focus on Insights */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="w-full lg:w-3/5 space-y-8 text-center lg:text-left"
+          {/* LEFT COLUMN: Headings and Search Bar */}
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="lg:col-span-7 space-y-6 md:space-y-8 text-center lg:text-left flex flex-col items-center lg:items-start"
           >
-            {/* Badge */}
-            <motion.div variants={itemVariants} className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-4 py-1.5 shadow-2xl">
-              <Sparkles className="w-4 h-4 text-amber-400" />
-              <span className="text-[10px] font-bold text-gray-200 uppercase tracking-[0.2em]">Latest Industry Insights</span>
-            </motion.div>
+            {/* Spotlight/Badge */}
+                      <SectionBadge text="Ideas, Insights & Tech" theme="dark" className="mb-4" />
 
-            <motion.h1 variants={itemVariants} className="text-5xl  font-bold text-white leading-[1.05] tracking-tight">
-              Ideas that Shape<br />
-              <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-400 to-yellow-500">
+            {/* Impressive Typography matching website theme */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight tracking-tight">
+              Ideas that Shape <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F49B21] to-amber-400">
                 The Future
-              </span>
-               of Tech
-            </motion.h1>
+              </span>{" "}
+              of Tech
+            </h1>
 
-            <motion.p variants={itemVariants} className="text-gray-400 text-lg md:text-xl max-w-xl mx-auto lg:mx-0 leading-relaxed font-light">
-              Explore our collection of expert-led articles, technical tutorials, 
-              and deep dives into the world of software engineering and digital growth.
-            </motion.p>
+            <p className="text-gray-300 text-base sm:text-lg md:text-xl font-light leading-relaxed max-w-xl mx-auto lg:mx-0">
+              Dive into detailed research, engineering strategies, and design paradigms written by the product architects at Codes Thinker.
+            </p>
 
-            {/* Stats Row: Blog Metrics */}
-            <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6">
-              {[
-                { label: "Articles Published", val: "250+", icon: <BookOpen className="w-5 h-5 text-amber-400" /> },
-                { label: "Weekly Readers", val: "12k+", icon: <Rss className="w-5 h-5 text-orange-400" /> },
-                { label: "Case Studies", val: "45+", icon: <Zap className="w-5 h-5 text-yellow-400" /> }
-              ].map((stat, i) => (
-                <div key={i} className="flex items-center gap-4 group cursor-default">
-                  <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-300 group-hover:bg-white/10 group-hover:border-amber-500/50">
-                    {stat.icon}
-                  </div>
-                  <div className="text-left">
-                    <div className="text-lg font-bold text-white leading-none">{stat.val}</div>
-                    <div className="text-[10px] text-gray-500 uppercase tracking-wider mt-1">{stat.label}</div>
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-
-          </motion.div>
-
-          {/* RIGHT IMAGE SECTION: Featured Post Style */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full lg:w-2/5 flex justify-center lg:justify-end relative"
-          >
-            {/* Background SVG Decoration */}
-             <motion.svg 
-               animate={{ rotate: 360 }}
-               transition={{ duration: 20, repeat: Infinity, ease: [0, 0, 1, 1] as const }}
-               className="absolute -top-10 -right-10 w-64 h-64 opacity-20 pointer-events-none" 
-               viewBox="0 0 200 200"
-             >
-              <path fill="#F59E0B" d="M44.7,-76.4C58.3,-69.2,70,-57.9,78.7,-44.5C87.4,-31.1,93,-15.5,91.2,-0.9C89.4,13.6,80.1,27.2,69.5,37.9C58.9,48.7,46.9,56.5,34.4,63.1C21.9,69.7,8.8,75,-4.4,82.7C-17.7,90.4,-31.1,100.4,-43.3,98.2C-55.5,96.1,-66.4,81.7,-74.6,67.6C-82.7,53.4,-88.1,39.6,-91,25.4C-93.9,11.2,-94.3,-3.3,-89.7,-16.5C-85.2,-29.7,-75.7,-41.5,-64.3,-51.1C-52.9,-60.7,-39.7,-68.1,-26.4,-75.4C-13.1,-82.7,0.3,-89.9,13.7,-88.5C27.1,-87.1,40.4,-77.2,44.7,-76.4Z" transform="translate(100 100)" />
-            </motion.svg>
-
-            <div className="relative z-10 group">
-              <div className="relative rounded-[2.5rem] overflow-hidden border border-white/20 bg-white/5 backdrop-blur-3xl p-3 shadow-[0_0_50px_rgba(245,158,11,0.1)] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(245,158,11,0.2)]">
-                <img
-                  alt="Reading technical insights"
-                  src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80&w=800"
-                  className="w-80 md:w-105 h-87.5 rounded-[2.1rem] object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                
-                
+            {/* Glassmorphic Search Input */}
+            <form onSubmit={handleSearchSubmit} className="relative max-w-lg w-full mx-auto lg:mx-0">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-gray-400" />
               </div>
+              <input 
+                type="text" 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search articles or categories..." 
+                className="w-full bg-white/10 border border-white/15 backdrop-blur-md text-white placeholder-gray-400 rounded-2xl py-4 pl-12 pr-32 focus:outline-none focus:ring-2 focus:ring-[#F49B21]/50 focus:border-[#F49B21] transition-all text-sm shadow-xl"
+              />
+              <button 
+                type="submit"
+                className="absolute right-1.5 top-1.5 bottom-1.5 px-5 bg-[#F49B21] hover:bg-amber-500 text-[#07051D] font-bold rounded-xl text-xs transition-colors flex items-center gap-1.5 shadow-md shadow-amber-500/10 cursor-pointer"
+              >
+                Search <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </form>
+
+            {/* Trending tags */}
+            <div className="flex items-center justify-center lg:justify-start gap-3 flex-wrap text-xs text-gray-400 w-full lg:w-auto">
+              <span className="font-semibold text-gray-300">Popular Topics:</span>
+              {["React", "UI/UX Design", "Backend Scaling", "Data Science"].map((tag) => (
+                <span 
+                  key={tag} 
+                  className="px-3 py-1 rounded-md bg-white/5 border border-white/10 hover:border-[#F49B21] hover:text-white transition-colors cursor-pointer"
+                  onClick={() => {
+                    const blogListSection = document.getElementById("blog-posts-list");
+                    if (blogListSection) {
+                      blogListSection.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                >
+                  {tag}
+                </span>
+              ))}
             </div>
           </motion.div>
+
+          {/* RIGHT COLUMN: Featured Spotlight Post Card (Responsive) */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            className="lg:col-span-5 w-full flex justify-center lg:justify-end"
+          >
+            {featuredPost && (
+              <Link 
+                to={`/blog/${featuredPost.slug}`}
+                className="group w-full max-w-md block"
+              >
+                <div className="relative w-full rounded-[2rem] overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl p-4 shadow-[0_20px_50px_rgba(7,5,29,0.5)] transition-all duration-500 hover:shadow-[0_25px_60px_rgba(244,155,33,0.15)] hover:border-white/20">
+                  
+                  {/* Category badge */}
+                  <span className="absolute top-7 left-7 z-20 text-[9px] px-2.5 py-1.5 rounded-full bg-[#F49B21] text-[#07051D] font-extrabold uppercase tracking-widest shadow-lg">
+                    Spotlight Article
+                  </span>
+
+                  {/* Image container with zoom effect */}
+                  <div className="relative h-56 rounded-2xl overflow-hidden mb-5 bg-gray-900">
+                    <img 
+                      src={featuredPost.image} 
+                      alt={featuredPost.title} 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#07051D]/60 to-transparent" />
+                  </div>
+
+                  {/* Details */}
+                  <div className="space-y-4 px-2">
+                    <div className="flex items-center gap-3 text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+                      <span className="flex items-center gap-1"><BookOpen className="w-3.5 h-3.5 text-[#F49B21]" /> {featuredPost.category}</span>
+                      <span className="w-1 h-1 rounded-full bg-white/20"></span>
+                      <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {featuredPost.readTime}</span>
+                    </div>
+
+                    <h3 className="text-xl sm:text-2xl font-bold text-white leading-snug group-hover:text-[#F49B21] transition-colors duration-300">
+                      {featuredPost.title}
+                    </h3>
+
+                    <p className="text-gray-300 text-sm font-light leading-relaxed line-clamp-2">
+                      {featuredPost.excerpt}
+                    </p>
+
+                    {/* Author block */}
+                    <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white text-xs font-bold border border-white/10">
+                          {featuredPost.author.charAt(0)}
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold text-white">{featuredPost.author}</p>
+                          <p className="text-[10px] text-gray-400">Contributor</p>
+                        </div>
+                      </div>
+
+                      <span className="text-xs font-bold text-[#F49B21] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                        Read Story <ArrowRight className="w-4 h-4" />
+                      </span>
+                    </div>
+
+                  </div>
+                </div>
+              </Link>
+            )}
+          </motion.div>
+
         </div>
       </div>
+
     </section>
   );
 };
 
-export default BlogHero;
+export default BlogHeader;

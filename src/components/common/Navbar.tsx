@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { HiOutlineMenu, HiX, HiChevronDown, HiArrowRight } from 'react-icons/hi';
 import { motion, AnimatePresence } from 'framer-motion';
 import Button from './Button'; 
-
+import { posts } from '../../data/blogData';
 interface SubLink {
     name: string;
     to: string;
@@ -94,7 +94,7 @@ const Navbar: React.FC = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [activeHover, setActiveHover] = useState<string | null>(null);
     const [activeMegaCategory, setActiveMegaCategory] = useState<number>(0);
-    const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null);
+    const [mobileActiveLink, setMobileActiveLink] = useState<NavLink | null>(null);
     const [scrolled, setScrolled] = useState(false);
     const location = useLocation();
 
@@ -111,17 +111,29 @@ const Navbar: React.FC = () => {
 
     useEffect(() => {
         setIsMobileMenuOpen(false);
-        setOpenMobileDropdown(null);
+        setMobileActiveLink(null);
         setActiveHover(null);
         setActiveMegaCategory(0);
     }, [location.pathname]);
 
+    useEffect(() => {
+        if (!isMobileMenuOpen) {
+            setMobileActiveLink(null);
+        }
+    }, [isMobileMenuOpen]);
+
     const handleLinkClick = useCallback((e?: React.MouseEvent) => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        setIsMobileMenuOpen(false);
     }, [location.pathname]);
 
     // Check if current page starts with a white/light background
-    const isLightHeroPage = ['/projects'].some(path => location.pathname.startsWith(path));
+    const isLightHeroPage = 
+        location.pathname.startsWith('/projects') ||
+        location.pathname === '/services/gaming' ||
+        location.pathname === '/services/resources' ||
+        location.pathname === '/services/ui-ux' ||
+        location.pathname === '/services/graphic-design';
 
     // Active dropdowns force a white navbar -> dark links.
     // Scrolled forces a dark navy navbar -> white links.
@@ -271,89 +283,147 @@ const Navbar: React.FC = () => {
                 </div>
             </div>
 
-            {/* Mobile Menu Overlay */}
+            {/* Backdrop overlay */}
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        className="lg:hidden absolute top-full left-0 right-0 bg-white border-t border-gray-100 h-[calc(100vh-100%)] overflow-y-auto px-4 py-6 flex flex-col gap-3 shadow-2xl"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 0.4 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="lg:hidden fixed inset-0 bg-[#08061E] z-[140] pointer-events-auto"
+                    />
+                )}
+            </AnimatePresence>
+
+            {/* Mobile Side Drawer Menu */}
+            <AnimatePresence>
+                {isMobileMenuOpen && (
+                    <motion.div
+                        initial={{ x: '100%' }}
+                        animate={{ x: 0 }}
+                        exit={{ x: '100%' }}
+                        transition={{ type: 'spring', damping: 26, stiffness: 220 }}
+                        className="lg:hidden fixed top-0 right-0 bottom-0 w-full sm:w-[380px] bg-white shadow-2xl z-[150] flex flex-col overflow-hidden"
                     >
-                        {navLinks.map((link) => (
-                            <div key={link.name}>
-                                {(link.subLinks || link.megaMenu) ? (
-                                    <div className="bg-gray-50 border border-gray-100 overflow-hidden rounded-xl">
-                                        <button
-                                            onClick={() => setOpenMobileDropdown(openMobileDropdown === link.name ? null : link.name)}
-                                            className="flex items-center justify-between w-full p-4 text-left font-bold text-[#08061E]"
-                                        >
-                                            {link.name}
-                                            <HiChevronDown className={`transition-transform duration-300 ${openMobileDropdown === link.name ? 'rotate-180 text-[#08061E]' : 'text-gray-400'}`} />
-                                        </button>
-                                        
-                                        <AnimatePresence>
-                                            {openMobileDropdown === link.name && (
-                                                <motion.div
-                                                    initial={{ height: 0, opacity: 0 }}
-                                                    animate={{ height: 'auto', opacity: 1 }}
-                                                    exit={{ height: 0, opacity: 0 }}
-                                                    className="overflow-hidden"
+                        {/* Drawer Header */}
+                        <div className="px-6 py-5 border-b border-gray-100 flex justify-between items-center shrink-0">
+                            {mobileActiveLink ? (
+                                <button
+                                    onClick={() => setMobileActiveLink(null)}
+                                    className="flex items-center gap-2 text-[#08061E] font-bold text-base focus:outline-none cursor-pointer"
+                                >
+                                    <HiArrowRight className="rotate-180 text-amber-500" />
+                                    <span>Back</span>
+                                </button>
+                            ) : (
+                                <span className="font-black text-[#08061E] tracking-tight uppercase text-xs">Navigation</span>
+                            )}
+                            <button
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="p-1.5 hover:bg-gray-100 rounded-xl text-gray-500 hover:text-gray-800 transition-colors cursor-pointer"
+                            >
+                                <HiX size={20} />
+                            </button>
+                        </div>
+
+                        {/* Slider Body Container */}
+                        <div className="flex-1 overflow-hidden relative">
+                            <div 
+                                className="flex w-[200%] h-full transition-transform duration-300 ease-out"
+                                style={{ transform: mobileActiveLink ? 'translateX(-50%)' : 'translateX(0)' }}
+                            >
+                                {/* Slide 1: Main Menu Links */}
+                                <div className="w-1/2 h-full overflow-y-auto px-6 py-6 flex flex-col gap-3">
+                                    {navLinks.map((link) => (
+                                        <div key={link.name}>
+                                            {(link.subLinks || link.megaMenu) ? (
+                                                <button
+                                                    onClick={() => setMobileActiveLink(link)}
+                                                    className="flex items-center justify-between w-full p-4 font-bold text-left bg-gray-50 text-[#08061E]/80 border border-transparent rounded-xl hover:border-gray-200 transition-all cursor-pointer"
                                                 >
-                                                    <div className="flex flex-col px-4 pb-4 gap-1">
-                                                        {link.megaMenu ? (
-                                                            link.megaMenu.map(cat => (
-                                                                <div key={cat.title} className="mb-3">
-                                                                    <h5 className="text-[#08061E]/50 text-xs font-bold uppercase tracking-wider mb-2 px-3">{cat.title}</h5>
-                                                                    {cat.items.map(sub => (
-                                                                        <Link
-                                                                            key={sub.name}
-                                                                            to={sub.to}
-                                                                            onClick={handleLinkClick}
-                                                                            className={`block p-3 text-sm rounded-lg font-medium ${isActive(sub.to) ? 'bg-[#08061E]/5 text-[#08061E]' : 'text-[#08061E]/70'}`}
-                                                                        >
-                                                                            {sub.name}
-                                                                        </Link>
-                                                                    ))}
-                                                                </div>
-                                                            ))
-                                                        ) : (
-                                                            link.subLinks!.map((sub) => (
-                                                                <Link
-                                                                    key={sub.name}
-                                                                    to={sub.to}
-                                                                    onClick={handleLinkClick}
-                                                                    className={`block p-3 text-sm rounded-lg font-medium ${isActive(sub.to) ? 'bg-[#08061E]/5 text-[#08061E]' : 'text-[#08061E]/70'}`}
-                                                                >
-                                                                    {sub.name}
-                                                                </Link>
-                                                            ))
-                                                        )}
-                                                    </div>
-                                                </motion.div>
+                                                    {link.name}
+                                                    <HiChevronDown className="-rotate-90 text-gray-400" />
+                                                </button>
+                                            ) : (
+                                                <Link
+                                                    to={link.to}
+                                                    onClick={handleLinkClick}
+                                                    className={`block p-4 font-bold transition-colors rounded-xl ${
+                                                        isActive(link.to) 
+                                                            ? 'bg-[#08061E]/5 text-[#08061E] border border-[#08061E]/10' 
+                                                            : 'bg-gray-50 text-[#08061E]/80 border border-transparent hover:border-gray-200'
+                                                    }`}
+                                                >
+                                                    {link.name}
+                                                </Link>
                                             )}
-                                        </AnimatePresence>
+                                        </div>
+                                    ))}
+
+                                    <div className="mt-4">
+                                        <Button
+                                            text="Get In Touch"
+                                            to="/contact"
+                                            className="w-full justify-center bg-[#08061E] text-white font-bold py-4 shadow-xl rounded-2xl cursor-pointer"
+                                            onClick={handleLinkClick}
+                                        />
                                     </div>
-                                ) : (
-                                    <Link
-                                        to={link.to}
-                                        onClick={handleLinkClick}
-                                        className={`block p-4 font-bold transition-colors rounded-xl
-                                        ${isActive(link.to) ? 'bg-[#08061E]/5 text-[#08061E] border border-[#08061E]/10' : 'bg-gray-50 text-[#08061E]/80 border border-transparent hover:border-gray-200'}`}
-                                    >
-                                        {link.name}
-                                    </Link>
-                                )}
+                                </div>
+
+                                {/* Slide 2: Active Submenu/MegaMenu */}
+                                <div className="w-1/2 h-full overflow-y-auto px-6 py-6 flex flex-col gap-3">
+                                    {mobileActiveLink && (
+                                        <>
+                                            <div className="mb-2 px-3">
+                                                <span className="text-[10px] text-amber-500 font-bold uppercase tracking-widest">Section</span>
+                                                <h4 className="font-black text-[#08061E] text-xl leading-tight">{mobileActiveLink.name}</h4>
+                                            </div>
+
+                                            {mobileActiveLink.megaMenu ? (
+                                                <div className="flex flex-col gap-4">
+                                                    {mobileActiveLink.megaMenu.map((cat, idx) => (
+                                                        <div key={idx} className="bg-gray-50/50 border border-gray-100 p-3 rounded-2xl">
+                                                            <h5 className="text-[#08061E]/40 text-[10px] font-bold uppercase tracking-wider mb-2 px-2">{cat.title}</h5>
+                                                            <div className="flex flex-col gap-1">
+                                                                {cat.items.map((sub, sIdx) => (
+                                                                    <Link
+                                                                        key={sIdx}
+                                                                        to={sub.to}
+                                                                        onClick={handleLinkClick}
+                                                                        className={`block p-2.5 text-sm rounded-xl font-medium transition-all ${
+                                                                            isActive(sub.to) 
+                                                                                ? 'bg-[#08061E]/5 text-[#08061E]' 
+                                                                                : 'text-[#08061E]/70 hover:bg-gray-50 hover:text-[#08061E]'
+                                                                        }`}
+                                                                    >
+                                                                        {sub.name}
+                                                                    </Link>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            ) : (
+                                                <div className="flex flex-col gap-2">
+                                                    {mobileActiveLink.subLinks?.map((sub, sIdx) => (
+                                                        <Link
+                                                            key={sIdx}
+                                                            to={sub.to}
+                                                            onClick={handleLinkClick}
+                                                            className={`block p-4 font-semibold bg-gray-50 text-[#08061E]/80 border border-transparent rounded-xl hover:border-gray-200 transition-all ${
+                                                                isActive(sub.to) ? 'bg-[#08061E]/5 text-[#08061E] border-[#08061E]/10' : ''
+                                                            }`}
+                                                        >
+                                                            {sub.name}
+                                                        </Link>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </>
+                                    )}
+                                </div>
                             </div>
-                        ))}
-                        
-                        <div className="mt-4 mb-20">
-                            <Button
-                                text="Get In Touch"
-                                to="/contact"
-                                className="w-full justify-center bg-[#08061E] text-white font-bold py-4 shadow-xl rounded-2xl"
-                                onClick={handleLinkClick}
-                            />
                         </div>
                     </motion.div>
                 )}
@@ -422,15 +492,21 @@ const Navbar: React.FC = () => {
                             {/* Right: Spotlight */}
                             <div className="w-1/4 bg-gradient-to-br from-gray-50 to-white py-8 px-8 border-l border-gray-100 flex flex-col">
                                 <span className="text-xs font-bold tracking-widest text-[#08061E]/40 uppercase mb-4">Spotlight</span>
-                                <div className="flex-1 overflow-hidden relative group cursor-pointer border border-gray-200 rounded-2xl shadow-sm">
-                                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" alt="Spotlight" className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                                    <div className="absolute inset-0 bg-gradient-to-tr from-[#08061E]/80 to-[#1a1440]/90 z-0" />
-                                    <div className="relative h-full p-6 flex flex-col justify-end z-10">
-                                        <h4 className="text-white font-bold text-lg mb-2">Digital Transformation</h4>
-                                        <p className="text-white/80 text-xs mb-4">Strategies for scaling your business in the modern digital era.</p>
-                                        <span className="text-amber-400 group-hover:text-amber-300 transition-colors text-xs font-bold flex items-center gap-1">Read Guide <HiArrowRight /></span>
-                                    </div>
-                                </div>
+                                {posts && posts.length > 0 && (
+                                    <Link 
+                                        to={`/blog/${posts[0].slug}`} 
+                                        onClick={handleLinkClick}
+                                        className="flex-1 overflow-hidden relative group cursor-pointer border border-gray-200 rounded-2xl shadow-sm block"
+                                    >
+                                        <img src={posts[0].image} alt={posts[0].title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                        <div className="absolute inset-0 bg-gradient-to-tr from-[#08061E]/80 to-[#1a1440]/90 z-0" />
+                                        <div className="relative h-full p-6 flex flex-col justify-end z-10">
+                                            <h4 className="text-white font-bold text-sm mb-1.5 leading-snug line-clamp-2 group-hover:text-amber-300 transition-colors">{posts[0].title}</h4>
+                                            <p className="text-white/80 text-[10px] mb-3 line-clamp-2 leading-relaxed">{posts[0].excerpt}</p>
+                                            <span className="text-amber-400 group-hover:text-amber-300 transition-colors text-xs font-bold flex items-center gap-1">Read Guide <HiArrowRight /></span>
+                                        </div>
+                                    </Link>
+                                )}
                             </div>
                         </div>
                     </motion.div>
