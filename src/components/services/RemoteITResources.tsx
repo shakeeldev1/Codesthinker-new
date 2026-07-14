@@ -1,36 +1,50 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  Users,
-  Zap,
-  Globe,
-  BarChart3,
-  CheckCircle2,
-  ArrowRight,
   Code2,
-  Shield,
-  Clock,
-  Lightbulb,
   Rocket,
   Target
 } from 'lucide-react';
 import GlobalHero1 from './GlobalHero1';
-import GlobalHeading from './GlobalHeading';
 import GlobalServiceCTA from './GlobalServiceCTA';
-import GlobalCard from './GlobalServiceCard';
-import GlobalServiceCard1 from './GlobalServiceCard1';
+import { GlobalCapabilitiesSection } from './GlobalCapabilitiesSection';
+import { GlobalTechStackSection } from './GlobalTechStackSection';
 
 const RemoteITResources = () => {
-  const [hoveredCard, setHoveredCard] = useState(null);
+  const capabilities = [
+    {
+      id: 1,
+      title: "Dedicated Teams",
+      description: "Full-time team members working exclusively for your company to drive development velocity.",
+      icon: Code2,
+      tag: "Dedicated",
+      span: "col-span-1",
+      accent: "from-orange-50 via-amber-50 to-white",
+      iconColor: "text-orange-500",
+    },
+    {
+      id: 2,
+      title: "Staff Augmentation",
+      description: "Supplement your existing development team with specialized technical expertise and talent.",
+      icon: Rocket,
+      tag: "Augmentation",
+      span: "col-span-1",
+      accent: "from-slate-50 to-white",
+      iconColor: "text-slate-700",
+    },
+    {
+      id: 3,
+      title: "Project-Based",
+      description: "Complete your scope-defined projects with focused, expert development teams.",
+      icon: Target,
+      tag: "On-demand",
+      span: "col-span-1",
+      accent: "from-amber-50 to-white",
+      iconColor: "text-amber-600",
+    }
+  ];
 
-  const technologies = [
-    { name: "React", category: "Frontend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-    { name: "Node.js", category: "Backend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-    { name: "Python", category: "Backend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-    { name: "AWS", category: "Cloud", icon: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" },
-    { name: "Docker", category: "DevOps", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
-    { name: "Java", category: "Language", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
-    { name: "Angular", category: "Frontend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" },
-    { name: "PostgreSQL", category: "Database", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" }
+  const techStack = [
+    "React", "Node.js", "Python", "AWS", "Docker", "Java", "Angular", "PostgreSQL", "Vue.js", "TypeScript", "Kubernetes", "Next.js"
   ];
 
   return (
@@ -51,82 +65,19 @@ const RemoteITResources = () => {
         secondaryBtnText="How It Works"
       />
 
-      {/* Services Section */}
-      <section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-slate-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <GlobalHeading
-              className="mb-16"
-              badge={{ text: "Services" }}
-              title="Remote IT Services"
-              titleHighlight="IT Services"
-              subtitle="Flexible engagement models for every need"
-              alignment="center"
-              textColor="dark"
-            />
-          </div>
+      <GlobalCapabilitiesSection
+        badgeText="Services"
+        title="Remote IT Services"
+        subtitle="Flexible engagement models for every development need and technical requirement."
+        capabilities={capabilities}
+      />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: <Code2 size={28} />,
-                title: "Dedicated Teams",
-                description: "Full-time team members working exclusively for your company",
-                features: ["24/7 Availability", "Scalable Team Size", "Managed Training"]
-              },
-              {
-                icon: <Rocket size={28} />,
-                title: "Staff Augmentation",
-                description: "Supplement your existing team with specialized expertise",
-                features: ["Flexible Duration", "Specific Skills", "Quick Integration"]
-              },
-              {
-                icon: <Target size={28} />,
-                title: "Project-Based",
-                description: "Complete projects with focused expert teams",
-                features: ["Fixed Timeline", "Quality Guaranteed", "No Long-term Commitment"]
-              }
-            ].map((service, index) => (
-              <GlobalCard
-                key={index}
-                index={index}
-                title={service.title}
-                description={service.description}
-                icon={service.icon}
-                theme="dark"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Tech Stack Section */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6">
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <GlobalHeading
-              badge={{ text: "Technology Stack" }}
-              title="Cutting-Edge Technologies"
-              titleHighlight="Technologies"
-              subtitle="We leverage industry-leading tools and frameworks"
-              alignment="center"
-              size="lg"
-              gradientColors={{ from: 'from-amber-400', to: 'to-orange-500' }}
-            />
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-            {technologies.map((tech, idx) => (
-              <GlobalServiceCard1
-                key={idx}
-                icon={tech.icon}
-                name={tech.name}
-                category={tech.category}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <GlobalTechStackSection
+        badgeText="Technology Stack"
+        title="Tools we master."
+        subtitle="Vetted capabilities across backend, frontend, cloud, databases, and devops."
+        techStack={techStack}
+      />
 
       <GlobalServiceCTA 
         theme="dark" 

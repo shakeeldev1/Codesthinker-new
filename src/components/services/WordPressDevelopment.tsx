@@ -1,9 +1,9 @@
 import React from 'react';
 import { Globe, PenTool, Layers } from 'lucide-react';
 import GlobalHero from './GlobalHero';
-import GlobalHeading from './GlobalHeading';
 import GlobalServiceCTA from './GlobalServiceCTA';
-import GlobalCard from './GlobalServiceCard';
+import { GlobalCapabilitiesSection } from './GlobalCapabilitiesSection';
+import { GlobalTechStackSection } from './GlobalTechStackSection';
 
 const WordPressDevelopment: React.FC = () => {
   const heroData = [
@@ -20,41 +20,60 @@ const WordPressDevelopment: React.FC = () => {
     }
   ];
 
-  const services = [
-    { icon: PenTool, title: 'Custom Themes', description: 'Bespoke, responsive themes built for speed and accessibility.' },
-    { icon: Layers, title: 'Plugin Development', description: 'Tailored plugins to add business-specific functionality and integrations.' },
-    { icon: Globe, title: 'Migrations & Optimization', description: 'Seamless migrations, performance tuning and security hardening for scale.' }
+  const capabilities = [
+    {
+      id: 1,
+      title: 'Custom Themes',
+      description: 'Bespoke, responsive themes built for speed, accessibility, and unique visual identity.',
+      icon: PenTool,
+      tag: 'Theme Dev',
+      span: 'col-span-1',
+      accent: 'from-orange-50 via-amber-50 to-white',
+      iconColor: 'text-orange-500',
+    },
+    {
+      id: 2,
+      title: 'Plugin Development',
+      description: 'Tailored plugins to add business-specific functionality, secure database routines, and API integrations.',
+      icon: Layers,
+      tag: 'Backend',
+      span: 'col-span-1',
+      accent: 'from-slate-50 to-white',
+      iconColor: 'text-slate-700',
+    },
+    {
+      id: 3,
+      title: 'Migrations & Optimization',
+      description: 'Seamless migrations, database query optimizations, performance tuning, and security hardening for scale.',
+      icon: Globe,
+      tag: 'Infrastructure',
+      span: 'col-span-1',
+      accent: 'from-amber-50 to-white',
+      iconColor: 'text-amber-600',
+    }
+  ];
+
+  const techStack = [
+    'WordPress', 'PHP', 'JavaScript', 'MySQL', 'CSS3', 'HTML5', 'WooCommerce', 'Gutenberg', 'WP-CLI', 'Elementor', 'Tailwind CSS', 'Docker'
   ];
 
   return (
-    <div className="min-h-screen pt-18 bg-white">
+    <div className="min-h-screen bg-white">
       <GlobalHero data={heroData} height="80vh" />
 
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-50">
-        <div className="max-w-6xl mx-auto">
-          <GlobalHeading
-            badge={{ text: 'WordPress' }}
-            title="WordPress Development Services"
-            titleHighlight="WordPress"
-            subtitle="Fast, secure and content-first WordPress experiences"
-            alignment="center"
-            textColor="dark"
-          />
+      <GlobalCapabilitiesSection
+        badgeText="WordPress"
+        title="WordPress Development Services"
+        subtitle="Fast, secure, and content-first WordPress experiences designed for easy editorial workflows and speed."
+        capabilities={capabilities}
+      />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-            {services.map((s, i) => (
-              <GlobalCard
-                key={i}
-                index={i}
-                title={s.title}
-                description={s.description}
-                icon={<s.icon size={28} />}
-                theme="light"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <GlobalTechStackSection
+        badgeText="CMS Stack"
+        title="Tools we master."
+        subtitle="Core WordPress ecosystems, database servers, query tools, and styling frameworks."
+        techStack={techStack}
+      />
 
       <GlobalServiceCTA
         theme="light"

@@ -1,17 +1,17 @@
 import React from 'react';
 import { BarChart2, PieChart, TrendingUp } from 'lucide-react';
 import GlobalHero from './GlobalHero';
-import GlobalHeading from './GlobalHeading';
 import GlobalServiceCTA from './GlobalServiceCTA';
-import GlobalCard from './GlobalServiceCard';
+import { GlobalCapabilitiesSection } from './GlobalCapabilitiesSection';
+import { GlobalTechStackSection } from './GlobalTechStackSection';
 
 const DataAnalytics: React.FC = () => {
   const heroData = [
     {
       id: 1,
-        subtitle: 'Data & Insights',
-        title: 'Data Analytics & Business Intelligence',
-        description: 'Convert raw data into clear, actionable insights using robust pipelines, dashboards, and reporting.',
+      subtitle: 'Data & Insights',
+      title: 'Data Analytics & Business Intelligence',
+      description: 'Convert raw data into clear, actionable insights using robust pipelines, dashboards, and reporting.',
       image: 'https://www.shutterstock.com/image-photo/developer-coding-on-laptop-ai-600nw-2686216519.jpg',
       primaryLink: '/contact',
       secondaryLink: '/projects',
@@ -20,41 +20,60 @@ const DataAnalytics: React.FC = () => {
     }
   ];
 
-  const services = [
-    { icon: BarChart2, title: 'Data Engineering', description: 'Scalable ETL and data warehouse design for reliable analytics.' },
-    { icon: PieChart, title: 'Business Intelligence', description: 'Custom dashboards, KPIs and executive reports for faster decisions.' },
-    { icon: TrendingUp, title: 'Predictive Analytics', description: 'Forecasting and ML models to surface future trends and opportunities.' }
+  const capabilities = [
+    {
+      id: 1,
+      title: 'Data Engineering',
+      description: 'Scalable ETL and data warehouse design for reliable analytics and data pipelines.',
+      icon: BarChart2,
+      tag: 'Engineering',
+      span: 'col-span-1',
+      accent: 'from-orange-50 via-amber-50 to-white',
+      iconColor: 'text-orange-500',
+    },
+    {
+      id: 2,
+      title: 'Business Intelligence',
+      description: 'Custom dashboards, KPIs and executive reports for faster decisions and deeper insights.',
+      icon: PieChart,
+      tag: 'Visualization',
+      span: 'col-span-1',
+      accent: 'from-slate-50 to-white',
+      iconColor: 'text-slate-700',
+    },
+    {
+      id: 3,
+      title: 'Predictive Analytics',
+      description: 'Forecasting and ML models to surface future trends, anomalies, and opportunities.',
+      icon: TrendingUp,
+      tag: 'Intelligence',
+      span: 'col-span-1',
+      accent: 'from-amber-50 to-white',
+      iconColor: 'text-amber-600',
+    }
+  ];
+
+  const techStack = [
+    'Python', 'R', 'SQL', 'Tableau', 'Power BI', 'Snowflake', 'Apache Spark', 'Databricks', 'TensorFlow', 'PostgreSQL', 'Redshift', 'BigQuery', 'Apache Airflow', 'Kafka'
   ];
 
   return (
-    <div className="min-h-screen pt-18 bg-white">
+    <div className="min-h-screen bg-white">
       <GlobalHero data={heroData} height="80vh" />
 
-      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <GlobalHeading
-            badge={{ text: 'Data' }}
-            title="Data Analytics Services"
-            titleHighlight="Analytics"
-            subtitle="Comprehensive analytics and BI to measure, optimize, and grow"
-            alignment="center"
-            textColor="dark"
-          />
+      <GlobalCapabilitiesSection
+        badgeText="Data"
+        title="Data Analytics Services"
+        subtitle="Comprehensive analytics and BI to measure, optimize, and grow your digital performance."
+        capabilities={capabilities}
+      />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-            {services.map((s, i) => (
-              <GlobalCard
-                key={i}
-                index={i}
-                title={s.title}
-                description={s.description}
-                icon={<s.icon size={28} />}
-                theme="dark"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <GlobalTechStackSection
+        badgeText="Data Stack"
+        title="Tools we master."
+        subtitle="Cutting-edge tools for processing, managing, visualizing, and analyzing raw data."
+        techStack={techStack}
+      />
 
       <GlobalServiceCTA
         theme="light"

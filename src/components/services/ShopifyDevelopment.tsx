@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React from 'react';
 import {
   ShoppingCart,
   Laptop,
@@ -8,27 +8,11 @@ import {
   TrendingUp
 } from 'lucide-react';
 import GlobalHero from './GlobalHero';
-import GlobalHeading from './GlobalHeading';
 import GlobalServiceCTA from './GlobalServiceCTA';
-import GlobalCard from './GlobalServiceCard';
-import GlobalServiceCard1 from './GlobalServiceCard1';
-import AOS from "aos";
-import "aos/dist/aos.css";
+import { GlobalCapabilitiesSection } from './GlobalCapabilitiesSection';
+import { GlobalTechStackSection } from './GlobalTechStackSection';
 
 const ShopifyDevelopment = () => {
-  useEffect(() => {
-    // Initialize AOS
-    AOS.init({
-      duration: 1200,
-      once: true,
-      easing: "ease-in-out",
-    });
-    // Explicitly refresh AOS to re-scan and apply animations after DOM is ready
-    setTimeout(() => {
-      AOS.refresh();
-    }, 100); // Add a small delay
-  }, []);
-
   const heroData = [
     {
       id: 1,
@@ -43,48 +27,71 @@ const ShopifyDevelopment = () => {
     }
   ];
 
-  const services = [
+  const capabilities = [
     {
-      icon: ShoppingCart,
+      id: 1,
       title: "Store Setup & Design",
-      description: "Custom store configuration, payment integrations, and visually stunning storefronts aligned with your brand."
+      description: "Custom store configuration, payment integrations, and visually stunning storefronts aligned with your brand.",
+      icon: ShoppingCart,
+      tag: "Store Setup",
+      span: "col-span-2",
+      accent: "from-orange-50 via-amber-50 to-white",
+      iconColor: "text-orange-500",
     },
     {
-      icon: Laptop,
+      id: 2,
       title: "Custom Theme Development",
-      description: "Tailored Shopify Liquid themes or Headless Hydrogen builds crafted for maximum speed and uniqueness."
+      description: "Tailored Shopify Liquid themes or Headless Hydrogen builds crafted for maximum speed and uniqueness.",
+      icon: Laptop,
+      tag: "Theme Dev",
+      span: "col-span-1",
+      accent: "from-slate-50 to-white",
+      iconColor: "text-slate-700",
     },
     {
-      icon: Layers,
+      id: 3,
       title: "App Integrations & APIs",
-      description: "Seamless connection with ERPs, CRMs, shipping carriers, and custom private app development."
+      description: "Seamless connection with ERPs, CRMs, shipping carriers, and custom private app development.",
+      icon: Layers,
+      tag: "Integrations",
+      span: "col-span-1",
+      accent: "from-amber-50 to-white",
+      iconColor: "text-amber-600",
     },
     {
-      icon: RefreshCw,
+      id: 4,
       title: "Platform Migrations",
-      description: "Risk-free migration of products, customers, and orders from WooCommerce, Magento, or custom setups."
+      description: "Risk-free migration of products, customers, and orders from WooCommerce, Magento, or custom setups.",
+      icon: RefreshCw,
+      tag: "Migration",
+      span: "col-span-1",
+      accent: "from-orange-50 to-white",
+      iconColor: "text-orange-400",
     },
     {
-      icon: Zap,
+      id: 5,
       title: "Speed & Performance Optimization",
-      description: "Performance auditing, code cleanup, and asset optimization to boost your conversion rates and Google Core Web Vitals."
+      description: "Performance auditing, code cleanup, and asset optimization to boost your conversion rates and Google Core Web Vitals.",
+      icon: Zap,
+      tag: "Optimization",
+      span: "col-span-1",
+      accent: "from-stone-50 to-white",
+      iconColor: "text-stone-600",
     },
     {
-      icon: TrendingUp,
+      id: 6,
       title: "E-commerce SEO & Marketing",
-      description: "Tailored on-page SEO strategies, Google Merchant Center setup, and conversion rate optimization (CRO) audits."
+      description: "Tailored on-page SEO strategies, Google Merchant Center setup, and conversion rate optimization (CRO) audits.",
+      icon: TrendingUp,
+      tag: "CRO & SEO",
+      span: "col-span-2",
+      accent: "from-amber-50 via-orange-50 to-white",
+      iconColor: "text-amber-500",
     }
   ];
 
-  const technologies = [
-    { name: "Shopify Plus", category: "E-commerce Platform", icon: "https://www.vectorlogo.zone/logos/shopify/shopify-icon.svg" },
-    { name: "Liquid", category: "Template Engine", icon: "/liquid-logo.svg" },
-    { name: "GraphQL", category: "Storefront API", icon: "https://www.vectorlogo.zone/logos/graphql/graphql-icon.svg" },
-    { name: "Tailwind CSS", category: "Storefront Styling", icon: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" },
-    { name: "React (Hydrogen)", category: "Headless Frontend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-    { name: "Node.js", category: "Custom App Backend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-    { name: "TypeScript", category: "App Development", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
-    { name: "Figma", category: "UI/UX Store Design", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" }
+  const techStack = [
+    "Shopify Plus", "Liquid", "GraphQL", "Tailwind CSS", "React (Hydrogen)", "Node.js", "TypeScript", "Figma", "Ruby", "Webpack", "Google Merchant Center", "Algolia"
   ];
 
   return (
@@ -92,64 +99,19 @@ const ShopifyDevelopment = () => {
       {/* Global Hero with Shopify Development Data */}
       <GlobalHero data={heroData} height="80vh" />
 
-      {/* Services Grid Section */}
-      <section className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12 md:mb-16" data-aos="fade-up">
-            <GlobalHeading
-              badge={{ text: "E-Commerce Services" }}
-              title="Shopify Development Services"
-              titleHighlight="Shopify Services"
-              subtitle="End-to-end commerce development optimized for revenue and stability"
-              alignment="center"
-              size="lg"
-              gradientColors={{ from: 'from-amber-400', to: 'to-orange-500' }}
-            />
-          </div>
+      <GlobalCapabilitiesSection
+        badgeText="E-Commerce Services"
+        title="Shopify Development Services"
+        subtitle="End-to-end commerce development optimized for revenue, UX performance, and transaction stability."
+        capabilities={capabilities}
+      />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {services.map((service, index) => (
-              <GlobalCard
-                key={index}
-                index={index}
-                title={service.title}
-                description={service.description}
-                icon={<service.icon size={28} />}
-                theme="light"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Tech Stack Section */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6">
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <GlobalHeading
-              badge={{ text: "Commerce Stack" }}
-              title="Modern E-Commerce Tech"
-              titleHighlight="E-Commerce Tech"
-              subtitle="We build stores using robust, industry-standard systems and modern headless integrations"
-              alignment="center"
-              size="lg"
-              gradientColors={{ from: 'from-amber-400', to: 'to-orange-500' }}
-            />
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-            {technologies.map((tech, idx) => (
-              <GlobalServiceCard1
-                key={idx}
-                icon={tech.icon}
-                name={tech.name}
-                category={tech.category}
-                theme="dark"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <GlobalTechStackSection
+        badgeText="Commerce Stack"
+        title="Modern E-Commerce Tech"
+        subtitle="We build stores using robust, industry-standard systems and modern headless integrations."
+        techStack={techStack}
+      />
 
       <GlobalServiceCTA 
         theme="light" 

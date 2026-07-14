@@ -98,22 +98,25 @@ const GlobalHero2: React.FC<GlobalHero2Props> = ({
             </p>
 
             {/* CTA Buttons */}
-            <motion.div variants={itemVariants} className="flex flex-wrap justify-center lg:justify-start gap-4 md:gap-6 mt-4">
+            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 md:gap-5 w-full sm:w-auto mt-8">
               <Link
                 to={primaryLink}
-                className="relative inline-flex items-center justify-center font-bold rounded-xl transition-all duration-300 cursor-pointer overflow-hidden shadow-lg focus:outline-none px-6 py-2 md:px-8 text-sm md:text-base bg-amber-500 text-[#07051d] hover:bg-amber-400 group"
+                className="relative overflow-hidden group flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-3.5 bg-[#F49B21] text-[#08061E] font-bold rounded-2xl shadow-lg text-[15px] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] select-none"
               >
-                <span className="relative z-10 flex items-center gap-2">
+                <span className="relative z-10 transition-colors duration-300 group-hover:text-white flex items-center gap-2">
                   {primaryBtnText}
                   <ArrowRight className="w-4 h-4" />
                 </span>
-                <span className="absolute inset-0 -translate-x-full bg-white/30 group-hover:translate-x-full transition-transform duration-700 ease-in-out rotate-12"></span>
+                <div className="absolute inset-0 bg-[#08061E] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
               </Link>
               <Link
                 to={secondaryLink}
-                className={`px-6 py-2 md:px-8 text-sm md:text-base font-bold rounded-xl border-2 transition-all duration-300 shadow-lg cursor-pointer ${isDark ? 'border-white text-white hover:bg-white hover:text-[#07051d]' : 'border-[#07051d] text-[#07051d] hover:bg-[#07051d] hover:text-white'}`}
+                className={`relative overflow-hidden group flex items-center justify-center w-full sm:w-auto px-8 py-3.5 bg-transparent ${isDark ? 'text-white border-white/20' : 'text-[#07051d] border-[#07051d]/20'} font-bold rounded-2xl border-2 hover:border-[#F49B21] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] select-none`}
               >
-                {secondaryBtnText}
+                <span className="relative z-10 transition-colors duration-300 group-hover:text-[#08061E]">
+                  {secondaryBtnText}
+                </span>
+                <div className="absolute inset-0 bg-[#F49B21] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
               </Link>
             </motion.div>
           </motion.div>

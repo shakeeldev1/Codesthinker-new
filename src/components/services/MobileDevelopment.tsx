@@ -1,53 +1,87 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
-  Smartphone,
   Zap,
   Shield,
   TrendingUp,
-  Code2,
-  Users,
-  Layers,
   PenTool,
-  Cpu,
   Rocket,
-  CheckCircle2,
-  ArrowRight,
   Globe,
   Smartphone as PhoneIcon,
-  BarChart3,
-  Lock,
-  Clock,
-  Award,
-  Download,
-  Cloud,
-  Wifi
+  Cloud
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import GlobalHeading from './GlobalHeading';
+import GlobalHero from './GlobalHero';
 import GlobalServiceCTA from './GlobalServiceCTA';
-import GlobalCard from './GlobalServiceCard';
-import GlobalServiceCard1 from './GlobalServiceCard1';
+import { GlobalCapabilitiesSection } from './GlobalCapabilitiesSection';
+import { GlobalTechStackSection } from './GlobalTechStackSection';
 
 const MobileDevelopment = () => {
-  const [activeTab, setActiveTab] = useState('features');
-  const [scrollY, setScrollY] = useState(0);
-
-  const technologies = [
-    { name: "Swift", category: "iOS", icon: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Swift_logo.svg" },
-    { name: "Kotlin", category: "Android", icon: "https://upload.wikimedia.org/wikipedia/commons/7/74/Kotlin_Icon.png" },
-    { name: "React Native", category: "Cross-Platform", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-    { name: "Flutter", category: "Cross-Platform", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" },
-    { name: "Firebase", category: "Backend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" },
-    { name: "SQLite", category: "Database", icon: "https://upload.wikimedia.org/wikipedia/commons/9/97/Sqlite-square-icon.svg" },
-    { name: "Figma", category: "Design", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
-    { name: "GraphQL", category: "API", icon: "https://upload.wikimedia.org/wikipedia/commons/1/17/GraphQL_Logo.svg" }
+  const capabilities = [
+    {
+      id: 1,
+      title: 'Native Development',
+      description: 'Swift for iOS and Kotlin for Android, built for maximum performance and native capabilities.',
+      icon: PhoneIcon,
+      tag: 'Native',
+      span: 'col-span-2',
+      accent: 'from-orange-50 via-amber-50 to-white',
+      iconColor: 'text-orange-500',
+    },
+    {
+      id: 2,
+      title: 'Cross-Platform Apps',
+      description: 'React Native and Flutter solutions for faster development and multi-platform reach.',
+      icon: Zap,
+      tag: 'Hybrid',
+      span: 'col-span-1',
+      accent: 'from-slate-50 to-white',
+      iconColor: 'text-slate-700',
+    },
+    {
+      id: 3,
+      title: 'UI/UX Design',
+      description: 'Beautiful, intuitive interfaces designed with user experience and engagement at the core.',
+      icon: PenTool,
+      tag: 'Design',
+      span: 'col-span-1',
+      accent: 'from-amber-50 to-white',
+      iconColor: 'text-amber-600',
+    },
+    {
+      id: 4,
+      title: 'Backend Integration',
+      description: 'Seamless API integration with cloud services, databases, and third-party platforms.',
+      icon: Cloud,
+      tag: 'Backend',
+      span: 'col-span-1',
+      accent: 'from-orange-50 to-white',
+      iconColor: 'text-orange-400',
+    },
+    {
+      id: 5,
+      title: 'Security & Privacy',
+      description: 'Enterprise-grade security with encryption, secure authentication, and data protection.',
+      icon: Shield,
+      tag: 'Security',
+      span: 'col-span-1',
+      accent: 'from-stone-50 to-white',
+      iconColor: 'text-stone-600',
+    },
+    {
+      id: 6,
+      title: 'App Optimization',
+      description: 'Performance tuning, App Store Optimization (ASO), analytics, and continuous improvement.',
+      icon: TrendingUp,
+      tag: 'Growth',
+      span: 'col-span-2',
+      accent: 'from-amber-50 via-orange-50 to-white',
+      iconColor: 'text-amber-500',
+    }
   ];
 
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const techStack = [
+    "Swift", "Kotlin", "React Native", "Flutter", "Firebase", "SQLite", "Figma", "GraphQL", "Objective-C", "Java", "App Store Connect", "Google Play Console", "Realm", "Redux"
+  ];
 
   return (
     <div className="bg-white overflow-hidden">
@@ -137,93 +171,20 @@ const MobileDevelopment = () => {
           </div>
         </div>
       </section>
-      {/* Services Grid */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <GlobalHeading
-            className="mb-16"
-            badge={{ text: "Solutions" }}
-            title="Comprehensive Mobile Solutions"
-            titleHighlight="Mobile Solutions"
-            subtitle="End-to-end development services covering every aspect of mobile app creation"
-            alignment="center"
-            textColor="dark"
-          />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                icon: <PhoneIcon size={28} />,
-                title: 'Native Development',
-                description: 'Swift for iOS and Kotlin for Android, built for maximum performance and native capabilities.'
-              },
-              {
-                icon: <Zap size={28} />,
-                title: 'Cross-Platform Apps',
-                description: 'React Native and Flutter solutions for faster development and multi-platform reach.'
-              },
-              {
-                icon: <PenTool size={28} />,
-                title: 'UI/UX Design',
-                description: 'Beautiful, intuitive interfaces designed with user experience and engagement at the core.'
-              },
-              {
-                icon: <Cloud size={28} />,
-                title: 'Backend Integration',
-                description: 'Seamless API integration with cloud services, databases, and third-party platforms.'
-              },
-              {
-                icon: <Shield size={28} />,
-                title: 'Security & Privacy',
-                description: 'Enterprise-grade security with encryption, secure authentication, and data protection.'
-              },
-              {
-                icon: <TrendingUp size={28} />,
-                title: 'App Optimization',
-                description: 'Performance tuning, ASO, analytics integration, and continuous improvement strategies.'
-              }
-            ].map((service, index) => (
-              <GlobalCard
-                key={index}
-                index={index}
-                title={service.title}
-                description={service.description}
-                icon={service.icon}
-                theme="light"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <GlobalCapabilitiesSection
+        badgeText="Solutions"
+        title="Comprehensive Mobile Solutions"
+        subtitle="End-to-end development services covering every aspect of mobile app creation, optimization, and scaling."
+        capabilities={capabilities}
+      />
 
-      {/* Tech Stack Section */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6">
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <GlobalHeading
-              badge={{ text: "Technology Stack" }}
-              title="Cutting-Edge Technologies"
-              titleHighlight="Technologies"
-              subtitle="We leverage industry-leading tools and frameworks"
-              alignment="center"
-              size="lg"
-              gradientColors={{ from: 'from-amber-400', to: 'to-orange-500' }}
-            />
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-            {technologies.map((tech, idx) => (
-              <GlobalServiceCard1
-                key={idx}
-                icon={tech.icon}
-                name={tech.name}
-                category={tech.category}
-                theme="dark"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <GlobalTechStackSection
+        badgeText="Technology Stack"
+        title="Tools we master."
+        subtitle="Native languages, hybrid SDKs, cloud backend platforms, and design tools."
+        techStack={techStack}
+      />
 
       <GlobalServiceCTA
         theme="light"

@@ -1,42 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Megaphone,
   BarChart,
   Search,
   Mail,
   Share2,
-  PenTool,
-  ArrowRight,
-  TrendingUp,
-  Target,
-  Users,
-  Award,
-  Globe,
-  PieChart,
-  MessageCircle,
-  Zap,
-  Star
+  PenTool
 } from 'lucide-react';
 import GlobalHero from './GlobalHero';
-import GlobalHeading from './GlobalHeading';
 import GlobalServiceCTA from './GlobalServiceCTA';
-import GlobalCard from './GlobalServiceCard';
-import GlobalServiceCard1 from './GlobalServiceCard1';
+import { GlobalCapabilitiesSection } from './GlobalCapabilitiesSection';
+import { GlobalTechStackSection } from './GlobalTechStackSection';
 
 const DigitalMarketing = () => {
-  const [activeTab, setActiveTab] = useState(0);
-
-  const technologies = [
-    { name: "Google", category: "Analytics & Ads", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" },
-    { name: "Facebook", category: "Social Marketing", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg" },
-    { name: "LinkedIn", category: "B2B Marketing", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" },
-    { name: "Instagram", category: "Social Media", icon: "https://cdn.simpleicons.org/instagram/E4405F" },
-    { name: "Salesforce", category: "CRM", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/salesforce/salesforce-original.svg" },
-    { name: "WordPress", category: "SEO & Content", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg" },
-    { name: "Figma", category: "Ad Creatives", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
-    { name: "Slack", category: "Community", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/slack/slack-original.svg" }
-  ];
-
   const marketingHeroData = [
     {
       id: 1,
@@ -73,83 +49,71 @@ const DigitalMarketing = () => {
     },
   ];
 
-  const services = [
+  const capabilities = [
     {
-      icon: Search,
+      id: 1,
       title: "Search Engine Optimization (SEO)",
-      description: "Boost your organic visibility and rank higher on search engines with data-driven SEO strategies."
+      description: "Boost your organic visibility and rank higher on search engines with data-driven SEO strategies.",
+      icon: Search,
+      tag: "Organic Search",
+      span: "col-span-2",
+      accent: "from-orange-50 via-amber-50 to-white",
+      iconColor: "text-orange-500",
     },
     {
+      id: 2,
+      title: "Social Media SMM",
+      description: "Build a loyal community and drive engagement across platforms like Instagram, LinkedIn, and Facebook.",
       icon: Share2,
-      title: "Social Media Marketing",
-      description: "Build a loyal community and drive engagement across platforms like Instagram, LinkedIn, and Facebook."
+      tag: "Social",
+      span: "col-span-1",
+      accent: "from-slate-50 to-white",
+      iconColor: "text-slate-700",
     },
     {
-      icon: Megaphone,
+      id: 3,
       title: "Pay-Per-Click (PPC)",
-      description: "Maximize your ROI with targeted ad campaigns on Google Ads, Bing, and social media platforms."
+      description: "Maximize your ROI with targeted ad campaigns on Google Ads, Bing, and social media platforms.",
+      icon: Megaphone,
+      tag: "Paid Advertising",
+      span: "col-span-1",
+      accent: "from-amber-50 to-white",
+      iconColor: "text-amber-600",
     },
     {
-      icon: PenTool,
+      id: 4,
       title: "Content Marketing",
-      description: "Create valuable, relevant content that attracts and retains a clearly defined audience."
+      description: "Create valuable, relevant content that attracts and retains a clearly defined audience.",
+      icon: PenTool,
+      tag: "Copywriting",
+      span: "col-span-1",
+      accent: "from-orange-50 to-white",
+      iconColor: "text-orange-400",
     },
     {
-      icon: Mail,
+      id: 5,
       title: "Email Marketing",
-      description: "Nurture leads and drive conversions with personalized, automated email campaigns."
+      description: "Nurture leads and drive conversions with personalized, automated email campaigns.",
+      icon: Mail,
+      tag: "Automation",
+      span: "col-span-1",
+      accent: "from-stone-50 to-white",
+      iconColor: "text-stone-600",
     },
     {
-      icon: BarChart,
+      id: 6,
       title: "Analytics & Reporting",
-      description: "Track performance, measure success, and gain actionable insights with advanced analytics."
+      description: "Track performance, measure success, and gain actionable insights with advanced analytics.",
+      icon: BarChart,
+      tag: "Telemetry",
+      span: "col-span-2",
+      accent: "from-amber-50 via-orange-50 to-white",
+      iconColor: "text-amber-500",
     }
   ];
 
-  const processSteps = [
-    {
-      number: "01",
-      title: "Audit",
-      description: "We analyze your current digital presence, competitors, and market opportunities."
-    },
-    {
-      number: "02",
-      title: "Strategy",
-      description: "Developing a tailored marketing plan aligned with your specific business goals."
-    },
-    {
-      number: "03",
-      title: "Execution",
-      description: "Launching campaigns, creating content, and optimizing your digital channels."
-    },
-    {
-      number: "04",
-      title: "Monitor",
-      description: "Tracking key performance indicators (KPIs) and gathering real-time data."
-    },
-    {
-      number: "05",
-      title: "Scale",
-      description: "Refining strategies based on analytics to maximize ROI and scale success."
-    }
-  ];
-
-  const tools = [
-    { name: "Google Ads", icon: Target },
-    { name: "Analytics", icon: PieChart },
-    { name: "Meta Ads", icon: Share2 },
-    { name: "Mailchimp", icon: Mail },
-    { name: "HubSpot", icon: Users },
-    { name: "SEMrush", icon: Search }
-  ];
-
-  const benefits = [
-    { icon: TrendingUp, text: "Increase website traffic" },
-    { icon: Target, text: "Generate high-quality leads" },
-    { icon: Award, text: "Improve brand authority" },
-    { icon: Users, text: "Enhance customer engagement" },
-    { icon: Globe, text: "Expand market reach" },
-    { icon: Zap, text: "Boost conversion rates" }
+  const techStack = [
+    "Google Analytics", "Google Ads", "Meta Ads", "Mailchimp", "HubSpot", "SEMrush", "Ahrefs", "Google Search Console", "Hotjar", "ActiveCampaign", "Buffer", "Hootsuite"
   ];
 
   return (
@@ -157,63 +121,19 @@ const DigitalMarketing = () => {
       {/* Dynamic Global Hero with Marketing Data */}
       <GlobalHero data={marketingHeroData} height="100vh" />
 
-      {/* Services Section */}
-      <section className="py-20 lg:py-32 px-4 sm:px-6 lg:px-8 bg-slate-50">
-        <div className="max-w-6xl mx-auto">
-          <GlobalHeading
-            className="mb-16"
-            badge={{ text: "Services" }}
-            title="Digital Marketing Services"
-            titleHighlight="Marketing Services"
-            subtitle="End-to-end digital marketing solutions designed to maximize your online visibility and revenue."
-            alignment="center"
-            textColor="dark"
-          />
+      <GlobalCapabilitiesSection
+        badgeText="Marketing Services"
+        title="Digital Marketing Services"
+        subtitle="End-to-end digital marketing solutions designed to maximize your online visibility, customer acquisition, and revenue."
+        capabilities={capabilities}
+      />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {services.map((service, index) => (
-              <GlobalCard
-                key={index}
-                index={index}
-                title={service.title}
-                description={service.description}
-                icon={<service.icon size={28} />}
-                theme="light"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Tech Stack Section */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6 bg-[#0B0F19]">
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <GlobalHeading
-              badge={{ text: "Technology Stack" }}
-              title="Cutting-Edge Technologies"
-              titleHighlight="Technologies"
-              subtitle="We leverage industry-leading tools and frameworks"
-              alignment="center"
-              size="lg"
-              textColor="light"
-              gradientColors={{ from: 'from-amber-400', to: 'to-orange-500' }}
-            />
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-            {technologies.map((tech, idx) => (
-              <GlobalServiceCard1
-                key={idx}
-                icon={tech.icon}
-                name={tech.name}
-                category={tech.category}
-                theme="dark"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <GlobalTechStackSection
+        badgeText="Marketing Stack"
+        title="Tools we master."
+        subtitle="Modern advertising platforms, content tools, SEO platforms, and analytics telemetry."
+        techStack={techStack}
+      />
 
       <GlobalServiceCTA 
         theme="light" 

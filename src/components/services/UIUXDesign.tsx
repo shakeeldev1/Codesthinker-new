@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Palette,
   Users,
@@ -7,55 +8,76 @@ import {
   Brain
 } from 'lucide-react';
 import GlobalHero2 from './GlobalHero2';
-import GlobalHeading from './GlobalHeading';
 import GlobalServiceCTA from './GlobalServiceCTA';
-import GlobalCard from './GlobalServiceCard';
-import GlobalServiceCard1 from './GlobalServiceCard1';
+import { GlobalCapabilitiesSection } from './GlobalCapabilitiesSection';
+import { GlobalTechStackSection } from './GlobalTechStackSection';
 
 const UIUXDesign = () => {
-
-  const technologies = [
-    { name: "Figma", category: "Design", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
-    { name: "Adobe XD", category: "Design", icon: "https://upload.wikimedia.org/wikipedia/commons/c/c2/Adobe_XD_CC_icon.svg" },
-    { name: "Sketch", category: "Prototyping", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sketch/sketch-original.svg" },
-    { name: "InVision", category: "Wireframing", icon: "https://cdn.worldvectorlogo.com/logos/invision.svg" },
-    { name: "Framer", category: "Collaboration", icon: "https://cdn.simpleicons.org/framer/ffffff" },
-    { name: "Tailwind CSS", category: "Styling", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
-    { name: "Photoshop", category: "Image Editing", icon: "https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg" },
-    { name: "Illustrator", category: "Vector Art", icon: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Adobe_Illustrator_CC_icon.svg" }
+  const capabilities = [
+    {
+      id: 1,
+      title: "Visual Design",
+      description: "Create stunning, brand-aligned interfaces that captivate and engage users with color psychology and design systems.",
+      icon: Palette,
+      tag: "Visuals",
+      span: "col-span-2",
+      accent: "from-orange-50 via-amber-50 to-white",
+      iconColor: "text-orange-500",
+    },
+    {
+      id: 2,
+      title: "User Research",
+      description: "Deep dive into user behavior, needs, and pain points through interviews, surveys, and usability testing.",
+      icon: Users,
+      tag: "Research",
+      span: "col-span-1",
+      accent: "from-slate-50 to-white",
+      iconColor: "text-slate-700",
+    },
+    {
+      id: 3,
+      title: "UX Strategy",
+      description: "Develop comprehensive strategies that align design with business goals and user expectations.",
+      icon: Brain,
+      tag: "Strategy",
+      span: "col-span-1",
+      accent: "from-amber-50 to-white",
+      iconColor: "text-amber-600",
+    },
+    {
+      id: 4,
+      title: "Mobile First",
+      description: "Design experiences optimized for mobile devices with responsive, touch-friendly interfaces.",
+      icon: Smartphone,
+      tag: "Responsive",
+      span: "col-span-1",
+      accent: "from-orange-50 to-white",
+      iconColor: "text-orange-400",
+    },
+    {
+      id: 5,
+      title: "Prototyping",
+      description: "Build interactive prototypes and wireframes to test concepts and validate ideas before development.",
+      icon: Zap,
+      tag: "Prototypes",
+      span: "col-span-1",
+      accent: "from-stone-50 to-white",
+      iconColor: "text-stone-600",
+    },
+    {
+      id: 6,
+      title: "Usability Testing",
+      description: "Validate designs through user testing to ensure intuitive, accessible, and effective solutions.",
+      icon: Target,
+      tag: "Testing",
+      span: "col-span-2",
+      accent: "from-amber-50 via-orange-50 to-white",
+      iconColor: "text-amber-500",
+    }
   ];
 
-  const services = [
-    {
-      icon: Palette,
-      title: "Visual Design",
-      description: "Create stunning, brand-aligned interfaces that captivate and engage users with color psychology and design systems."
-    },
-    {
-      icon: Users,
-      title: "User Research",
-      description: "Deep dive into user behavior, needs, and pain points through interviews, surveys, and usability testing."
-    },
-    {
-      icon: Brain,
-      title: "UX Strategy",
-      description: "Develop comprehensive strategies that align design with business goals and user expectations."
-    },
-    {
-      icon: Smartphone,
-      title: "Mobile First",
-      description: "Design experiences optimized for mobile devices with responsive, touch-friendly interfaces."
-    },
-    {
-      icon: Zap,
-      title: "Prototyping",
-      description: "Build interactive prototypes and wireframes to test concepts and validate ideas before development."
-    },
-    {
-      icon: Target,
-      title: "Usability Testing",
-      description: "Validate designs through user testing to ensure intuitive, accessible, and effective solutions."
-    }
+  const techStack = [
+    "Figma", "Adobe XD", "Sketch", "InVision", "Framer", "Tailwind CSS", "Photoshop", "Illustrator", "Zeplin", "Miro"
   ];
 
   return (
@@ -77,63 +99,19 @@ const UIUXDesign = () => {
         secondaryBtnText="Our Portfolio"
       />
 
-      {/* Services Section */}
-      <section className="py-20 lg:py-32 px-4 sm:px-6 lg:px-8 bg-slate-50">
-        <div className="max-w-6xl mx-auto">
-          <GlobalHeading
-            className="mb-16"
-            badge={{ text: "Services" }}
-            title="UI/UX Design Services"
-            titleHighlight="Design Services"
-            subtitle="Transformative design solutions tailored to your unique needs and goals"
-            alignment="center"
-            textColor="dark"
-          />
+      <GlobalCapabilitiesSection
+        badgeText="Services"
+        title="UI/UX Design Services"
+        subtitle="Transformative design solutions tailored to your unique needs, user patterns, and business goals."
+        capabilities={capabilities}
+      />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {services.map((service, index) => (
-              <GlobalCard
-                key={index}
-                index={index}
-                title={service.title}
-                description={service.description}
-                icon={<service.icon size={28} />}
-                theme="light"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Tech Stack Section */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6 bg-[#0B0F19]">
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <GlobalHeading
-              badge={{ text: "Technology Stack" }}
-              title="Cutting-Edge Technologies"
-              titleHighlight="Technologies"
-              subtitle="We leverage industry-leading tools and frameworks"
-              alignment="center"
-              size="lg"
-              textColor="light"
-              gradientColors={{ from: 'from-amber-400', to: 'to-orange-500' }}
-            />
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-            {technologies.map((tech, idx) => (
-              <GlobalServiceCard1
-                key={idx}
-                icon={tech.icon}
-                name={tech.name}
-                category={tech.category}
-                theme="dark"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <GlobalTechStackSection
+        badgeText="Design Stack"
+        title="Tools we master."
+        subtitle="Modern vector creation tools, interactive prototyping environments, wireframing software, and collaborative boards."
+        techStack={techStack}
+      />
 
       <GlobalServiceCTA 
         theme="light" 

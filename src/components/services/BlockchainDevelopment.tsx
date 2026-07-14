@@ -1,9 +1,9 @@
 import React from 'react';
 import { Server, ShieldCheck, Code } from 'lucide-react';
 import GlobalHero from './GlobalHero';
-import GlobalHeading from './GlobalHeading';
 import GlobalServiceCTA from './GlobalServiceCTA';
-import GlobalCard from './GlobalServiceCard';
+import { GlobalCapabilitiesSection } from './GlobalCapabilitiesSection';
+import { GlobalTechStackSection } from './GlobalTechStackSection';
 
 const BlockchainDevelopment: React.FC = () => {
   const heroData = [
@@ -20,41 +20,60 @@ const BlockchainDevelopment: React.FC = () => {
     }
   ];
 
-  const services = [
-    { icon: Code, title: 'Smart Contracts', description: 'Production-ready smart contracts with automated testing and formal audit support.' },
-    { icon: Server, title: 'DApp Development', description: 'Full-stack decentralized applications with secure wallet and backend integrations.' },
-    { icon: ShieldCheck, title: 'Security & Audits', description: 'Comprehensive security reviews, penetration testing and remediation guidance.' }
+  const capabilities = [
+    {
+      id: 1,
+      title: 'Smart Contracts',
+      description: 'Production-ready smart contracts with automated testing and formal audit support.',
+      icon: Code,
+      tag: 'Development',
+      span: 'col-span-1',
+      accent: 'from-orange-50 via-amber-50 to-white',
+      iconColor: 'text-orange-500',
+    },
+    {
+      id: 2,
+      title: 'DApp Development',
+      description: 'Full-stack decentralized applications with secure wallet and backend integrations.',
+      icon: Server,
+      tag: 'Fullstack',
+      span: 'col-span-1',
+      accent: 'from-slate-50 to-white',
+      iconColor: 'text-slate-700',
+    },
+    {
+      id: 3,
+      title: 'Security & Audits',
+      description: 'Comprehensive security reviews, penetration testing and remediation guidance.',
+      icon: ShieldCheck,
+      tag: 'Security',
+      span: 'col-span-1',
+      accent: 'from-amber-50 to-white',
+      iconColor: 'text-amber-600',
+    }
+  ];
+
+  const techStack = [
+    'Solidity', 'Rust', 'Hardhat', 'Truffle', 'Ethers.js', 'Web3.js', 'Ethereum', 'Solana', 'Hyperledger', 'IPFS', 'Metamask', 'ERC-20', 'ERC-721', 'Web3'
   ];
 
   return (
-    <div className="min-h-screen pt-18  bg-white">
+    <div className="min-h-screen bg-white">
       <GlobalHero data={heroData} height="80vh" />
 
-      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
-        <div className="max-w-6xl mx-auto">
-          <GlobalHeading
-            badge={{ text: 'Blockchain' }}
-            title="Blockchain Development Services"
-            titleHighlight="Blockchain"
-            subtitle="Decentralized solutions, secure smart contracts and reliable integrations"
-            alignment="center"
-            textColor="dark"
-          />
+      <GlobalCapabilitiesSection
+        badgeText="Blockchain"
+        title="Blockchain Development Services"
+        subtitle="Decentralized solutions, secure smart contracts, and reliable integrations engineered for trust."
+        capabilities={capabilities}
+      />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-            {services.map((s, i) => (
-              <GlobalCard
-                key={i}
-                index={i}
-                title={s.title}
-                description={s.description}
-                icon={<s.icon size={28} />}
-                theme="light"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <GlobalTechStackSection
+        badgeText="Web3 Stack"
+        title="Tools we master."
+        subtitle="Modern blockchain networks, tooling, and protocols."
+        techStack={techStack}
+      />
 
       <GlobalServiceCTA
         theme="light"

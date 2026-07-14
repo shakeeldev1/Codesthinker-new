@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { FaGithub, FaTwitter, FaLinkedin } from 'react-icons/fa';
 import {
   Shield,
   Lock,
@@ -13,10 +12,9 @@ import {
   ArrowRight
 } from 'lucide-react';
 import GlobalHero from './GlobalHero';
-import GlobalHeading from './GlobalHeading';
 import GlobalServiceCTA from './GlobalServiceCTA';
-import GlobalCard from './GlobalServiceCard';
-import GlobalServiceCard1 from './GlobalServiceCard1';
+import { GlobalCapabilitiesSection } from './GlobalCapabilitiesSection';
+import { GlobalTechStackSection } from './GlobalTechStackSection';
 
 // ==================== DATA ====================
 const cyberHeroData = [
@@ -55,128 +53,91 @@ const cyberHeroData = [
   },
 ];
 
-const servicesData = [
+const capabilities = [
   {
-    icon: Eye,
+    id: 1,
     title: "Threat Detection",
     description: "Real-time monitoring and intelligent threat detection powered by machine learning algorithms.",
-    features: ["24/7 Monitoring", "AI-Powered Analysis", "Instant Alerts"]
+    icon: Eye,
+    tag: "Monitoring",
+    span: "col-span-2",
+    accent: "from-orange-50 via-amber-50 to-white",
+    iconColor: "text-orange-500",
   },
   {
-    icon: Lock,
+    id: 2,
     title: "Data Protection",
     description: "Military-grade encryption and advanced data loss prevention for all your sensitive information.",
-    features: ["End-to-End Encryption", "DLP Systems", "Compliance Ready"]
+    icon: Lock,
+    tag: "Encryption",
+    span: "col-span-1",
+    accent: "from-slate-50 to-white",
+    iconColor: "text-slate-700",
   },
   {
-    icon: Server,
+    id: 3,
     title: "Infrastructure Security",
     description: "Secure your cloud, on-premise, and hybrid environments with comprehensive infrastructure hardening.",
-    features: ["Cloud Security", "Network Hardening", "Patch Management"]
+    icon: Server,
+    tag: "Cloud",
+    span: "col-span-1",
+    accent: "from-amber-50 to-white",
+    iconColor: "text-amber-600",
   },
   {
-    icon: Brain,
+    id: 4,
     title: "Incident Response",
     description: "Expert team ready to respond to security incidents 24/7 with proven methodologies.",
-    features: ["Rapid Response", "Forensics", "Recovery Planning"]
+    icon: Brain,
+    tag: "Response",
+    span: "col-span-1",
+    accent: "from-orange-50 to-white",
+    iconColor: "text-orange-400",
   },
   {
-    icon: TrendingUp,
+    id: 5,
     title: "Risk Management",
     description: "Comprehensive risk assessments and compliance management for regulatory requirements.",
-    features: ["Risk Assessment", "Compliance", "Reporting"]
+    icon: TrendingUp,
+    tag: "Compliance",
+    span: "col-span-1",
+    accent: "from-stone-50 to-white",
+    iconColor: "text-stone-600",
   },
   {
-    icon: Zap,
+    id: 6,
     title: "Security Training",
     description: "Empower your team with security awareness and best practices training programs.",
-    features: ["Staff Training", "Simulations", "Documentation"]
+    icon: Zap,
+    tag: "Training",
+    span: "col-span-2",
+    accent: "from-amber-50 via-orange-50 to-white",
+    iconColor: "text-amber-500",
   }
 ];
 
+const techStack = [
+  "Linux", "Python", "AWS Security", "Docker", "Bash", "C++", "Kubernetes", "Azure Security", "Wireshark", "Metasploit", "Nmap", "Suricata", "Snort", "Splunk", "Kali Linux", "OpenSSL"
+];
+
 const CyberSecurity = () => {
-  const [scrollY, setScrollY] = useState(0);
-  const [activeTab, setActiveTab] = useState(0);
-
-  const technologies = [
-    { name: "Linux", category: "Core OS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
-    { name: "Python", category: "Scripting", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-    { name: "AWS", category: "Cloud Security", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" },
-    { name: "Docker", category: "Containers", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
-    { name: "Bash", category: "Automation", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" },
-    { name: "C++", category: "System Level", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
-    { name: "Kubernetes", category: "Orchestration", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" },
-    { name: "Azure", category: "Cloud Infrastructure", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" }
-  ];
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <div className="bg-white">
       <GlobalHero data={cyberHeroData} height="100vh" />
       
-      {/* ==================== SECTION 2: CORE SERVICES ==================== */}
-      <section className="py-24 px-6 bg-white relative">
-        <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-20">
-            <GlobalHeading
-              className="mb-16"
-              badge={{ text: "Services" }}
-              title="Our Security Services"
-              titleHighlight="Services"
-              subtitle="Comprehensive security solutions tailored to protect your organization at every level."
-              alignment="center"
-              textColor="dark"
-            />
-          </div>
+      <GlobalCapabilitiesSection
+        badgeText="Security Services"
+        title="Our Security Services"
+        subtitle="Comprehensive security solutions tailored to protect your organization at every level from modern digital threats."
+        capabilities={capabilities}
+      />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {servicesData.map((service, index) => (
-              <GlobalCard
-                key={index}
-                index={index}
-                title={service.title}
-                description={service.description}
-                icon={<service.icon size={28} />}
-                theme="light"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Tech Stack Section */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6">
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <GlobalHeading
-              badge={{ text: "Technology Stack" }}
-              title="Cutting-Edge Technologies"
-              titleHighlight="Technologies"
-              subtitle="We leverage industry-leading tools and frameworks"
-              alignment="center"
-              size="lg"
-              gradientColors={{ from: 'from-amber-400', to: 'to-orange-500' }}
-            />
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-            {technologies.map((tech, idx) => (
-              <GlobalServiceCard1
-                key={idx}
-                icon={tech.icon}
-                name={tech.name}
-                category={tech.category}
-                theme="dark"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <GlobalTechStackSection
+        badgeText="Technology Stack"
+        title="Tools we master."
+        subtitle="Cutting-edge tools, platforms, and security suites used to audit, protect, and monitor infrastructure."
+        techStack={techStack}
+      />
 
       <GlobalServiceCTA 
         theme="light" 

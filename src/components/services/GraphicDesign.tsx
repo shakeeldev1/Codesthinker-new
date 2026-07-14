@@ -5,100 +5,85 @@ import {
   PenTool,
   Layout,
   Type,
-  Monitor,
-  Zap,
-  Star,
-  Shield,
-  Infinity,
-  Users,
-  TrendingUp
+  Monitor
 } from 'lucide-react';
-import GlobalHeading from './GlobalHeading';
 import GlobalHero2 from './GlobalHero2';
 import GlobalServiceCTA from './GlobalServiceCTA';
-import GlobalCard from './GlobalServiceCard';
-import GlobalServiceCard1 from './GlobalServiceCard1';
+import { GlobalCapabilitiesSection } from './GlobalCapabilitiesSection';
+import { GlobalTechStackSection } from './GlobalTechStackSection';
 
-const ServicesSection = () => {
-  const services = [
+const GraphicDesign = () => {
+  const capabilities = [
     {
-      icon: <Palette size={28} />,
+      id: 1,
       title: "Logo Design & Branding",
-      description: "Create a memorable brand identity with custom logos, color palettes, and comprehensive brand guidelines."
+      description: "Create a memorable brand identity with custom logos, color palettes, and comprehensive brand guidelines.",
+      icon: Palette,
+      tag: "Identity",
+      span: "col-span-2",
+      accent: "from-orange-50 via-amber-50 to-white",
+      iconColor: "text-orange-500",
     },
     {
-      icon: <Layout size={28} />,
+      id: 2,
       title: "Marketing Collateral",
-      description: "Professionally designed brochures, flyers, business cards, and presentations that leave a lasting impression."
+      description: "Professionally designed brochures, flyers, business cards, and presentations that leave a lasting impression.",
+      icon: Layout,
+      tag: "Print & PDF",
+      span: "col-span-1",
+      accent: "from-slate-50 to-white",
+      iconColor: "text-slate-700",
     },
     {
-      icon: <ImageIcon size={28} />,
+      id: 3,
       title: "Social Media Graphics",
-      description: "Engaging and on-brand visual content tailored for Instagram, LinkedIn, Twitter, and Facebook."
+      description: "Engaging and on-brand visual content tailored for Instagram, LinkedIn, Twitter, and Facebook.",
+      icon: ImageIcon,
+      tag: "Social Content",
+      span: "col-span-1",
+      accent: "from-amber-50 to-white",
+      iconColor: "text-amber-600",
     },
     {
-      icon: <Monitor size={28} />,
+      id: 4,
       title: "Digital Advertisements",
-      description: "High-converting display ads, social media ad creatives, and promotional banners for digital campaigns."
+      description: "High-converting display ads, social media ad creatives, and promotional banners for digital campaigns.",
+      icon: Monitor,
+      tag: "Marketing",
+      span: "col-span-1",
+      accent: "from-orange-50 to-white",
+      iconColor: "text-orange-400",
     },
     {
-      icon: <PenTool size={28} />,
+      id: 5,
       title: "Illustration & Art",
-      description: "Custom illustrations, iconography, and digital art that add a unique personality to your brand."
+      description: "Custom illustrations, iconography, and digital art that add a unique personality to your brand.",
+      icon: PenTool,
+      tag: "Custom Art",
+      span: "col-span-1",
+      accent: "from-stone-50 to-white",
+      iconColor: "text-stone-600",
     },
     {
-      icon: <Type size={28} />,
+      id: 6,
       title: "Typography & Layout",
-      description: "Expert typesetting and layout design for magazines, ebooks, whitepapers, and editorial content."
+      description: "Expert typesetting and layout design for magazines, ebooks, whitepapers, and editorial content.",
+      icon: Type,
+      tag: "Editorial",
+      span: "col-span-2",
+      accent: "from-amber-50 via-orange-50 to-white",
+      iconColor: "text-amber-500",
     }
   ];
 
-  return (
-    <section className="py-20 lg:py-32 px-4 sm:px-6 lg:px-8 bg-slate-50">
-      <div className="max-w-6xl mx-auto">
-        <GlobalHeading
-          className="mb-16"
-          badge={{ text: "Services" }}
-          title="Graphic Design Services"
-          titleHighlight="Design Services"
-          subtitle="Comprehensive graphic design solutions tailored to elevate your brand's visual identity."
-          alignment="center"
-          textColor="dark"
-        />
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {services.map((service, index) => (
-            <GlobalCard
-              key={index}
-              index={index}
-              title={service.title}
-              description={service.description}
-              icon={service.icon}
-              theme="dark"
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const GraphicDesign = () => {
   const heroImages = [
     "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=2071&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1545235617-9465d2a55698?q=80&w=2080&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=2070&auto=format&fit=crop"
   ];
 
-  const technologies = [
-    { name: "Illustrator", category: "Vector", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg" },
-    { name: "Photoshop", category: "Raster", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg" },
-    { name: "Adobe XD", category: "Layout", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/xd/xd-plain.svg" },
-    { name: "After Effects", category: "Animation", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aftereffects/aftereffects-plain.svg" },
-    { name: "Figma", category: "Design", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
-    { name: "Sketch", category: "Vector", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sketch/sketch-original.svg" },
-    { name: "Premiere Pro", category: "Video Editing", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/premierepro/premierepro-plain.svg" },
-    { name: "Blender", category: "3D Modeling", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" }
+  const techStack = [
+    "Adobe Illustrator", "Adobe Photoshop", "Adobe XD", "Adobe After Effects", "Figma", "Sketch", "Adobe Premiere Pro", "Blender", "InDesign", "Canva"
   ];
 
   return (
@@ -113,35 +98,20 @@ const GraphicDesign = () => {
         primaryBtnText="Get Creative Now"
         secondaryBtnText="View Designs"
       />
-      <ServicesSection />
 
-      {/* Tech Stack Section */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6">
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <GlobalHeading
-              badge={{ text: "Technology Stack" }}
-              title="Cutting-Edge Technologies"
-              titleHighlight="Technologies"
-              subtitle="We leverage industry-leading tools and frameworks"
-              alignment="center"
-              size="lg"
-              gradientColors={{ from: 'from-amber-400', to: 'to-orange-500' }}
-            />
-          </div>
+      <GlobalCapabilitiesSection
+        badgeText="Services"
+        title="Graphic Design Services"
+        subtitle="Comprehensive graphic design solutions tailored to elevate your brand's visual identity across all platforms."
+        capabilities={capabilities}
+      />
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-            {technologies.map((tech, idx) => (
-              <GlobalServiceCard1
-                key={idx}
-                icon={tech.icon}
-                name={tech.name}
-                category={tech.category}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <GlobalTechStackSection
+        badgeText="Design Stack"
+        title="Tools we master."
+        subtitle="Professional raster/vector editors, page layout suites, 3D modeling programs, and motion tools."
+        techStack={techStack}
+      />
 
       <GlobalServiceCTA 
         theme="dark" 

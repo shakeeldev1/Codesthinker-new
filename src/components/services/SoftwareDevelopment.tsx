@@ -10,10 +10,9 @@ import {
   Cpu,
   Rocket
 } from 'lucide-react';
-import GlobalHeading from './GlobalHeading';
 import GlobalServiceCTA from './GlobalServiceCTA';
-import GlobalCard from './GlobalServiceCard';
-import GlobalServiceCard1 from './GlobalServiceCard1';
+import { GlobalCapabilitiesSection } from './GlobalCapabilitiesSection';
+import { GlobalTechStackSection } from './GlobalTechStackSection';
 
 const SoftwareDevelopment = () => {
 
@@ -65,58 +64,69 @@ const SoftwareDevelopment = () => {
 
   const services = [
     {
-      number: "01",
+      id: 1,
       title: "Enterprise Applications",
       description: "Scalable, mission-critical systems designed for organizations that demand reliability and performance at scale.",
-      features: ["High availability", "Security hardened", "Scalable architecture"],
-      icon: <Layers size={28} />
+      icon: Layers,
+      tag: "Enterprise",
+      span: "col-span-2",
+      accent: "from-orange-50 via-amber-50 to-white",
+      iconColor: "text-orange-500",
     },
     {
-      number: "02",
+      id: 2,
       title: "Custom CRM & ERP",
       description: "Bespoke business systems tailored to your unique workflows and industry requirements.",
-      features: ["Workflow optimization", "Data integration", "Real-time analytics"],
-      icon: <Database size={28} />
+      icon: Database,
+      tag: "Business Systems",
+      span: "col-span-1",
+      accent: "from-slate-50 to-white",
+      iconColor: "text-slate-700",
     },
     {
-      number: "03",
+      id: 3,
       title: "API Integration",
       description: "Seamlessly connect disparate systems and build robust data pipelines for modern enterprises.",
-      features: ["RESTful design", "GraphQL ready", "Real-time sync"],
-      icon: <Zap size={28} />
+      icon: Zap,
+      tag: "Integration",
+      span: "col-span-1",
+      accent: "from-amber-50 to-white",
+      iconColor: "text-amber-600",
     },
     {
-      number: "04",
+      id: 4,
       title: "Cloud-Native Solutions",
       description: "Modern applications built for the cloud with containerization and orchestration at their core.",
-      features: ["Kubernetes ready", "Auto-scaling", "Multi-region"],
-      icon: <Globe size={28} />
+      icon: Globe,
+      tag: "Cloud",
+      span: "col-span-1",
+      accent: "from-orange-50 to-white",
+      iconColor: "text-orange-400",
     },
     {
-      number: "05",
+      id: 5,
       title: "Legacy Modernization",
       description: "Transform legacy systems into modern, maintainable applications without disrupting operations.",
-      features: ["Zero downtime", "Incremental migration", "Cost optimization"],
-      icon: <Cpu size={28} />
+      icon: Cpu,
+      tag: "Modernization",
+      span: "col-span-1",
+      accent: "from-stone-50 to-white",
+      iconColor: "text-stone-600",
     },
     {
-      number: "06",
+      id: 6,
       title: "Performance Engineering",
       description: "Optimize every millisecond with advanced profiling, caching strategies, and architectural improvements.",
-      features: ["Load optimization", "Database tuning", "CDN integration"],
-      icon: <Rocket size={28} />
+      icon: Rocket,
+      tag: "Performance",
+      span: "col-span-2",
+      accent: "from-amber-50 via-orange-50 to-white",
+      iconColor: "text-amber-500",
     }
   ];
 
-  const technologies = [
-    { name: "React", category: "Frontend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-    { name: "Node.js", category: "Backend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-    { name: "Python", category: "Backend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-    { name: "TypeScript", category: "Language", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
-    { name: "Docker", category: "DevOps", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
-    { name: "AWS", category: "Cloud", icon: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" },
-    { name: "PostgreSQL", category: "Database", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
-    { name: "Kubernetes", category: "Orchestration", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" }
+  const techStack = [
+    "React", "Node.js", "Python", "TypeScript", "Docker", "AWS", "PostgreSQL", "Kubernetes", "Next.js", "GraphQL", "Redis", "MongoDB", "Terraform", "CI/CD"
   ];
 
   return (
@@ -124,63 +134,19 @@ const SoftwareDevelopment = () => {
       {/* Dynamic Global Hero with Software Development Data */}
       <GlobalHero data={softwareHeroData} height="100vh" />
 
-      {/* Services Grid - Interactive */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6">
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <GlobalHeading
-              badge={{ text: "Our Services" }}
-              title="Complete Development Solutions"
-              titleHighlight="Development Solutions"
-              subtitle="From concept to launch, we deliver end-to-end software development excellence"
-              alignment="center"
-              size="lg"
-              gradientColors={{ from: 'from-amber-400', to: 'to-orange-500' }}
-            />
-          </div>
+      <GlobalCapabilitiesSection
+        badgeText="Our Services"
+        title="Complete Development Solutions"
+        subtitle="From concept to launch, we deliver end-to-end software development excellence engineered for enterprise complexity."
+        capabilities={services}
+      />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service, idx) => (
-              <GlobalCard
-                key={idx}
-                index={idx}
-                title={service.title}
-                description={service.description}
-                icon={service.icon}
-                theme="dark"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Tech Stack Section */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6">
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <GlobalHeading
-              badge={{ text: "Technology Stack" }}
-              title="Cutting-Edge Technologies"
-              titleHighlight="Technologies"
-              subtitle="We leverage industry-leading tools and frameworks"
-              alignment="center"
-              size="lg"
-              gradientColors={{ from: 'from-amber-400', to: 'to-orange-500' }}
-            />
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-            {technologies.map((tech, idx) => (
-              <GlobalServiceCard1
-                key={idx}
-                icon={tech.icon}
-                name={tech.name}
-                category={tech.category}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <GlobalTechStackSection
+        badgeText="Technology Stack"
+        title="Tools we master."
+        subtitle="Cutting-edge technologies across cloud, development, and data platforms."
+        techStack={techStack}
+      />
 
 
 

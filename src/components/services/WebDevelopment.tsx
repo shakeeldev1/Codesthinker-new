@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React from 'react';
 import {
   Code2,
   Smartphone,
@@ -8,69 +8,76 @@ import {
   Layers
 } from 'lucide-react';
 import GlobalHero1 from './GlobalHero1';
-import GlobalHeading from './GlobalHeading';
 import GlobalServiceCTA from './GlobalServiceCTA';
-import GlobalCard from './GlobalServiceCard';
-import GlobalServiceCard1 from './GlobalServiceCard1';
-import AOS from "aos";
-import "aos/dist/aos.css";
+import { GlobalCapabilitiesSection } from './GlobalCapabilitiesSection';
+import { GlobalTechStackSection } from './GlobalTechStackSection';
 
 const WebDevelopment = () => {
-  useEffect(() => {
-    // Initialize AOS
-    AOS.init({
-      duration: 1200,
-      once: true,
-      easing: "ease-in-out",
-    });
-    // Explicitly refresh AOS to re-scan and apply animations after DOM is ready
-    setTimeout(() => {
-      AOS.refresh();
-    }, 100); // Add a small delay
-  }, []);
-
-  const services = [
+  const capabilities = [
     {
-      icon: Globe,
+      id: 1,
       title: "Responsive Design",
-      description: "Pixel-perfect websites that work flawlessly on all devices, from mobile phones to desktop screens."
+      description: "Pixel-perfect websites that work flawlessly on all devices, from mobile phones to high-resolution desktop screens.",
+      icon: Globe,
+      tag: "UX Design",
+      span: "col-span-2",
+      accent: "from-orange-50 via-amber-50 to-white",
+      iconColor: "text-orange-500",
     },
     {
-      icon: Zap,
+      id: 2,
       title: "Performance First",
-      description: "Lightning-fast load times and smooth interactions optimized for SEO and user experience."
+      description: "Lightning-fast load times and smooth interactions optimized for search engine indexing and user experience.",
+      icon: Zap,
+      tag: "Optimization",
+      span: "col-span-1",
+      accent: "from-slate-50 to-white",
+      iconColor: "text-slate-700",
     },
     {
-      icon: ShoppingCart,
+      id: 3,
       title: "E-commerce Solutions",
-      description: "Complete online stores with secure payments, inventory management, and customer analytics."
+      description: "Complete online stores with secure checkout flows, real-time inventory management, and customer analytics.",
+      icon: ShoppingCart,
+      tag: "Commerce",
+      span: "col-span-1",
+      accent: "from-amber-50 to-white",
+      iconColor: "text-amber-600",
     },
     {
-      icon: Smartphone,
+      id: 4,
       title: "Progressive Web Apps",
-      description: "App-like experiences that work offline, install on home screens, and engage users seamlessly."
+      description: "App-like web experiences that function offline, install on home screens, and support push notifications.",
+      icon: Smartphone,
+      tag: "PWA",
+      span: "col-span-1",
+      accent: "from-orange-50 to-white",
+      iconColor: "text-orange-400",
     },
     {
-      icon: Code2,
+      id: 5,
       title: "Modern Stack",
-      description: "Built with cutting-edge technologies like React, Next.js, and TypeScript for scalability."
+      description: "Built with cutting-edge technologies like React, Next.js, and TypeScript for absolute scale and code safety.",
+      icon: Code2,
+      tag: "Engineering",
+      span: "col-span-1",
+      accent: "from-stone-50 to-white",
+      iconColor: "text-stone-600",
     },
     {
-      icon: Layers,
+      id: 6,
       title: "Content Management",
-      description: "Flexible CMS integration for easy content updates without technical knowledge required."
+      description: "Flexible headless CMS integrations allowing team members to make instant, visual content updates.",
+      icon: Layers,
+      tag: "CMS Integration",
+      span: "col-span-2",
+      accent: "from-amber-50 via-orange-50 to-white",
+      iconColor: "text-amber-500",
     }
   ];
 
-  const technologies = [
-    { name: "React", category: "Frontend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-    { name: "Next.js", category: "Framework", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
-    { name: "Node.js", category: "Backend", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-    { name: "TypeScript", category: "Language", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
-    { name: "Tailwind CSS", category: "Styling", icon: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" },
-    { name: "Vercel", category: "Deployment", icon: "https://assets.vercel.com/image/upload/v1588805858/repositories/vercel/logo.png" },
-    { name: "MongoDB", category: "Database", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
-    { name: "Figma", category: "Design", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" }
+  const techStack = [
+    "React", "Next.js", "Node.js", "TypeScript", "Tailwind CSS", "Vercel", "MongoDB", "Figma", "Redux", "GraphQL", "PostgreSQL", "Sanity CMS"
   ];
 
   return (
@@ -92,64 +99,19 @@ const WebDevelopment = () => {
         secondaryBtnText="View Our Work"
       />
 
-      {/* Services Grid Section */}
-      <section className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12 md:mb-16" data-aos="fade-up">
-            <GlobalHeading
-              badge={{ text: "Our Services" }}
-              title="Our Web Services"
-              titleHighlight="Web Services"
-              subtitle="Comprehensive solutions tailored to your business needs"
-              alignment="center"
-              size="lg"
-              gradientColors={{ from: 'from-amber-400', to: 'to-orange-500' }}
-            />
-          </div>
+      <GlobalCapabilitiesSection
+        badgeText="Our Services"
+        title="Our Web Services"
+        subtitle="Comprehensive solutions tailored to your business needs, engineered for responsiveness and high performance."
+        capabilities={capabilities}
+      />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {services.map((service, index) => (
-              <GlobalCard
-                key={index}
-                index={index}
-                title={service.title}
-                description={service.description}
-                icon={<service.icon size={28} />}
-                theme="light"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Tech Stack Section */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6">
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <GlobalHeading
-              badge={{ text: "Technology Stack" }}
-              title="Cutting-Edge Technologies"
-              titleHighlight="Technologies"
-              subtitle="We leverage industry-leading tools and frameworks"
-              alignment="center"
-              size="lg"
-              gradientColors={{ from: 'from-amber-400', to: 'to-orange-500' }}
-            />
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-            {technologies.map((tech, idx) => (
-              <GlobalServiceCard1
-                key={idx}
-                icon={tech.icon}
-                name={tech.name}
-                category={tech.category}
-                theme="dark"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <GlobalTechStackSection
+        badgeText="Technology Stack"
+        title="Tools we master."
+        subtitle="Modern frameworks, markup design systems, static generators, and serverless hosting environments."
+        techStack={techStack}
+      />
 
       <GlobalServiceCTA 
         theme="light" 
