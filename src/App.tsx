@@ -5,6 +5,7 @@ import {
   Outlet,
   ScrollRestoration, // <-- Add this import
 } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import { useEffect } from 'react';
@@ -21,6 +22,7 @@ import ApplyForInternship from './pages/ApplyForInternship';
 import ApplyForJob from './pages/ApplyForJob';
 import GetOurServices from './pages/GetOurServices';
 import Blog from './pages/Blog';
+import BlogPostPage from './pages/BlogPostPage';
 import TeamPage from './pages/TeamPage';
 import ProjectsPage from './pages/ProjectsPage';
 import ScrollToTop from './components/common/ScrollToTop';
@@ -35,17 +37,17 @@ const MainLayout = () => {
   }, [location.pathname]);
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       {/* This component ensures the page scrolls to top on every navigation */}
       <ScrollRestoration /> 
       <Navbar />
       <ScrollToTop />
-      <main>
+      <main className="flex-grow flex flex-col">
         <Outlet />
       </main>
       <Whatsapp />
       <Footer />
-    </>
+    </div>
   );
 };
 
@@ -60,6 +62,7 @@ const router = createBrowserRouter([
       { path: 'services', element: <ServicesPage /> },
       { path: 'services/:serviceId', element: <ServicePage /> },
       { path: 'blog', element: <Blog /> },
+      { path: 'blog/:slug', element: <BlogPostPage /> },
       { path: 'contact', element: <Contact /> },
       { path: 'apply/internship', element: <ApplyForInternship /> },
       { path: 'apply/job', element: <ApplyForJob /> },
@@ -71,7 +74,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <HelmetProvider>
+      <RouterProvider router={router} />
+    </HelmetProvider>
+  );
 }
 
 export default App;
