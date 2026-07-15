@@ -132,7 +132,7 @@ const Navbar: React.FC = () => {
         location.pathname.startsWith('/projects') ||
         location.pathname === '/services/gaming' ||
         location.pathname === '/services/resources' ||
-        location.pathname === '/services/ui-ux' ||
+       //location.pathname === '/services/ui-ux' ||
         location.pathname === '/services/graphic-design';
 
     // Active dropdowns force a white navbar -> dark links.
@@ -143,6 +143,7 @@ const Navbar: React.FC = () => {
     const isActive = (path: string) => location.pathname === path;
 
     return (
+        <>
         <nav 
             className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
                 activeHover
@@ -283,236 +284,238 @@ const Navbar: React.FC = () => {
                 </div>
             </div>
 
-            {/* Backdrop overlay */}
-            <AnimatePresence>
-                {isMobileMenuOpen && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 0.4 }}
-                        exit={{ opacity: 0 }}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="lg:hidden fixed inset-0 bg-[#08061E] z-[140] pointer-events-auto"
-                    />
-                )}
-            </AnimatePresence>
+        </nav>
+        
+        {/* Mobile Backdrop overlay */}
+        <AnimatePresence>
+            {isMobileMenuOpen && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 0.4 }}
+                    exit={{ opacity: 0 }}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="lg:hidden fixed inset-0 bg-[#08061E] z-[140] pointer-events-auto"
+                />
+            )}
+        </AnimatePresence>
 
-            {/* Mobile Side Drawer Menu */}
-            <AnimatePresence>
-                {isMobileMenuOpen && (
-                    <motion.div
-                        initial={{ x: '100%' }}
-                        animate={{ x: 0 }}
-                        exit={{ x: '100%' }}
-                        transition={{ type: 'spring', damping: 26, stiffness: 220 }}
-                        className="lg:hidden fixed top-0 right-0 bottom-0 w-full sm:w-[380px] bg-white shadow-2xl z-[150] flex flex-col overflow-hidden"
-                    >
-                        {/* Drawer Header */}
-                        <div className="px-6 py-5 border-b border-gray-100 flex justify-between items-center shrink-0">
-                            {mobileActiveLink ? (
-                                <button
-                                    onClick={() => setMobileActiveLink(null)}
-                                    className="flex items-center gap-2 text-[#08061E] font-bold text-base focus:outline-none cursor-pointer"
-                                >
-                                    <HiArrowRight className="rotate-180 text-amber-500" />
-                                    <span>Back</span>
-                                </button>
-                            ) : (
-                                <span className="font-black text-[#08061E] tracking-tight uppercase text-xs">Navigation</span>
-                            )}
+        {/* Mobile Side Drawer Menu */}
+        <AnimatePresence>
+            {isMobileMenuOpen && (
+                <motion.div
+                    initial={{ x: '100%' }}
+                    animate={{ x: 0 }}
+                    exit={{ x: '100%' }}
+                    transition={{ type: 'spring', damping: 26, stiffness: 220 }}
+                    className="lg:hidden fixed top-0 right-0 bottom-0 w-full sm:w-[380px] bg-white shadow-2xl z-[150] flex flex-col overflow-hidden"
+                >
+                    {/* Drawer Header */}
+                    <div className="px-6 py-5 border-b border-gray-100 flex justify-between items-center shrink-0">
+                        {mobileActiveLink ? (
                             <button
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className="p-1.5 hover:bg-gray-100 rounded-xl text-gray-500 hover:text-gray-800 transition-colors cursor-pointer"
+                                onClick={() => setMobileActiveLink(null)}
+                                className="flex items-center gap-2 text-[#08061E] font-bold text-base focus:outline-none cursor-pointer"
                             >
-                                <HiX size={20} />
+                                <HiArrowRight className="rotate-180 text-amber-500" />
+                                <span>Back</span>
                             </button>
-                        </div>
+                        ) : (
+                            <span className="font-black text-[#08061E] tracking-tight uppercase text-xs">Navigation</span>
+                        )}
+                        <button
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="p-1.5 hover:bg-gray-100 rounded-xl text-gray-500 hover:text-gray-800 transition-colors cursor-pointer"
+                        >
+                            <HiX size={20} />
+                        </button>
+                    </div>
 
-                        {/* Slider Body Container */}
-                        <div className="flex-1 overflow-hidden relative">
-                            <div 
-                                className="flex w-[200%] h-full transition-transform duration-300 ease-out"
-                                style={{ transform: mobileActiveLink ? 'translateX(-50%)' : 'translateX(0)' }}
-                            >
-                                {/* Slide 1: Main Menu Links */}
-                                <div className="w-1/2 h-full overflow-y-auto px-6 py-6 flex flex-col gap-3">
-                                    {navLinks.map((link) => (
-                                        <div key={link.name}>
-                                            {(link.subLinks || link.megaMenu) ? (
-                                                <button
-                                                    onClick={() => setMobileActiveLink(link)}
-                                                    className="flex items-center justify-between w-full p-4 font-bold text-left bg-gray-50 text-[#08061E]/80 border border-transparent rounded-xl hover:border-gray-200 transition-all cursor-pointer"
-                                                >
-                                                    {link.name}
-                                                    <HiChevronDown className="-rotate-90 text-gray-400" />
-                                                </button>
-                                            ) : (
-                                                <Link
-                                                    to={link.to}
-                                                    onClick={handleLinkClick}
-                                                    className={`block p-4 font-bold transition-colors rounded-xl ${
-                                                        isActive(link.to) 
-                                                            ? 'bg-[#08061E]/5 text-[#08061E] border border-[#08061E]/10' 
-                                                            : 'bg-gray-50 text-[#08061E]/80 border border-transparent hover:border-gray-200'
-                                                    }`}
-                                                >
-                                                    {link.name}
-                                                </Link>
-                                            )}
-                                        </div>
-                                    ))}
-
-                                    <div className="mt-4">
-                                        <Button
-                                            text="Get In Touch"
-                                            to="/contact"
-                                            className="w-full justify-center bg-[#08061E] text-white font-bold py-4 shadow-xl rounded-2xl cursor-pointer"
-                                            onClick={handleLinkClick}
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Slide 2: Active Submenu/MegaMenu */}
-                                <div className="w-1/2 h-full overflow-y-auto px-6 py-6 flex flex-col gap-3">
-                                    {mobileActiveLink && (
-                                        <>
-                                            <div className="mb-2 px-3">
-                                                <span className="text-[10px] text-amber-500 font-bold uppercase tracking-widest">Section</span>
-                                                <h4 className="font-black text-[#08061E] text-xl leading-tight">{mobileActiveLink.name}</h4>
-                                            </div>
-
-                                            {mobileActiveLink.megaMenu ? (
-                                                <div className="flex flex-col gap-4">
-                                                    {mobileActiveLink.megaMenu.map((cat, idx) => (
-                                                        <div key={idx} className="bg-gray-50/50 border border-gray-100 p-3 rounded-2xl">
-                                                            <h5 className="text-[#08061E]/40 text-[10px] font-bold uppercase tracking-wider mb-2 px-2">{cat.title}</h5>
-                                                            <div className="flex flex-col gap-1">
-                                                                {cat.items.map((sub, sIdx) => (
-                                                                    <Link
-                                                                        key={sIdx}
-                                                                        to={sub.to}
-                                                                        onClick={handleLinkClick}
-                                                                        className={`block p-2.5 text-sm rounded-xl font-medium transition-all ${
-                                                                            isActive(sub.to) 
-                                                                                ? 'bg-[#08061E]/5 text-[#08061E]' 
-                                                                                : 'text-[#08061E]/70 hover:bg-gray-50 hover:text-[#08061E]'
-                                                                        }`}
-                                                                    >
-                                                                        {sub.name}
-                                                                    </Link>
-                                                                ))}
-                                                            </div>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            ) : (
-                                                <div className="flex flex-col gap-2">
-                                                    {mobileActiveLink.subLinks?.map((sub, sIdx) => (
-                                                        <Link
-                                                            key={sIdx}
-                                                            to={sub.to}
-                                                            onClick={handleLinkClick}
-                                                            className={`block p-4 font-semibold bg-gray-50 text-[#08061E]/80 border border-transparent rounded-xl hover:border-gray-200 transition-all ${
-                                                                isActive(sub.to) ? 'bg-[#08061E]/5 text-[#08061E] border-[#08061E]/10' : ''
-                                                            }`}
-                                                        >
-                                                            {sub.name}
-                                                        </Link>
-                                                    ))}
-                                                </div>
-                                            )}
-                                        </>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            {/* Mega Menu Overlay */}
-            <AnimatePresence>
-                {activeHover && navLinks.find(l => l.name === activeHover)?.megaMenu && (
-                    <motion.div
-                        onMouseEnter={() => setActiveHover(activeHover)}
-                        onMouseLeave={() => setActiveHover(null)}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        transition={{ duration: 0.2 }}
-                        className="fixed top-[70px] lg:top-[80px] left-0 w-screen bg-white border-b border-gray-200 shadow-2xl overflow-hidden pointer-events-auto"
-                    >
-                        <div className="container mx-auto max-w-[1440px] flex shadow-[inset_0_10px_20px_rgba(0,0,0,0.02)]">
-                            {/* Left: Categories */}
-                            <div className="w-1/4 border-r border-gray-100 py-8 px-6 bg-gray-50/50">
-                                <ul className="flex flex-col gap-2">
-                                    {navLinks.find(l => l.name === activeHover)!.megaMenu!.map((cat, idx) => (
-                                        <li key={idx}>
+                    {/* Slider Body Container */}
+                    <div className="flex-1 overflow-hidden relative">
+                        <div 
+                            className="flex w-[200%] h-full transition-transform duration-300 ease-out"
+                            style={{ transform: mobileActiveLink ? 'translateX(-50%)' : 'translateX(0)' }}
+                        >
+                            {/* Slide 1: Main Menu Links */}
+                            <div className="w-1/2 h-full overflow-y-auto px-6 py-6 flex flex-col gap-3">
+                                {navLinks.map((link) => (
+                                    <div key={link.name}>
+                                        {(link.subLinks || link.megaMenu) ? (
                                             <button
-                                                onMouseEnter={() => setActiveMegaCategory(idx)}
-                                                className={`w-full text-left px-4 py-3 flex items-center justify-between transition-all duration-300 border-l-2 rounded-r-xl
-                                                    ${activeMegaCategory === idx ? 'bg-white text-[#08061E] font-bold border-[#08061E] shadow-sm' : 'text-[#08061E]/60 hover:text-[#08061E] hover:bg-gray-100/50 border-transparent'}`}
+                                                onClick={() => setMobileActiveLink(link)}
+                                                className="flex items-center justify-between w-full p-4 font-bold text-left bg-gray-50 text-[#08061E]/80 border border-transparent rounded-xl hover:border-gray-200 transition-all cursor-pointer"
                                             >
-                                                {cat.title}
-                                                {activeMegaCategory === idx && <HiArrowRight className="text-[#08061E]" />}
+                                                {link.name}
+                                                <HiChevronDown className="-rotate-90 text-gray-400" />
                                             </button>
-                                        </li>
-                                    ))}
-                                </ul>
+                                        ) : (
+                                            <Link
+                                                to={link.to}
+                                                onClick={handleLinkClick}
+                                                className={`block p-4 font-bold transition-colors rounded-xl ${
+                                                    isActive(link.to) 
+                                                        ? 'bg-[#08061E]/5 text-[#08061E] border border-[#08061E]/10' 
+                                                        : 'bg-gray-50 text-[#08061E]/80 border border-transparent hover:border-gray-200'
+                                                }`}
+                                            >
+                                                {link.name}
+                                            </Link>
+                                        )}
+                                    </div>
+                                ))}
+
+                                <div className="mt-4">
+                                    <Button
+                                        text="Get In Touch"
+                                        to="/contact"
+                                        className="w-full justify-center bg-[#08061E] text-white font-bold py-4 shadow-xl rounded-2xl cursor-pointer"
+                                        onClick={handleLinkClick}
+                                    />
+                                </div>
                             </div>
 
-                            {/* Middle: Services Grid */}
-                            <div className="w-2/4 py-8 px-10 bg-white">
-                                <div className="grid grid-cols-2 gap-x-8 gap-y-6">
-                                    {navLinks.find(l => l.name === activeHover)!.megaMenu![activeMegaCategory].items.map((sub, sIdx) => (
-                                        <Link
-                                            key={sIdx}
-                                            to={sub.to}
-                                            onClick={handleLinkClick}
-                                            className="group flex flex-col gap-1 p-3 hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-100 rounded-xl"
-                                        >
-                                            <span className="text-[#08061E] font-bold flex items-center gap-2">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-amber-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                                {sub.name}
-                                            </span>
-                                            {sub.desc && (
-                                                <span className="text-[#08061E]/60 text-xs leading-relaxed group-hover:text-[#08061E]/80 transition-colors">
-                                                    {sub.desc}
-                                                </span>
-                                            )}
-                                        </Link>
-                                    ))}
-                                </div>
-                                <div className="mt-8 pt-6 border-t border-gray-100">
-                                    <Link to="/services" onClick={handleLinkClick} className="text-[#08061E] hover:text-amber-500 text-sm font-bold flex items-center gap-2 hover:gap-3 transition-all">
-                                        View all {navLinks.find(l => l.name === activeHover)!.megaMenu![activeMegaCategory].title} services <HiArrowRight />
-                                    </Link>
-                                </div>
-                            </div>
- 
-                            {/* Right: Spotlight */}
-                            <div className="w-1/4 bg-gradient-to-br from-gray-50 to-white py-8 px-8 border-l border-gray-100 flex flex-col">
-                                <span className="text-xs font-bold tracking-widest text-[#08061E]/40 uppercase mb-4">Spotlight</span>
-                                {posts && posts.length > 0 && (
-                                    <Link 
-                                        to={`/blog/${posts[0].slug}`} 
-                                        onClick={handleLinkClick}
-                                        className="flex-1 overflow-hidden relative group cursor-pointer border border-gray-200 rounded-2xl shadow-sm block"
-                                    >
-                                        <img src={posts[0].image} alt={posts[0].title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                                        <div className="absolute inset-0 bg-gradient-to-tr from-[#08061E]/80 to-[#1a1440]/90 z-0" />
-                                        <div className="relative h-full p-6 flex flex-col justify-end z-10">
-                                            <h4 className="text-white font-bold text-sm mb-1.5 leading-snug line-clamp-2 group-hover:text-amber-300 transition-colors">{posts[0].title}</h4>
-                                            <p className="text-white/80 text-[10px] mb-3 line-clamp-2 leading-relaxed">{posts[0].excerpt}</p>
-                                            <span className="text-amber-400 group-hover:text-amber-300 transition-colors text-xs font-bold flex items-center gap-1">Read Guide <HiArrowRight /></span>
+                            {/* Slide 2: Active Submenu/MegaMenu */}
+                            <div className="w-1/2 h-full overflow-y-auto px-6 py-6 flex flex-col gap-3">
+                                {mobileActiveLink && (
+                                    <>
+                                        <div className="mb-2 px-3">
+                                            <span className="text-[10px] text-amber-500 font-bold uppercase tracking-widest">Section</span>
+                                            <h4 className="font-black text-[#08061E] text-xl leading-tight">{mobileActiveLink.name}</h4>
                                         </div>
-                                    </Link>
+
+                                        {mobileActiveLink.megaMenu ? (
+                                            <div className="flex flex-col gap-4">
+                                                {mobileActiveLink.megaMenu.map((cat, idx) => (
+                                                    <div key={idx} className="bg-gray-50/50 border border-gray-100 p-3 rounded-2xl">
+                                                        <h5 className="text-[#08061E]/40 text-[10px] font-bold uppercase tracking-wider mb-2 px-2">{cat.title}</h5>
+                                                        <div className="flex flex-col gap-1">
+                                                            {cat.items.map((sub, sIdx) => (
+                                                                <Link
+                                                                    key={sIdx}
+                                                                    to={sub.to}
+                                                                    onClick={handleLinkClick}
+                                                                    className={`block p-2.5 text-sm rounded-xl font-medium transition-all ${
+                                                                        isActive(sub.to) 
+                                                                            ? 'bg-[#08061E]/5 text-[#08061E]' 
+                                                                            : 'text-[#08061E]/70 hover:bg-gray-50 hover:text-[#08061E]'
+                                                                    }`}
+                                                                >
+                                                                    {sub.name}
+                                                                </Link>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <div className="flex flex-col gap-2">
+                                                {mobileActiveLink.subLinks?.map((sub, sIdx) => (
+                                                    <Link
+                                                        key={sIdx}
+                                                        to={sub.to}
+                                                        onClick={handleLinkClick}
+                                                        className={`block p-4 font-semibold bg-gray-50 text-[#08061E]/80 border border-transparent rounded-xl hover:border-gray-200 transition-all ${
+                                                            isActive(sub.to) ? 'bg-[#08061E]/5 text-[#08061E] border-[#08061E]/10' : ''
+                                                        }`}
+                                                    >
+                                                        {sub.name}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </>
                                 )}
                             </div>
                         </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </nav>
+                    </div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+
+        {/* Mega Menu Overlay */}
+        <AnimatePresence>
+            {activeHover && navLinks.find(l => l.name === activeHover)?.megaMenu && (
+                <motion.div
+                    onMouseEnter={() => setActiveHover(activeHover)}
+                    onMouseLeave={() => setActiveHover(null)}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.2 }}
+                    className="fixed top-[70px] lg:top-[80px] left-0 w-screen bg-white border-b border-gray-200 shadow-2xl overflow-hidden pointer-events-auto z-[120]"
+                >
+                    <div className="container mx-auto max-w-[1440px] flex shadow-[inset_0_10px_20px_rgba(0,0,0,0.02)]">
+                        {/* Left: Categories */}
+                        <div className="w-1/4 border-r border-gray-100 py-8 px-6 bg-gray-50/50">
+                            <ul className="flex flex-col gap-2">
+                                {navLinks.find(l => l.name === activeHover)!.megaMenu!.map((cat, idx) => (
+                                    <li key={idx}>
+                                        <button
+                                            onMouseEnter={() => setActiveMegaCategory(idx)}
+                                            className={`w-full text-left px-4 py-3 flex items-center justify-between transition-all duration-300 border-l-2 rounded-r-xl
+                                                ${activeMegaCategory === idx ? 'bg-white text-[#08061E] font-bold border-[#08061E] shadow-sm' : 'text-[#08061E]/60 hover:text-[#08061E] hover:bg-gray-100/50 border-transparent'}`}
+                                        >
+                                            {cat.title}
+                                            {activeMegaCategory === idx && <HiArrowRight className="text-[#08061E]" />}
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Middle: Services Grid */}
+                        <div className="w-2/4 py-8 px-10 bg-white">
+                            <div className="grid grid-cols-2 gap-x-8 gap-y-6">
+                                {navLinks.find(l => l.name === activeHover)!.megaMenu![activeMegaCategory].items.map((sub, sIdx) => (
+                                    <Link
+                                        key={sIdx}
+                                        to={sub.to}
+                                        onClick={handleLinkClick}
+                                        className="group flex flex-col gap-1 p-3 hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-100 rounded-xl"
+                                    >
+                                        <span className="text-[#08061E] font-bold flex items-center gap-2">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-amber-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            {sub.name}
+                                        </span>
+                                        {sub.desc && (
+                                            <span className="text-[#08061E]/60 text-xs leading-relaxed group-hover:text-[#08061E]/80 transition-colors">
+                                                {sub.desc}
+                                            </span>
+                                        )}
+                                    </Link>
+                                ))}
+                            </div>
+                            <div className="mt-8 pt-6 border-t border-gray-100">
+                                <Link to="/services" onClick={handleLinkClick} className="text-[#08061E] hover:text-amber-500 text-sm font-bold flex items-center gap-2 hover:gap-3 transition-all">
+                                    View all {navLinks.find(l => l.name === activeHover)!.megaMenu![activeMegaCategory].title} services <HiArrowRight />
+                                </Link>
+                            </div>
+                        </div>
+
+                        {/* Right: Spotlight */}
+                        <div className="w-1/4 bg-gradient-to-br from-gray-50 to-white py-8 px-8 border-l border-gray-100 flex flex-col">
+                            <span className="text-xs font-bold tracking-widest text-[#08061E]/40 uppercase mb-4">Spotlight</span>
+                            {posts && posts.length > 0 && (
+                                <Link 
+                                    to={`/blog/${posts[0].slug}`} 
+                                    onClick={handleLinkClick}
+                                    className="flex-1 overflow-hidden relative group cursor-pointer border border-gray-200 rounded-2xl shadow-sm block"
+                                >
+                                    <img src={posts[0].image} alt={posts[0].title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                    <div className="absolute inset-0 bg-gradient-to-tr from-[#08061E]/80 to-[#1a1440]/90 z-0" />
+                                    <div className="relative h-full p-6 flex flex-col justify-end z-10">
+                                        <h4 className="text-white font-bold text-sm mb-1.5 leading-snug line-clamp-2 group-hover:text-amber-300 transition-colors">{posts[0].title}</h4>
+                                        <p className="text-white/80 text-[10px] mb-3 line-clamp-2 leading-relaxed">{posts[0].excerpt}</p>
+                                        <span className="text-amber-400 group-hover:text-amber-300 transition-colors text-xs font-bold flex items-center gap-1">Read Guide <HiArrowRight /></span>
+                                    </div>
+                                </Link>
+                            )}
+                        </div>
+                    </div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+        </>
     );
 };
 

@@ -672,7 +672,10 @@ const Team: React.FC = () => {
   const [selectedStaff, setSelectedStaff] = useState<TeamMember | null>(null);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [hoveredOrb, setHoveredOrb] = useState<number | null>(null);
-  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+  const [windowSize, setWindowSize] = useState({ 
+    width: typeof window !== 'undefined' ? window.innerWidth : 1024, 
+    height: typeof window !== 'undefined' ? window.innerHeight : 768 
+  });
   const autoPlayTimeoutRef = useRef<number | undefined>(undefined);
 
   // Close modal on escape keypress
@@ -689,7 +692,14 @@ const Team: React.FC = () => {
 
   
   const TOTAL_ITEMS = executives.length;
-  const RADIUS = windowSize.width < 768 ? 160 : 260;
+  const getRadius = (width: number) => {
+    if (width < 380) return 100;
+    if (width < 500) return 130;
+    if (width < 768) return 160;
+    if (width < 1024) return 220;
+    return 260;
+  };
+  const RADIUS = getRadius(windowSize.width);
 
   // Handle window resize for responsive radius
   useEffect(() => {
@@ -808,7 +818,7 @@ const Team: React.FC = () => {
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           
           {/* LEFT: Enhanced Orbiting System */}
-          <div className="relative w-full lg:w-1/2 h-[450px] md:h-[550px] flex items-center justify-center select-none">
+          <div className="relative w-full lg:w-1/2 h-[340px] sm:h-[450px] md:h-[550px] flex items-center justify-center select-none overflow-visible">
             {/* Glowing Concentric Background Rings */}
             <motion.div 
               className="absolute border border-slate-200/50 rounded-full"
@@ -842,7 +852,7 @@ const Team: React.FC = () => {
                 {/* Ultra-premium glowing halo behind the executive */}
                 <div className="absolute -inset-8 bg-gradient-to-tr from-[#F49B21]/40 via-[#07051D]/10 to-[#F49B21]/40 rounded-full blur-[40px] opacity-70 animate-pulse-slow -z-10" />
                 
-                <div className="w-56 h-56 md:w-72 md:h-72 rounded-full p-[4px] bg-gradient-to-tr from-[#07051D] via-amber-400 to-[#F49B21] shadow-[0_20px_60px_-15px_rgba(244,155,33,0.4)] relative overflow-hidden group">
+                <div className="w-36 h-36 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-full p-[4px] bg-gradient-to-tr from-[#07051D] via-amber-400 to-[#F49B21] shadow-[0_20px_60px_-15px_rgba(244,155,33,0.4)] relative overflow-hidden group">
                   <div className="absolute inset-0 bg-white/20 animate-[spin_4s_linear_infinite]" />
                   <div className="w-full h-full rounded-full overflow-hidden bg-[#07051D] relative z-10 border-[4px] border-white/90">
                     <img 
