@@ -693,11 +693,11 @@ const Team: React.FC = () => {
   
   const TOTAL_ITEMS = executives.length;
   const getRadius = (width: number) => {
-    if (width < 380) return 100;
-    if (width < 500) return 130;
-    if (width < 768) return 160;
-    if (width < 1024) return 220;
-    return 260;
+    if (width < 380) return 115;
+    if (width < 500) return 150;
+    if (width < 768) return 185;
+    if (width < 1024) return 245;
+    return 290;
   };
   const RADIUS = getRadius(windowSize.width);
 
