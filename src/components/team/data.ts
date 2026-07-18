@@ -143,22 +143,22 @@ export const teamMembers: TeamMember[] = [
     avatar: "/team/Kiran_Saif_wordpress.jpeg", location: "Pakistan", experience: "8+ years", email: "kiran@company.com",
     achievements: ["Certified WordPress Developer", "Top 10 WordPress Plugins Contributor"],
   },
-  {
-    id: "dev-008", name: "Ayesha Choudary", role: "Frontend Developer",
-    description: "Passionate frontend developer specializing in responsive web applications.",
-    skills: ["React", "Next.js", "TypeScript", "JavaScript", "CSS", "HTML"],
-    social: [{ platform: "linkedin", url: "#", icon: "linkedin" }],
-    avatar: "/team/Ayesha_Chaudhry_frontend.jpeg", location: "Pakistan", experience: "5+ years", email: "ayesha@company.com",
-    achievements: ["Frontend Development Award", "UI/UX Excellence"],
-  },
-  {
-    id: "dev-009", name: "Maryam Tahir", role: "Frontend Developer",
-    description: "Passionate frontend developer specializing in responsive web applications.",
-    skills: ["React", "Next.js", "TypeScript", "JavaScript", "CSS", "HTML"],
-    social: [{ platform: "linkedin", url: "#", icon: "linkedin" }],
-    avatar: "/team/Maryam_tahir_frontend.jpeg", location: "Pakistan", experience: "5+ years", email: "maryam@company.com",
-    achievements: ["Frontend Development Award", "UI/UX Excellence"],
-  },
+  // {
+  //   id: "dev-008", name: "Ayesha Choudary", role: "Frontend Developer",
+  //   description: "Passionate frontend developer specializing in responsive web applications.",
+  //   skills: ["React", "Next.js", "TypeScript", "JavaScript", "CSS", "HTML"],
+  //   social: [{ platform: "linkedin", url: "#", icon: "linkedin" }],
+  //   avatar: "/team/Ayesha_Chaudhry_frontend.jpeg", location: "Pakistan", experience: "5+ years", email: "ayesha@company.com",
+  //   achievements: ["Frontend Development Award", "UI/UX Excellence"],
+  // },
+  // {
+  //   id: "dev-009", name: "Maryam Tahir", role: "Frontend Developer",
+  //   description: "Passionate frontend developer specializing in responsive web applications.",
+  //   skills: ["React", "Next.js", "TypeScript", "JavaScript", "CSS", "HTML"],
+  //   social: [{ platform: "linkedin", url: "#", icon: "linkedin" }],
+  //   avatar: "/team/Maryam_tahir_frontend.jpeg", location: "Pakistan", experience: "5+ years", email: "maryam@company.com",
+  //   achievements: ["Frontend Development Award", "UI/UX Excellence"],
+  // },
 ];
 
 export const getRoleTheme = (role: string) => {
