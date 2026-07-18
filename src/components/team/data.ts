@@ -65,7 +65,7 @@ export const teamMembers: TeamMember[] = [
       { platform: "linkedin", url: "https://www.linkedin.com/in/sadiq-hussain-9a85a2334", icon: "linkedin" },
       { platform: "github", url: "https://github.com/sadiqhussain988", icon: "github" },
     ],
-    avatar: "/team/Sadiq_Hussain_Full-Satack-Developer.png", location: "Pakistan", experience: "6+ years", email: "sadiqhussain31304@gmail.com",
+    avatar: "/team/Sadiq_Hussain_Full-Satack-Developer.jpg", location: "Pakistan", experience: "6+ years", email: "sadiqhussain31304@gmail.com",
     achievements: ["AWS Certified Solutions Architect", "Full Stack Developer Award"],
   },
   {
