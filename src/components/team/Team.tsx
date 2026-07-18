@@ -2,11 +2,31 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LuMapPin, LuMail, LuAward } from "react-icons/lu";
+import { FaLinkedin, FaLinkedinIn, FaTwitter, FaGithub, FaDribbble, FaFacebook, FaInstagram } from "react-icons/fa";
 import { SectionBadge } from "../ui/SectionBadge";
 
 // Corrected type import to fix the syntax error
 import { teamMembers, getRoleTheme, FALLBACK_AVATAR } from "./data";
 import type { TeamMember } from "./data";
+
+// Map the string icon names stored in data to actual react-icons components
+const SOCIAL_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  linkedin: FaLinkedin,
+  FaLinkedinIn,
+  FaLinkedin,
+  twitter: FaTwitter,
+  FaTwitter,
+  github: FaGithub,
+  FaGithub,
+  dribbble: FaDribbble,
+  FaDribbble,
+  facebook: FaFacebook,
+  FaFacebook,
+  instagram: FaInstagram,
+  FaInstagram,
+};
+
+const resolveSocialIcon = (name: string) => SOCIAL_ICONS[name] ?? FaLinkedin;
 
 const Team: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -271,20 +291,24 @@ const Team: React.FC = () => {
                       </motion.div>
                     )}
 
-                    <motion.div className="flex items-center gap-3 pt-8 border-t border-gray-100" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
-                      {activeMember.social.map((social, i) => (
-                        <motion.a
-                          key={i}
-                          href={social.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-3 bg-[#F1F5F9] text-slate-600 rounded-xl hover:bg-[#07051D] hover:text-white transition-all duration-300 border border-slate-200/60 shadow-sm"
-                          whileHover={{ scale: 1.1, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <span className="text-xl">{social.icon}</span>
-                        </motion.a>
-                      ))}
+                    <motion.div className="flex flex-wrap items-center gap-3 pt-8 border-t border-gray-100" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+                      {activeMember.social.map((social, i) => {
+                        const Icon = resolveSocialIcon(social.icon);
+                        return (
+                          <motion.a
+                            key={i}
+                            href={social.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={social.platform}
+                            className="p-3 bg-[#F1F5F9] text-slate-600 rounded-xl hover:bg-[#07051D] hover:text-white transition-all duration-300 border border-slate-200/60 shadow-sm"
+                            whileHover={{ scale: 1.1, y: -2 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                            <Icon className="text-xl" />
+                          </motion.a>
+                        );
+                      })}
                       {activeMember.email && (
                         <motion.a
                           href={`mailto:${activeMember.email}`}
@@ -348,7 +372,7 @@ const Team: React.FC = () => {
           </div>
 
           {/* Cards configured with high visual hierarchy: Top Image -> Bottom Content */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 max-w-7xl mx-auto">
             {normalStaff.map((member) => {
               const theme = getRoleTheme(member.role);
               const accentColor = theme.accent; // e.g., '#F49B21'
@@ -366,7 +390,7 @@ const Team: React.FC = () => {
               return (
                 <div
                   key={member.id}
-                  className="group relative bg-white rounded-2xl border border-slate-100/80 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-2 hover:scale-[1.01] overflow-hidden flex flex-col cursor-pointer"
+                  className="group relative bg-white rounded-2xl border border-slate-100/80 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-2 sm:hover:scale-[1.01] overflow-hidden flex flex-col cursor-pointer"
                   style={
                     {
                       '--accent-rgb': rgbAccent,
@@ -385,7 +409,7 @@ const Team: React.FC = () => {
                   <div className={`absolute top-0 left-0 w-full h-[6px] bg-gradient-to-r ${theme.gradient} z-20`} />
 
                   {/* 1. TOP IMAGE AREA */}
-                  <div className="relative w-full h-72 sm:h-80 overflow-hidden bg-slate-50 flex-shrink-0">
+                  <div className="relative w-full h-60 xs:h-64 sm:h-72 md:h-80 overflow-hidden bg-slate-50 flex-shrink-0">
                     <img
                       src={member.avatar}
                       alt={member.name}
@@ -397,12 +421,12 @@ const Team: React.FC = () => {
                   </div>
 
                   {/* 2. BOTTOM CONTENT AREA */}
-                  <div className="relative z-10 flex flex-col flex-grow p-6 sm:p-8 bg-white border-t border-slate-50">
+                  <div className="relative z-10 flex flex-col flex-grow p-5 sm:p-6 md:p-8 bg-white border-t border-slate-50">
 
                     {/* Header: Profile Name & Role */}
-                    <div className="mb-5">
+                    <div className="mb-4 sm:mb-5">
                       <h3
-                        className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight transition-colors duration-300"
+                        className="text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 tracking-tight transition-colors duration-300"
                         style={{ fontFamily: "'Outfit', sans-serif" }}
                         onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent-color)'}
                         onMouseLeave={(e) => e.currentTarget.style.color = ''}
@@ -410,8 +434,8 @@ const Team: React.FC = () => {
                         {member.name}
                       </h3>
 
-                      <div className="flex flex-wrap items-center gap-3 mt-2.5">
-                        <span className={`${theme.text} font-bold text-xs uppercase tracking-[0.15em] opacity-90`}>
+                      <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3 sm:gap-y-2 mt-2.5">
+                        <span className={`${theme.text} font-bold text-[11px] sm:text-xs uppercase tracking-[0.15em] opacity-90`}>
                           {member.role}
                         </span>
                         {member.location && (
@@ -445,27 +469,31 @@ const Team: React.FC = () => {
 
                     {/* Footer Actions: Social Links & Contact */}
                     <div
-                      className="mt-auto pt-5 border-t border-slate-100 flex items-center justify-between relative z-30"
+                      className="mt-auto pt-5 border-t border-slate-100 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between relative z-30"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <div className="flex gap-2.5">
-                        {member.social.map((s, i) => (
-                          <a
-                            key={i}
-                            href={s.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 text-slate-400 hover:text-white hover:bg-slate-900 transition-all duration-300 border border-slate-100 hover:-translate-y-0.5 hover:shadow-sm"
-                          >
-                            <span className="text-base">{s.icon}</span>
-                          </a>
-                        ))}
+                      <div className="flex flex-wrap gap-2 sm:gap-2.5">
+                        {member.social.map((s, i) => {
+                          const Icon = resolveSocialIcon(s.icon);
+                          return (
+                            <a
+                              key={i}
+                              href={s.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={s.platform}
+                              className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 text-slate-400 hover:text-white hover:bg-slate-900 transition-all duration-300 border border-slate-100 hover:-translate-y-0.5 hover:shadow-sm"
+                            >
+                              <Icon className="text-base" />
+                            </a>
+                          );
+                        })}
                       </div>
 
                       {member.email && (
                         <a
                           href={`mailto:${member.email}`}
-                          className={`px-5 h-10 flex items-center justify-center gap-1.5 rounded-xl bg-slate-50 text-slate-600 hover:text-white transition-all duration-300 border border-slate-100 hover:-translate-y-0.5 hover:shadow-sm ${theme.hoverFill} font-bold text-[11px] uppercase tracking-wider`}
+                          className={`px-5 h-10 flex items-center justify-center gap-1.5 rounded-xl bg-slate-50 text-slate-600 hover:text-white transition-all duration-300 border border-slate-100 hover:-translate-y-0.5 hover:shadow-sm ${theme.hoverFill} font-bold text-[11px] uppercase tracking-wider sm:ml-auto`}
                         >
                           <LuMail className="text-base" /> Contact
                         </a>

@@ -88,6 +88,16 @@ export const teamMembers: TeamMember[] = [
     ],
     avatar: "/team/AbdullahFlutter.jpeg", location: "Pakistan", experience: "2+ years", email: "abdullahrajpoot2476@gmail.com",
   },
+   {
+    id: "dev-0010", name: "Zahid Hussain", role: "Digital Marketer",
+    description: "Digital marketing strategist driving brand growth through data-driven campaigns and social media expertise.",
+    skills: ["SEO", "Content Marketing", "Social Media Management", "Analytics", "PPC", "Email Marketing"],
+    social: [
+      { platform: "linkedin", url: "#", icon: "FaLinkedinIn" },
+      { platform: "github", url: "#", icon: "FaGithub" },
+    ],
+    avatar: "/team/zahid.jpg", location: "Pakistan", experience: "2+ years", email: "abdullahrajpoot2476@gmail.com",
+  },
   {
     id: "dev-004", name: "Farhan Ahmad", role: "Mern Stack Developer",
     description: "Passionate MERN Stack Developer building responsive and scalable web applications.",
