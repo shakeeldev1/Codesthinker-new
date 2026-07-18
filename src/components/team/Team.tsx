@@ -15,7 +15,7 @@ const Team: React.FC = () => {
 
   // SSR safe: Initialize with default safe desktop width, update in useEffect
   const [windowSize, setWindowSize] = useState({ width: 1024, height: 768 });
-  const autoPlayTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
+  const autoPlayTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const { executives, normalStaff } = useMemo(() => ({
     executives: teamMembers.slice(0, 4),
@@ -367,11 +367,13 @@ const Team: React.FC = () => {
                 <div
                   key={member.id}
                   className="group relative bg-white rounded-2xl border border-slate-100/80 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-2 hover:scale-[1.01] overflow-hidden flex flex-col cursor-pointer"
-                  style={{
-                    '--accent-rgb': rgbAccent,
-                    '--accent-color': accentColor,
-                    boxShadow: '0 15px 35px -15px rgba(7, 5, 29, 0.05)'
-                  }}
+                  style={
+                    {
+                      '--accent-rgb': rgbAccent,
+                      '--accent-color': accentColor,
+                      boxShadow: '0 15px 35px -15px rgba(7, 5, 29, 0.05)'
+                    } as any
+                  }
                   onMouseEnter={(e) => {
                     e.currentTarget.style.boxShadow = `0 30px 60px -15px rgba(${rgbAccent}, 0.15)`;
                   }}

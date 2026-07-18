@@ -1,7 +1,7 @@
 import React from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Users, Globe, Rocket, Sparkles, ChevronRight } from "lucide-react";
-import video from "../../../public/video.mp4";
+const video = "/video.mp4";
 import { SectionBadge } from "../ui/SectionBadge";
 
 const Hero: React.FC = () => {

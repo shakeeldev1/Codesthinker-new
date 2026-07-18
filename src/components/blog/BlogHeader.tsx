@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Sparkles, Search, ArrowRight, BookOpen, Clock, User } from "lucide-react";
-import video from "../../../public/video.mp4";
+const video = "/video.mp4";
 import { posts } from "../../data/blogData";
 import { Link } from "react-router-dom";
 import { SectionBadge } from "../ui/SectionBadge";

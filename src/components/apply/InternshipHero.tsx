@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Users, Globe, Rocket, Sparkles, ChevronRight } from "lucide-react";
-import video from "../../../public/video.mp4"; // Ensure this path is correct
+const video = "/video.mp4";
 
 interface StatItem {
     label: string;

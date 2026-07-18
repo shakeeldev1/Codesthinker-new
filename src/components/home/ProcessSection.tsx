@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import img from "../../../public/process.webp"
+const img = "/process.webp";
 import { SectionBadge } from "../ui/SectionBadge";
 
 // --- Types ---

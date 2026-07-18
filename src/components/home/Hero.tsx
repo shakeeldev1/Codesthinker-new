@@ -9,7 +9,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import Button from "../common/Button";
 import BusinessFeatures from "./BusinessFeatures";
-import video from "../../../public/video.mp4"
+const video = "/video.mp4";
 
 interface SlideContent {
     title: string;
