@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Users, Globe, Rocket, Sparkles, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 const video = "/video.mp4";
 
 interface StatItem {
@@ -67,10 +68,10 @@ const InternshipHero: React.FC = () => {
                             ))}
                         </div>
 
-                        <button className="inline-flex items-center gap-2 bg-[#F69A20] hover:bg-[#e08a1d] text-white font-bold px-6 py-2 rounded-full transition-all shadow-lg hover:shadow-orange-500/20">
+                        <Link to="/contact" className="inline-flex items-center gap-2 bg-[#F69A20] hover:bg-[#e08a1d] text-white font-bold px-6 py-2 rounded-full transition-all shadow-lg hover:shadow-orange-500/20">
                             Start Collaborating
                             <ChevronRight className="w-5 h-5" />
-                        </button>
+                        </Link>
                     </motion.div>
 
                     {/* Right Image/Badge */}

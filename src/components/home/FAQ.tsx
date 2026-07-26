@@ -81,7 +81,7 @@ const FAQ: React.FC = () => {
   });
 
   return (
-    <section className="relative w-full min-h-[600px] bg-gradient-to-br from-slate-50 to-gray-100 py-16 px-4 sm:px-6 lg:py-20 lg:px-8 overflow-hidden font-sans">
+    <section className="relative w-full min-h-[600px] bg-gradient-to-br from-slate-50 to-gray-100 py-12 px-4 sm:px-6  lg:px-8 overflow-hidden font-sans">
       {/* Background Decor matching system layout */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-gray-400 rounded-full mix-blend-multiply filter blur-[100px] opacity-15"></div>
@@ -154,7 +154,7 @@ const FAQ: React.FC = () => {
                       initial={{ opacity: 0, scale: 0.98 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.98 }}
-                      className={`group rounded-2xl overflow-hidden transition-all duration-300 bg-white ring-1 ${
+                      className={`group rounded-xl overflow-hidden transition-all duration-300 bg-white ring-1 ${
                         activeId === faq.id 
                           ? "ring-gray-300 shadow-md" 
                           : "ring-gray-200/60 shadow-sm hover:ring-gray-300"
@@ -162,9 +162,9 @@ const FAQ: React.FC = () => {
                     >
                       <button
                         onClick={() => setActiveId(activeId === faq.id ? null : faq.id)}
-                        className="w-full px-6 py-5 flex items-center justify-between text-left"
+                        className="w-full px-5 py-2 flex items-center justify-between text-left"
                       >
-                        <span className="text-base sm:text-lg font-bold text-gray-900 tracking-tight">
+                        <span className="text-base sm:text-lg font-bold text-gray-900 ">
                           {faq.question}
                         </span>
                         <div className="flex-shrink-0 ml-4 p-1.5 bg-gray-50 rounded-lg text-gray-500 group-hover:bg-gray-900 group-hover:text-white transition-colors duration-300">

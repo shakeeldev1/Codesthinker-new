@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import type { LucideProps } from "lucide-react";
 import { SectionBadge } from "../ui/SectionBadge";
+import { Link } from "react-router-dom";
 
 // --- Components ---
 const Button = ({ text }: { text: string }) => (
@@ -228,7 +229,9 @@ const WhyChoose: React.FC = () => {
           transition={{ delay: 0.4 }}
           className="text-center mt-12"
         >
+       <Link to="/about" className="inline-block">
           <Button text="More About Us" />
+       </Link>
         </motion.div>
       </div>
     </section>

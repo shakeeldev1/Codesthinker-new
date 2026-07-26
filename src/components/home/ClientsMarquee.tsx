@@ -30,7 +30,7 @@ const LogoImage: React.FC<{ src: string }> = ({ src }) => (
     src={src}
     alt="Trusted Client Logo"
     loading="lazy"
-    className="h-14 md:h-20 lg:h-24 w-auto flex-shrink-0 object-contain mx-10 transform-gpu contrast-[1.02] brightness-95 filter transition-all duration-300 hover:scale-105"
+    className="h-14 md:h-20  w-auto flex-shrink-0 object-contain mx-10 transform-gpu contrast-[1.02] brightness-95 filter transition-all duration-300 hover:scale-105"
     style={{ 
       WebkitBackfaceVisibility: 'hidden',
       backfaceVisibility: 'hidden',
@@ -76,7 +76,7 @@ const ClientsMarquee: React.FC = () => {
       `}</style>
 
       {/* Marquee Body Layout Wrapper */}
-      <div className="relative flex flex-col gap-10 marquee-group-container z-10">
+      <div className="relative flex flex-col gap-5 marquee-group-container z-10">
         
         {/* Row 1: Left to Right movement */}
         <div className="relative flex w-full overflow-hidden items-center">

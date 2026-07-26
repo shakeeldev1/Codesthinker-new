@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Users, Globe, Rocket, Sparkles, ChevronRight } from "lucide-react";
 const video = "/video.mp4";
 import { SectionBadge } from "../ui/SectionBadge";
+import { Link } from "react-router-dom";
 
 const Hero: React.FC = () => {
   const { scrollY } = useScroll();
@@ -88,13 +89,13 @@ const Hero: React.FC = () => {
 
             {/* CTA Button */}
             <motion.div variants={itemVariants} className="pt-4 flex justify-center lg:justify-start">
-              <button className="relative overflow-hidden group flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-3.5 bg-[#F49B21] text-[#08061E] font-bold rounded-2xl shadow-lg text-[15px] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] select-none">
+              <Link to="/apply/job" className="relative overflow-hidden group flex items-center justify-center gap-2 w-full sm:w-auto px-5 py-2 bg-[#F49B21] text-[#08061E] font-bold rounded-2xl shadow-lg text-[15px] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] select-none">
                 <span className="relative z-10 transition-colors duration-300 group-hover:text-white flex items-center gap-2">
                   Start Collaborating
                   <ChevronRight className="w-4 h-4" />
                 </span>
                 <div className="absolute inset-0 bg-[#08061E] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
-              </button>
+              </Link>
             </motion.div>
           </motion.div>
 

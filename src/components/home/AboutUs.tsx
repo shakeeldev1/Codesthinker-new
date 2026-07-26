@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -128,7 +128,7 @@ const AboutUs: React.FC = () => {
               <img
                 src="/ct.png"
                 alt="Code's Thinker Team"
-                className="w-full h-[450px]  object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-[500px]  object-full transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"
               />
               
@@ -189,13 +189,13 @@ const AboutUs: React.FC = () => {
 
               {/* CTA Button */}
               <div className="pt-2 text-center">
-                <button 
+                <Link to="/about" 
                   type="button"
                   className="group inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white font-bold px-5 py-2 rounded-full transition-all hover:shadow-lg focus:ring-4 focus:ring-gray-200"
                 >
                   Learn More About Us
                   <LuChevronRight className="text-lg group-hover:translate-x-1 transition-transform" />
-                </button>
+                </Link>
               </div>
             </div>
           )}

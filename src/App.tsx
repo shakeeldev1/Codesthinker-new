@@ -26,6 +26,8 @@ import BlogPostPage from './pages/BlogPostPage';
 import TeamPage from './pages/TeamPage';
 import ProjectsPage from './pages/ProjectsPage';
 import ScrollToTop from './components/common/ScrollToTop';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 
 
 // Layout
@@ -69,8 +71,10 @@ const router = createBrowserRouter([
       { path: 'apply/get-services', element: <GetOurServices /> },
       { path: 'team', element: <TeamPage /> },
       { path: 'projects', element: <ProjectsPage /> },
-    ],
-  },
+      { path: 'privacy', element: <Privacy /> },
+      { path: 'terms', element: <Terms /> },
+      ]}
+  
 ]);
 
 function App() {

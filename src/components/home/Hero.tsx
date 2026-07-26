@@ -57,8 +57,8 @@ const Hero: React.FC = () => {
                 </video>
 
 
-            {/* OVERLAY - Matches Footer #07051D, with extra opacity for contrast */}
-            <div className="absolute inset-0 bg-[#07051D]/75 z-10 pointer-events-none" />
+                {/* OVERLAY - Matches Footer #07051D, with extra opacity for contrast */}
+                <div className="absolute inset-0 bg-[#07051D]/75 z-10 pointer-events-none" />
 
 
                 {/* SWIPER CONTENT */}
@@ -101,25 +101,25 @@ const Hero: React.FC = () => {
 
                                             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-5 w-full sm:w-auto mt-8">
 
-                                            <Link 
-                                                to="/projects" 
-                                                className="relative overflow-hidden group flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-3.5 bg-[#F49B21] text-[#08061E] font-bold rounded-2xl shadow-lg text-[15px] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] select-none"
-                                            >
-                                                <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
-                                                    View Our Work
-                                                </span>
-                                                <div className="absolute inset-0 bg-[#08061E] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
-                                            </Link>
+                                                <Link
+                                                    to="/projects"
+                                                    className="relative overflow-hidden group flex items-center justify-center gap-2 w-full sm:w-auto px-5 py-2 bg-[#F49B21] text-[#08061E] font-bold rounded-2xl shadow-lg text-[15px] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] select-none"
+                                                >
+                                                    <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
+                                                        View Our Work
+                                                    </span>
+                                                    <div className="absolute inset-0 bg-[#08061E] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
+                                                </Link>
 
-                                            <Link 
-                                                to="/contact" 
-                                                className="relative overflow-hidden group flex items-center justify-center w-full sm:w-auto px-8 py-3.5 bg-transparent text-white font-bold rounded-2xl border-2 border-white/20 hover:border-[#F49B21] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] select-none"
-                                            >
-                                                <span className="relative z-10 transition-colors duration-300 group-hover:text-[#08061E]">
-                                                    Contact Us
-                                                </span>
-                                                <div className="absolute inset-0 bg-[#F49B21] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
-                                            </Link>
+                                                <Link
+                                                    to="/contact"
+                                                    className="relative overflow-hidden group flex items-center justify-center w-full sm:w-auto px-5 py-2 bg-transparent text-white font-bold rounded-2xl border-2 border-white/20 hover:border-[#F49B21] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] select-none"
+                                                >
+                                                    <span className="relative z-10 transition-colors duration-300 group-hover:text-[#08061E]">
+                                                        Contact Us
+                                                    </span>
+                                                    <div className="absolute inset-0 bg-[#F49B21] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
+                                                </Link>
 
                                             </div>
                                         </motion.div>

@@ -26,7 +26,7 @@ const ServicesSection = () => {
   const [sliderStyle, setSliderStyle] = useState({ width: "0px", transform: "translateX(0px)" });
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [visibleCards, setVisibleCards] = useState(6);
-  
+
   const tabs = ["All", "Web", "Mobile", "DevOps", "Data", "AI"];
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -62,7 +62,8 @@ const ServicesSection = () => {
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
       ],
       icon: Code2,
-gradient: "from-[#08061E] to-[#08061E]",    },
+      gradient: "from-[#08061E] to-[#08061E]",
+    },
     {
       id: 2,
       title: "Mobile App Development",
@@ -78,7 +79,8 @@ gradient: "from-[#08061E] to-[#08061E]",    },
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg"
       ],
       icon: Smartphone,
-gradient: "from-[#08061E] to-[#08061E]",    },
+      gradient: "from-[#08061E] to-[#08061E]",
+    },
     {
       id: 3,
       title: "DevOps Services",
@@ -94,7 +96,8 @@ gradient: "from-[#08061E] to-[#08061E]",    },
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
       ],
       icon: Cloud,
-gradient: "from-[#08061E] to-[#08061E]",    },
+      gradient: "from-[#08061E] to-[#08061E]",
+    },
     {
       id: 4,
       title: "Browser Extensions",
@@ -110,7 +113,8 @@ gradient: "from-[#08061E] to-[#08061E]",    },
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
       ],
       icon: Layers,
-gradient: "from-[#08061E] to-[#08061E]",    },
+      gradient: "from-[#08061E] to-[#08061E]",
+    },
     {
       id: 5,
       title: "Data Science",
@@ -126,7 +130,8 @@ gradient: "from-[#08061E] to-[#08061E]",    },
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg"
       ],
       icon: Database,
-gradient: "from-[#08061E] to-[#08061E]",    },
+      gradient: "from-[#08061E] to-[#08061E]",
+    },
     {
       id: 6,
       title: "Generative AI",
@@ -142,7 +147,8 @@ gradient: "from-[#08061E] to-[#08061E]",    },
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/keras/keras-original.svg"
       ],
       icon: Brain,
-gradient: "from-[#08061E] to-[#08061E]",    },
+      gradient: "from-[#08061E] to-[#08061E]",
+    },
     {
       id: 7,
       title: "Cloud Architecture",
@@ -162,12 +168,12 @@ gradient: "from-[#08061E] to-[#08061E]",    },
     },
   ], []);
 
-  const filteredServices = useMemo(() => 
+  const filteredServices = useMemo(() =>
     activeTab === "All" ? servicesData : servicesData.filter(s => s.category === activeTab),
     [activeTab, servicesData]
   );
 
-  const displayedServices = useMemo(() => 
+  const displayedServices = useMemo(() =>
     filteredServices.slice(0, visibleCards),
     [filteredServices, visibleCards]
   );
@@ -221,7 +227,7 @@ gradient: "from-[#08061E] to-[#08061E]",    },
   };
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       className="relative w-full bg-gradient-to-br from-gray-50 via-white to-gray-50 py-12 overflow-hidden"
     >
@@ -247,12 +253,9 @@ gradient: "from-[#08061E] to-[#08061E]",    },
           className="text-center mb-16"
         >
           <SectionBadge text="Our Services" theme="light" className="mb-2" />
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-800">
-            Turning <span className="text-[#F69A20] relative inline-block">
-              Vision
-             
-            </span> into Reality
-          </h2>
+         <h2 className="text-4xl md:text-5xl font-bold mb-6 py-2 leading-tight bg-gradient-to-r from-gray-900 to-gray-800 bg-clip-text text-transparent">
+  Turning <span className="relative text-[#F69A20]">Vision</span> into Reality
+</h2>
           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
             Delivering innovative technology solutions that drive business growth and digital transformation
           </p>
@@ -260,8 +263,8 @@ gradient: "from-[#08061E] to-[#08061E]",    },
 
         {/* Enhanced Tabs with better interaction */}
         <div className="hidden sm:flex justify-center mb-16">
-          <div 
-            ref={containerRef} 
+          <div
+            ref={containerRef}
             className="relative bg-white/80 backdrop-blur-sm border border-gray-200 rounded-full p-1.5 flex shadow-lg"
           >
             <motion.div
@@ -277,11 +280,10 @@ gradient: "from-[#08061E] to-[#08061E]",    },
                   setActiveTab(tab);
                   setVisibleCards(6);
                 }}
-                className={`relative z-10 px-6 md:px-8 py-2.5 text-sm md:text-base font-semibold transition-all duration-300 ${
-                  activeTab === tab 
-                    ? "text-white" 
+                className={`relative z-10 px-6 md:px-8 py-2.5 text-sm md:text-base font-semibold transition-all duration-300 ${activeTab === tab
+                    ? "text-white"
                     : "text-gray-700 hover:text-gray-900 hover:bg-gray-100/50"
-                } rounded-full`}
+                  } rounded-full`}
                 aria-label={`Filter by ${tab}`}
               >
                 {tab}
@@ -308,7 +310,7 @@ gradient: "from-[#08061E] to-[#08061E]",    },
 
         {/* Services Grid with improved animations */}
         <LayoutGroup>
-          <motion.div 
+          <motion.div
             layout
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
@@ -331,10 +333,10 @@ gradient: "from-[#08061E] to-[#08061E]",    },
                     <div className="relative group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden h-full flex flex-col">
                       {/* Gradient Border Effect */}
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-transparent group-hover:via-orange-200/20 transition-all duration-700" />
-                      
+
                       {/* Top Gradient Bar */}
                       <div className={`h-1 bg-gradient-to-r ${service.gradient} transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`} />
-                      
+
                       <div className="p-6 flex flex-col h-full">
                         {/* Icon with enhanced animation */}
                         <motion.div
@@ -349,7 +351,7 @@ gradient: "from-[#08061E] to-[#08061E]",    },
                         <h3 className="text-2xl font-bold mb-3 text-gray-900 group-hover:text-[#08061E] transition-colors duration-300">
                           {service.title}
                         </h3>
-                        
+
                         <p className="text-gray-500 text-sm mb-6 leading-relaxed">
                           {service.shortDesc}
                         </p>
@@ -461,7 +463,7 @@ gradient: "from-[#08061E] to-[#08061E]",    },
                   >
                     {/* Elegant animated top accent line */}
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-[#F69A20] group-hover:w-full transition-all duration-500 ease-out opacity-0 group-hover:opacity-100" />
-                    
+
                     {/* Subtle soft gradient background on hover */}
                     <div className="absolute inset-0 bg-gradient-to-b from-[#F69A20]/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -470,7 +472,7 @@ gradient: "from-[#08061E] to-[#08061E]",    },
                       <div className="absolute inset-0 bg-[#F69A20] blur-md opacity-0 group-hover:opacity-30 transition-opacity duration-500 rounded-full scale-150" />
                       <Icon className="w-6 h-6 stroke-[1.5] relative z-10" />
                     </div>
-                    
+
                     <div className="text-3xl font-extrabold mb-1.5 text-white/90 group-hover:text-white transition-colors duration-300 tracking-tight relative z-10">{stat.val}</div>
                     <div className="text-[9px] font-bold text-gray-500 group-hover:text-gray-300 tracking-[0.15em] uppercase transition-colors duration-300 relative z-10">{stat.label}</div>
                   </motion.div>
@@ -480,7 +482,7 @@ gradient: "from-[#08061E] to-[#08061E]",    },
           </div>
         </motion.div>
 
-       
+
       </div>
 
       <style jsx global>{`

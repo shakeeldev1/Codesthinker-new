@@ -97,7 +97,7 @@ function AboutHead() {
               whileHover={{ scale: 1.02, boxShadow: '0 20px 40px rgba(244,155,33,0.25)' }}
               whileTap={{ scale: 0.98 }}
               onClick={() => navigate("/projects")}
-              className="relative overflow-hidden group flex items-center justify-center gap-2.5 w-full sm:w-auto px-8 py-4 bg-[#F49B21] text-[#08061E] font-bold rounded-2xl shadow-xl text-[15px]"
+              className="relative overflow-hidden group flex items-center justify-center gap-2.5 w-full sm:w-auto px-5 py-2 bg-[#F49B21] text-[#08061E] font-bold rounded-2xl shadow-xl text-[15px]"
             >
               <span className="relative z-10 flex items-center gap-2 transition-colors duration-300 group-hover:text-white">
                 View Our Projects
@@ -123,7 +123,7 @@ function AboutHead() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => navigate("/contact")}
-              className="relative overflow-hidden group w-full sm:w-auto px-8 py-4 bg-transparent text-white font-bold rounded-2xl border-2 border-white/20 hover:border-[#F49B21] transition-colors duration-300 text-[15px]"
+              className="relative overflow-hidden group w-full sm:w-auto px-5 py-2 bg-transparent text-white font-bold rounded-2xl border-2 border-white/20 hover:border-[#F49B21] transition-colors duration-300 text-[15px]"
             >
               <span className="relative z-10 transition-colors duration-300 group-hover:text-[#08061E]">
                 Get in Touch

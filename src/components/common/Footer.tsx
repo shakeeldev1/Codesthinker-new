@@ -30,7 +30,7 @@ const Footer: React.FC = () => {
             links: [
                 { name: 'About Us', href: '/about' },
                 { name: 'Our Team', href: '/team' },
-                { name: 'Latest Blogs', href: '/blogs' },
+                { name: 'Latest Blogs', href: '/blog' },
                 { name: 'Apply for Internship', href: '/apply/internship' },
                 { name: 'Contact Us', href: '/contact' },
             ]
@@ -169,6 +169,7 @@ const Footer: React.FC = () => {
                     <div className="flex gap-6 text-xs text-gray-500">
                         <Link to="/privacy" className="hover:text-gray-300 transition-colors">Privacy Policy</Link>
                         <Link to="/terms" className="hover:text-gray-300 transition-colors">Terms of Service</Link>
+                        <Link to="/contact" className="hover:text-gray-300 transition-colors">Contact</Link>
                     </div>
                 </div>
                 

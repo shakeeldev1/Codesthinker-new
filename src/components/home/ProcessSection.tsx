@@ -58,7 +58,7 @@ const ProcessSection: React.FC = () => {
    };
 
   return (
-    <section className="relative w-full min-h-[600px] bg-gradient-to-br from-slate-50 to-gray-100 py-16 px-4 sm:px-6 lg:py-24 lg:px-8 overflow-hidden font-sans">
+    <section className="relative w-full min-h-[600px] bg-gradient-to-br from-slate-50 to-gray-100 py-12 px-4 sm:px-6  lg:px-8 overflow-hidden font-sans">
       {/* Background Decor matching AboutUs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -left-40 w-96 h-96 bg-gray-400 rounded-full mix-blend-multiply filter blur-[100px] opacity-10"></div>
@@ -92,7 +92,7 @@ const ProcessSection: React.FC = () => {
             {processPoints.map((point) => (
               <div 
                 key={point.id} 
-                className="flex items-start gap-5 p-5 bg-white rounded-2xl shadow-sm ring-1 ring-gray-100 hover:shadow-md hover:ring-gray-200 transition-all duration-300 hover:-translate-y-1 group"
+                className="flex items-start gap-5 px-5 py-2 bg-white rounded-2xl shadow-sm ring-1 ring-gray-100 hover:shadow-md hover:ring-gray-200 transition-all duration-300 hover:-translate-y-1 group"
               >
                 <div className="flex-shrink-0">
                   {/* Digital Rounded Box for Number matching AboutUs feature patterns */}
@@ -127,7 +127,7 @@ const ProcessSection: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 via-transparent to-transparent opacity-80 transition-opacity duration-500"></div>
             
             {/* Call to Action Box inside corner layout */}
-            <div className="absolute bottom-6 left-6 right-6 sm:right-auto bg-white/95 backdrop-blur-md rounded-xl p-6 shadow-xl ring-1 ring-black/5 max-w-xs transform translate-y-0 group-hover:-translate-y-1 transition-transform duration-300">
+            <div className="absolute bottom-6 left-6 right-6 sm:right-auto bg-white/95 backdrop-blur-md rounded-xl px-5 py-2 shadow-xl ring-1 ring-black/5 max-w-xs transform translate-y-0 group-hover:-translate-y-1 transition-transform duration-300">
               <div className="flex flex-col gap-1">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="flex h-2 w-2 relative">

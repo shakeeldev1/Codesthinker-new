@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { Link } from "react-router-dom";
 
 function OurMissions() {
   const [index, setIndex] = useState(0);
@@ -102,7 +103,7 @@ function OurMissions() {
           </p>
 
           {/* Progress Bar */}
-          <div className="mt-8 w-full h-[3px] bg-gray-200 rounded-full overflow-hidden">
+          <div className="my-8 w-full h-[3px] bg-gray-200 rounded-full overflow-hidden">
             <div
               key={index}
               className="h-full bg-[#FEA800] animate-[progress_3s_linear]"
@@ -110,9 +111,9 @@ function OurMissions() {
           </div>
 
           {/* Button */}
-          <button className="mt-10 px-7 py-3 rounded-full bg-[#07051D] text-white hover:bg-[#0f0b35] transition-all duration-300 font-semibold shadow-lg hover:scale-105">
+          <Link to="/services" className="mt-10 px-5 py-2 rounded-full bg-[#07051D] text-white hover:bg-[#0f0b35] transition-all duration-300 font-semibold shadow-lg hover:scale-105">
             Learn More
-          </button>
+          </Link>
         </div>
       </div>
 

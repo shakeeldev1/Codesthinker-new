@@ -9,6 +9,7 @@ import {
   Code,
   Award,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function WhyChooseUs() {
   useEffect(() => {
@@ -134,9 +135,9 @@ function WhyChooseUs() {
 
       {/* CTA */}
       <div data-aos="fade-up" className="text-center mt-8">
-        <button className="px-8 py-3 rounded-full bg-[#07051D] hover:bg-[#0f0b35] transition-all text-white font-semibold shadow-lg hover:scale-105">
+        <Link to="/services"  className="px-5 py-2 rounded-full bg-[#07051D] hover:bg-[#0f0b35] transition-all text-white font-semibold shadow-lg hover:scale-105">
           Start Your Journey
-        </button>
+        </Link>
       </div>
     </section>
   );

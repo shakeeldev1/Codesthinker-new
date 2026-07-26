@@ -13,7 +13,7 @@ export const allProjects = [
     ],
     link: "https://akoyaluxureylaundry.com/",
     aos: "fade-right",
-    duration: "1000",
+    duration: 1000,
     category: "Website Development",
   },
   {
@@ -30,7 +30,7 @@ export const allProjects = [
     ],
     link: "https://www.tamakon.in/",
     aos: "fade-right",
-    duration: "1000",
+    duration: 1000,
     category: "Website Development",
   },
   {
