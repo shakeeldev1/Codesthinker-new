@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Production Build
+dist/
+
+# Environment Variables
+.env
+
+# Local database
+prisma/*.db
+prisma/*.db-journal
+
+# Uploaded Files
+uploads/

@@ -1,0 +1,54 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model ContactSubmission {
+  id        String   @id @default(uuid())
+  firstName String
+  lastName  String   // Acts as "Company" on the frontend
+  phone     String
+  email     String
+  subject   String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model ServiceInquiry {
+  id        String   @id @default(uuid())
+  fullName  String
+  email     String
+  phone     String
+  company   String
+  service   String
+  budget    String?
+  timeline  String?
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model JobApplication {
+  id         String   @id @default(uuid())
+  fullName   String
+  email      String
+  phone      String
+  position   String
+  resumeName String   // Original filename
+  resumeData Bytes    // Binary file data stored in DB
+  createdAt  DateTime @default(now())
+}
+
+model InternshipApplication {
+  id         String   @id @default(uuid())
+  fullName   String
+  email      String
+  phone      String
+  position   String
+  resumeName String   // Original filename
+  resumeData Bytes    // Binary file data stored in DB
+  createdAt  DateTime @default(now())
+}
