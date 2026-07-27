@@ -36,4 +36,3 @@ export const SectionBadge: React.FC<SectionBadgeProps> = ({ text, theme = "light
     </div>
   );
 };
-

@@ -13,6 +13,9 @@ const BlogPostPage: React.FC = () => {
   const [post, setPost] = useState<BlogPost | null>(null);
   const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [copied, setCopied] = useState(false);
+  const [newsEmail, setNewsEmail] = useState('');
+  const [newsSubbed, setNewsSubbed] = useState(false);
   
   const contentRef = useRef<HTMLDivElement>(null);
   const [activeId, setActiveId] = useState<string>('');
@@ -95,11 +98,25 @@ const BlogPostPage: React.FC = () => {
 
   const copyLink = () => {
     navigator.clipboard.writeText(window.location.href);
-    alert('Link copied to clipboard!');
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
+  };
+
+  const handleNewsSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newsEmail) {
+      setNewsSubbed(true);
+      setTimeout(() => {
+        setNewsSubbed(false);
+        setNewsEmail('');
+      }, 3000);
+    }
   };
 
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center bg-[#F9FAFB] text-[#08061E] font-bold">Loading...</div>;
+    return <div className="min-h-screen flex items-center justify-center bg-[#F9FAFB] text-[#07051D] font-bold">Loading...</div>;
   }
 
   if (!post) {
@@ -232,12 +249,12 @@ const BlogPostPage: React.FC = () => {
       >
         {/* Blurred Background Image Layer - Higher visibility, balanced blur */}
         <div className="absolute inset-0 z-0 scale-105">
-          <img src={post.image} alt={post.title} className="w-full h-full object-cover opacity-50 filter blur-[3px]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#07051D] via-[#07051D]/75 to-[#07051D]/25" />
+          <img src={post.image} alt={post.title} className="w-full h-full object-cover opacity-20 filter blur-[8px]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#07051D] via-[#07051D]/80 to-[#07051D]/30" />
         </div>
 
         {/* Ambient Color Glow matching post theme */}
-        <div className={`absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br ${post.gradient} rounded-full filter blur-[150px] opacity-25 z-0 pointer-events-none`} />
+        <div className={`absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br ${post.gradient} rounded-full filter blur-[150px] opacity-20 z-0 pointer-events-none`} />
 
         <div className="max-w-6xl mx-auto w-full relative z-10 text-left">
           {/* Breadcrumbs */}
@@ -248,7 +265,7 @@ const BlogPostPage: React.FC = () => {
           </nav>
 
           <div className="max-w-4xl space-y-6">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight tracking-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight tracking-tight" style={{ fontFamily: "'Outfit', sans-serif" }}>
               {post.title}
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed font-light max-w-3xl">
@@ -277,31 +294,30 @@ const BlogPostPage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
           
           {/* Left Column: Author & Share (Sticky) */}
-          {/* Left Column: Author & Share (Sticky) */}
           <motion.div variants={slideInLeft} className="lg:col-span-3 hidden lg:block">
             <div className="sticky top-32 space-y-6">
               
               {/* Author Card */}
-              <div className="bg-white border border-gray-100 shadow-md shadow-gray-900/5 rounded-2xl p-5 hover:border-gray-200 hover:shadow-lg transition-all duration-300">
-                <span className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Published By</span>
+              <div className="bg-white border border-gray-100 shadow-[0_8px_30px_rgba(7,5,29,0.02)] rounded-2xl p-5 hover:border-gray-200 hover:shadow-lg transition-all duration-300">
+                <span className="block text-[10px] font-bold text-gray-405 uppercase tracking-widest mb-4">// Published By</span>
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#F49B21] to-amber-400 p-[2px] shadow-sm">
-                    <div className="w-full h-full rounded-full bg-white flex items-center justify-center text-[#08061E] font-bold text-lg">
+                    <div className="w-full h-full rounded-full bg-white flex items-center justify-center text-[#07051D] font-black text-lg">
                       {post.author.charAt(0)}
                     </div>
                   </div>
                   <div>
-                    <p className="font-bold text-sm text-[#08061E] leading-tight">{post.author}</p>
-                    <p className="text-[11px] text-gray-400 mt-0.5">{post.date}</p>
+                    <p className="font-bold text-sm text-[#07051D] leading-tight">{post.author}</p>
+                    <p className="text-[10px] text-gray-400 mt-1 font-medium">{post.date}</p>
                   </div>
                 </div>
               </div>
 
               {/* Share Card */}
-              <div className="bg-white border border-gray-100 shadow-md shadow-gray-900/5 rounded-2xl p-5 hover:border-gray-200 hover:shadow-lg transition-all duration-300">
+              <div className="bg-white border border-gray-100 shadow-[0_8px_30px_rgba(7,5,29,0.02)] rounded-2xl p-5 hover:border-gray-200 hover:shadow-lg transition-all duration-300">
                 <div className="flex items-center gap-2 mb-4">
                   <Share2 className="w-4 h-4 text-gray-400" />
-                  <span className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest">Share Article</span>
+                  <span className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest">// Share Article</span>
                 </div>
                 <div className="flex flex-col gap-2.5">
                   <a 
@@ -330,13 +346,25 @@ const BlogPostPage: React.FC = () => {
                   </a>
                   <button 
                     onClick={copyLink} 
-                    className="flex items-center justify-between gap-3 text-gray-500 hover:text-[#F49B21] hover:bg-[#F49B21]/5 border border-gray-100 hover:border-[#F49B21]/30 transition-all duration-300 p-2.5 rounded-xl font-semibold text-xs text-left group w-full cursor-pointer"
+                    className={`flex items-center justify-between gap-3 transition-all duration-300 p-2.5 rounded-xl font-semibold text-xs text-left group w-full cursor-pointer border ${
+                      copied 
+                        ? 'text-emerald-600 bg-emerald-50 border-emerald-200' 
+                        : 'text-gray-500 hover:text-[#F49B21] hover:bg-[#F49B21]/5 border-gray-100 hover:border-[#F49B21]/30'
+                    }`}
                   >
                     <div className="flex items-center gap-2.5">
-                      <LinkIcon className="w-4 h-4 text-gray-400 group-hover:text-[#F49B21] transition-colors" />
-                      <span>Copy Link</span>
+                      {copied ? (
+                        <svg className="w-4 h-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      ) : (
+                        <LinkIcon className="w-4 h-4 text-gray-400 group-hover:text-[#F49B21] transition-colors" />
+                      )}
+                      <span>{copied ? 'Copied!' : 'Copy Link'}</span>
                     </div>
-                    <ChevronRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all text-[#F49B21]" />
+                    {!copied && (
+                      <ChevronRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all text-[#F49B21]" />
+                    )}
                   </button>
                 </div>
               </div>
@@ -349,11 +377,11 @@ const BlogPostPage: React.FC = () => {
             {/* Mobile Author Info */}
             <div className="flex items-center justify-between lg:hidden mb-12 pb-8 border-b border-gray-200">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-full bg-amber-500 flex items-center justify-center text-white font-bold text-2xl shadow-md">
+                <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#F49B21] to-amber-400 flex items-center justify-center text-white font-black text-2xl shadow-md">
                   {post.author.charAt(0)}
                 </div>
                 <div>
-                  <p className="font-bold text-lg text-[#08061E]">{post.author}</p>
+                  <p className="font-bold text-lg text-[#07051D]">{post.author}</p>
                   <p className="text-sm text-gray-500">{post.date} · {post.readTime}</p>
                 </div>
               </div>
@@ -363,20 +391,20 @@ const BlogPostPage: React.FC = () => {
             <div 
               ref={contentRef}
               className="prose prose-lg md:prose-xl max-w-none 
-                prose-headings:font-bold prose-headings:text-[#08061E] prose-headings:tracking-tight
-                prose-h2:mt-12 prose-h2:mb-6 prose-h2:pb-2 prose-h2:border-b prose-h2:border-gray-100
+                prose-headings:font-bold prose-headings:text-[#07051D] prose-headings:tracking-tight
+                prose-h2:mt-12 prose-h2:mb-6 prose-h2:pb-2 prose-h2:border-b prose-h2:border-gray-100/80
                 prose-p:text-gray-600 prose-p:leading-relaxed
-                prose-a:text-amber-500 hover:prose-a:text-amber-600 prose-a:font-semibold prose-a:no-underline
-                prose-blockquote:border-l-4 prose-blockquote:border-amber-500 prose-blockquote:bg-amber-50/50 prose-blockquote:px-6 prose-blockquote:py-4 prose-blockquote:rounded-r-xl prose-blockquote:font-medium prose-blockquote:text-gray-700 prose-blockquote:not-italic
+                prose-a:text-[#F49B21] hover:prose-a:text-amber-600 prose-a:font-semibold prose-a:no-underline
+                prose-blockquote:border-l-4 prose-blockquote:border-[#F49B21] prose-blockquote:bg-amber-50/50 prose-blockquote:px-6 prose-blockquote:py-4 prose-blockquote:rounded-r-xl prose-blockquote:font-medium prose-blockquote:text-gray-700 prose-blockquote:not-italic
                 prose-img:rounded-2xl prose-img:shadow-lg prose-img:my-10"
               dangerouslySetInnerHTML={{ __html: processedContent }} 
             />
 
             {/* Tags */}
             <div className="mt-16 pt-8 border-t border-gray-200 flex flex-wrap gap-2">
-              <span className="text-sm font-bold text-gray-400 uppercase tracking-widest mr-4 py-2">Tags:</span>
+              <span className="text-sm font-bold text-gray-400 uppercase tracking-widest mr-4 py-2">// Tags:</span>
               {post.tags.map(tag => (
-                <span key={tag} className="px-4 py-2 rounded-full bg-white text-gray-600 border border-gray-200 text-sm font-medium hover:border-amber-500 hover:text-amber-600 shadow-sm transition-all cursor-pointer">
+                <span key={tag} className="px-4 py-2 rounded-full bg-white text-gray-600 border border-gray-200 text-sm font-medium hover:border-[#F49B21] hover:text-[#F49B21] shadow-sm transition-all cursor-pointer">
                   {tag}
                 </span>
               ))}
@@ -388,8 +416,8 @@ const BlogPostPage: React.FC = () => {
             <div className="sticky top-32 space-y-6">
               
               {/* Table of Contents Card */}
-              <div className="bg-white border border-gray-100 shadow-md shadow-gray-900/5 rounded-2xl p-6 hover:border-gray-200 hover:shadow-lg transition-all duration-300">
-                <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-5">Table of Contents</h3>
+              <div className="bg-white border border-gray-100 shadow-[0_8px_30px_rgba(7,5,29,0.02)] rounded-2xl p-6 hover:border-gray-200 hover:shadow-lg transition-all duration-300">
+                <h3 className="text-xs font-bold text-gray-405 uppercase tracking-widest mb-5">// Table of Contents</h3>
                 <div className="relative border-l border-gray-200/80 pl-4 py-1 flex flex-col gap-4">
                   {headings.map((h) => (
                     <a 
@@ -426,14 +454,14 @@ const BlogPostPage: React.FC = () => {
               </div>
 
               {/* Reading Time Card */}
-              <div className="bg-white border border-gray-100 shadow-md shadow-gray-900/5 rounded-2xl p-5 hover:border-gray-200 hover:shadow-lg transition-all duration-300">
+              <div className="bg-white border border-gray-100 shadow-[0_8px_30px_rgba(7,5,29,0.02)] rounded-2xl p-5 hover:border-gray-200 hover:shadow-lg transition-all duration-300">
                 <div className="flex items-center gap-3 bg-gradient-to-r from-amber-50/50 to-orange-50/30 rounded-xl p-4 border border-amber-100/30">
-                  <div className="p-2.5 rounded-xl bg-[#F49B21] text-white shadow-md shadow-amber-500/20">
+                  <div className="p-2.5 rounded-xl bg-[#F49B21] text-white shadow-md shadow-[#F49B21]/20">
                     <Clock className="w-4 h-4" />
                   </div>
                   <div>
                     <span className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest">Reading Time</span>
-                    <span className="text-base font-extrabold text-[#08061E] mt-0.5 block">{post.readTime}</span>
+                    <span className="text-base font-extrabold text-[#07051D] mt-0.5 block">{post.readTime}</span>
                   </div>
                 </div>
               </div>
@@ -453,8 +481,8 @@ const BlogPostPage: React.FC = () => {
         className="max-w-6xl mx-auto px-6 mt-24 pt-16 border-t border-gray-200"
       >
         <div className="flex items-center justify-between mb-10">
-          <h2 className="text-3xl font-bold text-[#08061E]">Read Next</h2>
-          <Link to="/blog" className="hidden md:flex items-center gap-2 text-amber-500 font-bold hover:text-amber-600 transition-colors">
+          <h2 className="text-3xl font-bold text-[#07051D]" style={{ fontFamily: "'Outfit', sans-serif" }}>Read Next</h2>
+          <Link to="/blog" className="hidden md:flex items-center gap-2 text-[#F49B21] font-bold hover:text-amber-500 transition-colors">
             View All Articles <ChevronRight className="w-5 h-5" />
           </Link>
         </div>
@@ -464,7 +492,7 @@ const BlogPostPage: React.FC = () => {
           ))}
         </div>
         <div className="mt-8 md:hidden">
-          <Link to="/blog" className="flex items-center justify-center gap-2 w-full py-4 rounded-xl bg-white border border-gray-200 text-[#08061E] font-bold shadow-sm hover:border-amber-500 hover:text-amber-600 transition-colors">
+          <Link to="/blog" className="flex items-center justify-center gap-2 w-full py-4 rounded-xl bg-white border border-gray-200 text-[#07051D] font-bold shadow-sm hover:border-[#F49B21] hover:text-[#F49B21] transition-colors">
             View All Articles <ChevronRight className="w-5 h-5" />
           </Link>
         </div>
@@ -478,29 +506,31 @@ const BlogPostPage: React.FC = () => {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="max-w-6xl mx-auto px-6 mt-24"
       >
-        <div className="bg-[#08061E] rounded-[2rem] p-10 md:p-16 relative overflow-hidden shadow-2xl">
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=2000&q=80')] opacity-5 object-cover mix-blend-overlay" />
-          <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-blue-500/10 pointer-events-none" />
+        <div className="bg-[#07051D] rounded-[2rem] p-10 md:p-16 relative overflow-hidden shadow-2xl select-none">
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=2000&q=80')] opacity-[0.03] object-cover mix-blend-overlay pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-amber-500/5 to-blue-500/5 pointer-events-none" />
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
             <div className="text-left md:w-1/2">
-              <h3 className="text-3xl md:text-4xl font-extrabold text-white mb-4 leading-tight">Stay ahead of the curve.</h3>
-              <p className="text-gray-300 text-lg">
+              <h3 className="text-3xl md:text-4xl font-extrabold text-white mb-4 leading-tight" style={{ fontFamily: "'Outfit', sans-serif" }}>Stay ahead of the curve.</h3>
+              <p className="text-gray-300 text-lg font-light">
                 Join our newsletter to receive the latest engineering insights and design strategies straight to your inbox.
               </p>
             </div>
             <div className="w-full md:w-1/2">
-              <form className="flex flex-col gap-3" onSubmit={(e) => e.preventDefault()}>
+              <form className="flex flex-col gap-3" onSubmit={handleNewsSubscribe}>
                 <input 
                   type="email" 
+                  value={newsEmail}
+                  onChange={(e) => setNewsEmail(e.target.value)}
                   placeholder="name@company.com" 
-                  className="w-full px-6 py-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-amber-500 focus:bg-white/20 transition-all"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl py-4 px-6 text-white placeholder-gray-400 focus:outline-none focus:border-[#F49B21] focus:ring-1 focus:ring-[#F49B21] transition-all"
                   required
                 />
                 <button 
                   type="submit"
-                  className="w-full px-6 py-4 bg-[#F69A20] hover:bg-amber-500 text-white font-extrabold rounded-xl transition-colors shadow-lg shadow-amber-500/25"
+                  className="w-full px-6 py-4 bg-[#F49B21] hover:bg-amber-500 text-[#07051D] font-extrabold rounded-xl transition-all shadow-lg shadow-[#F49B21]/20 active:scale-[0.98] cursor-pointer"
                 >
-                  Subscribe to Newsletter
+                  {newsSubbed ? 'Subscribed!' : 'Subscribe to Newsletter'}
                 </button>
               </form>
               <p className="text-xs text-gray-500 mt-4 text-center md:text-left">We care about your data. Read our Privacy Policy.</p>

@@ -26,20 +26,20 @@ const GlobalServiceCard = ({
       hoverIconColor: 'group-hover:text-white',
       shadow: 'shadow-sm group-hover:shadow-xl group-hover:shadow-amber-500/20',
       hoverBorder: 'group-hover:border-amber-400',
-      hoverText: 'group-hover:text-amber-500',
+      hoverText: 'group-hover:text-[#F49B21]',
     },
     dark: {
-      bg: 'bg-[#07051d]',
-      border: 'border-white/10',
+      bg: 'bg-gradient-to-br from-[#0c0933] to-[#07051d]',
+      border: 'border-white/5',
       text: 'text-white',
-      subtext: 'text-gray-200',
-      iconBg: 'bg-white/5',
-      iconColor: 'text-amber-500',
-      hoverIconBg: 'group-hover:bg-amber-500',
+      subtext: 'text-slate-300',
+      iconBg: 'bg-white/[0.03] border border-white/10',
+      iconColor: 'text-[#F49B21]',
+      hoverIconBg: 'group-hover:bg-gradient-to-tr group-hover:from-amber-400 group-hover:to-[#F49B21]',
       hoverIconColor: 'group-hover:text-[#07051d]',
-      shadow: 'shadow-lg group-hover:shadow-2xl group-hover:shadow-amber-500/10',
-      hoverBorder: 'group-hover:border-amber-500/50',
-      hoverText: 'group-hover:text-amber-500',
+      shadow: 'shadow-[0_4px_30px_rgba(0,0,0,0.25)] group-hover:shadow-[0_24px_60px_-15px_rgba(244,155,33,0.18)]',
+      hoverBorder: 'group-hover:border-[#F49B21]/50',
+      hoverText: 'group-hover:text-[#F49B21]',
     },
   };
 
@@ -49,13 +49,13 @@ const GlobalServiceCard = ({
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0, transition: { delay: index * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] } }}
+      whileInView={{ opacity: 1, y: 0, transition: { delay: index * 0.05, duration: 0.5, ease: [0.22, 1, 0.36, 1] } }}
       viewport={{ once: true }}
-      whileHover={{ y: -8, transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] } }}
+      whileHover={{ y: -10, transition: { duration: 0.3, ease: [0.25, 1, 0.5, 1] } }}
       className={`
-        group relative overflow-hidden rounded-2xl border-2
+        group relative overflow-hidden rounded-[2rem] border
         transition-all duration-500 cursor-pointer
-        ${compact ? 'p-5 md:p-6' : 'p-8'}
+        ${compact ? 'p-6 md:p-7' : 'p-8 md:p-10'}
         ${t.bg} ${t.border} ${t.shadow} ${t.hoverBorder}
         before:absolute before:inset-0 before:bg-gradient-to-br 
         before:from-white/5 before:to-transparent before:opacity-0 
@@ -64,12 +64,15 @@ const GlobalServiceCard = ({
         ${className}
       `}
     >
-      {/* Animated glow effect on hover */}
+      {/* Top Accent Glowing Bar */}
+      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-[#F49B21] to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
+
+      {/* Animated radial halo glow in the background */}
       <div className={`
-        absolute -inset-20 opacity-0 group-hover:opacity-100 
-        transition-opacity duration-500 pointer-events-none
-        ${isDark ? 'bg-amber-500/5' : 'bg-amber-400/5'}
-        blur-3xl
+        absolute -inset-10 opacity-0 group-hover:opacity-100 
+        transition-all duration-700 pointer-events-none
+        ${isDark ? 'bg-[radial-gradient(circle_at_center,rgba(244,155,33,0.15)_0%,transparent_60%)]' : 'bg-amber-400/[0.06]'}
+        blur-2xl
       `}></div>
 
       {/* Icon container */}
@@ -78,11 +81,11 @@ const GlobalServiceCard = ({
         transition={{ duration: 0.3 }}
         className={`
           relative z-10
-          ${compact ? 'w-10 h-10 mb-4' : 'w-14 h-14 mb-6'}
+          ${compact ? 'w-11 h-11 mb-5' : 'w-16 h-16 mb-8'}
           rounded-2xl flex items-center justify-center
           ${t.iconBg} ${t.hoverIconBg}
           transition-all duration-500
-          shadow-md group-hover:shadow-lg group-hover:drop-shadow-xl
+          shadow-md group-hover:shadow-lg
         `}
       >
         <div className={`
@@ -90,7 +93,7 @@ const GlobalServiceCard = ({
           transition-colors duration-500 pointer-events-none
         `}>
           {icon && (
-            <div>
+            <div className="transform group-hover:scale-110 transition-transform duration-300">
               {React.isValidElement(icon) ? (
                 React.cloneElement(icon, { 
                   size: iconSize,
@@ -107,39 +110,45 @@ const GlobalServiceCard = ({
       {/* Title */}
       {title && (
         <h3 className={`
-          ${compact ? 'text-lg mb-2' : 'text-xl mb-4'}
+          ${compact ? 'text-lg mb-2.5' : 'text-2xl mb-4'}
           font-bold tracking-tight pointer-events-none
-          transition-colors duration-500
+          transition-colors duration-300
           ${t.text} ${t.hoverText}
-        `}>
+        `}
+        style={{ fontFamily: "'Outfit', sans-serif" }}
+        >
           {title}
         </h3>
       )}
 
-      {/* Description (clamped to keep cards uniform) */}
+      {/* Description */}
       {description && (
         <p
-          className={`leading-relaxed pointer-events-none transition-colors duration-500 ${compact ? 'text-sm' : 'text-base'} ${t.subtext}`}
+          className={`leading-relaxed pointer-events-none transition-colors duration-300 ${compact ? 'text-xs' : 'text-sm'} ${t.subtext}`}
           style={{
             display: '-webkit-box',
             WebkitLineClamp: 3,
             WebkitBoxOrient: 'vertical',
             overflow: 'hidden',
-            minHeight: compact ? 48 : 72,
+            minHeight: compact ? 48 : 60,
           }}
         >
           {description}
         </p>
       )}
 
-      {/* Decorative corner accent */}
-      <div className={`
-        absolute top-0 right-0 w-24 h-24 -mr-12 -mt-12
-        rounded-full opacity-0 group-hover:opacity-20
-        transition-opacity duration-500
-        ${isDark ? 'bg-amber-500' : 'bg-amber-500'}
-        blur-2xl pointer-events-none
-      `}></div>
+      {/* Link indicator */}
+      {!compact && (
+        <div className="mt-8 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#F49B21] opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-out">
+          <span>Explore Service</span>
+          <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+      )}
+
+      {/* Decorative corner blur accent */}
+      <div className="absolute top-0 right-0 w-24 h-24 -mr-12 -mt-12 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-[#F49B21] blur-2xl pointer-events-none" />
     </motion.div>
   );
 };

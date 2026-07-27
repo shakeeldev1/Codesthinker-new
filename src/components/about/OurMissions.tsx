@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { Link } from "react-router-dom";
-
+import { SectionBadge } from "../ui/SectionBadge";
 function OurMissions() {
   const [index, setIndex] = useState(0);
   const missions = [
@@ -41,10 +40,7 @@ function OurMissions() {
 
       {/* Heading */}
       <div data-aos="fade-down" className="text-center max-w-3xl mx-auto mb-16">
-       <div className="inline-flex items-center gap-2 bg-white ring-1 ring-gray-200 shadow-sm rounded-full px-4 py-1.5">
-          <div className="w-2 h-2 rounded-full bg-[#F69A20] "></div>
-          <span className="text-xs font-bold text-gray-700 uppercase tracking-widest"> Our Mission</span>
-        </div>
+       <SectionBadge text="Our Mission" theme="light" />
 
         <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">
            What We  {" "}
@@ -103,7 +99,7 @@ function OurMissions() {
           </p>
 
           {/* Progress Bar */}
-          <div className="my-8 w-full h-[3px] bg-gray-200 rounded-full overflow-hidden">
+          <div className="mt-8 w-full h-[3px] bg-gray-200 rounded-full overflow-hidden">
             <div
               key={index}
               className="h-full bg-[#FEA800] animate-[progress_3s_linear]"
@@ -111,9 +107,9 @@ function OurMissions() {
           </div>
 
           {/* Button */}
-          <Link to="/services" className="mt-10 px-5 py-2 rounded-full bg-[#07051D] text-white hover:bg-[#0f0b35] transition-all duration-300 font-semibold shadow-lg hover:scale-105">
+          <button className="mt-10 px-7 py-3 rounded-full bg-[#07051D] text-white hover:bg-[#0f0b35] transition-all duration-300 font-semibold shadow-lg hover:scale-105">
             Learn More
-          </Link>
+          </button>
         </div>
       </div>
 

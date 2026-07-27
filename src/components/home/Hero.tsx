@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 // Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-import Button from "../common/Button";
+//import Button from "../common/Button";
 import BusinessFeatures from "./BusinessFeatures";
 const video = "/video.mp4";
 

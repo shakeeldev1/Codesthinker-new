@@ -49,8 +49,8 @@ function AboutHead() {
             data-aos-delay="100"
             className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight drop-shadow-lg"
           >
-            Delivering World Class Software for{" "}
-            <span className="text-[#F49B21]">Global Clients</span>
+            Delivering World Class Software <br className="hidden sm:inline" />
+            for <span className="text-[#F49B21]">Global Clients</span>
           </h1>
 
           {/* Description with enhanced visibility */}
@@ -59,7 +59,7 @@ function AboutHead() {
             data-aos-delay="200"
             className="mt-6 text-gray-200 text-lg sm:text-xl md:text-xl leading-relaxed max-w-4xl mx-auto drop-shadow-md"
           >
-            Codes Thinker is a high end digital company that delivers scalable, professional software solutions. We specialize in modern architecture, AI development, and seamless UI/UX transforming complex business challenges into high performance digital products.
+            We build scalable software, intelligent AI, and intuitive UI/UX to transform complex challenges into high-performance digital products.
           </p>
 
           {/* Global Client Banner */}

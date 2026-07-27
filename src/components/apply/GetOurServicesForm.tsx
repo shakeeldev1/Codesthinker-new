@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Button from '../common/Button';
+import { API_BASE_URL } from '../../config';
 
 interface FormData {
   fullName: string;
@@ -38,6 +39,7 @@ const GetOurServicesForm: React.FC = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   // STYLING UPDATES:
   // Using slate/gray shades to match the AboutUs section
@@ -45,10 +47,45 @@ const GetOurServicesForm: React.FC = () => {
   const labelBase = "block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 ml-1";
   const textareaBase = `${inputBase} min-h-[120px] resize-none`;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Form submission logic would go here
-    setSubmitStatus('success');
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setErrorMessage('');
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/v1/services`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Something went wrong. Please try again.');
+      }
+
+      setSubmitStatus('success');
+      // Reset form
+      setFormData({
+        fullName: '',
+        email: '',
+        phone: '',
+        company: '',
+        service: 'Software Development',
+        budget: '',
+        timeline: '',
+        message: '',
+      });
+    } catch (err: any) {
+      setSubmitStatus('error');
+      setErrorMessage(err.message || 'Network error. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -58,6 +95,12 @@ const GetOurServicesForm: React.FC = () => {
       {submitStatus === 'success' && (
         <div className="mb-6 bg-emerald-50 text-emerald-700 px-5 py-3 rounded-xl text-sm font-medium border border-emerald-200">
           ✅ Request submitted! Our team will contact you shortly.
+        </div>
+      )}
+
+      {submitStatus === 'error' && (
+        <div className="mb-6 bg-red-50 text-red-700 px-5 py-3 rounded-xl text-sm font-medium border border-red-200">
+          ❌ {errorMessage}
         </div>
       )}
 
@@ -138,8 +181,12 @@ const GetOurServicesForm: React.FC = () => {
           <textarea className={textareaBase} placeholder="Briefly describe your project requirements, goals, and any specific features you need..." value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} />
         </div>
 
-        <button className="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition-colors">
-          Submit Request →
+        <button 
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isSubmitting ? 'Submitting...' : 'Submit Request →'}
         </button>
       </form>
     </div>

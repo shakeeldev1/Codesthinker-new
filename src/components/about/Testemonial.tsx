@@ -1,40 +1,83 @@
-import React, { useEffect, useState } from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { Star, Send } from "lucide-react"; // Matching AboutUs icons
+import { Star, Quote } from "lucide-react";
+import { SectionBadge } from "../ui/SectionBadge";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 
 interface ReviewType {
   id: number;
   name: string;
   role: string;
+  company: string;
   review: string;
   rating: number;
   image: string;
 }
 
-function Testimonial() {
-  const [reviews, setReviews] = useState<ReviewType[]>([
-    {
-      id: 1,
-      name: "Sarah Ahmed",
-      role: "Frontend Developer",
-      review: "Codes Thinker completely transformed my learning journey with practical experience.",
-      rating: 5,
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=300&fit=crop&crop=face",
-    },
-    {
-      id: 2,
-      name: "Ali Raza",
-      role: "MERN Stack Intern",
-      review: "Amazing internship experience. Real projects boosted my confidence.",
-      rating: 4,
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face",
-    },
-  ]);
+const reviews: ReviewType[] = [
+  {
+    id: 1,
+    name: "David Vance",
+    role: "Chief Technology Officer",
+    company: "FinTech ScaleUp",
+    review: "Code's Thinker delivered our payment processing microservices three weeks ahead of schedule. The code quality, architectural decisions, and communication were exceptional.",
+    rating: 5,
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+  },
+  {
+    id: 2,
+    name: "Elena Rostova",
+    role: "VP of Engineering",
+    company: "HealthTech Systems",
+    review: "From UX wireframes to deployment, Code's Thinker executed our HIPAA-compliant SaaS platform flawlessly. Their attention to security and scalability was highly impressive.",
+    rating: 5,
+    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face",
+  },
+  {
+    id: 3,
+    name: "Marcus Thornby",
+    role: "Founder & CEO",
+    company: "Apex Logistics",
+    review: "We hired them to build our cross-platform fleet tracking app. They built a fast, battery-efficient solution that instantly improved our delivery operations by over 40%.",
+    rating: 5,
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
+  },
+  {
+    id: 4,
+    name: "Emma Watson",
+    role: "Product Director",
+    company: "DataSync AI",
+    review: "Partnering with Code's Thinker on our AI features was a game-changer. They deliver clean code, maintain excellent velocity, and integrate seamlessly with our internal teams.",
+    rating: 5,
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+  },
+  {
+    id: 5,
+    name: "Michael Chen",
+    role: "Lead Architect",
+    company: "CloudNative",
+    review: "Their expertise in Kubernetes and AWS serverless architecture helped us reduce our cloud spend by 35% while improving system reliability and deployment times.",
+    rating: 5,
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+  },
+  {
+    id: 6,
+    name: "Sarah Jenkins",
+    role: "Head of Digital",
+    company: "RetailEdge",
+    review: "The headless Shopify Plus storefront they built for us is lightning fast. Our conversion rates jumped 22% in the first month post-launch. Absolute professionals.",
+    rating: 5,
+    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face",
+  }
+];
 
-  const [newReview, setNewReview] = useState("");
-  const [rating, setRating] = useState(5);
-
+const Testimonial: React.FC = () => {
   useEffect(() => {
     AOS.init({ 
       duration: 800, 
@@ -43,160 +86,134 @@ function Testimonial() {
     });
   }, []);
 
-  const handleAddReview = () => {
-    if (!newReview.trim()) return;
-    const reviewObj: ReviewType = {
-      id: Date.now(),
-      name: "New Learner",
-      role: "Student",
-      review: newReview,
-      rating,
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=300&fit=crop&crop=face",
-    };
-    setReviews([reviewObj, ...reviews]);
-    setNewReview("");
-    setRating(5);
-  };
-
   return (
-    <section className="relative w-full min-h-[600px] bg-gradient-to-br from-slate-50 to-gray-100 overflow-hidden font-sans py-16">
+    <section className="relative w-full py-24 bg-white overflow-hidden font-sans">
       
-      {/* Background Decor - Exact match from AboutUs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-gray-400 rounded-full mix-blend-multiply filter blur-[100px] opacity-20"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-slate-500 rounded-full mix-blend-multiply filter blur-[100px] opacity-20"></div>
+      {/* Premium B2B Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
+        
+        {/* Soft glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-blue-500/5 blur-[120px] rounded-full"></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* HEADER - Styled like AboutUs Section */}
-        <div className="text-center mb-16 space-y-4" data-aos="fade-up">
-          <div className="inline-flex items-center gap-2 bg-white ring-1 ring-gray-200 shadow-sm rounded-full px-4 py-1.5">
-            <div className="w-2 h-2 rounded-full bg-[#F69A20]"></div>
-            <span className="text-xs font-bold text-gray-700 uppercase tracking-widest">Testimonials</span>
+        {/* Header Section */}
+        <div className="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+          <div className="flex justify-center mb-6">
+            <SectionBadge text="Client Success" theme="light" />
           </div>
-
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">
-            What Our <span className="text-[#F69A20]">Community</span> Says
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-[#08061E] tracking-tight leading-tight mb-6">
+            Trusted by innovative <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#08061E] to-[#F69A20]">engineering teams</span>
           </h2>
-          
-          <p className="text-gray-600 text-lg leading-relaxed max-w-2xl mx-auto">
-            Real feedback from students and developers growing with us. We redefine excellence through shared success.
+          <p className="text-lg text-slate-600 leading-relaxed">
+            Discover how we partner with founders, CTOs, and global brands to design, build, and deploy high-performance software solutions.
           </p>
         </div>
 
-        {/* MAIN GRID */}
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
+        {/* Testimonials Swiper Carousel */}
+        <div className="w-full pb-12" data-aos="fade-up" data-aos-delay="200">
+          <Swiper
+            modules={[Autoplay, Pagination]}
+            spaceBetween={32}
+            slidesPerView={1}
+            loop={true}
+            autoplay={{
+              delay: 3500,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true
+            }}
+            pagination={{
+              clickable: true,
+              dynamicBullets: true,
+            }}
+            breakpoints={{
+              640: {
+                slidesPerView: 1,
+              },
+              768: {
+                slidesPerView: 2,
+              },
+              1024: {
+                slidesPerView: 3,
+              },
+            }}
+            className="w-full !pb-16"
+          >
+            {reviews.map((review) => (
+              <SwiperSlide key={review.id} className="h-auto">
+                <div className="bg-white rounded-2xl p-8 border border-gray-200/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.1)] transition-all duration-300 h-full flex flex-col cursor-grab active:cursor-grabbing">
+                  {/* Top Section: Rating & Quote Icon */}
+                  <div className="flex justify-between items-start mb-6">
+                    <div className="flex gap-1">
+                      {[...Array(review.rating)].map((_, i) => (
+                        <Star key={i} size={16} className="text-[#F69A20] fill-[#F69A20]" />
+                      ))}
+                    </div>
+                    <Quote size={24} className="text-gray-200" />
+                  </div>
 
-          {/* LEFT: Image/Stat Panel - Styled like AboutUs Image Card */}
-          <div className="w-full lg:w-1/2 order-2 lg:order-1" data-aos="zoom-out-right">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl ring-1 ring-gray-900/5 group h-[500px]">
-              <img
-                src="https://i.pinimg.com/1200x/e1/c5/15/e1c5157514f9a5819b4e9ec0ce25c5cd.jpg"
-                alt="Community"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-500"></div>
+                  {/* Review Text */}
+                  <p className="text-slate-700 leading-relaxed mb-8 flex-grow text-[15px]">
+                    "{review.review}"
+                  </p>
 
-              <div className="absolute bottom-8 left-8 text-white">
-                 <div className="flex gap-8">
+                  {/* Author Profile */}
+                  <div className="flex items-center gap-4 pt-6 border-t border-gray-100 mt-auto">
+                    <img 
+                      src={review.image} 
+                      alt={review.name} 
+                      className="w-12 h-12 rounded-full object-cover border border-gray-200"
+                      draggable="false"
+                    />
                     <div>
-                        <p className="text-3xl font-extrabold text-[#F69A20]">5K+</p>
-                        <p className="text-xs font-medium uppercase tracking-wider text-gray-300">Students</p>
+                      <h4 className="text-sm font-bold text-[#08061E]">{review.name}</h4>
+                      <p className="text-xs text-slate-500 font-medium mt-0.5">
+                        {review.role}, <span className="text-[#F69A20]">{review.company}</span>
+                      </p>
                     </div>
-                    <div className="w-px h-10 bg-white/20"></div>
-                    <div>
-                        <p className="text-3xl font-extrabold text-[#F69A20]">4.9/5</p>
-                        <p className="text-xs font-medium uppercase tracking-wider text-gray-300">Rating</p>
-                    </div>
-                 </div>
-              </div>
-
-              {/* Floating Badge */}
-              <div className="absolute top-6 right-6 bg-white/95 backdrop-blur-md rounded-xl px-4 py-2 shadow-xl ring-1 ring-black/5">
-                <div className="flex items-center gap-3">
-                  <span className="relative flex h-3 w-3">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F69A20] opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-[#F69A20]"></span>
-                  </span>
-                  <span className="text-sm font-semibold text-gray-800">Live Feedback</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* RIGHT: Form & Reviews - Styled with Glassmorphism */}
-          <div className="w-full lg:w-1/2 order-1 lg:order-2 space-y-6" data-aos="fade-left">
-            
-            {/* Input Card */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm ring-1 ring-gray-200 p-6">
-              <h3 className="font-bold text-gray-900 text-lg mb-2">Share Your Experience</h3>
-              <textarea
-                value={newReview}
-                onChange={(e) => setNewReview(e.target.value)}
-                placeholder="How was your journey with us?"
-                className="w-full border border-gray-100 bg-gray-50/50 rounded-xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#F69A20] transition-all"
-                rows={2}
-              />
-
-              <div className="flex justify-between items-center mt-4">
-                <div className="flex gap-1">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <button key={star} onClick={() => setRating(star)} className="transition-transform hover:scale-110">
-                      <Star
-                        size={18}
-                        className={`${star <= rating ? "text-[#F69A20] fill-[#F69A20]" : "text-gray-300"}`}
-                      />
-                    </button>
-                  ))}
-                </div>
-                <button
-                  onClick={handleAddReview}
-                  className="inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white font-bold px-5 py-2 rounded-full transition-all hover:shadow-lg"
-                >
-                  Submit <Send size={14} />
-                </button>
-              </div>
-            </div>
-
-            {/* Scrollable Reviews List */}
-            <div className="h-[280px] overflow-y-auto space-y-4 pr-2 custom-scrollbar">
-              {reviews.map((item, index) => (
-                <div
-                  key={item.id}
-                  data-aos="fade-up"
-                  className="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm ring-1 ring-gray-100 hover:shadow-md transition-all group"
-                >
-                  <img src={item.image} className="w-12 h-12 rounded-xl object-cover ring-2 ring-gray-50" alt={item.name} />
-                  <div className="flex-1">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h4 className="font-bold text-gray-900 text-sm">{item.name}</h4>
-                        <p className="text-[10px] font-medium text-gray-500 uppercase tracking-wide">{item.role}</p>
-                      </div>
-                      <div className="flex">
-                        {[...Array(item.rating)].map((_, i) => (
-                          <Star key={i} size={12} className="text-[#F69A20] fill-[#F69A20]" />
-                        ))}
-                      </div>
-                    </div>
-                    <p className="text-gray-600 text-sm mt-2 leading-snug italic">“{item.review}”</p>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
-      </div>
 
+        {/* Bottom CTA / Trust Metrics */}
+        <div className="mt-12 pt-10 border-t border-gray-200/60 flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16" data-aos="fade-up" data-aos-delay="300">
+          <div className="text-center sm:text-left">
+            <h4 className="text-3xl font-extrabold text-[#08061E]">4.9/5</h4>
+            <p className="text-sm font-medium text-slate-500 mt-1 uppercase tracking-wider">Average Rating</p>
+          </div>
+          <div className="hidden sm:block w-px h-12 bg-gray-200"></div>
+          <div className="text-center sm:text-left">
+            <h4 className="text-3xl font-extrabold text-[#08061E]">50+</h4>
+            <p className="text-sm font-medium text-slate-500 mt-1 uppercase tracking-wider">Enterprise Clients</p>
+          </div>
+          <div className="hidden sm:block w-px h-12 bg-gray-200"></div>
+          <div className="text-center sm:text-left">
+            <h4 className="text-3xl font-extrabold text-[#08061E]">98%</h4>
+            <p className="text-sm font-medium text-slate-500 mt-1 uppercase tracking-wider">Client Retention</p>
+          </div>
+        </div>
+
+      </div>
+      
       <style>{`
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 10px; }
+        .swiper-pagination-bullet {
+          background: #08061E !important;
+          opacity: 0.2;
+        }
+        .swiper-pagination-bullet-active {
+          background: #F69A20 !important;
+          opacity: 1;
+        }
       `}</style>
     </section>
   );
-}
+};
 
 export default Testimonial;

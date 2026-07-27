@@ -9,7 +9,7 @@ import {
   Code,
   Award,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { SectionBadge } from "../ui/SectionBadge";
 
 function WhyChooseUs() {
   useEffect(() => {
@@ -63,10 +63,7 @@ function WhyChooseUs() {
 
      {/* Heading */}
       <div data-aos="fade-down" className="text-center max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 bg-white ring-1 ring-gray-200 shadow-sm rounded-full px-4 py-1.5">
-          <div className="w-2 h-2 rounded-full bg-[#F69A20] "></div>
-          <span className="text-xs font-bold text-gray-700 uppercase tracking-widest"> Why Choose Us</span>
-        </div>
+        <SectionBadge text="Why Choose Us" theme="light" />
 
         <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">
            Built for  {" "}
@@ -135,9 +132,9 @@ function WhyChooseUs() {
 
       {/* CTA */}
       <div data-aos="fade-up" className="text-center mt-8">
-        <Link to="/services"  className="px-5 py-2 rounded-full bg-[#07051D] hover:bg-[#0f0b35] transition-all text-white font-semibold shadow-lg hover:scale-105">
+        <button className="px-8 py-3 rounded-full bg-[#07051D] hover:bg-[#0f0b35] transition-all text-white font-semibold shadow-lg hover:scale-105">
           Start Your Journey
-        </Link>
+        </button>
       </div>
     </section>
   );

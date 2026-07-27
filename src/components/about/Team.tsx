@@ -150,16 +150,21 @@ const Team: React.FC = () => {
   };
 
   return (
-    <section className="relative min-h-screen bg-[#030211] text-white py-24 px-6 overflow-hidden flex items-center">
+    <section className="relative min-h-screen bg-[#07051D] text-white py-24 px-6 overflow-hidden flex items-center">
       
-      {/* Dynamic Background Blurs */}
+      {/* Dynamic Background Blurs - More Elegant */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-soft-light"></div>
         <motion.div 
-          animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.2, 0.1] }}
-          transition={{ duration: 10, repeat: Infinity }}
-          className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#F59C24] rounded-full blur-[160px]" 
+          animate={{ scale: [1, 1.1, 1], opacity: [0.15, 0.25, 0.15] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-[#F59C24]/30 to-purple-600/20 rounded-full blur-[120px]" 
         />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-700/10 rounded-full blur-[160px]" />
+        <motion.div 
+          animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.15, 0.1] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-gradient-to-tl from-blue-700/20 to-teal-500/10 rounded-full blur-[150px]" 
+        />
       </div>
 
       <div className="container mx-auto max-w-7xl relative z-10">
@@ -167,22 +172,40 @@ const Team: React.FC = () => {
           
           {/* LEFT: ORBIT SYSTEM */}
           <div className="relative h-[500px] md:h-[650px] w-full flex items-center justify-center">
-            {/* Visual Orbit Ring */}
-            <div className="absolute border border-white/5 rounded-full" style={{ width: RADIUS * 2, height: RADIUS * 2 }} />
+            {/* Visual Orbit Ring with Slow Rotation */}
+            <motion.div 
+              animate={{ rotate: 360 }}
+              transition={{ duration: 100, repeat: Infinity, ease: "linear" }}
+              className="absolute border border-white/5 rounded-full" 
+              style={{ width: RADIUS * 2, height: RADIUS * 2 }} 
+            />
+            
+            {/* Inner dashed ring for detail */}
+            <motion.div 
+              animate={{ rotate: -360 }}
+              transition={{ duration: 150, repeat: Infinity, ease: "linear" }}
+              className="absolute border border-dashed border-white/[0.03] rounded-full" 
+              style={{ width: RADIUS * 1.5, height: RADIUS * 1.5 }} 
+            />
 
             {/* CENTRAL IMAGE */}
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeMember.id}
-                initial={{ scale: 0.7, opacity: 0, rotate: -10 }}
-                animate={{ scale: 1, opacity: 1, rotate: 0 }}
-                exit={{ scale: 0.7, opacity: 0, rotate: 10 }}
-                transition={{ type: "spring", damping: 20, stiffness: 100 }}
-                className="relative z-20 w-64 h-64 md:w-80 md:h-80"
+                initial={{ scale: 0.8, opacity: 0, filter: "blur(10px)" }}
+                animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
+                exit={{ scale: 0.8, opacity: 0, filter: "blur(10px)" }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="relative z-20 w-64 h-64 md:w-80 md:h-80 group"
               >
-                <div className="absolute inset-0 bg-[#F59C24] rounded-full blur-[40px] opacity-20" />
-                <div className="relative w-full h-full rounded-full border-[8px] border-white/5 p-2 backdrop-blur-sm shadow-2xl overflow-hidden">
-                   <img src={activeMember.avatar} alt={activeMember.name} className="w-full h-full rounded-full object-cover" />
+                <div className="absolute inset-0 bg-[#F59C24] rounded-full blur-[60px] opacity-20 group-hover:opacity-30 transition-opacity duration-700" />
+                <div className="relative w-full h-full rounded-full border-[6px] border-white/10 p-2 backdrop-blur-md shadow-2xl overflow-hidden transition-transform duration-700 group-hover:scale-[1.02]">
+                   <img 
+                      src={activeMember.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(activeMember.name)}&background=F59C24&color=fff&size=512`} 
+                      alt={activeMember.name} 
+                      onError={(e) => { e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(activeMember.name)}&background=F59C24&color=fff&size=512`; }}
+                      className="w-full h-full rounded-full object-cover" 
+                    />
                 </div>
               </motion.div>
             </AnimatePresence>
@@ -199,20 +222,32 @@ const Team: React.FC = () => {
                   key={member.id}
                   className="absolute z-30"
                   animate={{ x, y }}
-                  transition={{ type: "spring", stiffness: 60, damping: 15 }}
+                  transition={{ type: "spring", stiffness: 50, damping: 20 }}
                 >
-                  <button onClick={() => handleManualSelection(index)} className="relative group">
+                  <button onClick={() => handleManualSelection(index)} className="relative group outline-none">
                     <motion.div
                       animate={{ 
-                        scale: isActive ? 1.25 : 1,
-                        borderColor: isActive ? "#F59C24" : "rgba(255,255,255,0.2)"
+                        scale: isActive ? 1.3 : 1,
+                        borderColor: isActive ? "#F59C24" : "rgba(255,255,255,0.1)"
                       }}
-                      className={`w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-2 transition-all duration-300 ${
-                        isActive ? 'opacity-100 shadow-[0_0_20px_rgba(245,156,36,0.5)]' : 'opacity-40 grayscale hover:grayscale-0 hover:opacity-100'
+                      className={`w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-[3px] transition-all duration-500 ${
+                        isActive ? 'opacity-100 shadow-[0_0_30px_rgba(245,156,36,0.6)] z-40' : 'opacity-50 hover:opacity-100 hover:scale-110 hover:border-white/30'
                       }`}
                     >
-                      <img src={member.avatar} className="w-full h-full object-cover" alt={member.name} />
+                      <img 
+                        src={member.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=F59C24&color=fff`} 
+                        onError={(e) => { e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=F59C24&color=fff`; }}
+                        className="w-full h-full object-cover" 
+                        alt={member.name} 
+                      />
                     </motion.div>
+                    
+                    {/* Tooltip for hovering over non-active members */}
+                    {!isActive && (
+                      <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap bg-black/80 backdrop-blur-sm text-xs px-3 py-1.5 rounded-lg border border-white/10 text-white/90 shadow-xl">
+                        {member.name}
+                      </div>
+                    )}
                   </button>
                 </motion.div>
               );
@@ -224,41 +259,47 @@ const Team: React.FC = () => {
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeMember.id}
-                initial={{ opacity: 0, x: 40 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -40 }}
-                transition={{ duration: 0.4 }}
-                className="bg-white/5 backdrop-blur-2xl border border-white/10 p-10 md:p-14 rounded-[3rem] shadow-3xl relative overflow-hidden"
+                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -30, scale: 0.95 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="bg-[#0B0929]/80 backdrop-blur-2xl border border-white/5 p-10 md:p-14 rounded-[2rem] shadow-2xl relative overflow-hidden"
               >
-                {/* Accent Flare */}
-                <div className="absolute top-0 right-0 w-40 h-40 bg-[#F59C24]/10 blur-3xl" />
+                {/* Elegant Accent Flare */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#F59C24]/10 to-transparent blur-3xl rounded-full" />
                 
                 <motion.div 
                   initial={{ width: 0 }} 
                   animate={{ width: "3rem" }} 
-                  className="h-1 bg-[#F59C24] mb-8" 
+                  transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
+                  className="h-1 bg-[#F59C24] mb-8 rounded-full shadow-[0_0_10px_rgba(245,156,36,0.5)]" 
                 />
 
-                <h2 className="text-5xl font-black mb-2 tracking-tight italic bg-gradient-to-r from-white to-white/50 bg-clip-text text-transparent">
+                <h2 className="text-4xl md:text-5xl font-black mb-2 tracking-tight bg-gradient-to-r from-white via-white/90 to-white/60 bg-clip-text text-transparent">
                   {activeMember.name}
                 </h2>
-                <p className="text-[#F59C24] font-mono text-sm uppercase tracking-[0.4em] mb-10">
+                <p className="text-[#F59C24] font-semibold text-xs md:text-sm uppercase tracking-[0.3em] mb-10 drop-shadow-sm">
                   {activeMember.role}
                 </p>
 
-                <p className="text-gray-300 text-lg leading-relaxed mb-12 font-light">
+                <p className="text-gray-300 text-base md:text-lg leading-relaxed mb-12 font-light">
                   "{activeMember.description}"
                 </p>
 
                 <div className="space-y-10">
                   <div>
-                    <h4 className="text-[10px] uppercase text-gray-500 tracking-[0.5em] font-bold mb-5">Technical Mastery</h4>
-                    <div className="flex flex-wrap gap-2">
+                    <h4 className="text-[10px] uppercase text-gray-500 tracking-[0.3em] font-bold mb-5 flex items-center gap-3">
+                      Technical Mastery
+                      <div className="h-px bg-white/5 flex-grow" />
+                    </h4>
+                    <div className="flex flex-wrap gap-2.5">
                       {activeMember.skills.map((skill, i) => (
                         <motion.span 
-                          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.1 }}
+                          initial={{ opacity: 0, y: 10 }} 
+                          animate={{ opacity: 1, y: 0 }} 
+                          transition={{ delay: i * 0.1 + 0.3, duration: 0.5 }}
                           key={skill} 
-                          className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs font-medium text-gray-300 hover:bg-[#F59C24] hover:text-black transition-colors"
+                          className="px-4 py-2 rounded-xl bg-white/[0.03] border border-white/10 text-xs font-medium text-gray-300 hover:bg-[#F59C24] hover:text-black hover:border-[#F59C24] transition-all duration-300 shadow-sm cursor-default"
                         >
                           {skill}
                         </motion.span>
@@ -266,15 +307,18 @@ const Team: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="flex gap-4 pt-8 border-t border-white/10">
+                  <div className="flex gap-4 pt-8 border-t border-white/5">
                     {activeMember.social.map((s, i) => (
-                      <a 
+                      <motion.a 
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: i * 0.1 + 0.5 }}
                         key={i} 
                         href={s.url} 
-                        className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-[#F59C24] hover:text-black transition-all duration-300 text-xl"
+                        className="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center hover:bg-[#F59C24] hover:text-black hover:shadow-[0_0_15px_rgba(245,156,36,0.4)] hover:-translate-y-1 transition-all duration-300 text-xl"
                       >
                         <i className={s.icon}></i>
-                      </a>
+                      </motion.a>
                     ))}
                   </div>
                 </div>
