@@ -73,9 +73,9 @@ const navLinks: NavLink[] = [
             {
                 title: 'Opportunities',
                 items: [
-                    { name: 'Project Training', to: '/apply/projects', desc: 'Hands-on tech training and skill development.' },
+                    { name: 'Project Training', to: '/apply/get-services', desc: 'Hands-on tech training and skill development.' },
                     { name: 'Apply for Internship', to: '/apply/internship', desc: 'Kickstart your career with real-world experience.' },
-                    { name: 'Careers', to: '/career', desc: 'Join our team of expert developers and designers.' }
+                    { name: 'Careers', to: '/careers', desc: 'Join our team of expert developers and designers.' }
                 ]
             }
         ]
@@ -481,11 +481,13 @@ const Navbar: React.FC = () => {
                                     </Link>
                                 ))}
                             </div>
-                            <div className="mt-8 pt-6 border-t border-gray-100">
-                                <Link to="/services" onClick={handleLinkClick} className="text-[#08061E] hover:text-amber-500 text-sm font-bold flex items-center gap-2 hover:gap-3 transition-all">
-                                    View all {navLinks.find(l => l.name === activeHover)!.megaMenu![activeMegaCategory].title} services <HiArrowRight />
-                                </Link>
-                            </div>
+                            {activeHover === 'Services' && (
+                                <div className="mt-8 pt-6 border-t border-gray-100">
+                                    <Link to="/services" onClick={handleLinkClick} className="text-[#08061E] hover:text-amber-500 text-sm font-bold flex items-center gap-2 hover:gap-3 transition-all">
+                                        View all {navLinks.find(l => l.name === activeHover)!.megaMenu![activeMegaCategory].title} services <HiArrowRight />
+                                    </Link>
+                                </div>
+                            )}
                         </div>
 
                         {/* Right: Spotlight */}
