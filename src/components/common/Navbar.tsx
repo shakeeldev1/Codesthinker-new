@@ -67,20 +67,15 @@ const navLinks: NavLink[] = [
     },
     { name: 'Projects', to: '/projects' },
     {
-        name: 'Apply Now',
-        to: '#',
+        name: 'Apply',
+        to: '/apply',
         megaMenu: [
             {
-                title: 'Careers',
+                title: 'Opportunities',
                 items: [
-                    { name: 'Apply for Internship', to: '/apply/internship', desc: 'Kickstart your career with our hands-on programs.' },
-                    { name: 'Apply For Job', to: '/apply/job', desc: 'Join our team of expert engineers and designers.' },
-                ]
-            },
-            {
-                title: 'Client Engagement',
-                items: [
-                    { name: 'Get Our Services', to: '/apply/get-services', desc: 'Hire us to build your next breakthrough product.' },
+                    { name: 'Project Training', to: '/apply/projects', desc: 'Hands-on tech training and skill development.' },
+                    { name: 'Apply for Internship', to: '/apply/internship', desc: 'Kickstart your career with real-world experience.' },
+                    { name: 'Careers', to: '/career', desc: 'Join our team of expert developers and designers.' }
                 ]
             }
         ]
@@ -130,6 +125,7 @@ const Navbar: React.FC = () => {
     // Check if current page starts with a white/light background
     const isLightHeroPage = 
         location.pathname.startsWith('/projects') ||
+        location.pathname === '/careers' ||
         location.pathname === '/services/gaming' ||
         location.pathname === '/services/resources' ||
        //location.pathname === '/services/ui-ux' ||

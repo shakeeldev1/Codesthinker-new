@@ -50,10 +50,16 @@ export const submitJobApplication = async (
       );
     }
 
-    const { fullName, email, phone, position } = req.body;
+    const { fullName, email, phone, position, coverLetter, jobPostingId } = req.body;
     const resumeName = req.file.originalname;
 
     logger.info(`Received job application from ${email} for ${position}. Saving to DB blob...`);
+
+    // Validate jobPostingId if provided
+    if (jobPostingId) {
+      const posting = await prisma.jobPosting.findUnique({ where: { id: jobPostingId } });
+      if (!posting) throw new AppError('Invalid job posting ID', 400);
+    }
 
     // Save to database
     const application = await prisma.jobApplication.create({
@@ -64,6 +70,8 @@ export const submitJobApplication = async (
         position,
         resumeName,
         resumeData: fileBuffer,
+        coverLetter: coverLetter || null,
+        jobPostingId: jobPostingId || null,
       },
     });
 
@@ -77,6 +85,7 @@ export const submitJobApplication = async (
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Position:</strong> ${position}</p>
       <p><strong>Resume File Name:</strong> ${resumeName}</p>
+      ${coverLetter ? `<p><strong>Cover Letter:</strong> ${coverLetter}</p>` : ''}
       <p><em>The resume file has been safely parsed, binary-validated, and stored in the database.</em></p>
       `
     ).catch(err => logger.error('Error sending job application email', err));
@@ -98,6 +107,7 @@ export const submitJobApplication = async (
     return next(error);
   }
 };
+
 
 export const submitInternshipApplication = async (
   req: Request,

@@ -24,6 +24,11 @@ export const getSubmissionsOverview = async (
         jobApplications: jobCount,
         internshipApplications: internshipCount,
       },
+      user: {
+        username: req.adminUser?.username,
+        role: req.adminUser?.role,
+        permissions: req.adminUser?.permissions,
+      },
     });
   } catch (error) {
     return next(error);

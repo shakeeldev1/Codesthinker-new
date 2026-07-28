@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../config';
 import { 
   LayoutDashboard, 
@@ -64,6 +65,7 @@ interface JobApplication {
   position: string;
   resumeName: string;
   createdAt: string;
+  jobPostingId?: string;
 }
 
 interface InternshipApplication {
@@ -97,13 +99,34 @@ const ALL_PERMISSIONS = [
 ];
 
 const ROLE_COLORS: Record<string, string> = {
-  super_admin: 'text-orange-400 bg-orange-500/10 border-orange-500/20',
-  editor: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
-  viewer: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
-  custom: 'text-violet-400 bg-violet-500/10 border-violet-500/20',
+  super_admin: 'text-orange-600 bg-orange-50 border-orange-200',
+  editor: 'text-blue-600 bg-blue-50 border-blue-200',
+  viewer: 'text-emerald-600 bg-emerald-50 border-emerald-200',
+  custom: 'text-violet-600 bg-violet-50 border-violet-200',
 };
 
-type TabType = 'overview' | 'contacts' | 'services' | 'jobs' | 'internships' | 'users';
+interface JobPosting {
+  id: string;
+  title: string;
+  department: string;
+  category: string;
+  location: string;
+  description: string;
+  requirements: string[];
+  responsibilities: string[];
+  benefits: string[];
+  salaryMin?: number;
+  salaryMax?: number;
+  salaryVisible: boolean;
+  deadline?: string;
+  isActive: boolean;
+  isFeatured: boolean;
+  createdAt: string;
+  updatedAt: string;
+  _count?: { applications: number };
+}
+
+type TabType = 'overview' | 'contacts' | 'services' | 'jobs' | 'internships' | 'users' | 'jobPostings';
 
 export default function AdminDashboard() {
   // Auth state
@@ -120,7 +143,15 @@ export default function AdminDashboard() {
   const [userRole, setUserRole] = useState<string>('super_admin');
 
   // Nav state
-  const [activeTab, setActiveTab] = useState<TabType>('overview');
+  const { tab } = useParams<{ tab: string }>();
+  const navigate = useNavigate();
+  const activeTab: TabType = (tab as TabType) || 'overview';
+  
+  const setActiveTab = (newTab: TabType) => {
+    navigate(`/admin/${newTab}`);
+  };
+
+  const [expandedJobPostingId, setExpandedJobPostingId] = useState<string | null>(null);
   
   // Data state
   const [stats, setStats] = useState({
@@ -134,6 +165,7 @@ export default function AdminDashboard() {
   const [jobs, setJobs] = useState<JobApplication[]>([]);
   const [internships, setInternships] = useState<InternshipApplication[]>([]);
   const [adminUsers, setAdminUsers] = useState<AdminUser[]>([]);
+  const [jobPostings, setJobPostings] = useState<JobPosting[]>([]);
   
   // Loading & searching state
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -166,6 +198,30 @@ export default function AdminDashboard() {
   const [isResettingPw, setIsResettingPw] = useState<boolean>(false);
   const [deleteUserConfirm, setDeleteUserConfirm] = useState<AdminUser | null>(null);
 
+  // Job Posting Modal state
+  const [showJobPostingModal, setShowJobPostingModal] = useState<boolean>(false);
+  const [editingJobPosting, setEditingJobPosting] = useState<JobPosting | null>(null);
+  const [jobPostingForm, setJobPostingForm] = useState({
+    title: '',
+    department: 'Engineering',
+    category: 'full-time',
+    location: '',
+    description: '',
+    requirements: '',
+    responsibilities: '',
+    benefits: '',
+    salaryMin: '',
+    salaryMax: '',
+    salaryVisible: false,
+    deadline: '',
+    isActive: true,
+    isFeatured: false,
+  });
+  const [isSavingJobPosting, setIsSavingJobPosting] = useState<boolean>(false);
+  const [jobPostingFormError, setJobPostingFormError] = useState<string>('');
+  const [jobPostingActionSuccess, setJobPostingActionSuccess] = useState<string>('');
+  const [deleteJobPostingConfirm, setDeleteJobPostingConfirm] = useState<JobPosting | null>(null);
+
   // Check login on mount by attempting to fetch overview stats
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -177,6 +233,10 @@ export default function AdminDashboard() {
         if (response.ok) {
           const data = await response.json();
           setStats(data.counts);
+          if (data.user) {
+            setUserPermissions(data.user.permissions || []);
+            setUserRole(data.user.role || 'viewer');
+          }
           setIsAuthenticated(true);
         } else {
           setIsAuthenticated(false);
@@ -249,6 +309,7 @@ export default function AdminDashboard() {
       setJobs([]);
       setInternships([]);
       setAdminUsers([]);
+      setJobPostings([]);
     }
   };
 
@@ -261,6 +322,10 @@ export default function AdminDashboard() {
       if (response.ok) {
         const data = await response.json();
         setStats(data.counts);
+        if (data.user) {
+          setUserPermissions(data.user.permissions || []);
+          setUserRole(data.user.role || 'viewer');
+        }
       }
     } catch (err) {
       console.error('Error fetching overview counts:', err);
@@ -277,6 +342,7 @@ export default function AdminDashboard() {
       else if (tab === 'jobs') endpoint = '/api/v1/admin/jobs';
       else if (tab === 'internships') endpoint = '/api/v1/admin/internships';
       else if (tab === 'users') endpoint = '/api/v1/admin/users';
+      else if (tab === 'jobPostings') endpoint = '/api/v1/admin/job-postings';
 
       const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: 'GET',
@@ -290,6 +356,7 @@ export default function AdminDashboard() {
         else if (tab === 'jobs') setJobs(result.data);
         else if (tab === 'internships') setInternships(result.data);
         else if (tab === 'users') setAdminUsers(result.data);
+        else if (tab === 'jobPostings') setJobPostings(result.data);
       } else if (response.status === 401) {
         handleLogout();
       }
@@ -485,6 +552,129 @@ export default function AdminDashboard() {
     }
   };
 
+  // --- Job Posting Management Handlers ---
+
+  const openCreateJobPostingModal = () => {
+    setEditingJobPosting(null);
+    setJobPostingForm({
+      title: '',
+      department: 'Engineering',
+      category: 'full-time',
+      location: 'On-site',
+      description: '',
+      requirements: '',
+      responsibilities: '',
+      benefits: '',
+      salaryMin: '',
+      salaryMax: '',
+      salaryVisible: false,
+      deadline: '',
+      isActive: true,
+      isFeatured: false,
+    });
+    setJobPostingFormError('');
+    setJobPostingActionSuccess('');
+    setShowJobPostingModal(true);
+  };
+
+  const openEditJobPostingModal = (posting: JobPosting) => {
+    setEditingJobPosting(posting);
+    setJobPostingForm({
+      title: posting.title,
+      department: posting.department,
+      category: posting.category,
+      location: posting.location,
+      description: posting.description,
+      requirements: posting.requirements.join('\n'),
+      responsibilities: posting.responsibilities.join('\n'),
+      benefits: posting.benefits.join('\n'),
+      salaryMin: posting.salaryMin ? String(posting.salaryMin) : '',
+      salaryMax: posting.salaryMax ? String(posting.salaryMax) : '',
+      salaryVisible: posting.salaryVisible,
+      deadline: posting.deadline ? posting.deadline.substring(0, 10) : '',
+      isActive: posting.isActive,
+      isFeatured: posting.isFeatured,
+    });
+    setJobPostingFormError('');
+    setJobPostingActionSuccess('');
+    setShowJobPostingModal(true);
+  };
+
+  const handleSaveJobPosting = async () => {
+    setJobPostingFormError('');
+    if (!jobPostingForm.title || !jobPostingForm.department || !jobPostingForm.location || !jobPostingForm.description) {
+      setJobPostingFormError('Title, Department, Location, and Description are required.');
+      return;
+    }
+    setIsSavingJobPosting(true);
+    try {
+      const url = editingJobPosting
+        ? `${API_BASE_URL}/api/v1/admin/job-postings/${editingJobPosting.id}`
+        : `${API_BASE_URL}/api/v1/admin/job-postings`;
+      const method = editingJobPosting ? 'PUT' : 'POST';
+
+      const parseList = (str: string) => str.split('\n').map(s => s.trim()).filter(s => s.length > 0);
+
+      const body = {
+        title: jobPostingForm.title,
+        department: jobPostingForm.department,
+        category: jobPostingForm.category,
+        location: jobPostingForm.location,
+        description: jobPostingForm.description,
+        requirements: parseList(jobPostingForm.requirements),
+        responsibilities: parseList(jobPostingForm.responsibilities),
+        benefits: parseList(jobPostingForm.benefits),
+        salaryMin: jobPostingForm.salaryMin ? Number(jobPostingForm.salaryMin) : null,
+        salaryMax: jobPostingForm.salaryMax ? Number(jobPostingForm.salaryMax) : null,
+        salaryVisible: jobPostingForm.salaryVisible,
+        deadline: jobPostingForm.deadline || null,
+        isActive: jobPostingForm.isActive,
+        isFeatured: jobPostingForm.isFeatured,
+      };
+
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Failed to save job posting');
+
+      setShowJobPostingModal(false);
+      setJobPostingActionSuccess(editingJobPosting ? 'Job posting updated successfully!' : 'Job posting created successfully!');
+      fetchTabData('jobPostings');
+      fetchOverview(); // Refresh overview counts
+      setTimeout(() => setJobPostingActionSuccess(''), 4000);
+    } catch (err: any) {
+      setJobPostingFormError(err.message);
+    } finally {
+      setIsSavingJobPosting(false);
+    }
+  };
+
+  const handleDeleteJobPosting = async () => {
+    if (!deleteJobPostingConfirm) return;
+    setIsDeleting(true);
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/v1/admin/job-postings/${deleteJobPostingConfirm.id}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Failed to delete job posting');
+      setJobPostings(prev => prev.filter(p => p.id !== deleteJobPostingConfirm.id));
+      setDeleteJobPostingConfirm(null);
+      setJobPostingActionSuccess('Job posting deleted successfully!');
+      fetchOverview(); // Refresh overview counts
+      setTimeout(() => setJobPostingActionSuccess(''), 4000);
+    } catch (err: any) {
+      alert(err.message);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   const formatDate = (dateStr: string) => {
     const d = new Date(dateStr);
     return d.toLocaleString('en-US', {
@@ -499,7 +689,7 @@ export default function AdminDashboard() {
   // Render checking auth spinner
   if (isCheckingAuth) {
     return (
-      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center gap-4 text-slate-400 font-sans">
+      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center gap-4 text-slate-500 font-sans">
         <RefreshCw className="w-8 h-8 animate-spin text-orange-500" />
         <p className="text-sm">Verifying secure administrator session...</p>
       </div>
@@ -510,26 +700,26 @@ export default function AdminDashboard() {
   if (!isAuthenticated) {
     return (
       <div 
-        className="min-h-screen bg-slate-950 flex items-center justify-center p-6 relative overflow-hidden font-sans"
+        className="min-h-screen bg-slate-50 flex items-center justify-center p-6 relative overflow-hidden font-sans"
         style={{
-          backgroundImage: 'radial-gradient(circle at top right, rgba(30, 58, 138, 0.4), transparent), radial-gradient(circle at bottom left, rgba(234, 88, 12, 0.15), transparent)'
+          backgroundImage: 'radial-gradient(circle at top right, rgba(246, 154, 32, 0.05), transparent), radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.03), transparent)'
         }}
       >
         {/* Decorative dynamic circles */}
-        <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-600/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
 
-        <div className="w-full max-w-md bg-slate-900/60 backdrop-blur-xl border border-slate-800 rounded-2xl shadow-2xl p-8 relative z-10 transition-all duration-300 hover:border-slate-700">
+        <div className="w-full max-w-md bg-white border border-slate-200/80 rounded-2xl shadow-xl p-8 relative z-10 transition-all duration-300 hover:shadow-2xl">
           <div className="text-center mb-8">
-            <div className="inline-flex p-3 bg-gradient-to-tr from-orange-600 to-orange-500 rounded-xl shadow-lg shadow-orange-500/20 text-white mb-4">
+            <div className="inline-flex p-3 bg-gradient-to-tr from-orange-600 to-orange-500 rounded-xl shadow-lg shadow-orange-500/10 text-white mb-4">
               <Lock className="w-6 h-6" />
             </div>
-            <h1 className="text-2xl font-bold text-white">Code's Thinker</h1>
-            <p className="text-slate-400 text-sm mt-1">Authorized Admin Dashboard Login</p>
+            <h1 className="text-2xl font-bold text-slate-900">Code's Thinker</h1>
+            <p className="text-slate-500 text-sm mt-1">Authorized Admin Dashboard Login</p>
           </div>
 
           {loginError && (
-            <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-lg p-3 flex items-start gap-2.5 mb-6">
+            <div className="bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg p-3 flex items-start gap-2.5 mb-6">
               <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
               <span>{loginError}</span>
             </div>
@@ -537,7 +727,7 @@ export default function AdminDashboard() {
 
           <form onSubmit={handleLogin} className="space-y-5">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">
                 Username
               </label>
               <div className="relative">
@@ -550,13 +740,13 @@ export default function AdminDashboard() {
                   placeholder="Enter admin username"
                   value={usernameInput}
                   onChange={(e) => setUsernameInput(e.target.value)}
-                  className="w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">
                 Password
               </label>
               <div className="relative">
@@ -566,21 +756,22 @@ export default function AdminDashboard() {
                 <input
                   type="password"
                   required
+                  autoComplete="current-password"
                   placeholder="••••••••"
                   value={passwordInput}
                   onChange={(e) => setPasswordInput(e.target.value)}
-                  className="w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
                 />
               </div>
             </div>
 
             <div className="flex items-center">
-              <label className="flex items-center cursor-pointer select-none text-xs text-slate-400 hover:text-slate-300 transition-colors">
+              <label className="flex items-center cursor-pointer select-none text-xs text-slate-500 hover:text-slate-700 transition-colors">
                 <input
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="mr-2 w-4 h-4 rounded border-slate-850 bg-slate-950 text-orange-500 focus:ring-0 focus:ring-offset-0 focus:outline-none cursor-pointer"
+                  className="mr-2 w-4 h-4 rounded border-slate-350 bg-white text-orange-500 focus:ring-0 focus:ring-offset-0 focus:outline-none cursor-pointer"
                 />
                 Remember Me
               </label>
@@ -662,46 +853,46 @@ export default function AdminDashboard() {
 
   // Render Dashboard UI
   return (
-    <div className="min-h-screen bg-slate-950 flex text-slate-100 font-sans">
+    <div className="min-h-screen bg-slate-100 flex text-slate-800 font-sans">
       
       {/* Sidebar Navigation */}
-      <aside className="w-72 bg-slate-900 border-r border-slate-800 flex flex-col justify-between shrink-0">
+      <aside className="w-72 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0">
         <div className="flex flex-col">
           {/* Sidebar Header */}
-          <div className="p-6 border-b border-slate-800 flex items-center gap-3">
+          <div className="p-6 border-b border-slate-200 flex items-center gap-3">
             <div className="w-9 h-9 bg-orange-600 rounded-lg flex items-center justify-center font-bold text-lg text-white shadow-md shadow-orange-600/20">
               C
             </div>
             <div>
-              <h2 className="font-bold text-white text-base">Code's Thinker</h2>
+              <h2 className="font-bold text-slate-900 text-base">Code's Thinker</h2>
               <span className="text-[10px] text-orange-500 uppercase tracking-widest font-bold">Admin Panel</span>
             </div>
           </div>
-
+ 
           {/* Navigation Items */}
-          <nav className="p-4 space-y-1">
+          <nav className="p-4 space-y-1 font-medium">
             <button
               onClick={() => { setActiveTab('overview'); setSearchQuery(''); }}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                 activeTab === 'overview'
                   ? 'bg-orange-600 text-white shadow-lg shadow-orange-600/10'
-                  : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'
+                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
               }`}
             >
               <LayoutDashboard className="w-4.5 h-4.5" />
               Overview
             </button>
-
-            <div className="h-px bg-slate-800 my-4 mx-2"></div>
+ 
+            <div className="h-px bg-slate-200 my-4 mx-2"></div>
             
-            <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider px-4 mb-2">Form Submissions</p>
-
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-4 mb-2">Form Submissions</p>
+ 
             <button
               onClick={() => { setActiveTab('contacts'); setSearchQuery(''); }}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                 activeTab === 'contacts'
                   ? 'bg-orange-600 text-white shadow-lg shadow-orange-600/10'
-                  : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'
+                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
               }`}
             >
               <span className="flex items-center gap-3">
@@ -709,18 +900,18 @@ export default function AdminDashboard() {
                 Contact Inquiries
               </span>
               <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                activeTab === 'contacts' ? 'bg-orange-700/80 text-white' : 'bg-slate-800 text-slate-300'
+                activeTab === 'contacts' ? 'bg-orange-700/80 text-white' : 'bg-slate-100 text-slate-600 border border-slate-200'
               }`}>
                 {stats.contacts}
               </span>
             </button>
-
+ 
             <button
               onClick={() => { setActiveTab('services'); setSearchQuery(''); }}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                 activeTab === 'services'
                   ? 'bg-orange-600 text-white shadow-lg shadow-orange-600/10'
-                  : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'
+                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
               }`}
             >
               <span className="flex items-center gap-3">
@@ -728,18 +919,18 @@ export default function AdminDashboard() {
                 Service Requests
               </span>
               <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                activeTab === 'services' ? 'bg-orange-700/80 text-white' : 'bg-slate-800 text-slate-300'
+                activeTab === 'services' ? 'bg-orange-700/80 text-white' : 'bg-slate-100 text-slate-600 border border-slate-200'
               }`}>
                 {stats.serviceInquiries}
               </span>
             </button>
-
+ 
             <button
               onClick={() => { setActiveTab('jobs'); setSearchQuery(''); }}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                 activeTab === 'jobs'
                   ? 'bg-orange-600 text-white shadow-lg shadow-orange-600/10'
-                  : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'
+                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
               }`}
             >
               <span className="flex items-center gap-3">
@@ -747,18 +938,18 @@ export default function AdminDashboard() {
                 Job Applications
               </span>
               <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                activeTab === 'jobs' ? 'bg-orange-700/80 text-white' : 'bg-slate-800 text-slate-300'
+                activeTab === 'jobs' ? 'bg-orange-700/80 text-white' : 'bg-slate-100 text-slate-600 border border-slate-200'
               }`}>
                 {stats.jobApplications}
               </span>
             </button>
-
+ 
             <button
               onClick={() => { setActiveTab('internships'); setSearchQuery(''); }}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                 activeTab === 'internships'
                   ? 'bg-orange-600 text-white shadow-lg shadow-orange-600/10'
-                  : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'
+                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
               }`}
             >
               <span className="flex items-center gap-3">
@@ -766,23 +957,23 @@ export default function AdminDashboard() {
                 Internships
               </span>
               <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                activeTab === 'internships' ? 'bg-orange-700/80 text-white' : 'bg-slate-800 text-slate-300'
+                activeTab === 'internships' ? 'bg-orange-700/80 text-white' : 'bg-slate-100 text-slate-600 border border-slate-200'
               }`}>
                 {stats.internshipApplications}
               </span>
             </button>
-
+ 
             {/* Users tab - only visible to users with manage_users permission */}
             {userPermissions.includes('manage_users') && (
               <>
-                <div className="h-px bg-slate-800 my-4 mx-2"></div>
-                <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider px-4 mb-2">Administration</p>
+                <div className="h-px bg-slate-200 my-4 mx-2"></div>
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-4 mb-2">Administration</p>
                 <button
                   onClick={() => { setActiveTab('users'); setSearchQuery(''); }}
-                  className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                  className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                     activeTab === 'users'
                       ? 'bg-orange-600 text-white shadow-lg shadow-orange-600/10'
-                      : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'
+                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                   }`}
                 >
                   <span className="flex items-center gap-3">
@@ -790,25 +981,44 @@ export default function AdminDashboard() {
                     Admin Users
                   </span>
                   <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                    activeTab === 'users' ? 'bg-orange-700/80 text-white' : 'bg-slate-800 text-slate-300'
+                    activeTab === 'users' ? 'bg-orange-700/80 text-white' : 'bg-slate-100 text-slate-600 border border-slate-200'
                   }`}>
                     {adminUsers.length}
+                  </span>
+                </button>
+ 
+                <button
+                  onClick={() => { setActiveTab('jobPostings'); setSearchQuery(''); }}
+                  className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold mt-1.5 transition-all ${
+                    activeTab === 'jobPostings'
+                      ? 'bg-orange-600 text-white shadow-lg shadow-orange-600/10'
+                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                  }`}
+                >
+                  <span className="flex items-center gap-3">
+                    <Briefcase className="w-4.5 h-4.5" />
+                    Job Postings
+                  </span>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                    activeTab === 'jobPostings' ? 'bg-orange-700/80 text-white' : 'bg-slate-100 text-slate-600 border border-slate-200'
+                  }`}>
+                    {jobPostings.length}
                   </span>
                 </button>
               </>
             )}
           </nav>
         </div>
-
+ 
         {/* Sidebar Footer Profile */}
-        <div className="p-4 border-t border-slate-800 bg-slate-950/40">
+        <div className="p-4 border-t border-slate-200 bg-slate-50">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 border border-slate-700 font-bold text-xs uppercase">
+              <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 border border-slate-350 font-bold text-xs uppercase">
                 A
               </div>
               <div className="overflow-hidden">
-                <p className="text-xs font-semibold text-slate-200 truncate">Administrator</p>
+                <p className="text-xs font-bold text-slate-800 truncate">Administrator</p>
                 <span className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${ROLE_COLORS[userRole] || ROLE_COLORS['viewer']}`}>
                   {userRole.replace('_', ' ')}
                 </span>
@@ -818,7 +1028,7 @@ export default function AdminDashboard() {
             <button
               onClick={handleLogout}
               title="Logout"
-              className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all"
+              className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
             >
               <LogOut className="w-4.5 h-4.5" />
             </button>
@@ -827,15 +1037,15 @@ export default function AdminDashboard() {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-grow flex flex-col min-h-screen overflow-x-hidden">
+      <main className="flex-grow flex flex-col min-h-screen overflow-x-hidden bg-slate-50">
         
         {/* Header bar */}
-        <header className="h-20 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-8 shrink-0">
+        <header className="h-20 bg-white border-b border-slate-200 flex items-center justify-between px-8 shrink-0">
           <div>
-            <h1 className="text-xl font-bold text-white capitalize flex items-center gap-2">
+            <h1 className="text-xl font-bold text-slate-800 capitalize flex items-center gap-2">
               {activeTab === 'overview' ? 'Overview' : activeTab.replace(/([A-Z])/g, ' $1')}
               {activeTab !== 'overview' && (
-                <span className="text-xs font-semibold bg-slate-800 text-slate-400 px-2 py-0.5 rounded-md">
+                <span className="text-xs font-semibold bg-slate-100 border border-slate-200 text-slate-500 px-2 py-0.5 rounded-md">
                   Listings
                 </span>
               )}
@@ -849,37 +1059,36 @@ export default function AdminDashboard() {
                 if (activeTab !== 'overview') fetchTabData(activeTab);
               }}
               title="Refresh Data"
-              className="p-2.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-all border border-slate-800"
+              className="p-2.5 text-slate-500 hover:text-slate-800 hover:bg-slate-50 rounded-xl transition-all border border-slate-200"
             >
               <RefreshCw className="w-4 h-4" />
             </button>
-            <div className="h-6 w-px bg-slate-800"></div>
-            <div className="text-xs font-medium text-slate-400">
-              System Time: <span className="font-semibold text-slate-300">{new Date().toLocaleDateString()}</span>
+            <div className="h-6 w-px bg-slate-250"></div>
+            <div className="text-xs font-medium text-slate-500">
+              System Time: <span className="font-semibold text-slate-700">{new Date().toLocaleDateString()}</span>
             </div>
           </div>
         </header>
 
         {/* Content Body */}
         <div className="flex-grow p-8">
-          
           {/* 1. OVERVIEW VIEW */}
           {activeTab === 'overview' && (
             <div className="space-y-8 animate-fade-in">
               {/* Top Greeting Card */}
               <div 
-                className="bg-gradient-to-r from-slate-900 via-slate-900 to-slate-900/40 border border-slate-800 rounded-2xl p-6 relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
+                className="bg-white border border-slate-200 rounded-2xl p-6 relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-sm"
                 style={{
-                  backgroundImage: 'linear-gradient(to right, rgba(30, 41, 59, 0.4), rgba(234, 88, 12, 0.03))'
+                  backgroundImage: 'linear-gradient(to right, #ffffff, rgba(244, 155, 33, 0.02))'
                 }}
               >
                 <div>
-                  <h3 className="text-lg font-bold text-white">Welcome back, Administrator</h3>
-                  <p className="text-sm text-slate-400 mt-1 max-w-xl">
+                  <h3 className="text-lg font-bold text-slate-900">Welcome back, Administrator</h3>
+                  <p className="text-sm text-slate-500 mt-1 max-w-xl">
                     Here's what's happening with Code's Thinker user form submissions. Monitor, review and clean up logs efficiently.
                   </p>
                 </div>
-                <div className="flex items-center gap-1.5 text-xs text-orange-500 font-semibold bg-orange-600/10 border border-orange-500/20 px-3 py-1.5 rounded-lg">
+                <div className="flex items-center gap-1.5 text-xs text-orange-600 font-semibold bg-orange-50 border border-orange-200/60 px-3 py-1.5 rounded-lg">
                   <TrendingUp className="w-3.5 h-3.5" />
                   Live Updates
                 </div>
@@ -891,77 +1100,77 @@ export default function AdminDashboard() {
                 {/* Contacts Card */}
                 <div 
                   onClick={() => setActiveTab('contacts')}
-                  className="bg-slate-900 border border-slate-800 hover:border-blue-500/30 p-6 rounded-2xl cursor-pointer transition-all duration-300 group hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/5"
+                  className="bg-white border border-slate-200/80 hover:border-blue-500/30 p-6 rounded-2xl cursor-pointer shadow-sm hover:shadow-md transition-all duration-300 group hover:-translate-y-1"
                 >
                   <div className="flex justify-between items-start">
-                    <div className="p-3 bg-blue-500/10 rounded-xl text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all">
+                    <div className="p-3 bg-blue-500/10 rounded-xl text-blue-650 group-hover:bg-blue-600 group-hover:text-white transition-all">
                       <Mail className="w-5 h-5" />
                     </div>
-                    <span className="text-[10px] font-bold text-blue-400 uppercase bg-blue-500/10 px-2 py-0.5 rounded">Inquiries</span>
+                    <span className="text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded">Inquiries</span>
                   </div>
                   <div className="mt-4">
-                    <h4 className="text-2xl font-bold text-white tracking-tight">{stats.contacts}</h4>
-                    <p className="text-slate-400 text-xs mt-1">Contact Form Submissions</p>
+                    <h4 className="text-2xl font-bold text-slate-900 tracking-tight">{stats.contacts}</h4>
+                    <p className="text-slate-500 text-xs mt-1">Contact Form Submissions</p>
                   </div>
                 </div>
 
                 {/* Services Card */}
                 <div 
                   onClick={() => setActiveTab('services')}
-                  className="bg-slate-900 border border-slate-800 hover:border-violet-500/30 p-6 rounded-2xl cursor-pointer transition-all duration-300 group hover:-translate-y-1 hover:shadow-xl hover:shadow-violet-500/5"
+                  className="bg-white border border-slate-200/80 hover:border-violet-500/30 p-6 rounded-2xl cursor-pointer shadow-sm hover:shadow-md transition-all duration-300 group hover:-translate-y-1"
                 >
                   <div className="flex justify-between items-start">
-                    <div className="p-3 bg-violet-500/10 rounded-xl text-violet-400 group-hover:bg-violet-500 group-hover:text-white transition-all">
+                    <div className="p-3 bg-violet-500/10 rounded-xl text-violet-600 group-hover:bg-violet-600 group-hover:text-white transition-all">
                       <FileText className="w-5 h-5" />
                     </div>
-                    <span className="text-[10px] font-bold text-violet-400 uppercase bg-violet-500/10 px-2 py-0.5 rounded">Services</span>
+                    <span className="text-[10px] font-bold text-violet-600 bg-violet-50 border border-violet-200 px-2 py-0.5 rounded">Services</span>
                   </div>
                   <div className="mt-4">
-                    <h4 className="text-2xl font-bold text-white tracking-tight">{stats.serviceInquiries}</h4>
-                    <p className="text-slate-400 text-xs mt-1">Project Inquiry Requests</p>
+                    <h4 className="text-2xl font-bold text-slate-900 tracking-tight">{stats.serviceInquiries}</h4>
+                    <p className="text-slate-500 text-xs mt-1">Project Inquiry Requests</p>
                   </div>
                 </div>
 
                 {/* Job Applications Card */}
                 <div 
                   onClick={() => setActiveTab('jobs')}
-                  className="bg-slate-900 border border-slate-800 hover:border-amber-500/30 p-6 rounded-2xl cursor-pointer transition-all duration-300 group hover:-translate-y-1 hover:shadow-xl hover:shadow-amber-500/5"
+                  className="bg-white border border-slate-200/80 hover:border-amber-500/30 p-6 rounded-2xl cursor-pointer shadow-sm hover:shadow-md transition-all duration-300 group hover:-translate-y-1"
                 >
                   <div className="flex justify-between items-start">
-                    <div className="p-3 bg-amber-500/10 rounded-xl text-amber-400 group-hover:bg-amber-500 group-hover:text-white transition-all">
+                    <div className="p-3 bg-amber-500/10 rounded-xl text-amber-600 group-hover:bg-amber-500 group-hover:text-white transition-all">
                       <Briefcase className="w-5 h-5" />
                     </div>
-                    <span className="text-[10px] font-bold text-amber-400 uppercase bg-amber-500/10 px-2 py-0.5 rounded">Careers</span>
+                    <span className="text-[10px] font-bold text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded">Careers</span>
                   </div>
                   <div className="mt-4">
-                    <h4 className="text-2xl font-bold text-white tracking-tight">{stats.jobApplications}</h4>
-                    <p className="text-slate-400 text-xs mt-1">Full-Time Applications</p>
+                    <h4 className="text-2xl font-bold text-slate-900 tracking-tight">{stats.jobApplications}</h4>
+                    <p className="text-slate-500 text-xs mt-1">Full-Time Applications</p>
                   </div>
                 </div>
 
                 {/* Internship Applications Card */}
                 <div 
                   onClick={() => setActiveTab('internships')}
-                  className="bg-slate-900 border border-slate-800 hover:border-emerald-500/30 p-6 rounded-2xl cursor-pointer transition-all duration-300 group hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-500/5"
+                  className="bg-white border border-slate-200/80 hover:border-emerald-500/30 p-6 rounded-2xl cursor-pointer shadow-sm hover:shadow-md transition-all duration-300 group hover:-translate-y-1"
                 >
                   <div className="flex justify-between items-start">
-                    <div className="p-3 bg-emerald-500/10 rounded-xl text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-all">
+                    <div className="p-3 bg-emerald-500/10 rounded-xl text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-all">
                       <GraduationCap className="w-5 h-5" />
                     </div>
-                    <span className="text-[10px] font-bold text-emerald-400 uppercase bg-emerald-500/10 px-2 py-0.5 rounded">Interns</span>
+                    <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">Interns</span>
                   </div>
                   <div className="mt-4">
-                    <h4 className="text-2xl font-bold text-white tracking-tight">{stats.internshipApplications}</h4>
-                    <p className="text-slate-400 text-xs mt-1">Internship Submissions</p>
+                    <h4 className="text-2xl font-bold text-slate-900 tracking-tight">{stats.internshipApplications}</h4>
+                    <p className="text-slate-500 text-xs mt-1">Internship Submissions</p>
                   </div>
                 </div>
 
               </div>
 
               {/* Informative instructions banner */}
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
-                <h4 className="text-sm font-bold text-white mb-2">Operational Guidelines:</h4>
-                <ul className="text-xs text-slate-400 space-y-2 list-disc list-inside">
+              <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <h4 className="text-sm font-bold text-slate-800 mb-2">Operational Guidelines:</h4>
+                <ul className="text-xs text-slate-500 space-y-2 list-disc list-inside">
                   <li>Form submissions are mapped dynamically directly from client page components.</li>
                   <li>Job and Internship applications carry PDF/Doc resume binary files stored directly in PostgreSQL database.</li>
                   <li>Clicking a category on the left sidebar opens complete tabular listings with full details.</li>
@@ -972,14 +1181,14 @@ export default function AdminDashboard() {
           )}
 
           {/* 2. SUBMISSIONS LISTS */}
-          {activeTab !== 'overview' && (
-            <div className="space-y-6">
+          {activeTab !== 'overview' && activeTab !== 'users' && (
+            <div className="space-y-6 animate-fade-in">
               {/* Table search & statistics toolbar */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-between items-stretch sm:items-center bg-slate-900 border border-slate-800 rounded-xl p-4">
+              <div className="flex flex-col sm:flex-row gap-4 justify-between items-stretch sm:items-center bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
                 
                 {/* Search box */}
                 <div className="relative flex-grow max-w-md">
-                  <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
+                  <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
                     <Search className="w-4 h-4" />
                   </span>
                   <input
@@ -987,12 +1196,12 @@ export default function AdminDashboard() {
                     placeholder="Search logs by keyword..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-10 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-all"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg pl-10 pr-4 py-2 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-500 focus:bg-white transition-all"
                   />
                   {searchQuery && (
                     <button 
                       onClick={() => setSearchQuery('')}
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-white"
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-700"
                     >
                       <X className="w-3.5 h-3.5" />
                     </button>
@@ -1000,29 +1209,29 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* Count summary and loading */}
-                <div className="flex items-center gap-3 text-xs text-slate-400 select-none">
+                <div className="flex items-center gap-3 text-xs text-slate-500 select-none font-medium">
                   {isLoading && <RefreshCw className="w-3.5 h-3.5 animate-spin text-orange-500" />}
                   <span>Found {filteredItems.length} records</span>
                 </div>
               </div>
 
               {/* Data Table */}
-              <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-lg">
+              <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
                 {isLoading ? (
-                  <div className="p-20 flex flex-col items-center justify-center gap-4 text-slate-400">
+                  <div className="p-20 flex flex-col items-center justify-center gap-4 text-slate-500">
                     <RefreshCw className="w-8 h-8 animate-spin text-orange-500" />
                     <p className="text-sm">Fetching list from secure database...</p>
                   </div>
                 ) : filteredItems.length === 0 ? (
-                  <div className="p-20 flex flex-col items-center justify-center gap-3 text-slate-500">
-                    <AlertCircle className="w-10 h-10 text-slate-600" />
-                    <p className="text-sm font-semibold">No submissions matching criteria found.</p>
+                  <div className="p-20 flex flex-col items-center justify-center gap-3 text-slate-400">
+                    <AlertCircle className="w-10 h-10 text-slate-350" />
+                    <p className="text-sm font-bold text-slate-700">No submissions matching criteria found.</p>
                   </div>
                 ) : (
                   <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                       <thead>
-                        <tr className="border-b border-slate-800 text-[10px] font-bold text-slate-400 uppercase tracking-wider bg-slate-950/50">
+                        <tr className="border-b border-slate-200 text-[10px] font-bold text-slate-500 uppercase tracking-wider bg-slate-50/60">
                           <th className="py-4.5 px-6">Name</th>
                           <th className="py-4.5 px-6">Contact info</th>
                           {activeTab === 'contacts' && <th className="py-4.5 px-6">Subject</th>}
@@ -1039,34 +1248,34 @@ export default function AdminDashboard() {
                       </thead>
                       <tbody className="divide-y divide-slate-800/80 text-sm">
                         {filteredItems.map((item: any) => (
-                          <tr key={item.id} className="hover:bg-slate-800/30 transition-all">
+                          <tr key={item.id} className="hover:bg-slate-50/50 transition-all border-b border-slate-150">
                             {/* Column 1: Name */}
-                            <td className="py-4 px-6 font-semibold text-white">
+                            <td className="py-4 px-6 font-semibold text-slate-800">
                               {activeTab === 'contacts' 
                                 ? `${item.firstName} ${item.lastName}` 
                                 : item.fullName}
                             </td>
 
                             {/* Column 2: Contact Info */}
-                            <td className="py-4 px-6 text-xs text-slate-300">
+                            <td className="py-4 px-6 text-xs text-slate-650">
                               <div className="flex flex-col gap-0.5">
-                                <a href={`mailto:${item.email}`} className="hover:underline hover:text-orange-500 transition-all">{item.email}</a>
-                                <a href={`tel:${item.phone}`} className="text-slate-400 hover:text-orange-500 transition-all">{item.phone}</a>
+                                <a href={`mailto:${item.email}`} className="hover:underline hover:text-orange-600 transition-all font-medium">{item.email}</a>
+                                <a href={`tel:${item.phone}`} className="text-slate-500 hover:text-orange-600 transition-all">{item.phone}</a>
                               </div>
                             </td>
 
                             {/* Column 3: Custom Field based on tab */}
                             {activeTab === 'contacts' && (
-                              <td className="py-4 px-6 text-slate-300 font-medium max-w-xs truncate">
+                              <td className="py-4 px-6 text-slate-600 font-medium max-w-xs truncate">
                                 {item.subject}
                               </td>
                             )}
 
                             {activeTab === 'services' && (
                               <>
-                                <td className="py-4 px-6 text-slate-300">{item.company}</td>
-                                <td className="py-4 px-6 text-slate-300">
-                                  <span className="bg-orange-600/10 text-orange-500 border border-orange-500/20 px-2.5 py-0.5 rounded-full text-xs font-semibold">
+                                <td className="py-4 px-6 text-slate-600">{item.company}</td>
+                                <td className="py-4 px-6 text-slate-650">
+                                  <span className="bg-orange-50 text-orange-600 border border-orange-200 px-2.5 py-0.5 rounded-full text-xs font-semibold">
                                     {item.service}
                                   </span>
                                 </td>
@@ -1074,26 +1283,26 @@ export default function AdminDashboard() {
                             )}
 
                             {(activeTab === 'jobs' || activeTab === 'internships') && (
-                              <td className="py-4 px-6 text-slate-300">
-                                <span className="bg-blue-600/10 text-blue-400 border border-blue-500/20 px-2.5 py-0.5 rounded-full text-xs font-semibold">
+                              <td className="py-4 px-6 text-slate-650">
+                                <span className="bg-blue-550/10 text-blue-600 border border-blue-200 px-2.5 py-0.5 rounded-full text-xs font-semibold">
                                   {item.position}
                                 </span>
                               </td>
                             )}
 
                             {/* Column 4: Submitted At */}
-                            <td className="py-4 px-6 text-xs text-slate-400 font-medium">
+                            <td className="py-4 px-6 text-xs text-slate-500 font-medium">
                               {formatDate(item.createdAt)}
                             </td>
 
                             {/* Column 5: Action buttons */}
                             <td className="py-4 px-6 text-right">
-                              <div className="inline-flex items-center gap-1 bg-slate-950/60 border border-slate-800 p-1.5 rounded-xl">
+                              <div className="inline-flex items-center gap-1 bg-slate-50 border border-slate-200 p-1.5 rounded-xl">
                                 
                                 <button
                                   onClick={() => setSelectedItem({ type: activeTab, data: item })}
                                   title="View Details"
-                                  className="p-2 text-slate-400 hover:text-orange-500 hover:bg-slate-800 rounded-lg transition-all"
+                                  className="p-2 text-slate-500 hover:text-orange-600 hover:bg-white hover:shadow-sm rounded-lg transition-all"
                                 >
                                   <Eye className="w-4 h-4" />
                                 </button>
@@ -1102,7 +1311,7 @@ export default function AdminDashboard() {
                                   <button
                                     onClick={() => handleDownloadResume(activeTab, item.id, item.resumeName)}
                                     title={`Download resume: ${item.resumeName}`}
-                                    className="p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-800 rounded-lg transition-all flex items-center justify-center cursor-pointer"
+                                    className="p-2 text-slate-500 hover:text-blue-600 hover:bg-white hover:shadow-sm rounded-lg transition-all flex items-center justify-center cursor-pointer"
                                   >
                                     <Download className="w-4 h-4" />
                                   </button>
@@ -1111,7 +1320,7 @@ export default function AdminDashboard() {
                                 <button
                                   onClick={() => setDeleteConfirmItem({ type: activeTab, id: item.id })}
                                   title="Delete log"
-                                  className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all"
+                                  className="p-2 text-slate-500 hover:text-red-650 hover:bg-red-50 rounded-lg transition-all"
                                 >
                                   <Trash2 className="w-4 h-4" />
                                 </button>
@@ -1128,16 +1337,14 @@ export default function AdminDashboard() {
             </div>
           )}
 
-        </div>
-
           {/* 3. USERS MANAGEMENT VIEW */}
           {activeTab === 'users' && (
             <div className="space-y-6 animate-fade-in">
               {/* Header with action */}
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-900 border border-slate-800 rounded-xl p-4">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
                 <div>
-                  <h3 className="text-white font-bold text-sm">Admin Users</h3>
-                  <p className="text-slate-400 text-xs mt-0.5">Manage who has access to this dashboard and what they can do.</p>
+                  <h3 className="text-slate-900 font-bold text-sm">Admin Users</h3>
+                  <p className="text-slate-500 text-xs mt-0.5">Manage who has access to this dashboard and what they can do.</p>
                 </div>
                 <button
                   onClick={openCreateUserModal}
@@ -1150,18 +1357,18 @@ export default function AdminDashboard() {
 
               {/* Success message */}
               {userActionSuccess && (
-                <div className="flex items-center gap-2.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm rounded-xl px-4 py-3">
+                <div className="flex items-center gap-2.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm rounded-xl px-4 py-3 shadow-sm">
                   <CheckCircle2 className="w-4 h-4 shrink-0" />
                   {userActionSuccess}
                 </div>
               )}
 
               {/* Users Table */}
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+              <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left border-collapse">
                     <thead>
-                      <tr className="border-b border-slate-800 text-[10px] font-bold text-slate-400 uppercase tracking-wider bg-slate-950/50">
+                      <tr className="border-b border-slate-200 text-[10px] font-bold text-slate-500 uppercase tracking-wider bg-slate-50/60">
                         <th className="py-4 px-6">User</th>
                         <th className="py-4 px-6">Role</th>
                         <th className="py-4 px-6">Permissions</th>
@@ -1170,17 +1377,17 @@ export default function AdminDashboard() {
                         <th className="py-4 px-6 text-right">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-800/80 text-sm">
+                    <tbody className="divide-y divide-slate-150 text-sm">
                       {adminUsers.map((user) => (
-                        <tr key={user.id} className="hover:bg-slate-800/30 transition-all">
+                        <tr key={user.id} className="hover:bg-slate-50/50 transition-all border-b border-slate-150">
                           <td className="py-4 px-6">
                             <div className="flex items-center gap-3">
-                              <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-300 font-bold text-xs uppercase border border-slate-700">
+                              <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-650 font-bold text-xs uppercase border border-slate-250">
                                 {user.username[0]}
                               </div>
                               <div>
-                                <p className="font-semibold text-white text-sm">{user.username}</p>
-                                <p className="text-xs text-slate-400">{user.email}</p>
+                                <p className="font-semibold text-slate-800 text-sm">{user.username}</p>
+                                <p className="text-xs text-slate-500">{user.email}</p>
                               </div>
                             </div>
                           </td>
@@ -1192,29 +1399,29 @@ export default function AdminDashboard() {
                           <td className="py-4 px-6">
                             <div className="flex flex-wrap gap-1 max-w-xs">
                               {user.permissions.slice(0, 3).map(p => (
-                                <span key={p} className="text-[9px] font-semibold bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded border border-slate-700">
+                                <span key={p} className="text-[9px] font-semibold bg-slate-50 text-slate-600 px-1.5 py-0.5 rounded border border-slate-200">
                                   {p.replace('_', ' ')}
                                 </span>
                               ))}
                               {user.permissions.length > 3 && (
-                                <span className="text-[9px] text-slate-500">+{user.permissions.length - 3} more</span>
+                                <span className="text-[9px] text-slate-500 font-medium">+{user.permissions.length - 3} more</span>
                               )}
                             </div>
                           </td>
                           <td className="py-4 px-6">
                             {user.isActive ? (
-                              <span className="flex items-center gap-1.5 text-emerald-400 text-xs font-semibold">
-                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                              <span className="flex items-center gap-1.5 text-emerald-600 text-xs font-semibold">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                 Active
                               </span>
                             ) : (
                               <span className="flex items-center gap-1.5 text-slate-500 text-xs font-semibold">
-                                <span className="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+                                <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
                                 Inactive
                               </span>
                             )}
                           </td>
-                          <td className="py-4 px-6 text-xs text-slate-400">
+                          <td className="py-4 px-6 text-xs text-slate-500">
                             {user.isRoot ? 'System' : formatDate(user.createdAt)}
                           </td>
                           <td className="py-4 px-6">
@@ -1224,28 +1431,28 @@ export default function AdminDashboard() {
                                   <button
                                     onClick={() => openEditUserModal(user)}
                                     title="Edit user"
-                                    className="p-2 text-slate-400 hover:text-blue-400 hover:bg-blue-500/10 rounded-lg transition-all"
+                                    className="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
                                   >
                                     <Edit2 className="w-3.5 h-3.5" />
                                   </button>
                                   <button
                                     onClick={() => { setShowResetPassword(user.id); setNewPassword(''); }}
                                     title="Reset password"
-                                    className="p-2 text-slate-400 hover:text-violet-400 hover:bg-violet-500/10 rounded-lg transition-all"
+                                    className="p-2 text-slate-500 hover:text-violet-650 hover:bg-violet-50 rounded-lg transition-all"
                                   >
                                     <KeyRound className="w-3.5 h-3.5" />
                                   </button>
                                   <button
                                     onClick={() => setDeleteUserConfirm(user)}
                                     title="Delete user"
-                                    className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all"
+                                    className="p-2 text-slate-500 hover:text-red-650 hover:bg-red-50 rounded-lg transition-all"
                                   >
                                     <Trash2 className="w-3.5 h-3.5" />
                                   </button>
                                 </>
                               )}
                               {user.isRoot && (
-                                <span className="text-[9px] text-slate-600 uppercase tracking-wider px-2">Root — Protected</span>
+                                <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider px-2">Root — Protected</span>
                               )}
                             </div>
                           </td>
@@ -1263,26 +1470,191 @@ export default function AdminDashboard() {
             </div>
           )}
 
+          {/* 4. JOB POSTINGS MANAGEMENT VIEW */}
+          {activeTab === 'jobPostings' && (
+            <div className="space-y-6 animate-fade-in">
+              {/* Header with action */}
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                <div>
+                  <h3 className="text-slate-900 font-bold text-sm">Job Postings</h3>
+                  <p className="text-slate-500 text-xs mt-0.5">Publish and manage job opportunities on the careers portal.</p>
+                </div>
+                <button
+                  onClick={openCreateJobPostingModal}
+                  className="flex items-center gap-2 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-all shadow-lg shadow-orange-500/10 hover:shadow-orange-500/25 active:scale-[0.98]"
+                >
+                  <Plus className="w-4 h-4" />
+                  Create Job Posting
+                </button>
+              </div>
+
+              {/* Success message */}
+              {jobPostingActionSuccess && (
+                <div className="flex items-center gap-2.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm rounded-xl px-4 py-3 shadow-sm">
+                  <CheckCircle2 className="w-4 h-4 shrink-0" />
+                  {jobPostingActionSuccess}
+                </div>
+              )}
+
+              {/* Job Postings Table */}
+              <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-slate-200 text-[10px] font-bold text-slate-500 uppercase tracking-wider bg-slate-50/60">
+                        <th className="py-4 px-6">Job Details</th>
+                        <th className="py-4 px-6">Department</th>
+                        <th className="py-4 px-6">Type & Location</th>
+                        <th className="py-4 px-6">Applications</th>
+                        <th className="py-4 px-6">Status</th>
+                        <th className="py-4 px-6 text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-150 text-sm">
+                      {jobPostings.map((posting) => (
+                        <React.Fragment key={posting.id}>
+                        <tr className={`transition-all border-b border-slate-150 ${expandedJobPostingId === posting.id ? 'bg-slate-50' : 'hover:bg-slate-50/50'}`}>
+                          <td className="py-4 px-6">
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <p className="font-semibold text-slate-800 text-sm">{posting.title}</p>
+                                {posting.isFeatured && (
+                                  <span className="text-[9px] font-bold bg-orange-50 text-orange-650 border border-orange-200 px-1.5 py-0.5 rounded">
+                                    Featured
+                                  </span>
+                                )}
+                              </div>
+                              <p className="text-xs text-slate-500 mt-0.5">
+                                Created: {formatDate(posting.createdAt)}
+                              </p>
+                            </div>
+                          </td>
+                          <td className="py-4 px-6">
+                            <span className="text-xs text-slate-700 font-semibold">{posting.department}</span>
+                          </td>
+                          <td className="py-4 px-6">
+                            <div className="flex flex-col gap-0.5">
+                              <span className="text-xs text-slate-700 font-semibold capitalize">{posting.category.replace('-', ' ')}</span>
+                              <span className="text-[10px] text-slate-500">{posting.location}</span>
+                            </div>
+                          </td>
+                          <td className="py-4 px-6">
+                            <span className="text-xs font-semibold bg-slate-50 border border-slate-200 text-slate-600 px-2.5 py-1 rounded-lg">
+                              {posting._count?.applications ?? 0} applied
+                            </span>
+                          </td>
+                          <td className="py-4 px-6">
+                            {posting.isActive ? (
+                              <span className="flex items-center gap-1.5 text-emerald-600 text-xs font-semibold">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                Active / Live
+                              </span>
+                            ) : (
+                              <span className="flex items-center gap-1.5 text-slate-500 text-xs font-semibold">
+                                <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                                Archived
+                              </span>
+                            )}
+                          </td>
+                          <td className="py-4 px-6">
+                            <div className="flex items-center justify-end gap-1">
+                              <button
+                                onClick={() => setExpandedJobPostingId(expandedJobPostingId === posting.id ? null : posting.id)}
+                                title="View applications"
+                                className={`p-2 rounded-lg transition-all ${expandedJobPostingId === posting.id ? 'text-orange-600 bg-orange-50' : 'text-slate-500 hover:text-orange-600 hover:bg-orange-50'}`}
+                              >
+                                <Users className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                onClick={() => openEditJobPostingModal(posting)}
+                                title="Edit job posting"
+                                className="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                              >
+                                <Edit2 className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                onClick={() => setDeleteJobPostingConfirm(posting)}
+                                title="Delete job posting"
+                                className="p-2 text-slate-500 hover:text-red-650 hover:bg-red-50 rounded-lg transition-all"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                        {expandedJobPostingId === posting.id && (
+                          <tr className="bg-slate-50/50 border-b border-slate-200">
+                            <td colSpan={6} className="p-0">
+                              <div className="p-6 pt-2 animate-fade-in">
+                                <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                                  <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider mb-4 flex items-center gap-2">
+                                    <Users className="w-4 h-4 text-orange-500" />
+                                    Applicants for {posting.title}
+                                  </h4>
+                                  {jobs.filter(app => app.jobPostingId === posting.id).length > 0 ? (
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                      {jobs.filter(app => app.jobPostingId === posting.id).map(app => (
+                                        <div key={app.id} className="flex items-start justify-between p-3 border border-slate-150 rounded-lg bg-slate-50 hover:bg-white transition-all">
+                                          <div>
+                                            <p className="text-sm font-bold text-slate-900">{app.fullName}</p>
+                                            <div className="text-xs text-slate-500 mt-1 flex flex-col gap-0.5">
+                                              <a href={`mailto:${app.email}`} className="hover:text-orange-600">{app.email}</a>
+                                              <a href={`tel:${app.phone}`} className="hover:text-orange-600">{app.phone}</a>
+                                            </div>
+                                          </div>
+                                          <button
+                                            onClick={() => handleDownloadResume('jobs', app.id, app.resumeName)}
+                                            className="px-3 py-1.5 text-[10px] font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-md transition-all flex items-center gap-1"
+                                          >
+                                            <Download className="w-3 h-3" /> Resume
+                                          </button>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  ) : (
+                                    <div className="text-sm text-slate-500 text-center py-6">
+                                      No applications received for this position yet.
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                        </React.Fragment>
+                      ))}
+                    </tbody>
+                  </table>
+                  {jobPostings.length === 0 && !isLoading && (
+                    <div className="text-center py-16 text-slate-500 text-sm">
+                      No job postings created yet. Click "Create Job Posting" to publish your first role.
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
         </div>
       </main>
 
       {/* CREATE / EDIT USER MODAL */}
       {showUserModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 font-sans">
-          <div className="w-full max-w-lg bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
-            <div className="p-6 border-b border-slate-800 flex justify-between items-center bg-slate-950/30">
+          <div className="w-full max-w-lg bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+            <div className="p-6 border-b border-slate-200 flex justify-between items-center bg-slate-50">
               <div>
-                <h3 className="font-bold text-white text-base">{editingUser ? 'Edit Admin User' : 'Create New Admin User'}</h3>
-                <p className="text-xs text-slate-400 mt-0.5">{editingUser ? `Editing: ${editingUser.username}` : 'Add a new sub-administrator'}</p>
+                <h3 className="font-bold text-slate-900 text-base">{editingUser ? 'Edit Admin User' : 'Create New Admin User'}</h3>
+                <p className="text-xs text-slate-550 mt-0.5">{editingUser ? `Editing: ${editingUser.username}` : 'Add a new sub-administrator'}</p>
               </div>
-              <button onClick={() => setShowUserModal(false)} className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-all">
+              <button onClick={() => setShowUserModal(false)} className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-all">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <div className="p-6 overflow-y-auto space-y-5">
               {userFormError && (
-                <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-xs rounded-lg p-3 flex items-center gap-2">
+                <div className="bg-red-50 border border-red-200 text-red-650 text-xs rounded-lg p-3 flex items-center gap-2">
                   <AlertCircle className="w-4 h-4 shrink-0" />
                   {userFormError}
                 </div>
@@ -1290,27 +1662,27 @@ export default function AdminDashboard() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Username</label>
+                  <label className="block text-xs font-semibold text-slate-650 uppercase tracking-wider mb-1.5">Username</label>
                   <input
                     type="text" value={userForm.username}
                     onChange={e => setUserForm(f => ({ ...f, username: e.target.value }))}
                     placeholder="e.g. john_admin"
-                    className="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-all"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-500 focus:bg-white transition-all"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Email</label>
+                  <label className="block text-xs font-semibold text-slate-650 uppercase tracking-wider mb-1.5">Email</label>
                   <input
                     type="email" value={userForm.email}
                     onChange={e => setUserForm(f => ({ ...f, email: e.target.value }))}
                     placeholder="admin@example.com"
-                    className="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-all"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-500 focus:bg-white transition-all"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-semibold text-slate-650 uppercase tracking-wider mb-1.5">
                   {editingUser ? 'New Password (leave blank to keep current)' : 'Password'}
                 </label>
                 <input
@@ -1318,12 +1690,12 @@ export default function AdminDashboard() {
                   onChange={e => setUserForm(f => ({ ...f, password: e.target.value }))}
                   placeholder="••••••••"
                   autoComplete="new-password"
-                  className="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-all"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-500 focus:bg-white transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Role</label>
+                <label className="block text-xs font-semibold text-slate-650 uppercase tracking-wider mb-2">Role</label>
                 <div className="grid grid-cols-2 gap-2">
                   {['super_admin', 'editor', 'viewer', 'custom'].map(role => (
                     <button
@@ -1332,7 +1704,7 @@ export default function AdminDashboard() {
                       className={`px-3 py-2.5 rounded-xl text-xs font-semibold border transition-all ${
                         userForm.role === role
                           ? `${ROLE_COLORS[role]} border-current`
-                          : 'border-slate-800 text-slate-400 hover:border-slate-700'
+                          : 'border-slate-200 text-slate-500 hover:border-slate-350 hover:bg-slate-55'
                       }`}
                     >
                       {role.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
@@ -1342,9 +1714,9 @@ export default function AdminDashboard() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-semibold text-slate-650 uppercase tracking-wider mb-2">
                   Permissions
-                  <span className="ml-2 text-[9px] text-slate-500 normal-case">(auto-set by role, or customize)</span>
+                  <span className="ml-2 text-[9px] text-slate-450 normal-case font-bold">(auto-set by role, or customize)</span>
                 </label>
                 <div className="grid grid-cols-2 gap-2">
                   {ALL_PERMISSIONS.map(({ key, label }) => {
@@ -1355,11 +1727,11 @@ export default function AdminDashboard() {
                         onClick={() => togglePermission(key)}
                         className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium border transition-all ${
                           checked
-                            ? 'bg-orange-500/10 border-orange-500/30 text-orange-400'
-                            : 'bg-slate-950/40 border-slate-800 text-slate-400 hover:border-slate-700'
+                            ? 'bg-orange-50 border-orange-200 text-orange-600 font-semibold'
+                            : 'bg-slate-50 border-slate-200 text-slate-500 hover:border-slate-350 hover:bg-slate-100'
                         }`}
                       >
-                        {checked ? <ShieldCheck className="w-3.5 h-3.5 shrink-0" /> : <ShieldOff className="w-3.5 h-3.5 shrink-0" />}
+                        {checked ? <ShieldCheck className="w-3.5 h-3.5 shrink-0 text-orange-650" /> : <ShieldOff className="w-3.5 h-3.5 shrink-0" />}
                         {label}
                       </button>
                     );
@@ -1368,10 +1740,10 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            <div className="p-5 border-t border-slate-800 flex justify-end gap-3">
+            <div className="p-5 border-t border-slate-200 flex justify-end gap-3 bg-slate-50">
               <button
                 onClick={() => setShowUserModal(false)}
-                className="px-4 py-2.5 text-slate-400 hover:text-white text-sm font-medium rounded-xl hover:bg-slate-800 transition-all"
+                className="px-4 py-2.5 text-slate-500 hover:text-slate-800 text-sm font-medium rounded-xl hover:bg-slate-100 transition-all"
               >
                 Cancel
               </button>
@@ -1391,26 +1763,26 @@ export default function AdminDashboard() {
       {/* RESET PASSWORD MODAL */}
       {showResetPassword && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-6">
-            <h3 className="font-bold text-white text-base mb-1">Reset Password</h3>
-            <p className="text-slate-400 text-xs mb-5">Enter a new password for this admin user. Must be at least 8 characters.</p>
+          <div className="w-full max-w-sm bg-white border border-slate-200 rounded-2xl shadow-2xl p-6">
+            <h3 className="font-bold text-slate-900 text-base mb-1">Reset Password</h3>
+            <p className="text-slate-500 text-xs mb-5 font-medium">Enter a new password for this admin user. Must be at least 8 characters.</p>
             <input
               type="password" value={newPassword}
               onChange={e => setNewPassword(e.target.value)}
               placeholder="New password (min. 8 chars)"
               autoComplete="new-password"
-              className="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-all mb-5"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-500 focus:bg-white transition-all mb-5"
             />
             <div className="flex justify-end gap-3">
-              <button onClick={() => setShowResetPassword(null)} className="px-4 py-2.5 text-slate-400 hover:text-white text-sm font-medium rounded-xl hover:bg-slate-800 transition-all">
+              <button onClick={() => setShowResetPassword(null)} className="px-4 py-2.5 text-slate-500 hover:text-slate-800 text-sm font-medium rounded-xl hover:bg-slate-100 transition-all">
                 Cancel
               </button>
               <button
                 onClick={handleResetPassword}
                 disabled={isResettingPw}
-                className="px-5 py-2.5 bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold rounded-xl transition-all flex items-center gap-2 disabled:opacity-50"
+                className="px-5 py-2.5 bg-[#F69A20] hover:bg-[#e08914] text-white text-sm font-semibold rounded-xl transition-all flex items-center gap-2 disabled:opacity-50 shadow-lg shadow-orange-500/10"
               >
-                {isResettingPw ? <RefreshCw className="w-4 h-4 animate-spin" /> : <KeyRound className="w-4 h-4" />}
+                {isResettingPw ? <RefreshCw className="w-4 h-4 animate-spin" /> : null}
                 Reset Password
               </button>
             </div>
@@ -1421,24 +1793,22 @@ export default function AdminDashboard() {
       {/* DELETE USER CONFIRM MODAL */}
       {deleteUserConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-red-500/10 rounded-xl">
-                <Trash2 className="w-5 h-5 text-red-400" />
-              </div>
-              <h3 className="font-bold text-white text-base">Delete Admin User</h3>
+          <div className="w-full max-w-sm bg-white border border-slate-200 rounded-2xl shadow-2xl p-6">
+            <div className="flex items-center gap-3 text-red-600 mb-3">
+              <AlertCircle className="w-6 h-6 shrink-0" />
+              <h3 className="font-bold text-base">Delete Admin User</h3>
             </div>
-            <p className="text-slate-400 text-sm mb-6">
-              Are you sure you want to delete <span className="text-white font-semibold">{deleteUserConfirm.username}</span>? This action cannot be undone.
+            <p className="text-slate-500 text-sm mb-6 font-medium">
+              Are you sure you want to delete <span className="text-slate-850 font-bold">{deleteUserConfirm.username}</span>? This action cannot be undone.
             </p>
             <div className="flex justify-end gap-3">
-              <button onClick={() => setDeleteUserConfirm(null)} className="px-4 py-2.5 text-slate-400 hover:text-white text-sm font-medium rounded-xl hover:bg-slate-800 transition-all">
+              <button onClick={() => setDeleteUserConfirm(null)} className="px-4 py-2.5 text-slate-500 hover:text-slate-800 text-sm font-medium rounded-xl hover:bg-slate-100 transition-all">
                 Cancel
               </button>
               <button
                 onClick={handleDeleteUser}
                 disabled={isDeleting}
-                className="px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white text-sm font-semibold rounded-xl transition-all flex items-center gap-2 disabled:opacity-50"
+                className="px-5 py-2.5 bg-red-650 hover:bg-red-500 text-white text-sm font-semibold rounded-xl transition-all flex items-center gap-2 disabled:opacity-50"
               >
                 {isDeleting ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
                 Delete User
@@ -1448,20 +1818,270 @@ export default function AdminDashboard() {
         </div>
       )}
 
+      {/* CREATE / EDIT JOB POSTING MODAL */}
+      {showJobPostingModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 font-sans">
+          <div className="w-full max-w-2xl bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+            <div className="p-6 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+              <div>
+                <h3 className="font-bold text-slate-900 text-base">
+                  {editingJobPosting ? 'Edit Job Posting' : 'Create Job Posting'}
+                </h3>
+                <p className="text-xs text-slate-555 mt-0.5">
+                  {editingJobPosting ? `Editing: ${editingJobPosting.title}` : 'Publish a new role on the careers board'}
+                </p>
+              </div>
+              <button
+                onClick={() => setShowJobPostingModal(false)}
+                className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-all"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-6 overflow-y-auto space-y-5">
+              {jobPostingFormError && (
+                <div className="bg-red-55/10 border border-red-200 text-red-650 text-xs rounded-lg p-3 flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  {jobPostingFormError}
+                </div>
+              )}
+
+              {/* Title & Department */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-650 uppercase tracking-wider mb-1.5">Job Title</label>
+                  <input
+                    type="text"
+                    value={jobPostingForm.title}
+                    onChange={e => setJobPostingForm(f => ({ ...f, title: e.target.value }))}
+                    placeholder="e.g. Senior Full-Stack Engineer"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-500 focus:bg-white transition-all"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-650 uppercase tracking-wider mb-1.5">Department</label>
+                  <select
+                    value={jobPostingForm.department}
+                    onChange={e => setJobPostingForm(f => ({ ...f, department: e.target.value }))}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-orange-500 focus:bg-white transition-all"
+                  >
+                    {['Engineering', 'Design', 'Marketing', 'Sales', 'Product', 'Human Resources', 'Operations'].map(dept => (
+                      <option key={dept} value={dept}>{dept}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Category & Location */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-650 uppercase tracking-wider mb-1.5">Category</label>
+                  <select
+                    value={jobPostingForm.category}
+                    onChange={e => setJobPostingForm(f => ({ ...f, category: e.target.value }))}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-orange-500 focus:bg-white transition-all"
+                  >
+                    <option value="full-time">Full-time</option>
+                    <option value="part-time">Part-time</option>
+                    <option value="remote">Remote</option>
+                    <option value="contract">Contract</option>
+                    <option value="internship">Internship</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-655 uppercase tracking-wider mb-1.5">Location</label>
+                  <input
+                    type="text"
+                    value={jobPostingForm.location}
+                    onChange={e => setJobPostingForm(f => ({ ...f, location: e.target.value }))}
+                    placeholder="e.g. New York, NY (Hybrid)"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-500 focus:bg-white transition-all"
+                  />
+                </div>
+              </div>
+
+              {/* Salary & Deadline */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-650 uppercase tracking-wider mb-1.5">Min Salary</label>
+                  <input
+                    type="number"
+                    value={jobPostingForm.salaryMin}
+                    onChange={e => setJobPostingForm(f => ({ ...f, salaryMin: e.target.value }))}
+                    placeholder="Min (e.g. 80000)"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-sans"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-650 uppercase tracking-wider mb-1.5">Max Salary</label>
+                  <input
+                    type="number"
+                    value={jobPostingForm.salaryMax}
+                    onChange={e => setJobPostingForm(f => ({ ...f, salaryMax: e.target.value }))}
+                    placeholder="Max (e.g. 120000)"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-sans"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-655 uppercase tracking-wider mb-1.5">Application Deadline</label>
+                  <input
+                    type="date"
+                    value={jobPostingForm.deadline}
+                    onChange={e => setJobPostingForm(f => ({ ...f, deadline: e.target.value }))}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-orange-500 focus:bg-white transition-all"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center gap-6 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                <label className="flex items-center gap-2 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={jobPostingForm.salaryVisible}
+                    onChange={e => setJobPostingForm(f => ({ ...f, salaryVisible: e.target.checked }))}
+                    className="accent-orange-500"
+                  />
+                  <span className="text-xs text-slate-650 font-bold uppercase tracking-wider">Show Salary Publicly</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={jobPostingForm.isFeatured}
+                    onChange={e => setJobPostingForm(f => ({ ...f, isFeatured: e.target.checked }))}
+                    className="accent-orange-500"
+                  />
+                  <span className="text-xs text-slate-650 font-bold uppercase tracking-wider">Featured Role</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={jobPostingForm.isActive}
+                    onChange={e => setJobPostingForm(f => ({ ...f, isActive: e.target.checked }))}
+                    className="accent-orange-500"
+                  />
+                  <span className="text-xs text-slate-650 font-bold uppercase tracking-wider">Publish / Active</span>
+                </label>
+              </div>
+
+              {/* Description */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-650 uppercase tracking-wider mb-1.5">Job Description</label>
+                <textarea
+                  value={jobPostingForm.description}
+                  onChange={e => setJobPostingForm(f => ({ ...f, description: e.target.value }))}
+                  placeholder="Outline the scope, team dynamics and role overview..."
+                  rows={4}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-sans"
+                />
+              </div>
+
+              {/* Requirements & Responsibilities & Benefits */}
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-650 uppercase tracking-wider mb-1.5">
+                    Requirements <span className="text-[10px] text-slate-500 normal-case font-bold">(One requirement per line)</span>
+                  </label>
+                  <textarea
+                    value={jobPostingForm.requirements}
+                    onChange={e => setJobPostingForm(f => ({ ...f, requirements: e.target.value }))}
+                    placeholder="e.g. 5+ years of React experience&#10;Strong understanding of CSS & layout designs&#10;Degree in CS or equivalent experience"
+                    rows={3}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-sans"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-650 uppercase tracking-wider mb-1.5">
+                    Responsibilities <span className="text-[10px] text-slate-500 normal-case font-bold">(One responsibility per line)</span>
+                  </label>
+                  <textarea
+                    value={jobPostingForm.responsibilities}
+                    onChange={e => setJobPostingForm(f => ({ ...f, responsibilities: e.target.value }))}
+                    placeholder="e.g. Deliver performant web apps&#10;Review code submitted by peer engineers&#10;Collaborate with product designers"
+                    rows={3}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-sans"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-650 uppercase tracking-wider mb-1.5">
+                    Benefits & Perks <span className="text-[10px] text-slate-500 normal-case font-bold">(One benefit per line)</span>
+                  </label>
+                  <textarea
+                    value={jobPostingForm.benefits}
+                    onChange={e => setJobPostingForm(f => ({ ...f, benefits: e.target.value }))}
+                    placeholder="e.g. Competitive equity packages&#10;Health & dental coverage&#10;Flexible PTO and remote setup allowance"
+                    rows={3}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-sans"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="p-5 border-t border-slate-200 flex justify-end gap-3 bg-slate-50">
+              <button
+                onClick={() => setShowJobPostingModal(false)}
+                className="px-4 py-2.5 text-slate-500 hover:text-slate-800 text-sm font-medium rounded-xl hover:bg-slate-100 transition-all"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSaveJobPosting}
+                disabled={isSavingJobPosting}
+                className="px-5 py-2.5 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white text-sm font-semibold rounded-xl transition-all shadow-lg shadow-orange-500/10 disabled:opacity-50 disabled:pointer-events-none flex items-center gap-2"
+              >
+                {isSavingJobPosting ? <RefreshCw className="w-4 h-4 animate-spin" /> : null}
+                {editingJobPosting ? 'Save Changes' : 'Publish Job'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* DELETE JOB POSTING CONFIRM MODAL */}
+      {deleteJobPostingConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="w-full max-w-sm bg-white border border-slate-200 rounded-2xl shadow-2xl p-6">
+            <div className="flex items-center gap-3 text-red-650 mb-3">
+              <AlertCircle className="w-6 h-6 shrink-0" />
+              <h3 className="font-bold text-base">Delete Job Posting</h3>
+            </div>
+            <p className="text-slate-500 text-sm mb-6 font-medium">
+              Are you sure you want to delete <span className="text-slate-850 font-bold">{deleteJobPostingConfirm.title}</span>? All applications linked to this role will remain, but the listing will be permanently removed.
+            </p>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setDeleteJobPostingConfirm(null)}
+                className="px-4 py-2.5 text-slate-500 hover:text-slate-800 text-sm font-medium rounded-xl hover:bg-slate-100 transition-all"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDeleteJobPosting}
+                disabled={isDeleting}
+                className="px-5 py-2.5 bg-red-650 hover:bg-red-500 text-white text-sm font-semibold rounded-xl transition-all flex items-center gap-2 disabled:opacity-50"
+              >
+                {isDeleting ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                Delete Role
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* 3. DETAIL OVERLAY MODAL */}
       {selectedItem && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 font-sans animate-fade-in">
-          <div className="w-full max-w-xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden max-h-[85vh] flex flex-col">
+          <div className="w-full max-w-xl bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden max-h-[85vh] flex flex-col">
             
             {/* Modal Header */}
-            <div className="p-6 border-b border-slate-800 flex justify-between items-center bg-slate-950/30">
+            <div className="p-6 border-b border-slate-200 flex justify-between items-center bg-slate-50">
               <div>
-                <h3 className="font-bold text-white text-base">Submission Details</h3>
-                <span className="text-[10px] text-slate-400">ID: {selectedItem.data.id}</span>
+                <h3 className="font-bold text-slate-900 text-base">Submission Details</h3>
+                <span className="text-[10px] text-slate-500 font-medium">ID: {selectedItem.data.id}</span>
               </div>
               <button 
                 onClick={() => setSelectedItem(null)}
-                className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-all"
+                className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-all"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1472,33 +2092,33 @@ export default function AdminDashboard() {
               
               {/* Basic metadata cards */}
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-800/60">
-                  <span className="text-[10px] font-semibold text-slate-500 uppercase block tracking-wider">Full Name</span>
-                  <span className="text-white text-sm font-semibold mt-1 block">
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                  <span className="text-[10px] font-bold text-slate-450 uppercase block tracking-wider">Full Name</span>
+                  <span className="text-slate-850 text-sm font-bold mt-1 block">
                     {selectedItem.type === 'contacts' 
                       ? `${selectedItem.data.firstName} ${selectedItem.data.lastName}` 
                       : selectedItem.data.fullName}
                   </span>
                 </div>
-                <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-800/60">
-                  <span className="text-[10px] font-semibold text-slate-500 uppercase block tracking-wider">Date/Time</span>
-                  <span className="text-slate-300 text-xs font-medium mt-1.5 block">
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                  <span className="text-[10px] font-bold text-slate-450 uppercase block tracking-wider">Date/Time</span>
+                  <span className="text-slate-700 text-xs font-semibold mt-1.5 block">
                     {formatDate(selectedItem.data.createdAt)}
                   </span>
                 </div>
               </div>
 
               {/* Contact info card */}
-              <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-800/60 space-y-3">
-                <span className="text-[10px] font-semibold text-slate-500 uppercase block tracking-wider">Contact Channels</span>
-                <div className="grid grid-cols-2 gap-2 text-xs text-slate-300">
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80 space-y-3">
+                <span className="text-[10px] font-bold text-slate-450 uppercase block tracking-wider">Contact Channels</span>
+                <div className="grid grid-cols-2 gap-2 text-xs text-slate-700">
                   <div className="flex flex-col gap-0.5">
-                    <span className="text-[10px] text-slate-500">Email Address</span>
-                    <a href={`mailto:${selectedItem.data.email}`} className="font-medium text-orange-500 hover:underline">{selectedItem.data.email}</a>
+                    <span className="text-[10px] text-slate-450 font-bold">Email Address</span>
+                    <a href={`mailto:${selectedItem.data.email}`} className="font-semibold text-orange-655 hover:underline">{selectedItem.data.email}</a>
                   </div>
                   <div className="flex flex-col gap-0.5">
-                    <span className="text-[10px] text-slate-500">Phone Number</span>
-                    <a href={`tel:${selectedItem.data.phone}`} className="font-medium hover:text-orange-500 transition-all">{selectedItem.data.phone}</a>
+                    <span className="text-[10px] text-slate-450 font-bold">Phone Number</span>
+                    <a href={`tel:${selectedItem.data.phone}`} className="font-semibold hover:text-orange-600 transition-all">{selectedItem.data.phone}</a>
                   </div>
                 </div>
               </div>
@@ -1506,9 +2126,9 @@ export default function AdminDashboard() {
               {/* Tab specific properties */}
               {selectedItem.type === 'contacts' && (
                 <div className="space-y-4">
-                  <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-800/60">
-                    <span className="text-[10px] font-semibold text-slate-500 uppercase block tracking-wider mb-1">Subject</span>
-                    <span className="text-slate-100 text-sm font-medium">{selectedItem.data.subject}</span>
+                  <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                    <span className="text-[10px] font-bold text-slate-455 uppercase block tracking-wider mb-1">Subject</span>
+                    <span className="text-slate-800 text-sm font-semibold">{selectedItem.data.subject}</span>
                   </div>
                 </div>
               )}
@@ -1516,29 +2136,29 @@ export default function AdminDashboard() {
               {selectedItem.type === 'services' && (
                 <div className="space-y-4">
                   <div className="grid grid-cols-3 gap-4">
-                    <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-800/60">
-                      <span className="text-[10px] font-semibold text-slate-500 uppercase block tracking-wider">Company</span>
-                      <span className="text-slate-200 text-xs font-semibold mt-1.5 block">{selectedItem.data.company}</span>
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                      <span className="text-[10px] font-bold text-slate-455 uppercase block tracking-wider">Company</span>
+                      <span className="text-slate-800 text-xs font-bold mt-1.5 block">{selectedItem.data.company}</span>
                     </div>
-                    <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-800/60">
-                      <span className="text-[10px] font-semibold text-slate-500 uppercase block tracking-wider">Budget Limit</span>
-                      <span className="text-slate-200 text-xs font-semibold mt-1.5 block flex items-center gap-0.5 text-green-400">
-                        <DollarSign className="w-3.5 h-3.5 shrink-0" />
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                      <span className="text-[10px] font-bold text-slate-455 uppercase block tracking-wider">Budget Limit</span>
+                      <span className="text-green-600 text-xs font-bold mt-1.5 block flex items-center gap-0.5">
+                        <DollarSign className="w-3.5 h-3.5 shrink-0 text-green-500" />
                         {selectedItem.data.budget || 'Not specified'}
                       </span>
                     </div>
-                    <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-800/60">
-                      <span className="text-[10px] font-semibold text-slate-500 uppercase block tracking-wider">Timeline</span>
-                      <span className="text-slate-200 text-xs font-semibold mt-1.5 block flex items-center gap-1">
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                      <span className="text-[10px] font-bold text-slate-455 uppercase block tracking-wider">Timeline</span>
+                      <span className="text-slate-700 text-xs font-semibold mt-1.5 block flex items-center gap-1">
                         <Clock className="w-3.5 h-3.5 shrink-0 text-slate-400" />
                         {selectedItem.data.timeline || 'Not specified'}
                       </span>
                     </div>
                   </div>
 
-                  <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-800/60">
-                    <span className="text-[10px] font-semibold text-slate-500 uppercase block tracking-wider mb-1.5">Requested Service</span>
-                    <span className="bg-orange-600/10 text-orange-500 border border-orange-500/20 px-2.5 py-0.5 rounded-full text-xs font-semibold">
+                  <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                    <span className="text-[10px] font-bold text-slate-450 uppercase block tracking-wider mb-1.5">Requested Service</span>
+                    <span className="bg-orange-50 text-orange-600 border border-orange-200 px-2.5 py-0.5 rounded-full text-xs font-semibold">
                       {selectedItem.data.service}
                     </span>
                   </div>
@@ -1547,29 +2167,38 @@ export default function AdminDashboard() {
 
               {(selectedItem.type === 'jobs' || selectedItem.type === 'internships') && (
                 <div className="space-y-4">
-                  <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-800/60 flex items-center justify-between">
+                  <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80 flex items-center justify-between">
                     <div className="space-y-1">
-                      <span className="text-[10px] font-semibold text-slate-500 uppercase block tracking-wider">Position Applied For</span>
-                      <span className="bg-blue-600/10 text-blue-400 border border-blue-500/20 px-2.5 py-0.5 rounded-full text-xs font-semibold inline-block">
+                      <span className="text-[10px] font-bold text-slate-450 uppercase block tracking-wider">Position Applied For</span>
+                      <span className="bg-blue-50 text-blue-600 border border-blue-200 px-2.5 py-0.5 rounded-full text-xs font-semibold inline-block">
                         {selectedItem.data.position}
                       </span>
                     </div>
                   </div>
 
-                  <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-800/60 flex items-center justify-between">
+                  {selectedItem.data.coverLetter && (
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                      <span className="text-[10px] font-bold text-slate-450 uppercase block tracking-wider mb-2">Cover Letter / Note</span>
+                      <div className="text-slate-700 text-xs leading-relaxed whitespace-pre-line bg-white border border-slate-200 p-3 rounded-lg overflow-y-auto max-h-[150px]">
+                        {selectedItem.data.coverLetter}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 bg-blue-500/10 text-blue-400 rounded-lg">
+                      <div className="p-2 bg-blue-50 text-blue-600 border border-blue-200 rounded-lg">
                         <FileText className="w-5 h-5" />
                       </div>
                       <div className="overflow-hidden max-w-[280px]">
-                        <span className="text-[10px] font-semibold text-slate-500 uppercase block tracking-wider">Uploaded Resume File</span>
-                        <span className="text-white text-xs font-medium truncate block mt-0.5">{selectedItem.data.resumeName}</span>
+                        <span className="text-[10px] font-bold text-slate-450 uppercase block tracking-wider">Uploaded Resume File</span>
+                        <span className="text-slate-800 text-xs font-semibold truncate block mt-0.5">{selectedItem.data.resumeName}</span>
                       </div>
                     </div>
 
                     <button
                       onClick={() => handleDownloadResume(selectedItem.type, selectedItem.data.id, selectedItem.data.resumeName)}
-                      className="bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs px-4 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-lg shadow-blue-500/10"
+                      className="bg-blue-600 hover:bg-blue-550 text-white font-bold text-xs px-4 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-lg shadow-blue-500/10"
                     >
                       <Download className="w-3.5 h-3.5" />
                       Download file
@@ -1580,9 +2209,9 @@ export default function AdminDashboard() {
 
               {/* Message body (if present) */}
               {selectedItem.data.message && (
-                <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-800/60">
-                  <span className="text-[10px] font-semibold text-slate-500 uppercase block tracking-wider mb-2">Message Body</span>
-                  <div className="text-slate-300 text-xs leading-relaxed whitespace-pre-line bg-slate-950/60 border border-slate-900 p-3 rounded-lg overflow-y-auto max-h-[150px]">
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                  <span className="text-[10px] font-bold text-slate-450 uppercase block tracking-wider mb-2">Message Body</span>
+                  <div className="text-slate-750 text-xs leading-relaxed whitespace-pre-line bg-white border border-slate-200 p-3 rounded-lg overflow-y-auto max-h-[150px]">
                     {selectedItem.data.message}
                   </div>
                 </div>
@@ -1591,10 +2220,10 @@ export default function AdminDashboard() {
             </div>
 
             {/* Modal Footer */}
-            <div className="p-4 border-t border-slate-800 bg-slate-950/30 flex justify-end gap-2 shrink-0">
+            <div className="p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-2 shrink-0">
               <button
                 onClick={() => setSelectedItem(null)}
-                className="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs px-4 py-2 rounded-xl transition-all"
+                className="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs px-4 py-2 rounded-xl transition-all"
               >
                 Close details
               </button>
@@ -1607,13 +2236,13 @@ export default function AdminDashboard() {
       {/* 4. DELETE CONFIRMATION OVERLAY MODAL */}
       {deleteConfirmItem && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 font-sans animate-fade-in">
-          <div className="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-6 relative">
+          <div className="w-full max-w-sm bg-white border border-slate-200 rounded-2xl shadow-2xl p-6 relative">
             <div className="text-center">
-              <div className="inline-flex p-3 bg-red-500/10 rounded-full text-red-500 mb-4">
+              <div className="inline-flex p-3 bg-red-50 rounded-full text-red-650 mb-4 border border-red-200">
                 <Trash2 className="w-6 h-6" />
               </div>
-              <h3 className="text-base font-bold text-white">Permanently delete log?</h3>
-              <p className="text-xs text-slate-400 mt-2">
+              <h3 className="text-base font-bold text-slate-900">Permanently delete log?</h3>
+              <p className="text-xs text-slate-500 mt-2 font-medium">
                 This action is immediate and cannot be undone. The database record will be permanently deleted.
               </p>
             </div>
@@ -1622,14 +2251,14 @@ export default function AdminDashboard() {
               <button
                 onClick={() => setDeleteConfirmItem(null)}
                 disabled={isDeleting}
-                className="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs px-4 py-2 rounded-xl transition-all"
+                className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs px-4 py-2 rounded-xl transition-all"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDeleteItem}
                 disabled={isDeleting}
-                className="bg-red-600 hover:bg-red-500 text-white font-semibold text-xs px-4 py-2 rounded-xl transition-all shadow-lg shadow-red-600/10 flex items-center gap-1"
+                className="bg-red-600 hover:bg-red-500 text-white font-bold text-xs px-4 py-2 rounded-xl transition-all shadow-lg shadow-red-600/10 flex items-center gap-1"
               >
                 {isDeleting ? (
                   <>

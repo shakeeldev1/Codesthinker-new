@@ -23,6 +23,15 @@ import {
   deleteAdminUser,
   resetAdminUserPassword,
 } from '../controllers/users';
+import {
+  getPublicJobPostings,
+  getPublicJobPosting,
+  getAdminJobPostings,
+  getAdminJobPosting,
+  createJobPosting,
+  updateJobPosting,
+  deleteJobPosting,
+} from '../controllers/jobPostings';
 import { validateRequest } from '../middleware/validate';
 import { contactSchema, serviceInquirySchema, careerSchema } from '../middleware/schemas';
 import { upload } from '../middleware/upload';
@@ -34,6 +43,10 @@ const router = Router();
 // Public Submission Routes
 router.post('/contact', validateRequest(contactSchema), submitContact);
 router.post('/services', validateRequest(serviceInquirySchema), submitServiceInquiry);
+
+// Public Career Routes
+router.get('/careers', getPublicJobPostings);
+router.get('/careers/:id', getPublicJobPosting);
 
 // Career Routes with File Upload (Multer executes first to populate req.body, then Zod validates req.body text fields)
 router.post('/jobs', upload.single('resume'), validateRequest(careerSchema), submitJobApplication);
@@ -49,6 +62,13 @@ router.get('/admin/jobs', protectAdmin, noCache, getJobApplications);
 router.get('/admin/internships', protectAdmin, noCache, getInternshipApplications);
 router.get('/admin/resumes/:type/:id', protectAdmin, noCache, downloadResume);
 
+// Admin Job Postings Routes
+router.get('/admin/job-postings', protectAdmin, noCache, getAdminJobPostings);
+router.get('/admin/job-postings/:id', protectAdmin, noCache, getAdminJobPosting);
+router.post('/admin/job-postings', protectAdmin, requirePermission('manage_users'), noCache, createJobPosting);
+router.put('/admin/job-postings/:id', protectAdmin, requirePermission('manage_users'), noCache, updateJobPosting);
+router.delete('/admin/job-postings/:id', protectAdmin, requirePermission('manage_users'), noCache, deleteJobPosting);
+
 // Admin Delete Routes
 router.delete('/admin/contacts/:id', protectAdmin, requirePermission('delete_records'), noCache, deleteContactSubmission);
 router.delete('/admin/services/:id', protectAdmin, requirePermission('delete_records'), noCache, deleteServiceInquiry);
@@ -63,3 +83,4 @@ router.delete('/admin/users/:id', protectAdmin, requirePermission('manage_users'
 router.post('/admin/users/:id/reset-password', protectAdmin, requirePermission('manage_users'), noCache, resetAdminUserPassword);
 
 export default router;
+

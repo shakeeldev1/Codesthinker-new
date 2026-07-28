@@ -32,14 +32,17 @@ model ServiceInquiry {
 }
 
 model JobApplication {
-  id         String   @id @default(uuid())
-  fullName   String
-  email      String
-  phone      String
-  position   String
-  resumeName String   // Original filename
-  resumeData Bytes    // Binary file data stored in DB
-  createdAt  DateTime @default(now())
+  id            String      @id @default(uuid())
+  fullName      String
+  email         String
+  phone         String
+  position      String
+  resumeName    String      // Original filename
+  resumeData    Bytes       // Binary file data stored in DB
+  coverLetter   String?     // Optional cover letter text
+  jobPostingId  String?     // Optional link to a specific job posting
+  jobPosting    JobPosting? @relation(fields: [jobPostingId], references: [id], onDelete: SetNull)
+  createdAt     DateTime    @default(now())
 }
 
 model InternshipApplication {
@@ -63,4 +66,25 @@ model AdminUser {
   isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model JobPosting {
+  id               String           @id @default(uuid())
+  title            String
+  department       String           // Engineering, Design, Marketing, etc.
+  category         String           // full-time | part-time | remote | contract
+  location         String
+  description      String
+  requirements     String[]         // bullet points
+  responsibilities String[]         // bullet points
+  benefits         String[]         // bullet points
+  salaryMin        Int?
+  salaryMax        Int?
+  salaryVisible    Boolean          @default(false)
+  deadline         DateTime?
+  isActive         Boolean          @default(true)
+  isFeatured       Boolean          @default(false)
+  applications     JobApplication[]
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
 }

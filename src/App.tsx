@@ -29,6 +29,7 @@ import ScrollToTop from './components/common/ScrollToTop';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import AdminDashboard from './pages/AdminDashboard';
+import Careers from './pages/Careers';
 
 
 // Layout
@@ -70,6 +71,7 @@ const router = createBrowserRouter([
       { path: 'apply/internship', element: <ApplyForInternship /> },
       { path: 'apply/job', element: <ApplyForJob /> },
       { path: 'apply/get-services', element: <GetOurServices /> },
+      { path: 'careers', element: <Careers /> },
       { path: 'team', element: <TeamPage /> },
       { path: 'projects', element: <ProjectsPage /> },
       { path: 'privacy', element: <Privacy /> },
@@ -78,6 +80,10 @@ const router = createBrowserRouter([
   },
   {
     path: '/admin',
+    element: <AdminDashboard />,
+  },
+  {
+    path: '/admin/:tab',
     element: <AdminDashboard />,
   }
 ]);

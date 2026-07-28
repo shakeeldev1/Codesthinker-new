@@ -1,11 +1,17 @@
 import React, { useState, useRef } from 'react';
 import { API_BASE_URL } from '../../config';
 
+interface ApplyForJobFormProps {
+  jobPostingId?: string;
+  jobTitle?: string;
+}
+
 interface FormData {
   fullName: string;
   email: string;
   phone: string;
   position: string;
+  coverLetter: string;
   resume: File | null;
 }
 
@@ -14,17 +20,26 @@ interface FormErrors {
   email?: string;
   phone?: string;
   position?: string;
+  coverLetter?: string;
   resume?: string;
 }
 
-const ApplyForJobForm: React.FC = () => {
+const ApplyForJobForm: React.FC<ApplyForJobFormProps> = ({ jobPostingId, jobTitle }) => {
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
     email: '',
     phone: '',
-    position: 'Software Engineer',
+    position: jobTitle || 'Software Engineer',
+    coverLetter: '',
     resume: null,
   });
+
+  // Update position if jobTitle changes
+  React.useEffect(() => {
+    if (jobTitle) {
+      setFormData(prev => ({ ...prev, position: jobTitle }));
+    }
+  }, [jobTitle]);
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,7 +51,7 @@ const ApplyForJobForm: React.FC = () => {
   const inputBase = "w-full px-5 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F69A20]/50 focus:border-[#F69A20] transition-all duration-300";
   const labelBase = "block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 ml-1";
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -110,6 +125,12 @@ const ApplyForJobForm: React.FC = () => {
       payload.append('email', formData.email);
       payload.append('phone', formData.phone);
       payload.append('position', formData.position);
+      if (formData.coverLetter) {
+        payload.append('coverLetter', formData.coverLetter);
+      }
+      if (jobPostingId) {
+        payload.append('jobPostingId', jobPostingId);
+      }
       if (formData.resume) {
         payload.append('resume', formData.resume);
       }
@@ -134,7 +155,8 @@ const ApplyForJobForm: React.FC = () => {
         fullName: '',
         email: '',
         phone: '',
-        position: 'Software Engineer',
+        position: jobTitle || 'Software Engineer',
+        coverLetter: '',
         resume: null,
       });
       if (fileInputRef.current) {
@@ -218,29 +240,51 @@ const ApplyForJobForm: React.FC = () => {
           </div>
           <div>
             <label className={labelBase}>Position *</label>
-            <select 
-              name="position"
-              className={`${inputBase} cursor-pointer`}
-              value={formData.position}
-              onChange={handleChange}
-            >
-              {/* Engineering/Dev Roles */}
-              <option>Software Engineer</option>
-              <option>Web Development</option>
-              <option>App Development</option>
-              <option>DevOps Engineer</option>
-              
-              {/* Design & Product Roles */}
-              <option>Product Manager</option>
-              <option>UX/UI Designer</option>
-              <option>Graphic Design</option>
-              
-              {/* Data & Business Roles */}
-              <option>Data Scientist</option>
-              <option>Business Development</option>
-              <option>Digital Marketing</option>
-            </select>
+            {jobTitle ? (
+              <input
+                type="text"
+                name="position"
+                readOnly
+                className={`${inputBase} bg-gray-50 cursor-not-allowed`}
+                value={formData.position}
+              />
+            ) : (
+              <select 
+                name="position"
+                className={`${inputBase} cursor-pointer`}
+                value={formData.position}
+                onChange={handleChange}
+              >
+                {/* Engineering/Dev Roles */}
+                <option>Software Engineer</option>
+                <option>Web Development</option>
+                <option>App Development</option>
+                <option>DevOps Engineer</option>
+                
+                {/* Design & Product Roles */}
+                <option>Product Manager</option>
+                <option>UX/UI Designer</option>
+                <option>Graphic Design</option>
+                
+                {/* Data & Business Roles */}
+                <option>Data Scientist</option>
+                <option>Business Development</option>
+                <option>Digital Marketing</option>
+              </select>
+            )}
           </div>
+        </div>
+
+        <div>
+          <label className={labelBase}>Cover Letter / Message (Optional)</label>
+          <textarea 
+            name="coverLetter"
+            rows={4}
+            className={`${inputBase} font-sans`} 
+            placeholder="Tell us about yourself and why you're a great fit for this role..." 
+            value={formData.coverLetter} 
+            onChange={handleChange}
+          />
         </div>
 
         {/* File Upload */}
