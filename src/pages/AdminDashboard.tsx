@@ -149,6 +149,7 @@ export default function AdminDashboard() {
       try {
         const response = await fetch(`${API_BASE_URL}/api/v1/admin/overview`, {
           method: 'GET',
+          headers: getAuthHeaders(),
           credentials: 'include',
         });
         if (response.ok) {
@@ -207,39 +208,51 @@ export default function AdminDashboard() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ username: usernameInput, password: passwordInput, rememberMe }),
+        body: JSON.stringify({
+          username: usernameInput,
+          password: passwordInput,
+          rememberMe,
+        }),
       });
 
       const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Login failed. Invalid credentials.');
+      if (response.ok && data.success) {
+        if (data.apiKey) {
+          localStorage.setItem('admin_api_key', data.apiKey);
+        }
+        setIsAuthenticated(true);
+        setUserPermissions(data.permissions || []);
+        setUserRole(data.role || 'super_admin');
+        setCurrentUsername(usernameInput);
+        setLoginError('');
+        fetchOverview();
+      } else {
+        setLoginError(data.message || 'Invalid username or password');
       }
-
-      // Store permissions from the login response
-      setUserPermissions(data.permissions || []);
-      setUserRole(data.role || 'viewer');
-      setCurrentUsername(usernameInput);
-      setIsAuthenticated(true);
-      setApiConnected(true);
-      setUsernameInput('');
-      setPasswordInput('');
-    } catch (err: any) {
-      setLoginError(err.message || 'Connection error. Please check backend server.');
+    } catch {
+      setLoginError('Server error. Failed to reach backend API.');
     } finally {
       setIsLoggingIn(false);
     }
+  };
+
+  const getAuthHeaders = (): Record<string, string> => {
+    const key = localStorage.getItem('admin_api_key');
+    return key ? { 'x-api-key': key } : {};
   };
 
   const handleLogout = async () => {
     try {
       await fetch(`${API_BASE_URL}/api/v1/admin/logout`, {
         method: 'POST',
+        headers: getAuthHeaders(),
         credentials: 'include',
       });
     } catch (err) {
       console.error('Error logging out from backend:', err);
     } finally {
+      localStorage.removeItem('admin_api_key');
       setIsAuthenticated(false);
       setActiveTab('overview');
       setUserPermissions([]);
@@ -258,6 +271,7 @@ export default function AdminDashboard() {
     try {
       const response = await fetch(`${API_BASE_URL}/api/v1/admin/overview`, {
         method: 'GET',
+        headers: getAuthHeaders(),
         credentials: 'include',
       });
       if (response.ok) {
@@ -292,6 +306,7 @@ export default function AdminDashboard() {
 
       const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: 'GET',
+        headers: getAuthHeaders(),
         credentials: 'include',
       });
 
@@ -305,7 +320,7 @@ export default function AdminDashboard() {
         else if (tab === 'jobPostings') {
           setJobPostings(result.data);
           // Fetch job applications asynchronously so it doesn't block the UI loading spinner
-          fetch(`${API_BASE_URL}/api/v1/admin/jobs`, { credentials: 'include' })
+          fetch(`${API_BASE_URL}/api/v1/admin/jobs`, { headers: getAuthHeaders(), credentials: 'include' })
             .then(res => res.json())
             .then(data => {
               if (data.success) {
