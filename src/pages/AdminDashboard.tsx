@@ -356,7 +356,18 @@ export default function AdminDashboard() {
         else if (tab === 'jobs') setJobs(result.data);
         else if (tab === 'internships') setInternships(result.data);
         else if (tab === 'users') setAdminUsers(result.data);
-        else if (tab === 'jobPostings') setJobPostings(result.data);
+        else if (tab === 'jobPostings') {
+          setJobPostings(result.data);
+          // Fetch job applications asynchronously so it doesn't block the UI loading spinner
+          fetch(`${API_BASE_URL}/api/v1/admin/jobs`, { credentials: 'include' })
+            .then(res => res.json())
+            .then(data => {
+              if (data.success) {
+                setJobs(data.data);
+              }
+            })
+            .catch(err => console.error('Failed to load job applications for accordion', err));
+        }
       } else if (response.status === 401) {
         handleLogout();
       }

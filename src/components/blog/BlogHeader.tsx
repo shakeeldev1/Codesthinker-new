@@ -195,8 +195,8 @@ const BlogHeader: React.FC = () => {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 hidden md:flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-opacity">
-        <span className="text-[8px] font-mono tracking-[0.3em] text-gray-400 uppercase font-black">// Scroll to explore</span>
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 hidden md:flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-opacity">
+        <span className="text-[8px] font-mono tracking-[0.3em] text-gray-400 uppercase font-black">Scroll to explore</span>
         <div className="w-5.5 h-9 rounded-full border-2 border-white/20 p-1 flex justify-center bg-[#07051D]/20 backdrop-blur-sm">
           <motion.div 
             animate={{ y: [0, 10, 0] }}
@@ -206,6 +206,20 @@ const BlogHeader: React.FC = () => {
         </div>
       </div>
 
+      {/* Wave Transition Divider */}
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] pointer-events-none z-10 transform translate-y-[1px]">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+          className="relative block w-full h-[50px] md:h-[80px]"
+        >
+          <path
+            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,119.38,193.36,99.4,241.22,84.1,283.47,69.57,321.39,56.44Z"
+            className="fill-white"
+          ></path>
+        </svg>
+      </div>
     </section>
   );
 };

@@ -1,365 +1,189 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import BlogPostCard from './BlogPostCard';
-import { Search, Clock, BookOpen, ArrowRight, Sparkles, Send, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import BlogPostCard from './BlogPostCard';
+
 import { posts } from '../../data/blogData';
+import type { BlogPost } from '../../data/blogData';
 
 const BlogPostList: React.FC = () => {
   const categories = ['All', 'Development', 'Design', 'Backend', 'Career', 'Data Science'];
   const [activeCategory, setActiveCategory] = useState('All');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [emailSub, setEmailSub] = useState('');
-  const [subbed, setSubbed] = useState(false);
 
-  // Filter posts based on category and search query
-  const filteredPosts = posts.filter(post => {
-    const matchesCategory = activeCategory === 'All' ? true : post.category === activeCategory;
-    const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
-
-  // Get first post for the spotlight hero banner
-  const heroPost = filteredPosts[0];
-  // Remaining posts to map in the bento dashboard
-  const remainingPosts = filteredPosts.slice(1);
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (emailSub) {
-      setSubbed(true);
-      setTimeout(() => {
-        setSubbed(false);
-        setEmailSub('');
-      }, 3000);
-    }
-  };
-
-  // Count helper
-  const getCategoryCount = (cat: string) => {
-    if (cat === 'All') return posts.length;
-    return posts.filter(p => p.category === cat).length;
-  };
-
-  // Widget 1: Search & Topic Hub Widget
-  const renderSearchWidget = () => (
-    <div 
-      key="search-widget"
-      className="rounded-[2.2rem] p-[1.2px] bg-gradient-to-br from-slate-200 via-slate-100/50 to-transparent hover:from-[#F49B21] hover:via-amber-400 hover:to-[#07051d]/20 transition-all duration-500 shadow-[0_12px_40px_rgba(7,5,29,0.035)] hover:shadow-[0_20px_50px_-12px_rgba(244,155,33,0.15)] hover:-translate-y-2 z-10 h-[460px] select-none"
-    >
-      <div className="h-full w-full bg-white rounded-[2.1rem] overflow-hidden relative p-8 flex flex-col justify-between">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#07051d]/05 via-white to-amber-50/15 z-0 pointer-events-none" />
-        <div className="absolute inset-0 z-0 opacity-30 bg-[linear-gradient(to_right,#07051d08_1px,transparent_1px),linear-gradient(to_bottom,#07051d08_1px,transparent_1px)] bg-[size:16px_24px] pointer-events-none" />
-        
-        <div className="space-y-6 relative z-10">
-          <div className="flex justify-between items-center">
-            <span className="text-[10px] font-mono tracking-widest text-[#F49B21] uppercase font-bold">// filter dashboard</span>
-            <BookOpen className="w-4.5 h-4.5 text-slate-400" />
-          </div>
-          
-          <h3 
-            className="text-xl font-bold tracking-tight text-[#07051D]"
-            style={{ fontFamily: "'Outfit', sans-serif" }}
-          >
-            Explore Topics & Tags
-          </h3>
-
-          {/* Line-based search bar */}
-          <div className="relative group">
-            <Search className="absolute left-0 top-2.5 h-4 w-4 text-slate-400 group-focus-within:text-[#F49B21] transition-colors" />
-            <input 
-              type="text" 
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search publications..."
-              className="w-full bg-transparent border-b border-slate-200 focus:border-[#F49B21] text-slate-900 placeholder-slate-400 focus:outline-none text-xs pb-2 pl-6 transition-all"
-            />
-          </div>
-
-          {/* Categories Cloud */}
-          <div className="flex flex-wrap gap-2 pt-2 max-h-[200px] overflow-y-auto pr-1">
-            {categories.map((cat) => {
-              const isActive = activeCategory === cat;
-              return (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`px-3 py-1.5 rounded-xl text-[10px] font-bold uppercase tracking-wider border transition-all duration-300 ${
-                    isActive 
-                      ? 'bg-[#07051D] text-white border-[#07051D] shadow-sm' 
-                      : 'bg-slate-50 text-slate-500 border-slate-200/80 hover:border-[#F49B21] hover:text-[#07051D] hover:bg-[#F49B21]/5'
-                  }`}
-                >
-                  {cat} ({getCategoryCount(cat)})
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="relative z-10 text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold pt-4 border-t border-slate-100 flex justify-between items-center">
-          <span>Click tags to toggle filter</span>
-          <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
-        </div>
-      </div>
-    </div>
+  const filteredPosts = posts.filter(post => 
+    activeCategory === 'All' ? true : post.category === activeCategory
   );
 
-  // Widget 2: CTO Quote Widget (Dark Theme)
-  const renderQuoteWidget = () => (
-    <div 
-      key="quote-widget"
-      className="rounded-[2.2rem] p-[1.2px] bg-gradient-to-br from-slate-200 via-slate-100/50 to-transparent hover:from-[#F49B21] hover:via-amber-400 hover:to-[#07051d]/20 transition-all duration-500 shadow-[0_12px_40px_rgba(7,5,29,0.035)] hover:shadow-[0_20px_50px_-12px_rgba(244,155,33,0.18)] hover:-translate-y-2 z-10 h-[460px] select-none"
-    >
-      <div className="h-full w-full bg-[#07051D] rounded-[2.1rem] overflow-hidden relative p-8 flex flex-col justify-between text-white">
-        <div className="absolute inset-0 z-0 opacity-20 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:16px_24px] pointer-events-none" />
-        <div className="absolute -inset-10 opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(244,155,33,0.12)_0%,transparent_60%)] blur-2xl z-0" />
-        
-        <div className="flex justify-between items-center relative z-10">
-          <span className="text-[10px] font-mono tracking-widest text-[#F49B21] uppercase font-bold">// developer quote</span>
-          <Sparkles className="w-4.5 h-4.5 text-[#F49B21]" />
-        </div>
-
-        <div className="relative z-10 space-y-4 my-auto">
-          <p 
-            className="text-xl sm:text-2xl font-bold tracking-tight text-slate-100 leading-relaxed italic"
-            style={{ fontFamily: "'Outfit', sans-serif" }}
-          >
-            "We build software not just to solve immediate problems, but to engineer digital craft that stands the test of scale."
-          </p>
-          <div className="h-[2px] w-8 bg-[#F49B21]/30 rounded-full" />
-        </div>
-
-        <div className="relative z-10 text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold pt-4 border-t border-white/5 flex justify-between items-center">
-          <span>— CTO, Codes Thinker</span>
-          <span className="text-emerald-400">Verified Concept</span>
-        </div>
-      </div>
-    </div>
-  );
-
-  // Widget 3: Newsletter Sub console (Dark Theme)
-  const renderNewsletterWidget = () => (
-    <div 
-      key="news-widget"
-      className="rounded-[2.2rem] p-[1.2px] bg-gradient-to-br from-slate-200 via-slate-100/50 to-transparent hover:from-[#F49B21] hover:via-amber-400 hover:to-[#07051d]/20 transition-all duration-500 shadow-[0_12px_40px_rgba(7,5,29,0.035)] hover:shadow-[0_20px_50px_-12px_rgba(244,155,33,0.18)] hover:-translate-y-2 z-10 h-[460px] select-none"
-    >
-      <div className="h-full w-full bg-[#07051D] rounded-[2.1rem] overflow-hidden relative p-8 flex flex-col justify-between text-white">
-        <div className="absolute inset-0 z-0 opacity-20 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:16px_24px] pointer-events-none" />
-        <div className="absolute -inset-10 opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(244,155,33,0.12)_0%,transparent_60%)] blur-2xl z-0" />
-
-        <div className="flex justify-between items-center relative z-10">
-          <span className="text-[10px] font-mono tracking-widest text-[#F49B21] uppercase font-bold">// subscription hub</span>
-          <Mail className="w-4.5 h-4.5 text-[#F49B21]" />
-        </div>
-
-        <div className="relative z-10 space-y-4 my-auto">
-          <h3 
-            className="text-xl font-bold tracking-tight text-white"
-            style={{ fontFamily: "'Outfit', sans-serif" }}
-          >
-            Architectural Insights
-          </h3>
-          <p className="text-xs leading-relaxed text-slate-300">
-            Join 12,000+ tech leaders receiving weekly deep-dives in engineering and SaaS strategy.
-          </p>
-
-          <form onSubmit={handleSubscribe} className="space-y-3 pt-2">
-            <div className="relative">
-              <input 
-                type="email"
-                value={emailSub}
-                onChange={(e) => setEmailSub(e.target.value)}
-                placeholder="work email"
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 focus:outline-none focus:border-[#F49B21] focus:ring-1 focus:ring-[#F49B21] text-xs transition-all placeholder-gray-500 shadow-inner text-white"
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full py-3 bg-[#F49B21] hover:bg-amber-500 text-[#07051D] font-extrabold rounded-xl text-xs transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
-            >
-              {subbed ? (
-                <><span>Subscribed!</span></>
-              ) : (
-                <><span>Subscribe Now</span><Send className="w-3 h-3" /></>
-              )}
-            </button>
-          </form>
-        </div>
-
-        <div className="relative z-10 text-[8px] font-mono text-slate-500 uppercase tracking-widest font-bold pt-4 border-t border-white/5 text-center">
-          We respect privacy. Unsubscribe any time.
-        </div>
-      </div>
-    </div>
-  );
-
-  // Construct gridItems by interleaving posts and widgets dynamically
-  const gridItems: React.ReactNode[] = [];
-  let postIdx = 0;
-  
-  const totalSlots = remainingPosts.length + 3;
-  let searchPlaced = false;
-  let quotePlaced = false;
-  let newsPlaced = false;
-
-  for (let slot = 0; slot < totalSlots; slot++) {
-    if (slot === 1) {
-      searchPlaced = true;
-      gridItems.push(renderSearchWidget());
-    } else if (slot === 4) {
-      quotePlaced = true;
-      gridItems.push(renderQuoteWidget());
-    } else if (slot === 7) {
-      newsPlaced = true;
-      gridItems.push(renderNewsletterWidget());
-    } else {
-      if (postIdx < remainingPosts.length) {
-        const post = remainingPosts[postIdx];
-        gridItems.push(
-          <BlogPostCard key={`post-${post.id}`} post={post} index={postIdx + 1} />
-        );
-        postIdx++;
-      }
-    }
-  }
-
-  // Fallbacks: If list is too short and widgets haven't been rendered yet, append them
-  if (!searchPlaced) gridItems.push(renderSearchWidget());
-  if (!quotePlaced) gridItems.push(renderQuoteWidget());
-  if (!newsPlaced) gridItems.push(renderNewsletterWidget());
+  // For Bento Grid (Top 3)
+  const bentoPosts = filteredPosts.slice(0, 3);
+  const remainingPosts = filteredPosts.slice(bentoPosts.length);
 
   return (
-    <div id="blog-posts-list" className="relative w-full pb-32 bg-white font-sans z-10">
+    <div id="blog-posts-list" className="relative w-full pb-24 bg-transparent">
       
-      {/* Glow Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-amber-500/5 rounded-full filter blur-[120px]" />
-        <div className="absolute top-2/3 left-0 w-[500px] h-[500px] bg-blue-900/5 rounded-full filter blur-[100px]" />
-      </div>
-
-      <div className="max-w-[1400px] mx-auto px-6 sm:px-8 relative z-10">
-        
-        {/* SECTION HEADER: Luxury Serif Title */}
-        <div className="text-center md:text-left mb-16 border-b border-slate-100 pb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div>
-            <span className="text-[10px] font-mono tracking-[0.25em] text-[#F49B21] uppercase font-bold block mb-2">// INTELLECTUAL CAPITAL</span>
-            <h2 
-              className="text-4xl md:text-5xl font-extrabold text-[#07051D] tracking-tight"
-              style={{ fontFamily: "'Outfit', sans-serif" }}
-            >
-              Insights & Perspectives
-            </h2>
+      {/* Premium Static Category Filter */}
+      <div className="py-6 bg-transparent">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-gray-200/80 pb-6 mb-10">
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pb-1">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`whitespace-nowrap px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 border ${
+                  activeCategory === category 
+                    ? 'bg-[#08061E] text-white border-[#08061E] shadow-md scale-105' 
+                    : 'bg-white text-gray-500 border-gray-200 hover:border-[#F49B21] hover:text-[#08061E]'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
           </div>
-          <div className="text-xs text-slate-400 font-extrabold uppercase tracking-widest bg-slate-50 border border-slate-100 px-5 py-2.5 rounded-full">
-            Archive / {filteredPosts.length} Publications
+          <div className="text-xs text-gray-400 font-bold uppercase tracking-wider whitespace-nowrap">
+            Showing {filteredPosts.length} articles
           </div>
         </div>
+      </div>
 
+      <div className="container mx-auto px-6 pt-4">
+        
         <AnimatePresence mode="wait">
           <motion.div
-            key={activeCategory + searchQuery}
+            key={activeCategory}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
-            className="space-y-8"
+            transition={{ duration: 0.4 }}
           >
-            {/* 1. GIANT SPOTLIGHT HERO BANNER (Spans all 3 cols, Horizontal Split) */}
-            {heroPost && (
-              <Link to={`/blog/${heroPost.slug}`} className="block group">
-                <div className="w-full rounded-[2.5rem] p-[1.2px] bg-gradient-to-br from-slate-200 via-slate-100/50 to-transparent hover:from-[#F49B21] hover:via-amber-400 hover:to-[#07051d]/20 transition-all duration-500 shadow-[0_12px_40px_rgba(7,5,29,0.035)] hover:shadow-[0_30px_60px_-15px_rgba(244,155,33,0.22)] hover:-translate-y-2 relative overflow-hidden z-10 lg:h-[450px]">
-                  
-                  <div className="h-full w-full bg-white rounded-[2.4rem] overflow-hidden relative flex flex-col lg:flex-row items-stretch">
-                    
-                    {/* Background layers */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#07051d]/05 via-white to-amber-50/15 z-0 pointer-events-none" />
-                    <div className="absolute inset-0 z-0 opacity-30 group-hover:opacity-50 transition-opacity duration-500 pointer-events-none bg-[linear-gradient(to_right,#07051d08_1px,transparent_1px),linear-gradient(to_bottom,#07051d08_1px,transparent_1px)] bg-[size:16px_24px]" />
-                    <div className="absolute -inset-10 opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(244,155,33,0.12)_0%,transparent_60%)] blur-2xl z-0" />
-
-                    {/* Left: Image (Stretches to cover entire height) */}
-                    <div className="w-full lg:w-[55%] h-64 lg:h-full overflow-hidden relative bg-slate-100 flex-shrink-0 z-10">
+            {/* BENTO GRID (Only if we have at least 3 posts and it's 'All' or a big category) */}
+            {bentoPosts.length > 0 && (
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16">
+                
+                {/* Main Hero Post (Left side, takes 8 cols) */}
+                {bentoPosts[0] && (
+                  <Link to={`/blog/${bentoPosts[0].slug}`} className="lg:col-span-8 group block h-full">
+                    <div className="relative h-full min-h-[500px] rounded-[2rem] overflow-hidden bg-gray-900 shadow-xl">
                       <img 
-                        src={heroPost.image} 
-                        alt={heroPost.title}
-                        className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+                        src={bentoPosts[0].image} 
+                        alt={bentoPosts[0].title}
+                        className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-black/20 via-transparent to-transparent z-10" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#08061E] via-[#08061E]/60 to-transparent" />
                       
-                      {/* Glass Glare Sheen Sweep Effect on Hover */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[1000ms] ease-out z-20 pointer-events-none" />
-
-                      <span className="absolute top-6 left-6 z-20 text-[9px] px-4 py-2 rounded-full bg-[#F49B21] text-[#07051D] font-extrabold uppercase tracking-widest shadow-md">
-                        Spotlight Hero
-                      </span>
-                    </div>
-
-                    {/* Right: Typography details */}
-                    <div className="w-full lg:w-[45%] p-8 lg:p-12 flex flex-col justify-between flex-grow h-full z-10">
-                      
-                      <div className="space-y-4">
-                        <div className="flex items-center gap-2 text-[9px] text-[#F49B21] font-extrabold uppercase tracking-widest font-mono">
-                          <span>{heroPost.category}</span>
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#F49B21]"></span>
-                          <span className="text-slate-500">{heroPost.date}</span>
+                      <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-end">
+                        <div className="flex items-center gap-3 mb-4">
+                          <span className="px-3 py-1.5 rounded-full bg-amber-500 text-white text-[10px] font-bold uppercase tracking-widest shadow-sm">
+                            {bentoPosts[0].category}
+                          </span>
+                          <span className="text-white/80 text-xs font-bold uppercase tracking-widest">
+                            {bentoPosts[0].readTime}
+                          </span>
                         </div>
-
-                        <h3 
-                          className="text-2xl lg:text-4xl font-bold tracking-tight leading-snug group-hover:text-[#F49B21] transition-colors duration-300 text-[#07051D]"
-                          style={{ fontFamily: "'Outfit', sans-serif" }}
-                        >
-                          {heroPost.title}
-                        </h3>
-
-                        {/* Gold separator */}
-                        <div className="h-[2px] w-8 bg-[#F49B21]/30 group-hover:w-full transition-all duration-500 ease-out rounded-full" />
-
-                        <p className="text-slate-600 text-sm leading-relaxed line-clamp-4 font-sans">
-                          {heroPost.excerpt}
+                        <h2 className="text-3xl md:text-5xl font-bold text-white leading-tight mb-4 group-hover:text-amber-400 transition-colors duration-300">
+                          {bentoPosts[0].title}
+                        </h2>
+                        <p className="text-gray-300 text-lg line-clamp-2 max-w-2xl mb-6">
+                          {bentoPosts[0].excerpt}
                         </p>
-                      </div>
-
-                      {/* Footer */}
-                      <div className="pt-6 border-t border-slate-100 flex items-center justify-between mt-8">
-                        <div className="flex items-center gap-2.5">
-                          <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-400 to-[#F49B21] flex items-center justify-center text-white text-[10px] font-black shadow shadow-amber-500/10">
-                            {heroPost.author.charAt(0)}
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white text-sm font-bold border border-white/30">
+                            {bentoPosts[0].author.charAt(0)}
                           </div>
                           <div>
-                            <p className="text-xs font-bold text-slate-800 leading-none">{heroPost.author}</p>
-                            <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-1">Contributor</p>
+                            <p className="font-bold text-white text-sm">{bentoPosts[0].author}</p>
+                            <p className="text-xs text-white/60">{bentoPosts[0].date}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                )}
+
+                {/* Right Side Stacked Posts (Takes 4 cols) */}
+                <div className="lg:col-span-4 flex flex-col gap-6">
+                  {bentoPosts.slice(1, 3).map((post) => (
+                    <Link to={`/blog/${post.slug}`} key={post.id} className="group flex-1 block">
+                      <div className="h-full flex flex-col bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-500">
+                        
+                        {/* Image Header */}
+                        <div className="relative h-44 overflow-hidden bg-gray-100">
+                          <img 
+                            src={post.image} 
+                            alt={post.title} 
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" 
+                          />
+                          <span className="absolute top-4 left-4 text-[9px] px-2.5 py-1.5 rounded-full bg-[#08061E]/80 backdrop-blur-md text-white font-bold uppercase tracking-widest shadow-sm">
+                            {post.category}
+                          </span>
+                        </div>
+
+                        {/* Card Content - Clean Typography without Overlaps */}
+                        <div className="p-6 flex flex-col justify-between flex-grow bg-white">
+                          <h3 className="text-lg font-bold text-[#08061E] mb-4 leading-snug group-hover:text-amber-500 transition-colors duration-300">
+                            {post.title}
+                          </h3>
+                          
+                          <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-gray-400 pt-4 border-t border-gray-100">
+                            <span>{post.date}</span>
+                            <span>{post.readTime}</span>
                           </div>
                         </div>
 
-                        <div className="relative overflow-hidden pb-0.5">
-                          <span className="text-xs font-bold text-[#F49B21] flex items-center gap-1.5 transition-transform duration-300">
-                            Read Story <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                          </span>
-                          <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#F49B21] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                        </div>
                       </div>
-
-                    </div>
-
-                  </div>
+                    </Link>
+                  ))}
                 </div>
-              </Link>
+
+              </div>
             )}
 
-            {/* 2. BENTO DASHBOARD GRID (Combines Articles + Custom Interactive Widgets) */}
-            {filteredPosts.length > 0 ? (
+            {/* Standard Grid for Remaining Posts */}
+            {remainingPosts.length > 0 && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {gridItems}
+                {remainingPosts.map((post, index) => (
+                  <BlogPostCard 
+                    key={post.id}
+                    post={post} 
+                    index={index} 
+                  />
+                ))}
               </div>
-            ) : (
-              <div className="text-center py-32 bg-slate-50 rounded-[2.2rem] border border-dashed border-slate-200">
-                <h3 className="text-xl font-bold text-slate-400">No articles matched your criteria.</h3>
+            )}
+            
+            {filteredPosts.length === 0 && (
+              <div className="text-center py-32">
+                <h3 className="text-2xl font-bold text-gray-400">No articles found in this category.</h3>
               </div>
             )}
           </motion.div>
         </AnimatePresence>
+
+        {/* Newsletter Block */}
+        <div className="mt-32 bg-[#08061E] rounded-[2.5rem] p-10 md:p-16 relative overflow-hidden text-center shadow-2xl">
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=2000&q=80')] opacity-5 object-cover mix-blend-overlay" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#08061E] via-transparent to-transparent z-0" />
+          <div className="relative z-10 max-w-2xl mx-auto">
+            <h3 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">Stay Ahead of the Curve</h3>
+            <p className="text-gray-300 mb-10 text-lg md:text-xl font-light">
+              Join 12,000+ tech leaders receiving our latest insights, case studies, and engineering strategies directly to their inbox.
+            </p>
+            <form className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto" onSubmit={(e) => e.preventDefault()}>
+              <input 
+                type="email" 
+                placeholder="Enter your work email" 
+                className="flex-1 px-6 py-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-amber-500 focus:bg-white/20 transition-all"
+                required
+              />
+              <button 
+                type="submit"
+                className="px-8 py-4 bg-[#F69A20] hover:bg-amber-500 text-white font-extrabold rounded-xl transition-colors shadow-lg shadow-amber-500/25"
+              >
+                Subscribe
+              </button>
+            </form>
+            <p className="text-xs text-gray-500 mt-6 font-medium tracking-wide">We respect your privacy. Unsubscribe at any time.</p>
+          </div>
+        </div>
         
       </div>
     </div>
