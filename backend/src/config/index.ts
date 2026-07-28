@@ -8,6 +8,8 @@ export const config = {
   port: parseInt(process.env.PORT || '5000', 10),
   nodeEnv: process.env.NODE_ENV || 'development',
   apiKey: process.env.API_KEY || 'super_secret_admin_key_123',
+  adminUsername: process.env.ADMIN_USERNAME || '',
+  adminPassword: process.env.ADMIN_PASSWORD || '',
   databaseUrl: process.env.DATABASE_URL || 'file:./dev.db',
   
   // Email Notifications config

@@ -29,7 +29,8 @@ app.use(cors({
     return callback(new Error('The CORS policy for this site does not allow access from the specified Origin.'), false);
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-API-KEY'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-API-KEY', 'Cookie'],
+  credentials: true,
 }));
 
 // Body Parsing Middlewares

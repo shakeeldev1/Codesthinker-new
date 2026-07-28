@@ -8,12 +8,19 @@ import {
   getServiceInquiries, 
   getJobApplications, 
   getInternshipApplications, 
-  downloadResume 
+  downloadResume,
+  loginAdmin,
+  logoutAdmin,
+  deleteContactSubmission,
+  deleteServiceInquiry,
+  deleteJobApplication,
+  deleteInternshipApplication 
 } from '../controllers/admin';
 import { validateRequest } from '../middleware/validate';
 import { contactSchema, serviceInquirySchema, careerSchema } from '../middleware/schemas';
 import { upload } from '../middleware/upload';
 import { protectAdmin } from '../middleware/auth';
+import { noCache } from '../middleware/nocache';
 
 const router = Router();
 
@@ -26,11 +33,19 @@ router.post('/jobs', upload.single('resume'), validateRequest(careerSchema), sub
 router.post('/internships', upload.single('resume'), validateRequest(careerSchema), submitInternshipApplication);
 
 // Admin Routes (Protected)
-router.get('/admin/overview', protectAdmin, getSubmissionsOverview);
-router.get('/admin/contacts', protectAdmin, getContactSubmissions);
-router.get('/admin/services', protectAdmin, getServiceInquiries);
-router.get('/admin/jobs', protectAdmin, getJobApplications);
-router.get('/admin/internships', protectAdmin, getInternshipApplications);
-router.get('/admin/resumes/:type/:id', protectAdmin, downloadResume);
+router.post('/admin/login', loginAdmin); // Public POST for login
+router.post('/admin/logout', logoutAdmin); // Public POST for logout
+router.get('/admin/overview', protectAdmin, noCache, getSubmissionsOverview);
+router.get('/admin/contacts', protectAdmin, noCache, getContactSubmissions);
+router.get('/admin/services', protectAdmin, noCache, getServiceInquiries);
+router.get('/admin/jobs', protectAdmin, noCache, getJobApplications);
+router.get('/admin/internships', protectAdmin, noCache, getInternshipApplications);
+router.get('/admin/resumes/:type/:id', protectAdmin, noCache, downloadResume);
+
+// Admin Delete Routes
+router.delete('/admin/contacts/:id', protectAdmin, noCache, deleteContactSubmission);
+router.delete('/admin/services/:id', protectAdmin, noCache, deleteServiceInquiry);
+router.delete('/admin/jobs/:id', protectAdmin, noCache, deleteJobApplication);
+router.delete('/admin/internships/:id', protectAdmin, noCache, deleteInternshipApplication);
 
 export default router;

@@ -28,6 +28,7 @@ import ProjectsPage from './pages/ProjectsPage';
 import ScrollToTop from './components/common/ScrollToTop';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+import AdminDashboard from './pages/AdminDashboard';
 
 
 // Layout
@@ -73,8 +74,12 @@ const router = createBrowserRouter([
       { path: 'projects', element: <ProjectsPage /> },
       { path: 'privacy', element: <Privacy /> },
       { path: 'terms', element: <Terms /> },
-      ]}
-  
+    ]
+  },
+  {
+    path: '/admin',
+    element: <AdminDashboard />,
+  }
 ]);
 
 function App() {

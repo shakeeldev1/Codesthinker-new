@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import prisma from '../db';
 import { AppError } from '../middleware/errorHandler';
 import logger from '../utils/logger';
+import { config } from '../config';
 
 export const getSubmissionsOverview = async (
   req: Request,
@@ -144,6 +145,143 @@ export const downloadResume = async (
       res.setHeader('Content-Disposition', `attachment; filename="${record.resumeName}"`);
       return res.send(record.resumeData);
     }
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const loginAdmin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { username, password, rememberMe } = req.body;
+
+    if (!username || !password) {
+      throw new AppError('Username and password are required', 400);
+    }
+
+    if (username !== config.adminUsername || password !== config.adminPassword) {
+      throw new AppError('Invalid credentials', 401);
+    }
+
+    const isProd = config.nodeEnv === 'production';
+    const cookieOptions: any = {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
+      path: '/',
+    };
+
+    if (rememberMe) {
+      cookieOptions.maxAge = 30 * 24 * 60 * 60 * 1000; // 30 days
+    }
+
+    res.cookie('admin_api_key', config.apiKey, cookieOptions);
+
+    return res.status(200).json({
+      success: true,
+      message: 'Logged in successfully',
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const logoutAdmin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const isProd = config.nodeEnv === 'production';
+    res.clearCookie('admin_api_key', {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
+      path: '/',
+    });
+    return res.status(200).json({
+      success: true,
+      message: 'Logged out successfully',
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const deleteContactSubmission = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    await prisma.contactSubmission.delete({
+      where: { id },
+    });
+    return res.status(200).json({
+      success: true,
+      message: 'Contact submission deleted successfully',
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const deleteServiceInquiry = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    await prisma.serviceInquiry.delete({
+      where: { id },
+    });
+    return res.status(200).json({
+      success: true,
+      message: 'Service inquiry deleted successfully',
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const deleteJobApplication = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    await prisma.jobApplication.delete({
+      where: { id },
+    });
+    return res.status(200).json({
+      success: true,
+      message: 'Job application deleted successfully',
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const deleteInternshipApplication = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    await prisma.internshipApplication.delete({
+      where: { id },
+    });
+    return res.status(200).json({
+      success: true,
+      message: 'Internship application deleted successfully',
+    });
   } catch (error) {
     return next(error);
   }

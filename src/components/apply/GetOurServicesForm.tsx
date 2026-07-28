@@ -65,6 +65,10 @@ const GetOurServicesForm: React.FC = () => {
       const data = await response.json();
 
       if (!response.ok) {
+        if (data.errors && Array.isArray(data.errors)) {
+          const errorMsg = data.errors.map((e: any) => e.message).join(', ');
+          throw new Error(errorMsg);
+        }
         throw new Error(data.message || 'Something went wrong. Please try again.');
       }
 
