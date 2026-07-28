@@ -52,3 +52,15 @@ model InternshipApplication {
   resumeData Bytes    // Binary file data stored in DB
   createdAt  DateTime @default(now())
 }
+
+model AdminUser {
+  id          String   @id @default(uuid())
+  username    String   @unique
+  email       String   @unique
+  password    String   // bcrypt hashed
+  role        String   @default("viewer") // super_admin | editor | viewer | custom
+  permissions String[] // e.g. ["view_contacts", "delete_records", "manage_users"]
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

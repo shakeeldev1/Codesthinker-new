@@ -16,10 +16,17 @@ import {
   deleteJobApplication,
   deleteInternshipApplication 
 } from '../controllers/admin';
+import {
+  getAdminUsers,
+  createAdminUser,
+  updateAdminUser,
+  deleteAdminUser,
+  resetAdminUserPassword,
+} from '../controllers/users';
 import { validateRequest } from '../middleware/validate';
 import { contactSchema, serviceInquirySchema, careerSchema } from '../middleware/schemas';
 import { upload } from '../middleware/upload';
-import { protectAdmin } from '../middleware/auth';
+import { protectAdmin, requirePermission } from '../middleware/auth';
 import { noCache } from '../middleware/nocache';
 
 const router = Router();
@@ -43,9 +50,16 @@ router.get('/admin/internships', protectAdmin, noCache, getInternshipApplication
 router.get('/admin/resumes/:type/:id', protectAdmin, noCache, downloadResume);
 
 // Admin Delete Routes
-router.delete('/admin/contacts/:id', protectAdmin, noCache, deleteContactSubmission);
-router.delete('/admin/services/:id', protectAdmin, noCache, deleteServiceInquiry);
-router.delete('/admin/jobs/:id', protectAdmin, noCache, deleteJobApplication);
-router.delete('/admin/internships/:id', protectAdmin, noCache, deleteInternshipApplication);
+router.delete('/admin/contacts/:id', protectAdmin, requirePermission('delete_records'), noCache, deleteContactSubmission);
+router.delete('/admin/services/:id', protectAdmin, requirePermission('delete_records'), noCache, deleteServiceInquiry);
+router.delete('/admin/jobs/:id', protectAdmin, requirePermission('delete_records'), noCache, deleteJobApplication);
+router.delete('/admin/internships/:id', protectAdmin, requirePermission('delete_records'), noCache, deleteInternshipApplication);
+
+// Admin User Management Routes (requires manage_users permission)
+router.get('/admin/users', protectAdmin, requirePermission('manage_users'), noCache, getAdminUsers);
+router.post('/admin/users', protectAdmin, requirePermission('manage_users'), noCache, createAdminUser);
+router.put('/admin/users/:id', protectAdmin, requirePermission('manage_users'), noCache, updateAdminUser);
+router.delete('/admin/users/:id', protectAdmin, requirePermission('manage_users'), noCache, deleteAdminUser);
+router.post('/admin/users/:id/reset-password', protectAdmin, requirePermission('manage_users'), noCache, resetAdminUserPassword);
 
 export default router;

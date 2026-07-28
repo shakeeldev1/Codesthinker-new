@@ -10,7 +10,8 @@ import {
   Trash2, 
   LogOut, 
   Lock, 
-  User, 
+  User,
+  Users,
   Search, 
   RefreshCw, 
   Calendar, 
@@ -21,7 +22,13 @@ import {
   X, 
   ChevronRight,
   TrendingUp,
-  AlertCircle
+  AlertCircle,
+  Plus,
+  Edit2,
+  ShieldCheck,
+  ShieldOff,
+  KeyRound,
+  CheckCircle2,
 } from 'lucide-react';
 
 // Interfaces for backend models
@@ -69,7 +76,34 @@ interface InternshipApplication {
   createdAt: string;
 }
 
-type TabType = 'overview' | 'contacts' | 'services' | 'jobs' | 'internships';
+interface AdminUser {
+  id: string;
+  username: string;
+  email: string;
+  role: string;
+  permissions: string[];
+  isActive: boolean;
+  createdAt: string;
+  isRoot?: boolean;
+}
+
+const ALL_PERMISSIONS = [
+  { key: 'view_contacts', label: 'View Contacts' },
+  { key: 'view_services', label: 'View Services' },
+  { key: 'view_jobs', label: 'View Jobs' },
+  { key: 'view_internships', label: 'View Internships' },
+  { key: 'delete_records', label: 'Delete Records' },
+  { key: 'manage_users', label: 'Manage Users' },
+];
+
+const ROLE_COLORS: Record<string, string> = {
+  super_admin: 'text-orange-400 bg-orange-500/10 border-orange-500/20',
+  editor: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
+  viewer: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
+  custom: 'text-violet-400 bg-violet-500/10 border-violet-500/20',
+};
+
+type TabType = 'overview' | 'contacts' | 'services' | 'jobs' | 'internships' | 'users';
 
 export default function AdminDashboard() {
   // Auth state
@@ -80,6 +114,10 @@ export default function AdminDashboard() {
   const [rememberMe, setRememberMe] = useState<boolean>(false);
   const [loginError, setLoginError] = useState<string>('');
   const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
+
+  // Current user permissions (set after login)
+  const [userPermissions, setUserPermissions] = useState<string[]>([]);
+  const [userRole, setUserRole] = useState<string>('super_admin');
 
   // Nav state
   const [activeTab, setActiveTab] = useState<TabType>('overview');
@@ -95,6 +133,7 @@ export default function AdminDashboard() {
   const [services, setServices] = useState<ServiceInquiry[]>([]);
   const [jobs, setJobs] = useState<JobApplication[]>([]);
   const [internships, setInternships] = useState<InternshipApplication[]>([]);
+  const [adminUsers, setAdminUsers] = useState<AdminUser[]>([]);
   
   // Loading & searching state
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -112,6 +151,20 @@ export default function AdminDashboard() {
     id: string;
   } | null>(null);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
+
+  // User Management Modal state
+  const [showUserModal, setShowUserModal] = useState<boolean>(false);
+  const [editingUser, setEditingUser] = useState<AdminUser | null>(null);
+  const [userForm, setUserForm] = useState({
+    username: '', email: '', password: '', role: 'viewer', permissions: [] as string[],
+  });
+  const [isSavingUser, setIsSavingUser] = useState<boolean>(false);
+  const [userFormError, setUserFormError] = useState<string>('');
+  const [userActionSuccess, setUserActionSuccess] = useState<string>('');
+  const [showResetPassword, setShowResetPassword] = useState<string | null>(null);
+  const [newPassword, setNewPassword] = useState<string>('');
+  const [isResettingPw, setIsResettingPw] = useState<boolean>(false);
+  const [deleteUserConfirm, setDeleteUserConfirm] = useState<AdminUser | null>(null);
 
   // Check login on mount by attempting to fetch overview stats
   useEffect(() => {
@@ -154,15 +207,9 @@ export default function AdminDashboard() {
     try {
       const response = await fetch(`${API_BASE_URL}/api/v1/admin/login`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({
-          username: usernameInput,
-          password: passwordInput,
-          rememberMe,
-        }),
+        body: JSON.stringify({ username: usernameInput, password: passwordInput, rememberMe }),
       });
 
       const data = await response.json();
@@ -171,6 +218,9 @@ export default function AdminDashboard() {
         throw new Error(data.message || 'Login failed. Invalid credentials.');
       }
 
+      // Store permissions from the login response
+      setUserPermissions(data.permissions || []);
+      setUserRole(data.role || 'viewer');
       setIsAuthenticated(true);
       setUsernameInput('');
       setPasswordInput('');
@@ -192,11 +242,13 @@ export default function AdminDashboard() {
     } finally {
       setIsAuthenticated(false);
       setActiveTab('overview');
-      // Clear local state arrays
+      setUserPermissions([]);
+      setUserRole('super_admin');
       setContacts([]);
       setServices([]);
       setJobs([]);
       setInternships([]);
+      setAdminUsers([]);
     }
   };
 
@@ -224,6 +276,7 @@ export default function AdminDashboard() {
       else if (tab === 'services') endpoint = '/api/v1/admin/services';
       else if (tab === 'jobs') endpoint = '/api/v1/admin/jobs';
       else if (tab === 'internships') endpoint = '/api/v1/admin/internships';
+      else if (tab === 'users') endpoint = '/api/v1/admin/users';
 
       const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: 'GET',
@@ -236,6 +289,7 @@ export default function AdminDashboard() {
         else if (tab === 'services') setServices(result.data);
         else if (tab === 'jobs') setJobs(result.data);
         else if (tab === 'internships') setInternships(result.data);
+        else if (tab === 'users') setAdminUsers(result.data);
       } else if (response.status === 401) {
         handleLogout();
       }
@@ -309,6 +363,125 @@ export default function AdminDashboard() {
     } catch (err) {
       console.error('Error downloading resume:', err);
       alert('Failed to download resume. Please try again.');
+    }
+  };
+
+  // --- User Management Handlers ---
+
+  const openCreateUserModal = () => {
+    setEditingUser(null);
+    setUserForm({ username: '', email: '', password: '', role: 'viewer', permissions: [] });
+    setUserFormError('');
+    setUserActionSuccess('');
+    setShowUserModal(true);
+  };
+
+  const openEditUserModal = (user: AdminUser) => {
+    setEditingUser(user);
+    setUserForm({ username: user.username, email: user.email, password: '', role: user.role, permissions: user.permissions });
+    setUserFormError('');
+    setUserActionSuccess('');
+    setShowUserModal(true);
+  };
+
+  const handleRoleChange = (role: string) => {
+    const presets: Record<string, string[]> = {
+      super_admin: ['view_contacts','view_services','view_jobs','view_internships','delete_records','manage_users'],
+      editor: ['view_contacts','view_services','view_jobs','view_internships','delete_records'],
+      viewer: ['view_contacts','view_services','view_jobs','view_internships'],
+      custom: userForm.permissions,
+    };
+    setUserForm(f => ({ ...f, role, permissions: presets[role] || [] }));
+  };
+
+  const togglePermission = (perm: string) => {
+    setUserForm(f => ({
+      ...f,
+      role: 'custom',
+      permissions: f.permissions.includes(perm)
+        ? f.permissions.filter(p => p !== perm)
+        : [...f.permissions, perm],
+    }));
+  };
+
+  const handleSaveUser = async () => {
+    setUserFormError('');
+    if (!userForm.username || !userForm.email || (!editingUser && !userForm.password)) {
+      setUserFormError('Username, email, and password are required.');
+      return;
+    }
+    setIsSavingUser(true);
+    try {
+      const url = editingUser
+        ? `${API_BASE_URL}/api/v1/admin/users/${editingUser.id}`
+        : `${API_BASE_URL}/api/v1/admin/users`;
+      const method = editingUser ? 'PUT' : 'POST';
+      const body: any = { username: userForm.username, email: userForm.email, role: userForm.role, permissions: userForm.permissions };
+      if (!editingUser || userForm.password) body.password = userForm.password;
+
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Failed to save user');
+
+      setShowUserModal(false);
+      setUserActionSuccess(editingUser ? 'User updated successfully!' : 'User created successfully!');
+      fetchTabData('users');
+      setTimeout(() => setUserActionSuccess(''), 4000);
+    } catch (err: any) {
+      setUserFormError(err.message);
+    } finally {
+      setIsSavingUser(false);
+    }
+  };
+
+  const handleDeleteUser = async () => {
+    if (!deleteUserConfirm) return;
+    setIsDeleting(true);
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/v1/admin/users/${deleteUserConfirm.id}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Failed to delete user');
+      setAdminUsers(prev => prev.filter(u => u.id !== deleteUserConfirm.id));
+      setDeleteUserConfirm(null);
+      setUserActionSuccess('User deleted successfully!');
+      setTimeout(() => setUserActionSuccess(''), 4000);
+    } catch (err: any) {
+      setUserActionSuccess('');
+      alert(err.message);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  const handleResetPassword = async () => {
+    if (!showResetPassword || !newPassword) return;
+    if (newPassword.length < 8) { alert('Password must be at least 8 characters'); return; }
+    setIsResettingPw(true);
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/v1/admin/users/${showResetPassword}/reset-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ newPassword }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Failed to reset password');
+      setShowResetPassword(null);
+      setNewPassword('');
+      setUserActionSuccess('Password reset successfully!');
+      setTimeout(() => setUserActionSuccess(''), 4000);
+    } catch (err: any) {
+      alert(err.message);
+    } finally {
+      setIsResettingPw(false);
     }
   };
 
@@ -598,6 +771,32 @@ export default function AdminDashboard() {
                 {stats.internshipApplications}
               </span>
             </button>
+
+            {/* Users tab - only visible to users with manage_users permission */}
+            {userPermissions.includes('manage_users') && (
+              <>
+                <div className="h-px bg-slate-800 my-4 mx-2"></div>
+                <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider px-4 mb-2">Administration</p>
+                <button
+                  onClick={() => { setActiveTab('users'); setSearchQuery(''); }}
+                  className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                    activeTab === 'users'
+                      ? 'bg-orange-600 text-white shadow-lg shadow-orange-600/10'
+                      : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'
+                  }`}
+                >
+                  <span className="flex items-center gap-3">
+                    <Users className="w-4.5 h-4.5" />
+                    Admin Users
+                  </span>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                    activeTab === 'users' ? 'bg-orange-700/80 text-white' : 'bg-slate-800 text-slate-300'
+                  }`}>
+                    {adminUsers.length}
+                  </span>
+                </button>
+              </>
+            )}
           </nav>
         </div>
 
@@ -610,9 +809,8 @@ export default function AdminDashboard() {
               </div>
               <div className="overflow-hidden">
                 <p className="text-xs font-semibold text-slate-200 truncate">Administrator</p>
-                <span className="text-[9px] text-green-400 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-ping"></span>
-                  Active session
+                <span className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${ROLE_COLORS[userRole] || ROLE_COLORS['viewer']}`}>
+                  {userRole.replace('_', ' ')}
                 </span>
               </div>
             </div>
@@ -931,7 +1129,324 @@ export default function AdminDashboard() {
           )}
 
         </div>
+
+          {/* 3. USERS MANAGEMENT VIEW */}
+          {activeTab === 'users' && (
+            <div className="space-y-6 animate-fade-in">
+              {/* Header with action */}
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-900 border border-slate-800 rounded-xl p-4">
+                <div>
+                  <h3 className="text-white font-bold text-sm">Admin Users</h3>
+                  <p className="text-slate-400 text-xs mt-0.5">Manage who has access to this dashboard and what they can do.</p>
+                </div>
+                <button
+                  onClick={openCreateUserModal}
+                  className="flex items-center gap-2 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-all shadow-lg shadow-orange-500/10 hover:shadow-orange-500/25 active:scale-[0.98]"
+                >
+                  <Plus className="w-4 h-4" />
+                  Add New Admin
+                </button>
+              </div>
+
+              {/* Success message */}
+              {userActionSuccess && (
+                <div className="flex items-center gap-2.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm rounded-xl px-4 py-3">
+                  <CheckCircle2 className="w-4 h-4 shrink-0" />
+                  {userActionSuccess}
+                </div>
+              )}
+
+              {/* Users Table */}
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-slate-800 text-[10px] font-bold text-slate-400 uppercase tracking-wider bg-slate-950/50">
+                        <th className="py-4 px-6">User</th>
+                        <th className="py-4 px-6">Role</th>
+                        <th className="py-4 px-6">Permissions</th>
+                        <th className="py-4 px-6">Status</th>
+                        <th className="py-4 px-6">Created</th>
+                        <th className="py-4 px-6 text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-800/80 text-sm">
+                      {adminUsers.map((user) => (
+                        <tr key={user.id} className="hover:bg-slate-800/30 transition-all">
+                          <td className="py-4 px-6">
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-300 font-bold text-xs uppercase border border-slate-700">
+                                {user.username[0]}
+                              </div>
+                              <div>
+                                <p className="font-semibold text-white text-sm">{user.username}</p>
+                                <p className="text-xs text-slate-400">{user.email}</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="py-4 px-6">
+                            <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-lg border ${ROLE_COLORS[user.role] || ROLE_COLORS['viewer']}`}>
+                              {user.role.replace('_', ' ')}
+                            </span>
+                          </td>
+                          <td className="py-4 px-6">
+                            <div className="flex flex-wrap gap-1 max-w-xs">
+                              {user.permissions.slice(0, 3).map(p => (
+                                <span key={p} className="text-[9px] font-semibold bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded border border-slate-700">
+                                  {p.replace('_', ' ')}
+                                </span>
+                              ))}
+                              {user.permissions.length > 3 && (
+                                <span className="text-[9px] text-slate-500">+{user.permissions.length - 3} more</span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="py-4 px-6">
+                            {user.isActive ? (
+                              <span className="flex items-center gap-1.5 text-emerald-400 text-xs font-semibold">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                Active
+                              </span>
+                            ) : (
+                              <span className="flex items-center gap-1.5 text-slate-500 text-xs font-semibold">
+                                <span className="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+                                Inactive
+                              </span>
+                            )}
+                          </td>
+                          <td className="py-4 px-6 text-xs text-slate-400">
+                            {user.isRoot ? 'System' : formatDate(user.createdAt)}
+                          </td>
+                          <td className="py-4 px-6">
+                            <div className="flex items-center justify-end gap-1">
+                              {!user.isRoot && (
+                                <>
+                                  <button
+                                    onClick={() => openEditUserModal(user)}
+                                    title="Edit user"
+                                    className="p-2 text-slate-400 hover:text-blue-400 hover:bg-blue-500/10 rounded-lg transition-all"
+                                  >
+                                    <Edit2 className="w-3.5 h-3.5" />
+                                  </button>
+                                  <button
+                                    onClick={() => { setShowResetPassword(user.id); setNewPassword(''); }}
+                                    title="Reset password"
+                                    className="p-2 text-slate-400 hover:text-violet-400 hover:bg-violet-500/10 rounded-lg transition-all"
+                                  >
+                                    <KeyRound className="w-3.5 h-3.5" />
+                                  </button>
+                                  <button
+                                    onClick={() => setDeleteUserConfirm(user)}
+                                    title="Delete user"
+                                    className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all"
+                                  >
+                                    <Trash2 className="w-3.5 h-3.5" />
+                                  </button>
+                                </>
+                              )}
+                              {user.isRoot && (
+                                <span className="text-[9px] text-slate-600 uppercase tracking-wider px-2">Root — Protected</span>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {adminUsers.length === 0 && !isLoading && (
+                    <div className="text-center py-16 text-slate-500 text-sm">
+                      No admin users created yet. Click "Add New Admin" to create one.
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+        </div>
       </main>
+
+      {/* CREATE / EDIT USER MODAL */}
+      {showUserModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 font-sans">
+          <div className="w-full max-w-lg bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+            <div className="p-6 border-b border-slate-800 flex justify-between items-center bg-slate-950/30">
+              <div>
+                <h3 className="font-bold text-white text-base">{editingUser ? 'Edit Admin User' : 'Create New Admin User'}</h3>
+                <p className="text-xs text-slate-400 mt-0.5">{editingUser ? `Editing: ${editingUser.username}` : 'Add a new sub-administrator'}</p>
+              </div>
+              <button onClick={() => setShowUserModal(false)} className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-all">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-6 overflow-y-auto space-y-5">
+              {userFormError && (
+                <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-xs rounded-lg p-3 flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  {userFormError}
+                </div>
+              )}
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Username</label>
+                  <input
+                    type="text" value={userForm.username}
+                    onChange={e => setUserForm(f => ({ ...f, username: e.target.value }))}
+                    placeholder="e.g. john_admin"
+                    className="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-all"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Email</label>
+                  <input
+                    type="email" value={userForm.email}
+                    onChange={e => setUserForm(f => ({ ...f, email: e.target.value }))}
+                    placeholder="admin@example.com"
+                    className="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-all"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+                  {editingUser ? 'New Password (leave blank to keep current)' : 'Password'}
+                </label>
+                <input
+                  type="password" value={userForm.password}
+                  onChange={e => setUserForm(f => ({ ...f, password: e.target.value }))}
+                  placeholder="••••••••"
+                  autoComplete="new-password"
+                  className="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-all"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Role</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {['super_admin', 'editor', 'viewer', 'custom'].map(role => (
+                    <button
+                      key={role}
+                      onClick={() => handleRoleChange(role)}
+                      className={`px-3 py-2.5 rounded-xl text-xs font-semibold border transition-all ${
+                        userForm.role === role
+                          ? `${ROLE_COLORS[role]} border-current`
+                          : 'border-slate-800 text-slate-400 hover:border-slate-700'
+                      }`}
+                    >
+                      {role.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+                  Permissions
+                  <span className="ml-2 text-[9px] text-slate-500 normal-case">(auto-set by role, or customize)</span>
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  {ALL_PERMISSIONS.map(({ key, label }) => {
+                    const checked = userForm.permissions.includes(key);
+                    return (
+                      <button
+                        key={key}
+                        onClick={() => togglePermission(key)}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium border transition-all ${
+                          checked
+                            ? 'bg-orange-500/10 border-orange-500/30 text-orange-400'
+                            : 'bg-slate-950/40 border-slate-800 text-slate-400 hover:border-slate-700'
+                        }`}
+                      >
+                        {checked ? <ShieldCheck className="w-3.5 h-3.5 shrink-0" /> : <ShieldOff className="w-3.5 h-3.5 shrink-0" />}
+                        {label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <div className="p-5 border-t border-slate-800 flex justify-end gap-3">
+              <button
+                onClick={() => setShowUserModal(false)}
+                className="px-4 py-2.5 text-slate-400 hover:text-white text-sm font-medium rounded-xl hover:bg-slate-800 transition-all"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSaveUser}
+                disabled={isSavingUser}
+                className="px-5 py-2.5 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white text-sm font-semibold rounded-xl transition-all shadow-lg shadow-orange-500/10 disabled:opacity-50 disabled:pointer-events-none flex items-center gap-2"
+              >
+                {isSavingUser ? <RefreshCw className="w-4 h-4 animate-spin" /> : null}
+                {editingUser ? 'Save Changes' : 'Create User'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* RESET PASSWORD MODAL */}
+      {showResetPassword && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-6">
+            <h3 className="font-bold text-white text-base mb-1">Reset Password</h3>
+            <p className="text-slate-400 text-xs mb-5">Enter a new password for this admin user. Must be at least 8 characters.</p>
+            <input
+              type="password" value={newPassword}
+              onChange={e => setNewPassword(e.target.value)}
+              placeholder="New password (min. 8 chars)"
+              autoComplete="new-password"
+              className="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-all mb-5"
+            />
+            <div className="flex justify-end gap-3">
+              <button onClick={() => setShowResetPassword(null)} className="px-4 py-2.5 text-slate-400 hover:text-white text-sm font-medium rounded-xl hover:bg-slate-800 transition-all">
+                Cancel
+              </button>
+              <button
+                onClick={handleResetPassword}
+                disabled={isResettingPw}
+                className="px-5 py-2.5 bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold rounded-xl transition-all flex items-center gap-2 disabled:opacity-50"
+              >
+                {isResettingPw ? <RefreshCw className="w-4 h-4 animate-spin" /> : <KeyRound className="w-4 h-4" />}
+                Reset Password
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* DELETE USER CONFIRM MODAL */}
+      {deleteUserConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-red-500/10 rounded-xl">
+                <Trash2 className="w-5 h-5 text-red-400" />
+              </div>
+              <h3 className="font-bold text-white text-base">Delete Admin User</h3>
+            </div>
+            <p className="text-slate-400 text-sm mb-6">
+              Are you sure you want to delete <span className="text-white font-semibold">{deleteUserConfirm.username}</span>? This action cannot be undone.
+            </p>
+            <div className="flex justify-end gap-3">
+              <button onClick={() => setDeleteUserConfirm(null)} className="px-4 py-2.5 text-slate-400 hover:text-white text-sm font-medium rounded-xl hover:bg-slate-800 transition-all">
+                Cancel
+              </button>
+              <button
+                onClick={handleDeleteUser}
+                disabled={isDeleting}
+                className="px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white text-sm font-semibold rounded-xl transition-all flex items-center gap-2 disabled:opacity-50"
+              >
+                {isDeleting ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                Delete User
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* 3. DETAIL OVERLAY MODAL */}
       {selectedItem && (

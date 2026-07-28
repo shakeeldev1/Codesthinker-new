@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import bcrypt from 'bcryptjs';
 import prisma from '../db';
 import { AppError } from '../middleware/errorHandler';
 import logger from '../utils/logger';
@@ -162,10 +163,6 @@ export const loginAdmin = async (
       throw new AppError('Username and password are required', 400);
     }
 
-    if (username !== config.adminUsername || password !== config.adminPassword) {
-      throw new AppError('Invalid credentials', 401);
-    }
-
     const isProd = config.nodeEnv === 'production';
     const cookieOptions: any = {
       httpOnly: true,
@@ -178,11 +175,39 @@ export const loginAdmin = async (
       cookieOptions.maxAge = 30 * 24 * 60 * 60 * 1000; // 30 days
     }
 
-    res.cookie('admin_api_key', config.apiKey, cookieOptions);
+    // 1. Check root admin from env
+    if (username === config.adminUsername && password === config.adminPassword) {
+      res.cookie('admin_api_key', config.apiKey, cookieOptions);
+      return res.status(200).json({
+        success: true,
+        message: 'Logged in successfully',
+        role: 'super_admin',
+        permissions: [
+          'view_contacts', 'view_services', 'view_jobs', 'view_internships',
+          'delete_records', 'manage_users',
+        ],
+      });
+    }
+
+    // 2. Check sub-admin from DB
+    const dbUser = await prisma.adminUser.findUnique({ where: { username } });
+    if (!dbUser || !dbUser.isActive) {
+      throw new AppError('Invalid credentials', 401);
+    }
+
+    const passwordMatch = await bcrypt.compare(password, dbUser.password);
+    if (!passwordMatch) {
+      throw new AppError('Invalid credentials', 401);
+    }
+
+    // For sub-admins, store their DB id as the cookie value
+    res.cookie('admin_api_key', dbUser.id, cookieOptions);
 
     return res.status(200).json({
       success: true,
       message: 'Logged in successfully',
+      role: dbUser.role,
+      permissions: dbUser.permissions,
     });
   } catch (error) {
     return next(error);
