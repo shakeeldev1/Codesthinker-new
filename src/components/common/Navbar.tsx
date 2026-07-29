@@ -126,6 +126,9 @@ const Navbar: React.FC = () => {
     const isLightHeroPage = 
         location.pathname.startsWith('/projects') ||
         location.pathname === '/careers' ||
+        location.pathname.startsWith('/apply') ||
+       // location.pathname === '/privacy' ||
+       // location.pathname === '/terms' ||
         location.pathname === '/services/gaming' ||
         location.pathname === '/services/resources' ||
        //location.pathname === '/services/ui-ux' ||
