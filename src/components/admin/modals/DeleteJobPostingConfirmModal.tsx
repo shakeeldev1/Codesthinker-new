@@ -37,7 +37,7 @@ export const DeleteJobPostingConfirmModal: React.FC<DeleteJobPostingConfirmModal
           <button
             onClick={onConfirm}
             disabled={isDeleting}
-            className="px-5 py-2.5 bg-red-655 hover:bg-red-500 text-white text-sm font-semibold rounded-xl transition-all flex items-center gap-2 disabled:opacity-50 cursor-pointer"
+            className="px-5 py-2.5 bg-red-655 hover:bg-red-500 text-black border text-sm font-semibold rounded-xl transition-all flex items-center gap-2 disabled:opacity-50 cursor-pointer"
           >
             {isDeleting ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
             Delete Role

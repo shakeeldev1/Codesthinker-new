@@ -77,9 +77,9 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
               <img 
                 src="/logo-blue.png" 
                 alt="Code's Thinker Logo" 
-                className="h-8 w-auto object-contain" 
+                className="h-9 w-auto object-contain" 
               />
-              <span className="text-[10px] text-amber-600 bg-amber-50 border border-amber-200 uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full">
+              <span className="text-[11px] text-amber-600 bg-amber-50 border border-amber-200 uppercase tracking-wider font-extrabold px-2.5 py-0.5 rounded-full">
                 Admin
               </span>
             </div>
@@ -96,39 +96,39 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
           </div>
 
           {/* Navigation Items */}
-          <nav className="p-4 space-y-1 font-medium flex-1">
+          <nav className="p-4 space-y-1 font-semibold flex-1">
             
             <button
               onClick={() => handleTabClick('overview')}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold transition-all ${
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold transition-all ${
                 activeTab === 'overview'
                   ? 'bg-[#08061E] text-white shadow-md shadow-[#08061E]/15'
                   : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
               }`}
             >
               <span className="flex items-center gap-3">
-                <LayoutDashboard className="w-4 h-4 text-amber-500" />
+                <LayoutDashboard className="w-4.5 h-4.5 text-amber-500" />
                 Overview
               </span>
-              {activeTab === 'overview' && <ChevronRight className="w-3.5 h-3.5 text-amber-400" />}
+              {activeTab === 'overview' && <ChevronRight className="w-4 h-4 text-amber-400" />}
             </button>
 
             <div className="h-px bg-slate-200 my-4 mx-2"></div>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-4 mb-2">Form Submissions</p>
+            <p className="text-[11px] font-black text-slate-400 uppercase tracking-wider px-4 mb-2">Form Submissions</p>
 
             <button
               onClick={() => handleTabClick('contacts')}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold transition-all ${
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold transition-all ${
                 activeTab === 'contacts'
                   ? 'bg-[#08061E] text-white shadow-md shadow-[#08061E]/15'
                   : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
               }`}
             >
               <span className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-blue-500" />
+                <Mail className="w-4.5 h-4.5 text-blue-500" />
                 Contact Inquiries
               </span>
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+              <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${
                 activeTab === 'contacts' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-100 text-slate-600 border border-slate-200'
               }`}>
                 {stats.contacts}
@@ -137,17 +137,17 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
 
             <button
               onClick={() => handleTabClick('services')}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold transition-all ${
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold transition-all ${
                 activeTab === 'services'
                   ? 'bg-[#08061E] text-white shadow-md shadow-[#08061E]/15'
                   : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
               }`}
             >
               <span className="flex items-center gap-3">
-                <FileText className="w-4 h-4 text-purple-500" />
+                <FileText className="w-4.5 h-4.5 text-purple-500" />
                 Service Requests
               </span>
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+              <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${
                 activeTab === 'services' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-100 text-slate-600 border border-slate-200'
               }`}>
                 {stats.serviceInquiries}
@@ -156,17 +156,17 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
 
             <button
               onClick={() => handleTabClick('jobs')}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold transition-all ${
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold transition-all ${
                 activeTab === 'jobs'
                   ? 'bg-[#08061E] text-white shadow-md shadow-[#08061E]/15'
                   : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
               }`}
             >
               <span className="flex items-center gap-3">
-                <Briefcase className="w-4 h-4 text-amber-500" />
+                <Briefcase className="w-4.5 h-4.5 text-amber-500" />
                 Job Applications
               </span>
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+              <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${
                 activeTab === 'jobs' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-100 text-slate-600 border border-slate-200'
               }`}>
                 {stats.jobApplications}
@@ -175,17 +175,17 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
 
             <button
               onClick={() => handleTabClick('internships')}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold transition-all ${
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold transition-all ${
                 activeTab === 'internships'
                   ? 'bg-[#08061E] text-white shadow-md shadow-[#08061E]/15'
                   : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
               }`}
             >
               <span className="flex items-center gap-3">
-                <GraduationCap className="w-4 h-4 text-emerald-500" />
+                <GraduationCap className="w-4.5 h-4.5 text-emerald-500" />
                 Internships
               </span>
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+              <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${
                 activeTab === 'internships' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-100 text-slate-600 border border-slate-200'
               }`}>
                 {stats.internshipApplications}
@@ -195,21 +195,21 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
             {userPermissions.includes('manage_users') && (
               <>
                 <div className="h-px bg-slate-200 my-4 mx-2"></div>
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-4 mb-2">Management</p>
+                <p className="text-[11px] font-black text-slate-400 uppercase tracking-wider px-4 mb-2">Management</p>
                 
                 <button
                   onClick={() => handleTabClick('users')}
-                  className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold transition-all ${
+                  className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold transition-all ${
                     activeTab === 'users'
                       ? 'bg-[#08061E] text-white shadow-md shadow-[#08061E]/15'
                       : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
                   }`}
                 >
                   <span className="flex items-center gap-3">
-                    <Users className="w-4 h-4 text-indigo-500" />
+                    <Users className="w-4.5 h-4.5 text-indigo-500" />
                     Admin Users
                   </span>
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                  <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${
                     activeTab === 'users' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-100 text-slate-600 border border-slate-200'
                   }`}>
                     {adminUsersLength}
@@ -218,17 +218,17 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
 
                 <button
                   onClick={() => handleTabClick('jobPostings')}
-                  className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold transition-all mt-1 ${
+                  className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold transition-all mt-1 ${
                     activeTab === 'jobPostings'
                       ? 'bg-[#08061E] text-white shadow-md shadow-[#08061E]/15'
                       : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
                   }`}
                 >
                   <span className="flex items-center gap-3">
-                    <Briefcase className="w-4 h-4 text-amber-500" />
+                    <Briefcase className="w-4.5 h-4.5 text-amber-500" />
                     Job Postings
                   </span>
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                  <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${
                     activeTab === 'jobPostings' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-100 text-slate-600 border border-slate-200'
                   }`}>
                     {jobPostingsLength}
@@ -238,20 +238,20 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
             )}
 
             <div className="h-px bg-slate-200 my-4 mx-2"></div>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-4 mb-2">Preferences</p>
+            <p className="text-[11px] font-black text-slate-400 uppercase tracking-wider px-4 mb-2">Preferences</p>
             <button
               onClick={() => handleTabClick('settings')}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold transition-all ${
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold transition-all ${
                 activeTab === 'settings'
                   ? 'bg-[#08061E] text-white shadow-md shadow-[#08061E]/15'
                   : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
               }`}
             >
               <span className="flex items-center gap-3">
-                <Settings className="w-4 h-4 text-slate-500" />
+                <Settings className="w-4.5 h-4.5 text-slate-500" />
                 Settings
               </span>
-              {activeTab === 'settings' && <ChevronRight className="w-3.5 h-3.5 text-amber-400" />}
+              {activeTab === 'settings' && <ChevronRight className="w-4 h-4 text-amber-400" />}
             </button>
           </nav>
         </div>
@@ -259,13 +259,13 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
         {/* User Session Footer */}
         <div className="p-4 border-t border-slate-200 bg-slate-50 shrink-0">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-[#08061E] text-amber-400 flex items-center justify-center font-black text-xs uppercase shadow-sm">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-9 h-9 rounded-full bg-[#08061E] text-amber-400 flex items-center justify-center font-black text-sm uppercase shadow-sm shrink-0">
                 A
               </div>
               <div className="overflow-hidden">
-                <p className="text-xs font-bold text-slate-900 truncate">Administrator</p>
-                <span className={`text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.2 rounded border inline-block ${ROLE_COLORS[userRole] || ROLE_COLORS['viewer']}`}>
+                <p className="text-sm font-bold text-slate-900 truncate">Administrator</p>
+                <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border inline-block truncate ${ROLE_COLORS[userRole] || ROLE_COLORS['viewer']}`}>
                   {userRole.replace(/_/g, ' ')}
                 </span>
               </div>
@@ -274,9 +274,9 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
             <button
               onClick={handleLogout}
               title="Logout"
-              className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+              className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all shrink-0"
             >
-              <LogOut className="w-4 h-4" />
+              <LogOut className="w-4.5 h-4.5" />
             </button>
           </div>
         </div>

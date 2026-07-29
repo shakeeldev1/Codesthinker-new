@@ -44,7 +44,7 @@ export const DeleteConfirmModal: React.FC<DeleteConfirmModalProps> = ({
           <button
             onClick={onConfirm}
             disabled={isDeleting}
-            className="bg-red-650 hover:bg-red-500 text-white font-bold text-xs px-4 py-2 rounded-xl transition-all shadow-lg shadow-red-600/10 flex items-center gap-1 cursor-pointer"
+            className="bg-slate-100 hover:bg-red-500 text-black font-bold text-xs px-4 py-2 rounded-xl transition-all shadow-lg shadow-red-600/10 flex items-center gap-1 cursor-pointer"
           >
             {isDeleting ? (
               <>
