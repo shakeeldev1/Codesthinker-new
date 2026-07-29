@@ -50,10 +50,10 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
           </button>
         )}
 
-        <h1 className="text-base sm:text-lg font-black text-slate-900 capitalize flex items-center gap-2 font-outfit tracking-tight">
+        <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 capitalize flex items-center gap-2.5 font-outfit tracking-tight">
           {getTabTitle(activeTab)}
           {activeTab !== 'overview' && activeTab !== 'settings' && (
-            <span className="hidden sm:inline-block text-[10px] font-extrabold bg-amber-50 border border-amber-200 text-amber-700 px-2 py-0.5 rounded-md uppercase tracking-wider">
+            <span className="hidden sm:inline-block text-xs font-extrabold bg-amber-50 border border-amber-200 text-amber-700 px-2.5 py-0.5 rounded-md uppercase tracking-wider">
               Listings
             </span>
           )}
@@ -69,7 +69,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
           <RefreshCw className="w-4 h-4" />
         </button>
         <div className="hidden sm:block h-6 w-px bg-slate-200"></div>
-        <div className="hidden sm:block text-xs font-semibold text-slate-500">
+        <div className="hidden sm:block text-sm font-semibold text-slate-500">
           System Date: <span className="font-bold text-slate-800">{new Date().toLocaleDateString()}</span>
         </div>
       </div>

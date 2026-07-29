@@ -2,12 +2,31 @@
 
 @theme {
   --breakpoint-xs: 480px;
+  --font-sans: 'Outfit', 'Plus Jakarta Sans', 'Inter', 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-outfit: 'Outfit', sans-serif;
+  --font-space: 'Space Grotesk', sans-serif;
+  --font-vibes: 'Great Vibes', cursive;
+  --font-inter: 'Inter', sans-serif;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body, input, textarea, select, button {
+  font-family: 'Outfit', 'Plus Jakarta Sans', 'Inter', 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
 }
 
 body {
   overflow-x: hidden;
 }
-button{
+
+button {
   cursor: pointer;
 }
 
