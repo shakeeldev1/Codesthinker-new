@@ -80,7 +80,9 @@ export const DetailModal: React.FC<DetailModalProps> = ({
                 </div>
                 <div className="bg-[#1A163B] p-4 rounded-2xl border border-[#2A2454]">
                   <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Company & Role</span>
-                  <p className="font-bold text-white text-sm mt-1">{selectedItem.data.companyName} ({selectedItem.data.jobTitle})</p>
+                  <p className="font-bold text-white text-sm mt-1">
+                    {selectedItem.data.company || selectedItem.data.companyName || 'N/A'} {selectedItem.data.jobTitle ? `(${selectedItem.data.jobTitle})` : ''}
+                  </p>
                 </div>
               </div>
 
@@ -100,7 +102,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({
                   <FileText className="w-4 h-4 text-[#863bff]" />
                   <div>
                     <span className="text-[9px] font-bold text-slate-400 block uppercase">Requested Service</span>
-                    <span className="text-xs font-bold text-white">{selectedItem.data.serviceNeeded}</span>
+                    <span className="text-xs font-bold text-white">{selectedItem.data.service || selectedItem.data.serviceNeeded || 'N/A'}</span>
                   </div>
                 </div>
                 <div className="bg-[#1A163B] p-3 rounded-xl border border-[#2A2454] flex items-center gap-2">

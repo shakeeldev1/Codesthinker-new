@@ -151,13 +151,13 @@ export const SubmissionsTab: React.FC<SubmissionsTabProps> = ({
                         </td>
                         <td className={cellPadding}>
                           <div>
-                            <p className="font-medium text-slate-700">{item.companyName}</p>
-                            <p className="text-slate-400 text-[11px]">{item.jobTitle}</p>
+                            <p className="font-medium text-slate-700">{item.company || item.companyName || 'N/A'}</p>
+                            {item.jobTitle && <p className="text-slate-400 text-[11px]">{item.jobTitle}</p>}
                           </div>
                         </td>
                         <td className={cellPadding}>
                           <span className="text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-0.5 rounded-full">
-                            {item.serviceNeeded}
+                            {item.service || item.serviceNeeded || 'N/A'}
                           </span>
                         </td>
                         <td className={cellPadding}>
