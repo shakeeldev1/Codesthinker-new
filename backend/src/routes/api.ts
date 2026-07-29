@@ -17,6 +17,7 @@ import {
   deleteInternshipApplication,
   updateJobApplication,
   updateInternshipApplication,
+  pingSupabase,
 } from '../controllers/admin';
 import {
   getAdminUsers,
@@ -41,6 +42,10 @@ import { protectAdmin, requirePermission } from '../middleware/auth';
 import { noCache } from '../middleware/nocache';
 
 const router = Router();
+
+// Keep-Alive / Supabase Health Check Routes
+router.get('/ping', pingSupabase);
+router.get('/health', pingSupabase);
 
 // Public Submission Routes
 router.post('/contact', validateRequest(contactSchema), submitContact);

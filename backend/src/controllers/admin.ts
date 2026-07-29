@@ -399,3 +399,21 @@ export const updateInternshipApplication = async (
     return next(error);
   }
 };
+
+export const pingSupabase = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    // Perform a lightweight query to keep Supabase PostgreSQL connection active
+    await prisma.$queryRaw`SELECT 1`;
+    return res.status(200).json({
+      status: 'ok',
+      message: 'Supabase database pinged successfully. Connection is active.',
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
