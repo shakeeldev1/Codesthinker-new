@@ -13,6 +13,7 @@ interface JobPostingsTabProps {
   onCreateJobPostingClick: () => void;
   onEditJobPostingClick: (posting: JobPosting) => void;
   onDeleteJobPostingClick: (posting: JobPosting) => void;
+  onViewJobPostingClick?: (posting: JobPosting) => void;
   onDownloadResume: (type: string, id: string, filename: string) => void;
   onViewApplication?: (app: JobApplication) => void;
   onEditApplication?: (app: JobApplication) => void;
@@ -29,6 +30,7 @@ export const JobPostingsTab: React.FC<JobPostingsTabProps> = ({
   onCreateJobPostingClick,
   onEditJobPostingClick,
   onDeleteJobPostingClick,
+  onViewJobPostingClick,
   onDownloadResume,
   onViewApplication,
   onEditApplication,
@@ -75,89 +77,107 @@ export const JobPostingsTab: React.FC<JobPostingsTabProps> = ({
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-150 text-xs">
-              {jobPostings.map((posting) => (
-                <React.Fragment key={posting.id}>
-                  <tr className={`transition-all border-b border-slate-150 ${expandedJobPostingId === posting.id ? 'bg-amber-50/30' : 'hover:bg-slate-50/80'}`}>
-                    <td className="py-4 px-6">
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <p className="font-bold text-slate-900 text-sm">{posting.title}</p>
-                          {posting.isFeatured && (
-                            <span className="text-[9px] font-extrabold bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded-md uppercase tracking-wider">
-                              Featured
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-slate-500 text-[11px] mt-0.5">
-                          Created: {formatDate(posting.createdAt)}
-                        </p>
-                      </div>
-                    </td>
-                    <td className="py-4 px-6">
-                      <span className="text-xs text-slate-700 font-semibold">{posting.department}</span>
-                    </td>
-                    <td className="py-4 px-6">
-                      <div className="flex flex-col gap-0.5">
-                        <span className="text-xs text-slate-700 font-semibold capitalize">{posting.category.replace('-', ' ')}</span>
-                        <span className="text-[10px] text-slate-500">{posting.location}</span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-6">
-                      <button
-                        onClick={() => setExpandedJobPostingId(expandedJobPostingId === posting.id ? null : posting.id)}
-                        className="flex items-center gap-1.5 text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 px-3 py-1 rounded-lg transition-all"
-                      >
-                        <Users className="w-3.5 h-3.5" />
-                        {posting._count?.applications ?? 0} Applicants
-                      </button>
-                    </td>
-                    <td className="py-4 px-6">
-                      {posting.isActive ? (
-                        <span className="flex items-center gap-1.5 text-emerald-600 text-xs font-bold">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                          Active
-                        </span>
-                      ) : (
-                        <span className="flex items-center gap-1.5 text-slate-400 text-xs font-semibold">
-                          <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
-                          Closed
-                        </span>
-                      )}
-                    </td>
-                    <td className="py-4 px-6 text-right">
-                      <div className="flex items-center justify-end gap-1.5">
-                        <button
-                          onClick={() => onEditJobPostingClick(posting)}
-                          title="Edit posting"
-                          className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
-                        >
-                          <Edit2 className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={() => onDeleteJobPostingClick(posting)}
-                          title="Delete posting"
-                          className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
+              {jobPostings.map((posting) => {
+                const matchingApplicants = jobs.filter(j => 
+                  j.jobPostingId === posting.id || 
+                  (j.position && posting.title && j.position.trim().toLowerCase() === posting.title.trim().toLowerCase())
+                );
+                const countDisplay = (posting._count?.applications && posting._count.applications > 0) 
+                  ? posting._count.applications 
+                  : matchingApplicants.length;
 
-                  {/* Expanded Applicants sub-row */}
-                  {expandedJobPostingId === posting.id && (
-                    <tr className="bg-slate-50/80">
-                      <td colSpan={6} className="p-4 border-b border-slate-200">
-                        <div className="space-y-3">
-                          <h5 className="text-xs font-bold text-amber-700 uppercase tracking-wider flex items-center gap-2">
-                            <Users className="w-3.5 h-3.5" />
-                            Direct Applicants for {posting.title}
-                          </h5>
-                          {jobs.filter(j => j.jobPostingId === posting.id).length === 0 ? (
-                            <p className="text-xs text-slate-500 italic">No applicants for this specific opening yet.</p>
-                          ) : (
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                              {jobs.filter(j => j.jobPostingId === posting.id).map(app => (
+                return (
+                  <React.Fragment key={posting.id}>
+                    <tr className={`transition-all border-b border-slate-150 ${expandedJobPostingId === posting.id ? 'bg-amber-50/30' : 'hover:bg-slate-50/80'}`}>
+                      <td className="py-4 px-6">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <p className="font-bold text-slate-900 text-sm">{posting.title}</p>
+                            {posting.isFeatured && (
+                              <span className="text-[9px] font-extrabold bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded-md uppercase tracking-wider">
+                                Featured
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-slate-500 text-[11px] mt-0.5">
+                            Created: {formatDate(posting.createdAt)}
+                          </p>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        <span className="text-xs text-slate-700 font-semibold">{posting.department}</span>
+                      </td>
+                      <td className="py-4 px-6">
+                        <div className="flex flex-col gap-0.5">
+                          <span className="text-xs text-slate-700 font-semibold capitalize">{posting.category.replace('-', ' ')}</span>
+                          <span className="text-[10px] text-slate-500">{posting.location}</span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        <button
+                          onClick={() => setExpandedJobPostingId(expandedJobPostingId === posting.id ? null : posting.id)}
+                          className="flex items-center gap-1.5 text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 px-3 py-1 rounded-lg transition-all"
+                        >
+                          <Users className="w-3.5 h-3.5" />
+                          {countDisplay} Applicants
+                        </button>
+                      </td>
+                      <td className="py-4 px-6">
+                        {posting.isActive ? (
+                          <span className="flex items-center gap-1.5 text-emerald-600 text-xs font-bold">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            Active
+                          </span>
+                        ) : (
+                          <span className="flex items-center gap-1.5 text-slate-400 text-xs font-semibold">
+                            <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                            Closed
+                          </span>
+                        )}
+                      </td>
+                      <td className="py-4 px-6 text-right">
+                        <div className="flex items-center justify-end gap-1.5">
+                          {onViewJobPostingClick && (
+                            <button
+                              onClick={() => onViewJobPostingClick(posting)}
+                              title="View job posting details"
+                              className="p-2 text-slate-400 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-all"
+                            >
+                              <Eye className="w-4 h-4" />
+                            </button>
+                          )}
+                          <button
+                            onClick={() => onEditJobPostingClick(posting)}
+                            title="Edit posting"
+                            className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                          >
+                            <Edit2 className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => onDeleteJobPostingClick(posting)}
+                            title="Delete posting"
+                            className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+
+                    {/* Expanded Applicants sub-row */}
+                    {expandedJobPostingId === posting.id && (
+                      <tr className="bg-slate-50/80">
+                        <td colSpan={6} className="p-4 border-b border-slate-200">
+                          <div className="space-y-3">
+                            <h5 className="text-xs font-bold text-amber-700 uppercase tracking-wider flex items-center gap-2">
+                              <Users className="w-3.5 h-3.5" />
+                              Direct Applicants for {posting.title}
+                            </h5>
+                            {matchingApplicants.length === 0 ? (
+                              <p className="text-xs text-slate-500 italic">No applicants for this specific opening yet.</p>
+                            ) : (
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                {matchingApplicants.map(app => (
                                 <div key={app.id} className="bg-white border border-slate-200/80 rounded-xl p-3.5 flex justify-between items-center text-xs shadow-xs">
                                   <div>
                                     <p className="font-bold text-slate-900">{app.fullName}</p>
@@ -209,16 +229,17 @@ export const JobPostingsTab: React.FC<JobPostingsTabProps> = ({
                     </tr>
                   )}
                 </React.Fragment>
-              ))}
-            </tbody>
-          </table>
-          {jobPostings.length === 0 && !isLoading && (
-            <div className="text-center py-16 text-slate-400 text-xs font-medium">
-              No job postings created yet. Click "Create Job Posting" to add one.
-            </div>
-          )}
-        </div>
+              );
+            })}
+          </tbody>
+        </table>
+        {jobPostings.length === 0 && !isLoading && (
+          <div className="text-center py-16 text-slate-400 text-xs font-medium">
+            No job postings created yet. Click "Create Job Posting" to add one.
+          </div>
+        )}
       </div>
     </div>
-  );
+  </div>
+);
 };

@@ -36,6 +36,7 @@ import { DeleteUserConfirmModal } from '../components/admin/modals/DeleteUserCon
 import { JobPostingFormModal } from '../components/admin/modals/JobPostingFormModal';
 import { DeleteJobPostingConfirmModal } from '../components/admin/modals/DeleteJobPostingConfirmModal';
 import { EditSubmissionModal } from '../components/admin/modals/EditSubmissionModal';
+import { ViewJobPostingModal } from '../components/admin/modals/ViewJobPostingModal';
 
 export default function AdminDashboard() {
   // Auth state
@@ -165,6 +166,7 @@ export default function AdminDashboard() {
   const [jobPostingFormError, setJobPostingFormError] = useState<string>('');
   const [jobPostingActionSuccess, setJobPostingActionSuccess] = useState<string>('');
   const [deleteJobPostingConfirm, setDeleteJobPostingConfirm] = useState<JobPosting | null>(null);
+  const [viewingJobPosting, setViewingJobPosting] = useState<JobPosting | null>(null);
 
   // Check login on mount by attempting to fetch overview stats
   useEffect(() => {
@@ -315,9 +317,21 @@ export default function AdminDashboard() {
     }
   };
 
-  const fetchTabData = async (tab: TabType) => {
+  const fetchTabData = async (tab: TabType, forceLoading: boolean = false) => {
     if (tab === 'overview' || tab === 'settings') return;
-    setIsLoading(true);
+
+    const hasData = 
+      (tab === 'contacts' && contacts.length > 0) ||
+      (tab === 'services' && services.length > 0) ||
+      (tab === 'jobs' && jobs.length > 0) ||
+      (tab === 'internships' && internships.length > 0) ||
+      (tab === 'users' && adminUsers.length > 0) ||
+      (tab === 'jobPostings' && jobPostings.length > 0);
+
+    if (!hasData || forceLoading) {
+      setIsLoading(true);
+    }
+
     try {
       let endpoint = '';
       if (tab === 'contacts') endpoint = '/api/v1/admin/contacts';
@@ -546,27 +560,62 @@ export default function AdminDashboard() {
     setShowJobPostingModal(true);
   };
 
-  const openEditJobPostingModal = (posting: JobPosting) => {
-    setEditingJobPosting(posting);
+  const openEditJobPostingModal = async (posting: JobPosting) => {
+    let fullPosting = posting;
+    if (!posting.description && posting.id) {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/v1/admin/job-postings/${posting.id}`, {
+          headers: getAuthHeaders(),
+          credentials: 'include',
+        });
+        if (res.ok) {
+          const result = await res.json();
+          if (result.data) fullPosting = result.data;
+        }
+      } catch (err) {
+        console.error('Error fetching full job posting details:', err);
+      }
+    }
+
+    setEditingJobPosting(fullPosting);
     setJobPostingForm({
-      title: posting.title,
-      department: posting.department,
-      category: posting.category,
-      location: posting.location,
-      description: posting.description,
-      requirements: posting.requirements.join('\n'),
-      responsibilities: posting.responsibilities.join('\n'),
-      benefits: posting.benefits.join('\n'),
-      salaryMin: posting.salaryMin ? String(posting.salaryMin) : '',
-      salaryMax: posting.salaryMax ? String(posting.salaryMax) : '',
-      salaryVisible: posting.salaryVisible,
-      deadline: posting.deadline ? posting.deadline.substring(0, 10) : '',
-      isActive: posting.isActive,
-      isFeatured: posting.isFeatured,
+      title: fullPosting.title || '',
+      department: fullPosting.department || 'Engineering',
+      category: fullPosting.category || 'full-time',
+      location: fullPosting.location || '',
+      description: fullPosting.description || '',
+      requirements: Array.isArray(fullPosting.requirements) ? fullPosting.requirements.join('\n') : '',
+      responsibilities: Array.isArray(fullPosting.responsibilities) ? fullPosting.responsibilities.join('\n') : '',
+      benefits: Array.isArray(fullPosting.benefits) ? fullPosting.benefits.join('\n') : '',
+      salaryMin: fullPosting.salaryMin ? String(fullPosting.salaryMin) : '',
+      salaryMax: fullPosting.salaryMax ? String(fullPosting.salaryMax) : '',
+      salaryVisible: !!fullPosting.salaryVisible,
+      deadline: fullPosting.deadline ? fullPosting.deadline.substring(0, 10) : '',
+      isActive: fullPosting.isActive ?? true,
+      isFeatured: !!fullPosting.isFeatured,
     });
     setJobPostingFormError('');
     setJobPostingActionSuccess('');
     setShowJobPostingModal(true);
+  };
+
+  const openViewJobPostingModal = async (posting: JobPosting) => {
+    let fullPosting = posting;
+    if (!posting.description && posting.id) {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/v1/admin/job-postings/${posting.id}`, {
+          headers: getAuthHeaders(),
+          credentials: 'include',
+        });
+        if (res.ok) {
+          const result = await res.json();
+          if (result.data) fullPosting = result.data;
+        }
+      } catch (err) {
+        console.error('Error fetching full job posting details:', err);
+      }
+    }
+    setViewingJobPosting(fullPosting);
   };
 
   const handleSaveJobPosting = async () => {
@@ -806,6 +855,7 @@ export default function AdminDashboard() {
               onCreateJobPostingClick={openCreateJobPostingModal}
               onEditJobPostingClick={openEditJobPostingModal}
               onDeleteJobPostingClick={(posting) => setDeleteJobPostingConfirm(posting)}
+              onViewJobPostingClick={openViewJobPostingModal}
               onDownloadResume={handleDownloadResume}
               onViewApplication={(app) => setSelectedItem({ type: 'jobs', data: app })}
               onEditApplication={(app) => setEditingSubmissionItem({ type: 'jobs', data: app })}
@@ -893,6 +943,13 @@ export default function AdminDashboard() {
         isDeleting={isDeleting}
         onClose={() => setDeleteJobPostingConfirm(null)}
         onConfirm={handleDeleteJobPosting}
+      />
+
+      {/* VIEW JOB POSTING DETAILS MODAL */}
+      <ViewJobPostingModal
+        posting={viewingJobPosting}
+        onClose={() => setViewingJobPosting(null)}
+        onEdit={openEditJobPostingModal}
       />
 
       {/* 3. DETAIL OVERLAY MODAL */}

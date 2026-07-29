@@ -184,7 +184,7 @@ export const loginAdmin = async (
     }
 
     // 1. Check DB for matching user by username OR email
-    let dbUser = await prisma.adminUser.findFirst({
+    const dbUser = await prisma.adminUser.findFirst({
       where: {
         OR: [
           { username: username },
@@ -193,28 +193,13 @@ export const loginAdmin = async (
       },
     });
 
-    // 2. Fallback: If no user found in DB, check env credentials and seed into DB
-    if (!dbUser && config.adminUsername && username === config.adminUsername && password === config.adminPassword) {
-      const hashedPassword = await bcrypt.hash(config.adminPassword, 12);
-      dbUser = await prisma.adminUser.create({
-        data: {
-          username: config.adminUsername,
-          email: 'root@codesthinker.com',
-          password: hashedPassword,
-          role: 'super_admin',
-          permissions: ALL_PERMISSIONS,
-          isActive: true,
-        },
-      });
-    }
-
     if (!dbUser || !dbUser.isActive) {
-      throw new AppError('Invalid credentials', 401);
+      throw new AppError('Invalid username or password', 401);
     }
 
     const passwordMatch = await bcrypt.compare(password, dbUser.password);
     if (!passwordMatch) {
-      throw new AppError('Invalid credentials', 401);
+      throw new AppError('Invalid username or password', 401);
     }
 
     res.cookie('admin_api_key', dbUser.id, cookieOptions);

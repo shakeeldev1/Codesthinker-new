@@ -24,12 +24,20 @@ const ROLE_PERMISSIONS: Record<string, string[]> = {
 // Ensure an initial super admin user exists in DB
 export const ensureDefaultAdmin = async () => {
   try {
-    const count = await prisma.adminUser.count();
-    if (count === 0) {
-      const initialUsername = config.adminUsername || 'codesthinker_admin';
-      const initialPassword = config.adminPassword || 'admin123456';
+    const initialUsername = config.adminUsername || 'codesthinker_admin';
+    const initialPassword = config.adminPassword || 'admin123456';
+
+    const existingAdmin = await prisma.adminUser.findFirst({
+      where: {
+        OR: [
+          { username: initialUsername },
+          { email: 'root@codesthinker.com' },
+        ],
+      },
+    });
+
+    if (!existingAdmin) {
       const hashedPassword = await bcrypt.hash(initialPassword, 12);
-      
       const admin = await prisma.adminUser.create({
         data: {
           username: initialUsername,

@@ -17,8 +17,8 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  const statusCode = err.statusCode || 500;
-  const message = err.message || 'Internal Server Error';
+  let statusCode = err.statusCode || 500;
+  let message = err.message || 'An unexpected error occurred';
 
   logger.error(`API Error: [${req.method}] ${req.url}`, err);
 
@@ -30,9 +30,19 @@ export const errorHandler = (
     });
   }
 
+  // Handle Prisma / Database Error Messages safely without exposing stack traces or file paths
+  if (err.message && (err.message.includes('prisma') || err.message.includes('Invocation') || err.code?.startsWith('P'))) {
+    if (req.url.includes('/admin/login')) {
+      message = 'Invalid username or password';
+      statusCode = 401;
+    } else {
+      message = 'A database error occurred. Please try again.';
+      statusCode = 500;
+    }
+  }
+
   res.status(statusCode).json({
     success: false,
     message,
-    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
   });
 };
