@@ -112,34 +112,27 @@ export const AdminUsersTab: React.FC<AdminUsersTabProps> = ({
                     </td>
                     <td className="py-4 px-6">
                       <div className="flex items-center justify-end gap-1">
-                        {!user.isRoot && (
-                          <>
-                            <button
-                              onClick={() => onEditUserClick(user)}
-                              title="Edit user"
-                              className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
-                            >
-                              <Edit2 className="w-3.5 h-3.5" />
-                            </button>
-                            <button
-                              onClick={() => onResetPasswordClick(user.id)}
-                              title="Reset password"
-                              className="p-2 text-slate-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all"
-                            >
-                              <KeyRound className="w-3.5 h-3.5" />
-                            </button>
-                            <button
-                              onClick={() => onDeleteUserClick(user)}
-                              title="Delete user"
-                              className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
-                            >
-                              <Trash2 className="w-3.5 h-3.5" />
-                            </button>
-                          </>
-                        )}
-                        {user.isRoot && (
-                          <span className="text-[9px] text-amber-700 font-extrabold uppercase tracking-wider bg-amber-50 border border-amber-200 px-2 py-0.5 rounded whitespace-nowrap">Root — Protected</span>
-                        )}
+                        <button
+                          onClick={() => onEditUserClick(user)}
+                          title="Edit user"
+                          className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                        >
+                          <Edit2 className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => onResetPasswordClick(user.id)}
+                          title="Reset password"
+                          className="p-2 text-slate-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all"
+                        >
+                          <KeyRound className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => onDeleteUserClick(user)}
+                          title="Delete user"
+                          className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
                       </div>
                     </td>
                   </tr>

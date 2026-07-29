@@ -5,7 +5,7 @@ import { AppError } from '../middleware/errorHandler';
 import logger from '../utils/logger';
 import { config } from '../config';
 
-const ALL_PERMISSIONS = [
+export const ALL_PERMISSIONS = [
   'view_contacts',
   'view_services',
   'view_jobs',
@@ -21,12 +21,41 @@ const ROLE_PERMISSIONS: Record<string, string[]> = {
   custom: [],
 };
 
+// Ensure an initial super admin user exists in DB
+export const ensureDefaultAdmin = async () => {
+  try {
+    const count = await prisma.adminUser.count();
+    if (count === 0) {
+      const initialUsername = config.adminUsername || 'codesthinker_admin';
+      const initialPassword = config.adminPassword || 'admin123456';
+      const hashedPassword = await bcrypt.hash(initialPassword, 12);
+      
+      const admin = await prisma.adminUser.create({
+        data: {
+          username: initialUsername,
+          email: 'root@codesthinker.com',
+          password: hashedPassword,
+          role: 'super_admin',
+          permissions: ALL_PERMISSIONS,
+          isActive: true,
+        },
+      });
+      logger.info(`Default admin user seeded in DB: ${admin.username}`);
+      return admin;
+    }
+  } catch (err) {
+    logger.error('Failed to ensure default admin user:', err);
+  }
+};
+
 export const getAdminUsers = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
+    await ensureDefaultAdmin();
+
     const users = await prisma.adminUser.findMany({
       select: {
         id: true,
@@ -41,22 +70,9 @@ export const getAdminUsers = async (
       orderBy: { createdAt: 'desc' },
     });
 
-    // Prepend the root super admin (from env) as a non-deletable entry
-    const rootAdmin = {
-      id: 'root',
-      username: config.adminUsername,
-      email: 'root@codesthinker.com',
-      role: 'super_admin',
-      permissions: ALL_PERMISSIONS,
-      isActive: true,
-      createdAt: new Date(0).toISOString(),
-      updatedAt: new Date(0).toISOString(),
-      isRoot: true,
-    };
-
     return res.status(200).json({
       success: true,
-      data: [rootAdmin, ...users],
+      data: users,
     });
   } catch (error) {
     return next(error);
@@ -123,27 +139,44 @@ export const updateAdminUser = async (
   next: NextFunction
 ) => {
   try {
-    const { id } = req.params;
-    const { username, email, role, permissions: customPerms, isActive } = req.body;
+    let { id } = req.params;
+    const { username, email, role, permissions: customPerms, isActive, password } = req.body;
 
-    if (!['super_admin', 'editor', 'viewer', 'custom'].includes(role)) {
+    if (role && !['super_admin', 'editor', 'viewer', 'custom'].includes(role)) {
       throw new AppError('Invalid role', 400);
     }
 
     const permissions =
       role === 'custom'
         ? (customPerms || []).filter((p: string) => ALL_PERMISSIONS.includes(p))
-        : ROLE_PERMISSIONS[role];
+        : (ROLE_PERMISSIONS[role] || ALL_PERMISSIONS);
+
+    // If id is 'root', map to actual DB super admin user if found
+    if (id === 'root') {
+      await ensureDefaultAdmin();
+      const rootDbUser = await prisma.adminUser.findFirst({
+        where: { OR: [{ role: 'super_admin' }, { username: config.adminUsername }] },
+      });
+      if (rootDbUser) {
+        id = rootDbUser.id;
+      }
+    }
+
+    const updateData: any = {
+      ...(username && { username }),
+      ...(email && { email }),
+      ...(role && { role }),
+      permissions,
+      ...(typeof isActive === 'boolean' && { isActive }),
+    };
+
+    if (password && password.length >= 8) {
+      updateData.password = await bcrypt.hash(password, 12);
+    }
 
     const user = await prisma.adminUser.update({
       where: { id },
-      data: {
-        ...(username && { username }),
-        ...(email && { email }),
-        role,
-        permissions,
-        ...(typeof isActive === 'boolean' && { isActive }),
-      },
+      data: updateData,
       select: {
         id: true,
         username: true,
@@ -175,10 +208,15 @@ export const deleteAdminUser = async (
   next: NextFunction
 ) => {
   try {
-    const { id } = req.params;
+    let { id } = req.params;
 
     if (id === 'root') {
-      throw new AppError('Cannot delete the root super admin', 403);
+      const rootDbUser = await prisma.adminUser.findFirst({
+        where: { OR: [{ role: 'super_admin' }, { username: config.adminUsername }] },
+      });
+      if (rootDbUser) {
+        id = rootDbUser.id;
+      }
     }
 
     await prisma.adminUser.delete({ where: { id } });
@@ -199,7 +237,7 @@ export const resetAdminUserPassword = async (
   next: NextFunction
 ) => {
   try {
-    const { id } = req.params;
+    let { id } = req.params;
     const { newPassword } = req.body;
 
     if (!newPassword || newPassword.length < 8) {
@@ -207,7 +245,12 @@ export const resetAdminUserPassword = async (
     }
 
     if (id === 'root') {
-      throw new AppError('Root admin password must be changed via environment variables', 403);
+      const rootDbUser = await prisma.adminUser.findFirst({
+        where: { OR: [{ role: 'super_admin' }, { username: config.adminUsername }] },
+      });
+      if (rootDbUser) {
+        id = rootDbUser.id;
+      }
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 12);

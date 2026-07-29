@@ -35,6 +35,7 @@ import { ResetPasswordModal } from '../components/admin/modals/ResetPasswordModa
 import { DeleteUserConfirmModal } from '../components/admin/modals/DeleteUserConfirmModal';
 import { JobPostingFormModal } from '../components/admin/modals/JobPostingFormModal';
 import { DeleteJobPostingConfirmModal } from '../components/admin/modals/DeleteJobPostingConfirmModal';
+import { EditSubmissionModal } from '../components/admin/modals/EditSubmissionModal';
 
 export default function AdminDashboard() {
   // Auth state
@@ -97,6 +98,28 @@ export default function AdminDashboard() {
     type: TabType;
     data: any;
   } | null>(null);
+
+  // Edit Submission Modal state
+  const [editingSubmissionItem, setEditingSubmissionItem] = useState<{
+    type: TabType;
+    data: any;
+  } | null>(null);
+
+  const handleSaveSubmissionEdit = async (type: TabType, id: string, updatedData: any) => {
+    const endpoint = type === 'jobs' 
+      ? `${API_BASE_URL}/api/v1/admin/jobs/${id}` 
+      : `${API_BASE_URL}/api/v1/admin/internships/${id}`;
+    const res = await fetch(endpoint, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(updatedData),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Failed to update record');
+
+    fetchTabData(type);
+  };
 
   // Delete Confirm state
   const [deleteConfirmItem, setDeleteConfirmItem] = useState<{
@@ -751,6 +774,7 @@ export default function AdminDashboard() {
               setSearchQuery={setSearchQuery}
               isLoading={isLoading}
               onViewItem={(item) => setSelectedItem({ type: activeTab, data: item })}
+              onEditItem={(item) => setEditingSubmissionItem({ type: activeTab, data: item })}
               onDeleteItem={(id) => setDeleteConfirmItem({ type: activeTab, id })}
               onDownloadResume={handleDownloadResume}
               density={density}
@@ -783,6 +807,9 @@ export default function AdminDashboard() {
               onEditJobPostingClick={openEditJobPostingModal}
               onDeleteJobPostingClick={(posting) => setDeleteJobPostingConfirm(posting)}
               onDownloadResume={handleDownloadResume}
+              onViewApplication={(app) => setSelectedItem({ type: 'jobs', data: app })}
+              onEditApplication={(app) => setEditingSubmissionItem({ type: 'jobs', data: app })}
+              onDeleteApplication={(id) => setDeleteConfirmItem({ type: 'jobs', id })}
             />
           )}
 
@@ -873,9 +900,19 @@ export default function AdminDashboard() {
         selectedItem={selectedItem}
         onClose={() => setSelectedItem(null)}
         onDownloadResume={handleDownloadResume}
+        onEditItem={(item) => setEditingSubmissionItem({ type: selectedItem?.type || activeTab, data: item })}
       />
 
-      {/* 4. DELETE CONFIRMATION OVERLAY MODAL */}
+      {/* 4. EDIT SUBMISSION OVERLAY MODAL */}
+      <EditSubmissionModal
+        isOpen={!!editingSubmissionItem}
+        type={editingSubmissionItem?.type || 'jobs'}
+        item={editingSubmissionItem?.data}
+        onClose={() => setEditingSubmissionItem(null)}
+        onSave={handleSaveSubmissionEdit}
+      />
+
+      {/* 5. DELETE CONFIRMATION OVERLAY MODAL */}
       <DeleteConfirmModal
         deleteConfirmItem={deleteConfirmItem}
         isDeleting={isDeleting}

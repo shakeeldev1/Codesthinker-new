@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, X, RefreshCw, AlertCircle, Eye, Download, Trash2 } from 'lucide-react';
+import { Search, X, RefreshCw, AlertCircle, Eye, Download, Trash2, Edit2 } from 'lucide-react';
 import type { TabType } from '../../types/admin';
 import { formatDate } from '../../utils/adminHelpers';
 
@@ -10,6 +10,7 @@ interface SubmissionsTabProps {
   setSearchQuery: (query: string) => void;
   isLoading: boolean;
   onViewItem: (item: any) => void;
+  onEditItem?: (item: any) => void;
   onDeleteItem: (id: string) => void;
   onDownloadResume: (type: string, id: string, filename: string) => void;
   density?: 'compact' | 'comfortable';
@@ -22,6 +23,7 @@ export const SubmissionsTab: React.FC<SubmissionsTabProps> = ({
   setSearchQuery,
   isLoading,
   onViewItem,
+  onEditItem,
   onDeleteItem,
   onDownloadResume,
   density = 'comfortable',
@@ -219,6 +221,15 @@ export const SubmissionsTab: React.FC<SubmissionsTabProps> = ({
                         >
                           <Eye className="w-4 h-4" />
                         </button>
+                        {onEditItem && (
+                          <button
+                            onClick={() => onEditItem(item)}
+                            title="Edit Record"
+                            className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                          >
+                            <Edit2 className="w-4 h-4" />
+                          </button>
+                        )}
                         <button
                           onClick={() => onDeleteItem(item.id)}
                           title="Delete Record"

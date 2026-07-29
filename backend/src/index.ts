@@ -13,7 +13,9 @@ const allowedOrigins = [
   'http://localhost:3000',
   'https://codesthinker-rouge.vercel.app',
   'https://codesthinker.com',
-];
+  'https://www.codesthinker.com',
+  process.env.FRONTEND_URL,
+].filter(Boolean) as string[];
 
 // Security Middlewares
 app.use(helmet());

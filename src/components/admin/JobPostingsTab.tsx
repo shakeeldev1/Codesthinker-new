@@ -1,5 +1,5 @@
 import React from 'react';
-import { Plus, CheckCircle2, Users, Edit2, Trash2, Download } from 'lucide-react';
+import { Plus, CheckCircle2, Users, Edit2, Trash2, Download, Eye } from 'lucide-react';
 import type { JobPosting, JobApplication } from '../../types/admin';
 import { formatDate } from '../../utils/adminHelpers';
 
@@ -14,6 +14,9 @@ interface JobPostingsTabProps {
   onEditJobPostingClick: (posting: JobPosting) => void;
   onDeleteJobPostingClick: (posting: JobPosting) => void;
   onDownloadResume: (type: string, id: string, filename: string) => void;
+  onViewApplication?: (app: JobApplication) => void;
+  onEditApplication?: (app: JobApplication) => void;
+  onDeleteApplication?: (id: string) => void;
 }
 
 export const JobPostingsTab: React.FC<JobPostingsTabProps> = ({
@@ -27,6 +30,9 @@ export const JobPostingsTab: React.FC<JobPostingsTabProps> = ({
   onEditJobPostingClick,
   onDeleteJobPostingClick,
   onDownloadResume,
+  onViewApplication,
+  onEditApplication,
+  onDeleteApplication,
 }) => {
   return (
     <div className="space-y-6 animate-fade-in font-sans">
@@ -157,14 +163,43 @@ export const JobPostingsTab: React.FC<JobPostingsTabProps> = ({
                                     <p className="font-bold text-slate-900">{app.fullName}</p>
                                     <p className="text-slate-500 text-[11px] mt-0.5">{app.email} • {app.phone}</p>
                                   </div>
-                                  {app.resumeName && (
-                                    <button
-                                      onClick={() => onDownloadResume('jobs', app.id, app.resumeName)}
-                                      className="flex items-center gap-1 text-[11px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-lg"
-                                    >
-                                      <Download className="w-3 h-3" /> Resume
-                                    </button>
-                                  )}
+                                  <div className="flex items-center gap-1.5">
+                                    {app.resumeName && (
+                                      <button
+                                        onClick={() => onDownloadResume('jobs', app.id, app.resumeName)}
+                                        className="flex items-center gap-1 text-[11px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-lg"
+                                      >
+                                        <Download className="w-3 h-3" /> Resume
+                                      </button>
+                                    )}
+                                    {onViewApplication && (
+                                      <button
+                                        onClick={() => onViewApplication(app)}
+                                        title="View Details"
+                                        className="p-1.5 text-slate-400 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-all"
+                                      >
+                                        <Eye className="w-3.5 h-3.5" />
+                                      </button>
+                                    )}
+                                    {onEditApplication && (
+                                      <button
+                                        onClick={() => onEditApplication(app)}
+                                        title="Edit Application"
+                                        className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                                      >
+                                        <Edit2 className="w-3.5 h-3.5" />
+                                      </button>
+                                    )}
+                                    {onDeleteApplication && (
+                                      <button
+                                        onClick={() => onDeleteApplication(app.id)}
+                                        title="Delete Record"
+                                        className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                                      >
+                                        <Trash2 className="w-3.5 h-3.5" />
+                                      </button>
+                                    )}
+                                  </div>
                                 </div>
                               ))}
                             </div>
