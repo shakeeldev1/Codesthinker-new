@@ -337,3 +337,4 @@ const ApplyForJobForm: React.FC<ApplyForJobFormProps> = ({ jobPostingId, jobTitl
 };
 
 export default ApplyForJobForm;
+
