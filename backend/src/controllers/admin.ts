@@ -4,6 +4,7 @@ import prisma from '../db';
 import { AppError } from '../middleware/errorHandler';
 import logger from '../utils/logger';
 import { config } from '../config';
+import { ensureDefaultAdmin, ALL_PERMISSIONS } from './users';
 
 export const getSubmissionsOverview = async (
   req: Request,
@@ -168,6 +169,8 @@ export const loginAdmin = async (
       throw new AppError('Username and password are required', 400);
     }
 
+    await ensureDefaultAdmin();
+
     const isProd = config.nodeEnv === 'production';
     const cookieOptions: any = {
       httpOnly: true,
@@ -180,32 +183,25 @@ export const loginAdmin = async (
       cookieOptions.maxAge = 30 * 24 * 60 * 60 * 1000; // 30 days
     }
 
-    // 1. Check root admin from env
-    if (username === config.adminUsername && password === config.adminPassword) {
-      res.cookie('admin_api_key', config.apiKey, cookieOptions);
-      return res.status(200).json({
-        success: true,
-        message: 'Logged in successfully',
-        role: 'super_admin',
-        permissions: [
-          'view_contacts', 'view_services', 'view_jobs', 'view_internships',
-          'delete_records', 'manage_users',
+    // 1. Check DB for matching user by username OR email
+    const dbUser = await prisma.adminUser.findFirst({
+      where: {
+        OR: [
+          { username: username },
+          { email: username },
         ],
-      });
-    }
+      },
+    });
 
-    // 2. Check sub-admin from DB
-    const dbUser = await prisma.adminUser.findUnique({ where: { username } });
     if (!dbUser || !dbUser.isActive) {
-      throw new AppError('Invalid credentials', 401);
+      throw new AppError('Invalid username or password', 401);
     }
 
     const passwordMatch = await bcrypt.compare(password, dbUser.password);
     if (!passwordMatch) {
-      throw new AppError('Invalid credentials', 401);
+      throw new AppError('Invalid username or password', 401);
     }
 
-    // For sub-admins, store their DB id as the cookie value
     res.cookie('admin_api_key', dbUser.id, cookieOptions);
 
     return res.status(200).json({
@@ -311,6 +307,96 @@ export const deleteInternshipApplication = async (
     return res.status(200).json({
       success: true,
       message: 'Internship application deleted successfully',
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const updateJobApplication = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const { fullName, email, phone, position, coverLetter } = req.body;
+
+    const updated = await prisma.jobApplication.update({
+      where: { id },
+      data: {
+        ...(fullName && { fullName }),
+        ...(email && { email }),
+        ...(phone && { phone }),
+        ...(position && { position }),
+        ...(coverLetter !== undefined && { coverLetter }),
+      },
+      select: {
+        id: true,
+        fullName: true,
+        email: true,
+        phone: true,
+        position: true,
+        coverLetter: true,
+        resumeName: true,
+        createdAt: true,
+      },
+    });
+
+    logger.info(`Job application updated: ${id}`);
+    return res.status(200).json({ success: true, data: updated });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const updateInternshipApplication = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const { fullName, email, phone, position } = req.body;
+
+    const updated = await prisma.internshipApplication.update({
+      where: { id },
+      data: {
+        ...(fullName && { fullName }),
+        ...(email && { email }),
+        ...(phone && { phone }),
+        ...(position && { position }),
+      },
+      select: {
+        id: true,
+        fullName: true,
+        email: true,
+        phone: true,
+        position: true,
+        resumeName: true,
+        createdAt: true,
+      },
+    });
+
+    logger.info(`Internship application updated: ${id}`);
+    return res.status(200).json({ success: true, data: updated });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const pingSupabase = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    // Perform a lightweight query to keep Supabase PostgreSQL connection active
+    await prisma.$queryRaw`SELECT 1`;
+    return res.status(200).json({
+      status: 'ok',
+      message: 'Supabase database pinged successfully. Connection is active.',
+      timestamp: new Date().toISOString(),
     });
   } catch (error) {
     return next(error);

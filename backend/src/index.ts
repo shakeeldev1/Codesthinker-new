@@ -6,6 +6,8 @@ import apiRouter from './routes/api';
 import { errorHandler } from './middleware/errorHandler';
 import logger from './utils/logger';
 
+import { pingSupabase } from './controllers/admin';
+
 const app = express();
 
 const allowedOrigins = [
@@ -13,7 +15,9 @@ const allowedOrigins = [
   'http://localhost:3000',
   'https://codesthinker-rouge.vercel.app',
   'https://codesthinker.com',
-];
+  'https://www.codesthinker.com',
+  process.env.FRONTEND_URL,
+].filter(Boolean) as string[];
 
 // Security Middlewares
 app.use(helmet());
@@ -46,10 +50,9 @@ app.use((req, res, next) => {
 // API Routes
 app.use('/api/v1', apiRouter);
 
-// Health Check Route
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok', timestamp: new Date() });
-});
+// Health Check & Supabase Keep-Alive Routes
+app.get('/health', pingSupabase);
+app.get('/ping', pingSupabase);
 
 // Route Not Found Handler
 app.use((req, res, next) => {

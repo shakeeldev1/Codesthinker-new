@@ -42,26 +42,32 @@ export const protectAdmin = async (req: Request, res: Response, next: NextFuncti
     return next(new AppError('Unauthorized access. Invalid or missing API key.', 401));
   }
 
-  // Root admin via env API key
-  if (apiKey === config.apiKey) {
-    req.adminUser = {
-      username: config.adminUsername,
-      role: 'super_admin',
-      permissions: [
-        'view_contacts', 'view_services', 'view_jobs', 'view_internships',
-        'delete_records', 'manage_users',
-      ],
-      isRoot: true,
-    };
-    return next();
-  }
-
-  // Sub-admin: apiKey is stored as their DB id
   try {
-    const user = await prisma.adminUser.findUnique({
+    // 1. Try fetching user from DB by ID (cookie contains DB user ID)
+    let user = await prisma.adminUser.findUnique({
       where: { id: apiKey },
       select: { id: true, username: true, role: true, permissions: true, isActive: true },
     });
+
+    // 2. Fallback: If legacy API key from env matches
+    if (!user && config.apiKey && apiKey === config.apiKey) {
+      user = await prisma.adminUser.findFirst({
+        where: { role: 'super_admin' },
+        select: { id: true, username: true, role: true, permissions: true, isActive: true },
+      });
+      if (!user) {
+        req.adminUser = {
+          username: config.adminUsername || 'admin',
+          role: 'super_admin',
+          permissions: [
+            'view_contacts', 'view_services', 'view_jobs', 'view_internships',
+            'delete_records', 'manage_users',
+          ],
+          isRoot: true,
+        };
+        return next();
+      }
+    }
 
     if (!user || !user.isActive) {
       return next(new AppError('Unauthorized access. Invalid or missing API key.', 401));
@@ -71,7 +77,7 @@ export const protectAdmin = async (req: Request, res: Response, next: NextFuncti
       username: user.username,
       role: user.role,
       permissions: user.permissions,
-      isRoot: false,
+      isRoot: user.role === 'super_admin',
     };
     return next();
   } catch {

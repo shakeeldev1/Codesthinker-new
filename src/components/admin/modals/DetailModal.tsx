@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, DollarSign, Clock, FileText, Download, Loader2, Briefcase } from 'lucide-react';
+import { X, DollarSign, Clock, FileText, Download, Loader2, Edit2 } from 'lucide-react';
 import type { TabType } from '../../../types/admin';
 import { formatDate } from '../../../utils/adminHelpers';
 
@@ -10,12 +10,14 @@ interface DetailModalProps {
   } | null;
   onClose: () => void;
   onDownloadResume: (type: string, id: string, filename: string) => Promise<void> | void;
+  onEditItem?: (item: any) => void;
 }
 
 export const DetailModal: React.FC<DetailModalProps> = ({
   selectedItem,
   onClose,
   onDownloadResume,
+  onEditItem,
 }) => {
   const [isDownloading, setIsDownloading] = useState(false);
 
@@ -95,12 +97,26 @@ export const DetailModal: React.FC<DetailModalProps> = ({
             <h3 className="font-extrabold text-slate-900 text-base">Submission Details</h3>
             <span className="text-[10px] text-[#863bff] font-bold">Record ID: {selectedItem.data.id}</span>
           </div>
-          <button
-            onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 rounded-lg transition-all"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            {onEditItem && (
+              <button
+                onClick={() => {
+                  onClose();
+                  onEditItem(selectedItem.data);
+                }}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200 text-xs font-bold rounded-xl transition-all"
+              >
+                <Edit2 className="w-3.5 h-3.5" />
+                Edit
+              </button>
+            )}
+            <button 
+              onClick={onClose}
+              className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 rounded-lg transition-all"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* Content Body */}
@@ -219,8 +235,8 @@ export const DetailModal: React.FC<DetailModalProps> = ({
                   <p className="font-bold text-slate-900 text-sm mt-1">{selectedItem.data.fullName || selectedItem.data.name || selectedItem.data.firstName}</p>
                 </div>
                 <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
-                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Contact Phone</span>
-                  <p className="font-bold text-slate-900 text-sm mt-1">{selectedItem.data.phone || selectedItem.data.phoneNumber}</p>
+                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Position Applied For</span>
+                  <p className="font-bold text-amber-700 text-sm mt-1">{selectedItem.data.position || 'General Application'}</p>
                 </div>
               </div>
 
@@ -229,14 +245,18 @@ export const DetailModal: React.FC<DetailModalProps> = ({
                   <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Email Address</span>
                   <p className="font-bold text-blue-600 text-sm mt-1 break-all">{selectedItem.data.email}</p>
                 </div>
-                <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 flex items-center gap-2.5">
-                  <Briefcase className="w-4 h-4 text-amber-600 shrink-0" />
-                  <div className="min-w-0 flex-1">
-                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Applied Position</span>
-                    <p className="font-bold text-slate-900 text-sm truncate">{selectedItem.data.position || selectedItem.data.appliedPosition || 'N/A'}</p>
-                  </div>
+                <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Contact Phone</span>
+                  <p className="font-bold text-slate-900 text-sm mt-1">{selectedItem.data.phone || selectedItem.data.phoneNumber}</p>
                 </div>
               </div>
+
+              {selectedItem.data.coverLetter && (
+                <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Cover Letter</span>
+                  <p className="text-slate-700 text-xs leading-relaxed whitespace-pre-wrap">{selectedItem.data.coverLetter}</p>
+                </div>
+              )}
 
               {(selectedItem.data.linkedinUrl || selectedItem.data.portfolioUrl || selectedItem.data.links) && (
                 <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">

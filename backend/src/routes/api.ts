@@ -14,7 +14,10 @@ import {
   deleteContactSubmission,
   deleteServiceInquiry,
   deleteJobApplication,
-  deleteInternshipApplication 
+  deleteInternshipApplication,
+  updateJobApplication,
+  updateInternshipApplication,
+  pingSupabase,
 } from '../controllers/admin';
 import {
   getAdminUsers,
@@ -39,6 +42,10 @@ import { protectAdmin, requirePermission } from '../middleware/auth';
 import { noCache } from '../middleware/nocache';
 
 const router = Router();
+
+// Keep-Alive / Supabase Health Check Routes
+router.get('/ping', pingSupabase);
+router.get('/health', pingSupabase);
 
 // Public Submission Routes
 router.post('/contact', validateRequest(contactSchema), submitContact);
@@ -68,6 +75,10 @@ router.get('/admin/job-postings/:id', protectAdmin, noCache, getAdminJobPosting)
 router.post('/admin/job-postings', protectAdmin, requirePermission('manage_users'), noCache, createJobPosting);
 router.put('/admin/job-postings/:id', protectAdmin, requirePermission('manage_users'), noCache, updateJobPosting);
 router.delete('/admin/job-postings/:id', protectAdmin, requirePermission('manage_users'), noCache, deleteJobPosting);
+
+// Admin Update Routes
+router.put('/admin/jobs/:id', protectAdmin, requirePermission('delete_records'), noCache, updateJobApplication);
+router.put('/admin/internships/:id', protectAdmin, requirePermission('delete_records'), noCache, updateInternshipApplication);
 
 // Admin Delete Routes
 router.delete('/admin/contacts/:id', protectAdmin, requirePermission('delete_records'), noCache, deleteContactSubmission);
