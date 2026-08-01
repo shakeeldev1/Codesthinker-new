@@ -138,7 +138,6 @@ export const JobPostingsTab: React.FC<JobPostingsTabProps> = ({
                     </td>
                   </tr>
 
-                  {/* Expanded Applicants sub-row */}
                   {expandedJobPostingId === posting.id && (
                     <tr className="bg-slate-50/80">
                       <td colSpan={6} className="p-4 border-b border-slate-200">

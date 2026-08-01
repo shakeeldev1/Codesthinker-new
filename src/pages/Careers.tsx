@@ -121,10 +121,8 @@ const Careers: React.FC = () => {
 
         <div className="max-w-7xl mx-auto w-full z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative">
           
-          {/* Left Column: Title & Actions */}
           <div className="lg:col-span-7 space-y-6 text-left" data-aos="fade-right">
             
-            {/* Glowing 'We're hiring' Badge */}
             <div className="inline-flex items-center gap-2 bg-orange-50/80 border border-orange-200/55 rounded-full px-3.5 py-1.5 text-xs text-[#F49B21] font-bold shadow-sm shadow-orange-100/50">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -141,7 +139,6 @@ const Careers: React.FC = () => {
               Join a team of creators, designers, and systems architects building premium digital software. We empower businesses globally with next-generation engineering.
             </p>
 
-            {/* In-hero Search Box */}
             <div className="relative max-w-lg flex items-center bg-white border border-gray-250 rounded-2xl p-1.5 shadow-md shadow-gray-200/30 focus-within:border-[#F49B21] focus-within:ring-2 focus-within:ring-[#F49B21]/15 transition-all">
               <span className="text-gray-400 pl-3">
                 <Search className="w-4.5 h-4.5" />
@@ -162,7 +159,6 @@ const Careers: React.FC = () => {
               </a>
             </div>
 
-            {/* Quick Stats Grid */}
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3 pt-6 text-[11px] sm:text-xs font-bold text-gray-500">
               <div className="flex items-center gap-2">
                 <span className="text-gray-900 font-bold bg-white border border-gray-150 rounded-lg w-8 h-8 flex items-center justify-center shadow-sm">5+</span>
@@ -182,14 +178,11 @@ const Careers: React.FC = () => {
 
           </div>
 
-          {/* Right Column: Visual Composition with floating cards */}
           <div className="lg:col-span-5 hidden lg:block relative" data-aos="fade-left">
             <div className="relative w-full h-[400px] flex items-center justify-center">
               
-              {/* Outer structural circle */}
               <div className="absolute w-72 h-72 rounded-full border border-gray-200/50 bg-white/10 backdrop-blur-[2px] animate-pulse pointer-events-none"></div>
 
-              {/* Main Card */}
               <div className="w-64 bg-white border border-gray-150 rounded-3xl p-6 shadow-2xl relative z-10 transition-all hover:scale-[1.02] duration-300">
                 <div className="flex items-center gap-2.5 mb-4">
                   <div className="w-8 h-8 rounded-lg bg-orange-50 border border-orange-200 flex items-center justify-center text-[#F49B21] font-bold text-sm">
@@ -214,7 +207,6 @@ const Careers: React.FC = () => {
                 </div>
               </div>
 
-              {/* Floating Card 1: Software Engineer */}
               <div className="absolute -top-2 -left-4 bg-white/95 backdrop-blur-sm border border-gray-150 rounded-2xl p-4 shadow-xl z-20 flex items-center gap-3 animate-float-custom-1 pointer-events-none select-none">
                 <div className="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center text-[#F49B21] shrink-0 border border-orange-100">
                   <Briefcase size={16} />
@@ -227,7 +219,6 @@ const Careers: React.FC = () => {
                 </div>
               </div>
 
-              {/* Floating Card 2: UI/UX Designer */}
               <div className="absolute bottom-6 -right-4 bg-white/95 backdrop-blur-sm border border-gray-150 rounded-2xl p-4 shadow-xl z-20 flex items-center gap-3 animate-float-custom-2 pointer-events-none select-none">
                 <div className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500 shrink-0 border border-blue-100">
                   <Sparkles size={16} />
@@ -303,7 +294,6 @@ const Careers: React.FC = () => {
             <p className="text-gray-500 text-xs sm:text-sm mt-1.5">Filter by department or browse open postings below.</p>
           </div>
 
-          {/* Search bar */}
           <div className="relative w-full md:max-w-xs shrink-0">
             <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-gray-400">
               <Search className="w-4 h-4" />
@@ -318,7 +308,6 @@ const Careers: React.FC = () => {
           </div>
         </div>
 
-        {/* Filter bar */}
         <div className="flex flex-wrap gap-2 mb-10 pb-6 border-b border-gray-200">
           <div className="flex flex-wrap items-center gap-1.5">
             <span className="text-xs text-gray-400 font-bold mr-2 uppercase tracking-wider">Department:</span>
@@ -357,7 +346,6 @@ const Careers: React.FC = () => {
           </div>
         </div>
 
-        {/* Loading Spinner */}
         {isLoading ? (
           <div className="text-center py-20">
             <div className="w-10 h-10 border-4 border-[#F49B21]/20 border-t-[#F49B21] rounded-full animate-spin mx-auto mb-4"></div>
@@ -372,14 +360,12 @@ const Careers: React.FC = () => {
             </p>
           </div>
         ) : (
-          /* Job Cards list */
           <div className="space-y-6">
             {filteredJobs.map(job => {
               const isExpanded = expandedJobId === job.id;
               return (
                 <div 
                   key={job.id} 
-                  data-aos="fade-up"
                   className={`bg-white border transition-all duration-300 rounded-2xl overflow-hidden shadow-sm hover:shadow-md ${
                     isExpanded ? 'border-[#F49B21]/50 bg-white ring-1 ring-[#F49B21]/20' : 'border-gray-200/80 hover:border-gray-350'
                   }`}
@@ -439,98 +425,90 @@ const Careers: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Card Expanded details */}
-                  <AnimatePresence>
-                    {isExpanded && (
-                      <motion.div 
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="border-t border-gray-100 bg-gray-50/30"
-                      >
-                        <div className="p-6 sm:p-8 space-y-8 text-sm">
-                          
-                          {/* Role Overview */}
-                          <div className="space-y-2">
-                            <h4 className="font-bold text-gray-900 text-xs uppercase tracking-wider text-gray-400">Role Description</h4>
-                            <p className="text-gray-650 leading-relaxed max-w-4xl whitespace-pre-wrap">{job.description}</p>
-                          </div>
-
-                          {/* Requirements & Responsibilities & Benefits details grid */}
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            
-                            {/* Left: Requirements */}
-                            {job.requirements.length > 0 && (
-                              <div className="space-y-3">
-                                <h4 className="font-bold text-gray-900 text-xs uppercase tracking-wider text-gray-400">Key Requirements</h4>
-                                <ul className="space-y-2 text-gray-650">
-                                  {job.requirements.map((req, idx) => (
-                                    <li key={idx} className="flex items-start gap-2.5 leading-relaxed">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-[#F49B21] mt-2 shrink-0"></span>
-                                      {req}
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )}
-
-                            {/* Right: Responsibilities */}
-                            {job.responsibilities.length > 0 && (
-                              <div className="space-y-3">
-                                <h4 className="font-bold text-gray-900 text-xs uppercase tracking-wider text-gray-400">Your Responsibilities</h4>
-                                <ul className="space-y-2 text-gray-650">
-                                  {job.responsibilities.map((resp, idx) => (
-                                    <li key={idx} className="flex items-start gap-2.5 leading-relaxed">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 shrink-0"></span>
-                                      {resp}
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )}
-                          </div>
-
-                          {/* Benefits & CTA Bottom row */}
-                          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 pt-6 border-t border-gray-150 bg-gray-50 -mx-6 -mb-6 p-6 sm:-mx-8 sm:-mb-8 sm:p-8">
-                            {/* Benefits summary list */}
-                            <div>
-                              {job.benefits.length > 0 && (
-                                <div className="space-y-2">
-                                  <h4 className="font-bold text-gray-900 text-xs uppercase tracking-wider text-gray-450 font-semibold">Position Perks</h4>
-                                  <div className="flex flex-wrap gap-2 max-w-xl">
-                                    {job.benefits.map((benefit, idx) => (
-                                      <span key={idx} className="text-xs bg-white border border-gray-200 text-gray-600 px-3 py-1 rounded-lg">
-                                        {benefit}
-                                      </span>
-                                    ))}
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-
-                            {/* Actions */}
-                            <div className="flex items-center gap-4 w-full sm:w-auto shrink-0 justify-end">
-                              {job.deadline && (
-                                <span className="text-xs text-gray-500 flex items-center gap-1.5 font-medium">
-                                  <Calendar className="w-3.5 h-3.5" />
-                                  Apply by: {new Date(job.deadline).toLocaleDateString()}
-                                </span>
-                              )}
-                              <button
-                                onClick={() => handleApply(job.id)}
-                                className="bg-[#F49B21] hover:bg-[#e08914] text-white font-bold px-6 py-2.5 rounded-xl shadow-lg shadow-orange-500/10 active:scale-[0.98] transition-all flex items-center gap-1.5 text-xs select-none"
-                              >
-                                Apply For Role
-                                <ArrowRight className="w-3.5 h-3.5" />
-                              </button>
-                            </div>
-                          </div>
-
+                  {/* Card Expanded details without animation */}
+                  {isExpanded && (
+                    <div className="border-t border-gray-100 bg-gray-50/30">
+                      <div className="p-6 sm:p-8 space-y-8 text-sm">
+                        
+                        {/* Role Overview */}
+                        <div className="space-y-2">
+                          <h4 className="font-bold text-gray-900 text-xs uppercase tracking-wider text-gray-400">Role Description</h4>
+                          <p className="text-gray-650 leading-relaxed max-w-4xl whitespace-pre-wrap">{job.description}</p>
                         </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+
+                        {/* Requirements & Responsibilities & Benefits details grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                          
+                          {/* Left: Requirements */}
+                          {job.requirements.length > 0 && (
+                            <div className="space-y-3">
+                              <h4 className="font-bold text-gray-900 text-xs uppercase tracking-wider text-gray-400">Key Requirements</h4>
+                              <ul className="space-y-2 text-gray-650">
+                                {job.requirements.map((req, idx) => (
+                                  <li key={idx} className="flex items-start gap-2.5 leading-relaxed">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#F49B21] mt-2 shrink-0"></span>
+                                    {req}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+
+                          {/* Right: Responsibilities */}
+                          {job.responsibilities.length > 0 && (
+                            <div className="space-y-3">
+                              <h4 className="font-bold text-gray-900 text-xs uppercase tracking-wider text-gray-400">Your Responsibilities</h4>
+                              <ul className="space-y-2 text-gray-650">
+                                {job.responsibilities.map((resp, idx) => (
+                                  <li key={idx} className="flex items-start gap-2.5 leading-relaxed">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 shrink-0"></span>
+                                    {resp}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Benefits & CTA Bottom row */}
+                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 pt-6 border-t border-gray-150 bg-gray-50 -mx-6 -mb-6 p-6 sm:-mx-8 sm:-mb-8 sm:p-8">
+                          {/* Benefits summary list */}
+                          <div>
+                            {job.benefits.length > 0 && (
+                              <div className="space-y-2">
+                                <h4 className="font-bold text-gray-900 text-xs uppercase tracking-wider text-gray-405 font-semibold">Position Perks</h4>
+                                <div className="flex flex-wrap gap-2 max-w-xl">
+                                  {job.benefits.map((benefit, idx) => (
+                                    <span key={idx} className="text-xs bg-white border border-gray-200 text-gray-600 px-3 py-1 rounded-lg">
+                                      {benefit}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Actions */}
+                          <div className="flex items-center gap-4 w-full sm:w-auto shrink-0 justify-end">
+                            {job.deadline && (
+                              <span className="text-xs text-gray-500 flex items-center gap-1.5 font-medium">
+                                <Calendar className="w-3.5 h-3.5" />
+                                Apply by: {new Date(job.deadline).toLocaleDateString()}
+                              </span>
+                            )}
+                            <button
+                              onClick={() => handleApply(job.id)}
+                              className="bg-[#F49B21] hover:bg-[#e08914] text-white font-bold px-6 py-2.5 rounded-xl shadow-lg shadow-orange-500/10 active:scale-[0.98] transition-all flex items-center gap-1.5 text-xs select-none"
+                            >
+                              Apply For Role
+                              <ArrowRight className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -543,7 +521,3 @@ const Careers: React.FC = () => {
 };
 
 export default Careers;
-
-
-
-

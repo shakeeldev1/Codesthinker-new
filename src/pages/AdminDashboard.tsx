@@ -309,7 +309,6 @@ export default function AdminDashboard() {
         headers: getAuthHeaders(),
         credentials: 'include',
       });
-
       if (response.ok) {
         const result = await response.json();
         if (tab === 'contacts') setContacts(result.data);
@@ -317,6 +316,7 @@ export default function AdminDashboard() {
         else if (tab === 'jobs') setJobs(result.data);
         else if (tab === 'internships') setInternships(result.data);
         else if (tab === 'users') setAdminUsers(result.data);
+        
         else if (tab === 'jobPostings') {
           setJobPostings(result.data);
           // Fetch job applications asynchronously so it doesn't block the UI loading spinner
@@ -356,6 +356,7 @@ export default function AdminDashboard() {
         credentials: 'include',
       });
 
+      console.log(response)
       if (response.ok) {
         // Remove from local list state
         if (type === 'contacts') setContacts(contacts.filter(item => item.id !== id));
