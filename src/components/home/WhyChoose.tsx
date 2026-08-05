@@ -115,7 +115,7 @@ const WhyChoose: React.FC = () => {
         </div>
 
         {/* Circular Orbit Layout (Desktop Only) */}
-        <div className="relative mt-16 hidden lg:flex justify-center items-center h-[650px] w-full max-w-[1200px] mx-auto">
+        <div className="relative mt-16 hidden xl:flex justify-center items-center h-[650px] w-full max-w-[1200px] mx-auto">
           {/* Central Core */}
           <div className="absolute z-20 w-[300px] h-[300px] flex items-center justify-center">
             {/* Ambient Glow */}
@@ -215,7 +215,7 @@ const WhyChoose: React.FC = () => {
         </div>
 
         {/* Mobile/Tablet Grid View (Hidden on Desktop) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:hidden mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 xl:hidden mt-16">
           {features.map((f, i) => (
             <FeatureItem key={f.title} feature={f} index={i} align="left" />
           ))}

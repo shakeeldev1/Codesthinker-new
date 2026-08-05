@@ -170,7 +170,7 @@ export const JobPostingFormModal: React.FC<JobPostingFormModalProps> = ({
             </div>
           </div>
 
-          <div className="flex items-center gap-6 bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 bg-slate-50 p-4 rounded-xl border border-slate-200">
             <label className="flex items-center gap-2 cursor-pointer select-none">
               <input
                 type="checkbox"

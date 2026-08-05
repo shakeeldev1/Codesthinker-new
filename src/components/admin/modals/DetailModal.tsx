@@ -125,7 +125,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({
           {/* CONTACTS TAB VIEW */}
           {selectedItem.type === 'contacts' && (
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
                   <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Name</span>
                   <p className="font-bold text-slate-900 text-sm mt-1">{selectedItem.data.firstName || selectedItem.data.fullName || selectedItem.data.name}</p>
@@ -136,7 +136,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
                   <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Email Address</span>
                   <p className="font-bold text-blue-600 text-sm mt-1 break-all">{selectedItem.data.email}</p>
@@ -164,7 +164,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({
           {/* SERVICES TAB VIEW */}
           {selectedItem.type === 'services' && (
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
                   <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Client Name</span>
                   <p className="font-bold text-slate-900 text-sm mt-1">{selectedItem.data.fullName || selectedItem.data.name || selectedItem.data.firstName}</p>
@@ -178,7 +178,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
                   <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Email Address</span>
                   <p className="font-bold text-blue-600 text-sm mt-1 break-all">{selectedItem.data.email}</p>
@@ -189,7 +189,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="bg-slate-50 p-3 rounded-xl border border-slate-200/80 flex items-center gap-2">
                   <FileText className="w-4 h-4 text-[#863bff]" />
                   <div className="min-w-0 flex-1">
@@ -229,7 +229,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({
           {/* JOBS & INTERNSHIPS TAB VIEW */}
           {(selectedItem.type === 'jobs' || selectedItem.type === 'internships') && (
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
                   <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Applicant Name</span>
                   <p className="font-bold text-slate-900 text-sm mt-1">{selectedItem.data.fullName || selectedItem.data.name || selectedItem.data.firstName}</p>
@@ -240,7 +240,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
                   <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Email Address</span>
                   <p className="font-bold text-blue-600 text-sm mt-1 break-all">{selectedItem.data.email}</p>

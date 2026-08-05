@@ -178,12 +178,12 @@ export const JobPostingsTab: React.FC<JobPostingsTabProps> = ({
                             ) : (
                               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 {matchingApplicants.map(app => (
-                                <div key={app.id} className="bg-white border border-slate-200/80 rounded-xl p-3.5 flex justify-between items-center text-xs shadow-xs">
-                                  <div>
-                                    <p className="font-bold text-slate-900">{app.fullName}</p>
-                                    <p className="text-slate-500 text-[11px] mt-0.5">{app.email} • {app.phone}</p>
+                                <div key={app.id} className="bg-white border border-slate-200/80 rounded-xl p-3.5 flex justify-between items-center gap-3 text-xs shadow-xs">
+                                  <div className="min-w-0 flex-1">
+                                    <p className="font-bold text-slate-900 truncate">{app.fullName}</p>
+                                    <p className="text-slate-500 text-[11px] mt-0.5 truncate">{app.email} • {app.phone}</p>
                                   </div>
-                                  <div className="flex items-center gap-1.5">
+                                  <div className="flex items-center gap-1.5 shrink-0">
                                     {app.resumeName && (
                                       <button
                                         onClick={() => onDownloadResume('jobs', app.id, app.resumeName)}

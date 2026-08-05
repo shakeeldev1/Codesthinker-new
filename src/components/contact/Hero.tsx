@@ -153,7 +153,7 @@ const ContactHeader: React.FC = () => {
                 <img
                   alt="Customer support illustration"
                   src="https://www.algotix.ai/_next/image?url=%2Fimages%2Fcontact%2Fcontact-image.png&w=1080&q=75"
-                  className="w-[320px] md:w-[450px] rounded-[1.8rem] object-cover"
+                  className="w-[320px] max-w-[85vw] md:w-[450px] rounded-[1.8rem] object-cover"
                   loading="eager"
                   decoding="async"
                 />

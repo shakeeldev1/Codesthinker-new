@@ -17,7 +17,7 @@ const GetOurServicesHero: React.FC = () => {
     ];
 
     return (
-        <section className="relative w-full h-screen pt-12 flex items-center overflow-hidden font-sans">
+        <section className="relative w-full min-h-[100dvh] pt-28 pb-16 md:pt-32 lg:pt-12 flex items-center overflow-hidden font-sans">
 
             {/* Video Background Layer */}
             <div className="absolute inset-0 z-0">
@@ -83,7 +83,7 @@ const GetOurServicesHero: React.FC = () => {
                             <img
                                 src="https://images.pexels.com/photos/8134069/pexels-photo-8134069.jpeg"
                                 alt="Team collaborating"
-                                className="w-125 h-100 object-cover rounded-2xl"
+                                className="w-full max-w-[500px] aspect-[5/4] object-cover rounded-2xl"
                             />
                         </div>
                     </motion.div>

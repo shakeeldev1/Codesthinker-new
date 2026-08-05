@@ -23,9 +23,9 @@ export const ViewJobPostingModal: React.FC<ViewJobPostingModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 font-sans">
       <div className="w-full max-w-3xl bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
         {/* Modal Header */}
-        <div className="p-6 border-b border-slate-200 flex justify-between items-start bg-slate-50/80">
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
+        <div className="p-6 border-b border-slate-200 flex flex-wrap justify-between items-start gap-3 bg-slate-50/80">
+          <div className="space-y-2 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
               <span className="bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border border-amber-200">
                 {posting.department}
               </span>
@@ -42,7 +42,7 @@ export const ViewJobPostingModal: React.FC<ViewJobPostingModalProps> = ({
               {posting.title}
             </h3>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => {
                 onClose();

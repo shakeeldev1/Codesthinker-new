@@ -120,6 +120,16 @@ const teamMembers: TeamMember[] = [
 const Team: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  // Responsive orbit radius: prevents the orbiting avatars from overflowing/
+  // clipping past the viewport edge on mobile & tablet widths.
+  const [windowWidth, setWindowWidth] = useState(1024);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // --- Safety Check 1: Empty Array Protection ---
   if (!teamMembers || teamMembers.length === 0) {
@@ -131,7 +141,7 @@ const Team: React.FC = () => {
   const safeIndex = activeIndex >= teamMembers.length ? 0 : activeIndex;
   const activeMember = teamMembers[safeIndex];
 
-  const RADIUS = 280;
+  const RADIUS = windowWidth < 640 ? 130 : windowWidth < 768 ? 180 : 280;
   const TOTAL_ITEMS = teamMembers.length;
 
   useEffect(() => {
@@ -196,7 +206,7 @@ const Team: React.FC = () => {
                 animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
                 exit={{ scale: 0.8, opacity: 0, filter: "blur(10px)" }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="relative z-20 w-64 h-64 md:w-80 md:h-80 group"
+                className="relative z-20 w-40 h-40 sm:w-56 sm:h-56 md:w-80 md:h-80 group"
               >
                 <div className="absolute inset-0 bg-[#F59C24] rounded-full blur-[60px] opacity-20 group-hover:opacity-30 transition-opacity duration-700" />
                 <div className="relative w-full h-full rounded-full border-[6px] border-white/10 p-2 backdrop-blur-md shadow-2xl overflow-hidden transition-transform duration-700 group-hover:scale-[1.02]">

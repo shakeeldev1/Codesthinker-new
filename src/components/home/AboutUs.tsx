@@ -128,7 +128,7 @@ const AboutUs: React.FC = () => {
               <img
                 src="/ct.png"
                 alt="Code's Thinker Team"
-                className="w-full h-[500px]  object-full transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-full transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"
               />
               

@@ -46,8 +46,8 @@ const WorkProcess: React.FC = () => {
   return (
     <section className="relative bg-[#f8fafc] py-12  overflow-visible">
       {/* Background Decorative Blurs */}
-      <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-amber-400/10 blur-[100px] rounded-full -z-10" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-indigo-500/10 blur-[100px] rounded-full -z-10" />
+      <div className="absolute top-0 left-0 w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] bg-amber-400/10 blur-[100px] rounded-full -z-10" />
+      <div className="absolute bottom-0 right-0 w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] bg-indigo-500/10 blur-[100px] rounded-full -z-10" />
 
       <div className="max-w-7xl mx-auto px-6  text-center">
         {/* Section Header */}

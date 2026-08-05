@@ -125,7 +125,7 @@ const Hero: React.FC = () => {
                 <img
                   alt="Team collaboration"
                   src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800"
-                  className="w-[320px] md:w-105 h-87.5 rounded-[2.1rem] object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full max-w-[320px] md:max-w-none md:w-105 h-87.5 rounded-[2.1rem] object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 
                 {/* Float Badge */}

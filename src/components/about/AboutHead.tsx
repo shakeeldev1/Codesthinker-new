@@ -18,7 +18,7 @@ function AboutHead() {
   }, []);
 
   return (
-    <div className="relative w-full min-h-screen md:h-screen md:overflow-hidden bg-[#07051D]">
+    <div className="relative w-full min-h-screen md:h-screen overflow-hidden bg-[#07051D]">
       {/* Background Image */}
       <img
         src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop"
