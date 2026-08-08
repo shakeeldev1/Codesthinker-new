@@ -16,7 +16,7 @@ export const FALLBACK_AVATAR = "https://images.unsplash.com/photo-1535713875002-
 
 export const teamMembers: TeamMember[] = [
   {
-    id: "exec-001", name: "Waseem Malik", role: "CEO & Founder",
+    id: "exec-001", name: " Mr. Waseem", role: "CEO & Founder",
     description: "Visionary leader with 15+ years of experience in tech innovation.",
     skills: ["React", "Next.js", "Node.js", "AWS", "Leadership"],
     social: [
@@ -28,7 +28,7 @@ export const teamMembers: TeamMember[] = [
     achievements: ["Tech Innovator Award 2023", "Forbes 30 Under 30"],
   },
   {
-    id: "exec-002", name: "Muhammad Sarmad", role: "Managing Director",
+    id: "exec-002", name: "Mr. Saim", role: "Managing Director",
     description: "Visionary Managing Director with proven track record of corporate growth.",
     skills: ["Executive Leadership", "Strategic Planning", "P&L Management", "Operations"],
     social: [
@@ -39,7 +39,7 @@ export const teamMembers: TeamMember[] = [
     achievements: ["PhD in AI", "Google Developer Expert"],
   },
   {
-    id: "exec-003", name: "Faheem Bilal", role: "COO & Co-Founder",
+    id: "exec-003", name: "Mr. Faheem", role: "COO & Co-Founder",
     description: "Operations expert ensuring seamless execution of complex projects.",
     skills: ["System Design", "DevOps", "Kubernetes", "Team Management", "Agile"],
     social: [
@@ -50,7 +50,7 @@ export const teamMembers: TeamMember[] = [
     achievements: ["Operational Excellence Award", "Certified Scrum Master"],
   },
   {
-    id: "exec-004", name: "M Shakeel", role: "General Manager",
+    id: "exec-004", name: "Mr. Shakeel", role: "General Manager",
     description: "Strategic thinker driving operational excellence and customer satisfaction.",
     skills: ["Strategic Planning", "Operations", "Leadership", "Agile", "Business Development"],
     social: [{ platform: "linkedin", url: "#", icon: "linkedin" }],
