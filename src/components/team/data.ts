@@ -28,7 +28,7 @@ export const teamMembers: TeamMember[] = [
     achievements: ["Tech Innovator Award 2023", "Forbes 30 Under 30"],
   },
   {
-    id: "exec-002", name: "Mr. Saim", role: "Managing Director",
+    id: "exec-002", name: "Mr. Sam", role: "Managing Director",
     description: "Visionary Managing Director with proven track record of corporate growth.",
     skills: ["Executive Leadership", "Strategic Planning", "P&L Management", "Operations"],
     social: [
@@ -46,8 +46,19 @@ export const teamMembers: TeamMember[] = [
       { platform: "linkedin", url: "#", icon: "FaLinkedinIn" },
       { platform: "twitter", url: "#", icon: "FaTwitter" },
     ],
-    avatar: "/team/Faheem Bilal_COO.png", location: "United Kingdom", experience: "12+ years", email: "faheem@company.com",
+    avatar: "/team/Faheem Bilal_COO.png", location: "United Kingdom", experience: "10+ years", email: "faheem@company.com",
     achievements: ["Operational Excellence Award", "Certified Scrum Master"],
+  },
+  {
+    id: "hr-001", name: "Nova", role: "HR Manager",
+    description: "People-focused HR professional supporting recruitment, employee relations, and workplace culture.",
+    skills: ["Recruitment", "Employee Relations", "Onboarding", "Policy Development", "Talent Management"],
+    social: [
+      { platform: "linkedin", url: "#", icon: "FaLinkedinIn" },
+      { platform: "email", url: "mailto:hr@company.com", icon: "FaEnvelope" },
+    ],
+    avatar: "/team/hr.jpg", location: "UK", experience: "8+ years", email: "hr@company.com",
+    achievements: ["People Operations Excellence", "Employee Engagement Award"],
   },
   {
     id: "exec-004", name: "Mr. Shakeel", role: "General Manager",
