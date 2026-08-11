@@ -94,7 +94,7 @@ const Team: React.FC = () => {
   }, [RADIUS, TOTAL_ITEMS]);
 
   return (
-    <section className="relative w-full min-h-screen bg-[#F9FAFB] overflow-hidden font-sans py-24 px-4 sm:px-6 lg:px-8">
+    <section className="relative w-full min-h-screen bg-[#F9FAFB] overflow-hidden font-sans py-12 px-4 sm:px-6 lg:px-8">
       {/* Background Orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <motion.div

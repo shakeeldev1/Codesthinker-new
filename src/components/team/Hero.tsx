@@ -45,7 +45,7 @@ const Hero: React.FC = () => {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="w-full lg:w-3/5 space-y-8 text-center lg:text-left"
+            className="w-full lg:w-3/5 space-y-8 pt-14 text-center lg:text-left"
           >
             {/* Badge */}
             <SectionBadge text="Meet our Team" theme="dark" className="mx-auto lg:mx-0 mb-4" />
@@ -121,19 +121,21 @@ const Hero: React.FC = () => {
               animate={{ y: [-8, 8] }}
               transition={{ duration: 5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
             >
-              <div className="relative rounded-[2.5rem] overflow-hidden border border-white/20 bg-white/5 backdrop-blur-3xl p-3 shadow-[0_0_50px_rgba(244,155,33,0.1)] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(244,155,33,0.2)]">
-                <img
-                  alt="Team collaboration"
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800"
-                  className="w-full max-w-[320px] md:max-w-none md:w-105 h-87.5 rounded-[2.1rem] object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                
-                {/* Float Badge */}
-                <div className="absolute top-8 -left-8 bg-[#07051D]/90 backdrop-blur-md p-4 rounded-2xl shadow-2xl border border-white/10 flex items-center gap-3 select-none">
-                  <div className="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center">
+              <div className="relative rounded-[2.5rem] border border-white/20 bg-white/5 backdrop-blur-3xl p-3 shadow-[0_0_50px_rgba(244,155,33,0.1)] transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(244,155,33,0.2)]">
+                <div className="relative overflow-hidden rounded-[2.1rem]">
+                  <img
+                    alt="Team collaboration"
+                    src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800"
+                    className="w-full max-w-[320px] md:max-w-none md:w-105 h-87.5 object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+
+                {/* Float Badge — sits on the left card border */}
+                <div className="absolute top-8 left-2 bg-[#07051D]/90 backdrop-blur-md p-3 sm:p-4 rounded-2xl shadow-2xl border border-white/10 flex items-center gap-3 select-none z-10">
+                  <div className="w-10 h-10 shrink-0 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center">
                     <Sparkles className="w-5 h-5 text-[#F49B21] animate-pulse" />
                   </div>
-                  <div>
+                  <div className="whitespace-nowrap">
                     <p className="text-xs font-extrabold text-white uppercase tracking-wider" style={{ fontFamily: "'Outfit', sans-serif" }}>Innovation Hub</p>
                     <p className="text-[9px] text-[#F49B21] font-bold mt-0.5">2024 DESIGN WINNER</p>
                   </div>
