@@ -38,8 +38,8 @@ const Team: React.FC = () => {
   const autoPlayTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const { executives, normalStaff } = useMemo(() => ({
-    executives: teamMembers.slice(0, 4),
-    normalStaff: teamMembers.slice(4),
+    executives: teamMembers.slice(0, 5),
+    normalStaff: teamMembers.slice(5),
   }), []);
 
   const TOTAL_ITEMS = executives.length;

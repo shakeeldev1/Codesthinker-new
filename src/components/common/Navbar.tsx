@@ -257,7 +257,7 @@ const Navbar: React.FC = () => {
                 {/* Desktop Action & Mobile Toggle */}
                 <div className="flex items-center gap-3">
                     <Link 
-                        to="/contact" 
+                        to="/apply/get-services" 
                         onClick={handleLinkClick} 
                         className={`hidden sm:flex items-center justify-center px-6 py-2.5 text-[13px] font-bold transition-all active:scale-95 shadow-md rounded-2xl border select-none ${
                             useWhiteLinks
@@ -265,7 +265,7 @@ const Navbar: React.FC = () => {
                                 : 'bg-white text-[#08061E] border-gray-200 hover:bg-amber-500 hover:text-white hover:border-amber-500 shadow-sm'
                         }`}
                     >
-                        Get in Touch
+                        Services Request 
                     </Link>
 
                     <button
