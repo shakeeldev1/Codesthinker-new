@@ -9,6 +9,7 @@ export interface TeamMember {
   location?: string;
   experience?: string;
   email?: string;
+  phones?: string[];
   achievements?: string[];
 }
 
@@ -69,7 +70,7 @@ export const teamMembers: TeamMember[] = [
     achievements: ["GM of the Year 2022", "Customer Excellence Award"],
   },
   {
-    id: "dev-014", name: "Mughees Ur Rehman", role: "Full Stack Engineer",
+    id: "dev-014", name: "Mughees Ur Rehman", role: "Senior Software Engineer",
     description: "Full Stack Engineer building scalable end to end applications with clean architecture and solid delivery practices. Comfortable across frontend, backend, and deployment workflows.",
     skills: ["React", "Next.js", "TypeScript", "Node.js", "Express.js", "MongoDB"],
     social: [
@@ -81,12 +82,13 @@ export const teamMembers: TeamMember[] = [
   {
     id: "dev-001", name: "Sadiq Hussain", role: "Team Leader Full Stack Engineer",
     description: "Dynamic Full Stack Engineer with deep expertise in building scalable web applications and microservices. Leads architecture and mentors engineers to adopt best practices for performance and reliability.",
-    skills: ["React.js", "Next.js", "TypeScript", "Node.js", "Express.js", "MongoDB", "Redux Toolkit", "AWS", "DevOps"],
+    skills: ["DevOps", "AWS", "Problem Solving", "Team Management","Full Stack Development","Microservices"],
     social: [
       { platform: "linkedin", url: "https://www.linkedin.com/in/sadiq-hussain-9a85a2334", icon: "linkedin" },
       { platform: "github", url: "https://github.com/sadiqhussain988", icon: "github" },
     ],
     avatar: "/team/Sadiq_Hussain_Full-Satack-Developer.webp", location: "Pakistan", experience: "6+ years", email: "sadiqhussain31304@gmail.com",
+    phones: ["+92 320 3036988", "+92 329 9235015"],
     achievements: ["AWS & Dev Ops Certified Solutions Architect", "Full Stack Developer Award"],
   },
   {
@@ -102,7 +104,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: "dev-003", name: "M Abdullah", role: "Mobile Application Developer",
     description: "Cross-platform mobile expert building beautiful, performant apps with a strong focus on UX and battery/network efficiency. Experienced with React Native and Flutter for rapid delivery.",
-    skills: ["React Native", "Flutter", "iOS", "Android", "Firebase", "Swift"],
+    skills: ["iOS", "Flutter",  "Android", "Problem Solving", "Swift"],
     social: [
       { platform: "linkedin", url: "https://www.linkedin.com/in/muhammad-abdullah2476/", icon: "FaLinkedinIn" },
       { platform: "github", url: "https://github.com/Abdullah2476", icon: "FaGithub" },
@@ -148,6 +150,45 @@ export const teamMembers: TeamMember[] = [
       { platform: "github", url: "#", icon: "FaGithub" },
     ],
     avatar: "/team/zeeshan.webp", location: "Pakistan", experience: "2+ years", email: "zeeshan@company.com",
+  },
+  {
+    id: "dev-016", name: "James Thornton", role: "DevOps Engineer",
+    description: "DevOps Engineer focused on CI/CD pipelines, cloud infrastructure, and reliable deployments. Builds secure, automated environments that keep products stable as they scale.",
+    skills: ["AWS", "Docker", "Kubernetes", "CI/CD", "Terraform", "Linux"],
+    social: [
+      { platform: "linkedin", url: "#", icon: "FaLinkedinIn" },
+      { platform: "github", url: "#", icon: "FaGithub" },
+    ],
+    avatar: "https://i.pinimg.com/1200x/6b/94/30/6b9430c1c6b6041e8008f301e813028a.jpg",
+    location: "Manchester, UK",
+    experience: "7+ years",
+    email: "james@company.com",
+  },
+  {
+    id: "dev-017", name: "Oliver Hayes", role: "AI Specialist",
+    description: "AI Specialist designing intelligent systems with machine learning, NLP, and automation. Helps businesses turn data into practical AI features that improve products and operations.",
+    skills: ["Python", "Machine Learning", "NLP", "TensorFlow", "PyTorch", "OpenAI"],
+    social: [
+      { platform: "linkedin", url: "#", icon: "FaLinkedinIn" },
+      { platform: "github", url: "#", icon: "FaGithub" },
+    ],
+    avatar: "https://i.pinimg.com/1200x/b5/de/d1/b5ded1b360966492b3b2f1aa5055b8bf.jpg",
+    location: "Manchester, UK",
+    experience: "6+ years",
+    email: "oliver@company.com",
+  },
+  {
+    id: "dev-018", name: "Alicia Hartley", role: "AI Automation Expert",
+    description: "AI Automation Expert building intelligent workflows that remove repetitive work and speed up operations. Combines AI tools, integrations, and practical automation to help teams deliver more with less manual effort.",
+    skills: ["AI Automation", "Python", "n8n", "Zapier", "OpenAI", "Workflow Design"],
+    social: [
+      { platform: "linkedin", url: "#", icon: "FaLinkedinIn" },
+      { platform: "github", url: "#", icon: "FaGithub" },
+    ],
+    avatar: "https://i.pinimg.com/736x/1c/88/70/1c887069fec338e0ff5285bd5cbe7511.jpg",
+    location: "Manchester, UK",
+    experience: "5+ years",
+    email: "alicia@company.com",
   },
   {
     id: "des-001", name: "Riffat Tahira", role: "UI Designer",
@@ -301,7 +342,7 @@ export const getRoleTheme = (role: string) => {
       accentBar: 'from-[#07051D] to-[#0f172a]',
     };
   }
-  if (r.includes('developer') || r.includes('engineer') || r.includes('qa') || r.includes('architect') || r.includes('scientist') || r.includes('mern')) {
+  if (r.includes('developer') || r.includes('engineer') || r.includes('qa') || r.includes('architect') || r.includes('scientist') || r.includes('mern') || r.includes('devops') || r.includes('ai ')) {
     return {
       ...navyBase,
       gradient: 'from-[#07051D] via-[#12102a] to-[#1a1540]',

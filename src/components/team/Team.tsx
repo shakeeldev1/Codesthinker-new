@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LuMapPin, LuMail, LuAward } from "react-icons/lu";
-import { FaLinkedin, FaLinkedinIn, FaTwitter, FaGithub, FaDribbble, FaFacebook, FaInstagram } from "react-icons/fa";
+import { FaLinkedin, FaLinkedinIn, FaTwitter, FaGithub, FaDribbble, FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { SectionBadge } from "../ui/SectionBadge";
 
 // Corrected type import to fix the syntax error
@@ -617,9 +617,28 @@ const Team: React.FC = () => {
                   ))}
                 </div>
 
-                <div className="mt-6 flex items-center gap-3">
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-3">
                   {modalMember.email && (
-                    <a href={`mailto:${modalMember.email}`} className="px-4 py-2 bg-[#07051D] text-white rounded-md">Contact</a>
+                    <a href={`mailto:${modalMember.email}`} className="px-4 py-2 bg-[#07051D] text-white rounded-md text-center">Contact</a>
+                  )}
+                  {modalMember.phones && modalMember.phones.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {modalMember.phones.map((phone) => {
+                        const waNumber = phone.replace(/\D/g, "");
+                        return (
+                          <a
+                            key={phone}
+                            href={`https://wa.me/${waNumber}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-[#25D366] text-white text-sm font-medium hover:bg-[#1ebe57] transition-colors shadow-sm"
+                          >
+                            <FaWhatsapp className="text-base" />
+                            {phone}
+                          </a>
+                        );
+                      })}
+                    </div>
                   )}
                   <div className="flex gap-2">
                     {modalMember.social.map((s, i) => {
