@@ -18,7 +18,7 @@ const ShopifyDevelopment = () => {
       id: 1,
       subtitle: 'E-Commerce',
       title: 'High-Converting Shopify Stores Built to Scale',
-      description: 'We build high-performance Shopify stores that blend premium design and clean Liquid/Hydrogen development to deliver frictionless shopping experiences and boost your sales.',
+      description: 'We build high performance Shopify stores that blend premium design and clean Liquid/Hydrogen development to deliver frictionless shopping experiences and boost your sales.',
       image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop',
       primaryLink: '/contact',
       secondaryLink: '/projects',
@@ -102,7 +102,7 @@ const ShopifyDevelopment = () => {
       <GlobalCapabilitiesSection
         badgeText="E-Commerce Services"
         title="Shopify Development Services"
-        subtitle="End-to-end commerce development optimized for revenue, UX performance, and transaction stability."
+        subtitle="End to end commerce development optimized for revenue, UX performance, and transaction stability."
         capabilities={capabilities}
       />
 

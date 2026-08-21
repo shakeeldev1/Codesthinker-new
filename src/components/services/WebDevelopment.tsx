@@ -17,7 +17,7 @@ const WebDevelopment = () => {
     {
       id: 1,
       title: "Responsive Design",
-      description: "Pixel-perfect websites that work flawlessly on all devices, from mobile phones to high-resolution desktop screens.",
+      description: "Pixel perfect websites that work flawlessly on all devices, from mobile phones to high-resolution desktop screens.",
       icon: Globe,
       tag: "UX Design",
       span: "col-span-2",
@@ -37,7 +37,7 @@ const WebDevelopment = () => {
     {
       id: 3,
       title: "E-commerce Solutions",
-      description: "Complete online stores with secure checkout flows, real-time inventory management, and customer analytics.",
+      description: "Complete online stores with secure checkout flows, real time inventory management, and customer analytics.",
       icon: ShoppingCart,
       tag: "Commerce",
       span: "col-span-1",
@@ -87,7 +87,7 @@ const WebDevelopment = () => {
         theme="dark"
         title="Web Development That Converts"
         badge="Development"
-        subtitle="We create stunning, high-performance websites that engage your audience and drive measurable results. From responsive design to complex applications, we build digital experiences that matter."
+        subtitle="We create stunning, high performance websites that engage your audience and drive measurable results. From responsive design to complex applications, we build digital experiences that matter."
         images={[
           "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop",
           "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2070&auto=format&fit=crop",
@@ -117,7 +117,7 @@ const WebDevelopment = () => {
         theme="light" 
         title="Ready to Build Your"
         highlightText="Next-Gen Website?"
-        subtitle="From complex web apps to stunning landing pages, we build high-performance solutions tailored to your business."
+        subtitle="From complex web apps to stunning landing pages, we build high performance solutions tailored to your business."
       />
     </div>
   );

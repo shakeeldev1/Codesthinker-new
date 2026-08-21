@@ -28,7 +28,7 @@ const WorkProcess: React.FC = () => {
     {
       icon: <FaCode className="w-6 h-6" />,
       title: 'Development',
-      desc: 'Modern frameworks ka istemal karte hue hum scalable, secure aur high-performance web solutions build karte hain.',
+      desc: 'Modern frameworks ka istemal karte hue hum scalable, secure aur high performance web solutions build karte hain.',
       img: 'https://images.pexels.com/photos/7691729/pexels-photo-7691729.jpeg',
       points: ['Clean Architecture', 'API Integration', 'Performance Optimization'],
     },

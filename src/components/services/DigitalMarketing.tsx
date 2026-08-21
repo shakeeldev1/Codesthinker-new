@@ -17,7 +17,7 @@ const DigitalMarketing = () => {
     {
       id: 1,
       subtitle: "Performance Marketing",
-      title: "Drive Growth with Data-Driven Strategies",
+      title: "Drive Growth with Data Driven Strategies",
       description: "Scale your business with expert-led digital marketing campaigns that deliver measurable ROI and brand authority.",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop",
       primaryLink: "/contact",
@@ -53,7 +53,7 @@ const DigitalMarketing = () => {
     {
       id: 1,
       title: "Search Engine Optimization (SEO)",
-      description: "Boost your organic visibility and rank higher on search engines with data-driven SEO strategies.",
+      description: "Boost your organic visibility and rank higher on search engines with data driven SEO strategies.",
       icon: Search,
       tag: "Organic Search",
       span: "col-span-2",
@@ -124,7 +124,7 @@ const DigitalMarketing = () => {
       <GlobalCapabilitiesSection
         badgeText="Marketing Services"
         title="Digital Marketing Services"
-        subtitle="End-to-end digital marketing solutions designed to maximize your online visibility, customer acquisition, and revenue."
+        subtitle="End to end digital marketing solutions designed to maximize your online visibility, customer acquisition, and revenue."
         capabilities={capabilities}
       />
 
@@ -139,7 +139,7 @@ const DigitalMarketing = () => {
         theme="light" 
         title="Ready to Maximize Your"
         highlightText="Marketing ROI?"
-        subtitle="Drive measurable growth and scale your business with data-driven digital marketing strategies that convert."
+        subtitle="Drive measurable growth and scale your business with data driven digital marketing strategies that convert."
       />
     </div>
   );

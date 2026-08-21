@@ -52,7 +52,7 @@ const GetOurServicesHero: React.FC = () => {
 
                         <p className="text-gray-200 text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed">
                             We offer comprehensive digital solutions tailored to your business needs.
-                            From concept to launch, we deliver end-to-end digital excellence.
+                            From concept to launch, we deliver end to end digital excellence.
                         </p>
 
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6">

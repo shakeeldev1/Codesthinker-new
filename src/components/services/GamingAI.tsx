@@ -66,7 +66,7 @@ const GamingAI = () => {
     },
     {
       id: 6,
-      title: "Real-time Systems",
+      title: "Real time Systems",
       description: "Ultra low-latency data processing pipelines for critical gaming and AI workloads.",
       icon: Zap,
       tag: "Infrastructure",

@@ -216,7 +216,6 @@ import toast, { Toaster } from 'react-hot-toast';
 import {
   FaPhoneAlt,
   FaEnvelope,
-  FaTwitter,
   FaInstagram,
   FaFacebookF,
   FaLinkedinIn,
@@ -350,9 +349,20 @@ export default function ContactFormAlternative() {
           <div className="pt-4">
             <h4 className="font-bold text-[#091a44] mb-4">Follow our social media</h4>
             <div className="flex gap-3">
-              {[<FaFacebookF />, <FaInstagram />, <FaTwitter />, <FaLinkedinIn />].map((icon, idx) => (
-                <a key={idx} href="#" className="w-10 h-10 flex items-center justify-center bg-[#091a44] text-white rounded-full hover:bg-amber-500 transition-colors">
-                  {icon}
+              {[
+                { icon: <FaFacebookF />, href: "https://www.facebook.com/profile.php?id=61565400934738", label: "Facebook" },
+                { icon: <FaInstagram />, href: "https://www.instagram.com/codesthinker_offical/", label: "Instagram" },
+                { icon: <FaLinkedinIn />, href: "https://www.linkedin.com/company/codesthinker/", label: "LinkedIn" },
+              ].map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  className="w-10 h-10 flex items-center justify-center bg-[#091a44] text-white rounded-full hover:bg-amber-500 transition-colors"
+                >
+                  {social.icon}
                 </a>
               ))}
             </div>

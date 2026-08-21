@@ -28,7 +28,7 @@ const Button: React.FC<ButtonComponentProps> = ({
   showArrow = false, 
   ...props 
 }) => {
-  const baseStyles = "relative inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-300 cursor-pointer overflow-hidden focus:outline-none";
+  const baseStyles = "relative inline-flex items-center justify-center font-semibold !rounded-xl transition-all duration-300 cursor-pointer overflow-hidden focus:outline-none";
 
   const variants = {
     primary: "bg-[#08061E] text-white hover:text-white border border-[#F59C20]/20 hover:border-[#F59C20]/40",
@@ -46,11 +46,11 @@ const Button: React.FC<ButtonComponentProps> = ({
   const ButtonContent = (
     <>
       {/* Shine effect - left to right on hover */}
-      <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-[#F59C20]/30 to-transparent group-hover:translate-x-full transition-transform duration-700 ease-in-out"></span>
+      <span className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-[#F59C20]/30 to-transparent group-hover:translate-x-full transition-transform duration-700 ease-in-out"></span>
       
       {/* Animated border shine */}
       <span className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-[#F59C20] to-transparent animate-pulse"></span>
+        <span className="absolute inset-0 rounded-xl bg-linear-to-r from-transparent via-[#F59C20] to-transparent animate-pulse"></span>
       </span>
 
       {/* Text & Arrow */}

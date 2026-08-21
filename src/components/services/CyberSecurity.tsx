@@ -22,7 +22,7 @@ const cyberHeroData = [
     id: 1,
     subtitle: "Enterprise Defense",
     title: "Intelligent Cyber Security Solutions",
-    description: "Protecting your digital assets with advanced threat intelligence and real-time response capabilities.",
+    description: "Protecting your digital assets with advanced threat intelligence and real time response capabilities.",
     image: "https://images.unsplash.com/photo-1509956072962-7ff0f36dd7ba?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     primaryLink: "/contact",
     secondaryLink: "/projects",
@@ -57,7 +57,7 @@ const capabilities = [
   {
     id: 1,
     title: "Threat Detection",
-    description: "Real-time monitoring and intelligent threat detection powered by machine learning algorithms.",
+    description: "Real time monitoring and intelligent threat detection powered by machine learning algorithms.",
     icon: Eye,
     tag: "Monitoring",
     span: "col-span-2",
@@ -143,7 +143,7 @@ const CyberSecurity = () => {
         theme="light" 
         title="Ready to Secure Your"
         highlightText="Digital Enterprise?"
-        subtitle="Protect your business with world-class security architectures and proactive threat defense systems."
+        subtitle="Protect your business with world class security architectures and proactive threat defense systems."
       />
     </div>
   );

@@ -63,7 +63,7 @@ const aboutFeatures: Feature[] = [
     delay: 100,
   },
   {
-    text: "Client-Centric",
+    text: "Client Centric",
     aos: "fade-left",
     icon: <LuTarget />,
     description: "Your success is our priority",
@@ -126,7 +126,7 @@ const AboutUs: React.FC = () => {
           <div className="w-full lg:w-1/2 order-2 lg:order-1" data-aos="zoom-out-right">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl ring-1 ring-gray-900/5 group">
               <img
-                src="/ct.png"
+                src="/ct.webp"
                 alt="Code's Thinker Team"
                 className="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-full transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"

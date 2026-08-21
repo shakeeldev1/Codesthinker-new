@@ -2,153 +2,233 @@ import React, { useEffect, useState, useCallback } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { SectionBadge } from "../ui/SectionBadge";
+import { HiArrowRight, HiOutlineCheckCircle } from "react-icons/hi";
 
 interface StoryItem {
   year: string;
   title: string;
   description: string;
+  highlight: string;
   image: string;
 }
 
 const storyData: StoryItem[] = [
   {
-    year: "2022",
-    title: "Where It Started",
+    year: "2005",
+    title: "Where Codes Thinker Began",
     description:
-      "Code's Thinker began with a bold vision: delivering high-quality, international-grade software solutions. What started in local markets quickly grew into a trusted digital engineering company.",
-    image: "https://codesthinker.com/home/servicesImage.png",
+      "We started with one goal: build reliable software that businesses can depend on. Quality engineering and honest partnerships became the foundation of everything we do.",
+    highlight: "Company founded",
+    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1400&auto=format&fit=crop",
   },
   {
-    year: "2023",
-    title: "Bahawalpur Branch Established",
+    year: "2012",
+    title: "From Builds to Full Product Delivery",
     description:
-      "Second branch established in Bahawalpur, Pakistan, empowering local developers with the capability to deliver world-class, international SEO for our global client projects.",
-    image: "https://online.maryville.edu/wp-content/uploads/sites/97/2020/07/software-developer-coding.jpg",
+      "We expanded into complete product cycles covering web platforms, custom software, and digital transformation for growing companies across multiple industries.",
+    highlight: "Full cycle delivery",
+    image: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1400&auto=format&fit=crop",
+  },
+  {
+    year: "2018",
+    title: "Serving Clients Across Continents",
+    description:
+      "Our work reached teams in the UK, Europe, Middle East, and North America. Consistent delivery and clear communication turned first projects into long term partnerships.",
+    highlight: "Global client reach",
+    image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1400&auto=format&fit=crop",
   },
   {
     year: "2024",
-    title: "Global Project Growth",
+    title: "Manchester UK Regional Office",
     description:
-      "We expanded our portfolio internationally, securing significant software projects and AI integrations for businesses across the UK, Europe, and beyond.",
-    image: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1200&auto=format&fit=crop",
-  },
-  {
-    year: "2025",
-    title: "Manchester UK Branch Launch",
-    description:
-      "First branch opened in Manchester, United Kingdom — putting Code's Thinker on the international map and building stronger relationships with UK-based and European clients.",
-    image: "https://res.cloudinary.com/highereducation/images/f_auto,q_auto/g_face,c_fill,fl_lossy,q_auto:best,w_448,h_382/v1673383092/ComputerScience.org/day-in-the-life-of-a-software-dev/day-in-the-life-of-a-software-dev.jpg?_i=AA",
+      "We opened our Manchester office to stay closer to European clients, while our Bahawalpur delivery center continues to power scalable engineering execution.",
+    highlight: "UK office launched",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1400&auto=format&fit=crop",
   },
   {
     year: "2026",
-    title: "Future Vision: One Global Team",
+    title: "500+ Projects and Still Growing",
     description:
-      "Our vision is to stand among the world's leading software development companies — one international project at a time, powered by AI innovation.",
-    image: "https://www.blimp.pk/wp-content/uploads/2025/05/software-development-service-pakistan.jpg",
+      "With 20+ years of experience, 500+ delivered projects, 45K+ satisfied clients, and a 4.9/5 rating, we help the next generation of products launch and scale with confidence.",
+    highlight: "500+ projects delivered",
+    image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1400&auto=format&fit=crop",
   },
 ];
 
 const OurStory: React.FC = () => {
-  const [index, setIndex] = useState<number>(0);
+  const [index, setIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const active = storyData[index];
 
   useEffect(() => {
     AOS.init({ duration: 800, once: true });
-
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % storyData.length);
-    }, 4500);
-
-    return () => clearInterval(interval);
   }, []);
 
-  const getPosition = useCallback((i: number) => {
-    const diff = i - index;
-    if (diff === 0) return "center";
-    if (diff === -1 || diff === storyData.length - 1) return "left";
-    if (diff === 1 || diff === -(storyData.length - 1)) return "right";
-    return "hidden";
-  }, [index]);
+  const handleNext = useCallback(() => {
+    setIndex((prev) => (prev + 1) % storyData.length);
+  }, []);
+
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(handleNext, 5000);
+    return () => clearInterval(interval);
+  }, [isPaused, handleNext]);
 
   return (
-    // Fixed: Added strict overflow-hidden on outer container wrapper
-    <section className="w-full bg-white py-12 px-4 sm:px-6 overflow-hidden relative">
-      {/* Heading */}
-      <div data-aos="fade-down" className="text-center max-w-3xl mx-auto mb-4">
-       <SectionBadge text="Our Journey" theme="light" className="mb-4" />
+    <section className="relative w-full bg-gradient-to-b from-white via-slate-50 to-white py-12 px-4 sm:px-6 overflow-hidden">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[70%] h-px bg-gradient-to-r from-transparent via-[#07051D]/15 to-transparent" />
 
-        <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">
-          Code's{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-800">
-            <span className="text-[#F69A20] ">Thinker</span> Story
-          </span>
-        </h2>
+      <div className="max-w-7xl mx-auto">
+        {/* Heading */}
+        <div data-aos="fade-up" className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+          <SectionBadge text="Our Journey" theme="light" className="mb-4" />
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#07051D] tracking-tight">
+            The Codes Thinker Story
+          </h2>
+          <p className="text-slate-500 mt-4 max-w-2xl mx-auto text-sm sm:text-base md:text-lg leading-relaxed">
+            Since 2005 we have grown from a focused engineering team into a trusted global partner.
+            Today that journey includes 500+ projects, 45K+ satisfied clients, and partnerships built on delivery and trust.
+          </p>
+        </div>
 
-        <p className="text-gray-500 mt-4 max-w-xl mx-auto text-sm md:text-base">
-          From a bold vision to a global software development company — delivering excellence across continents.
-        </p>
-      </div>
-
-      {/* Slider deck */}
-      {/* Fixed: Adjusted mobile height to prevent clipping card scales */}
-      <div className="relative mt-8 flex justify-center items-center h-[480px] md:h-[540px] w-full max-w-7xl mx-auto">
-        {storyData.map((item, i) => {
-          const pos = getPosition(i);
-
-          return (
-            <div
-              key={i}
-              className={`
-                absolute w-[280px] sm:w-[340px] md:w-[420px] transition-all duration-700 ease-in-out
-                ${pos === "center"
-                  ? "z-30 scale-100 md:scale-110 opacity-100 pointer-events-auto"
-                  : pos === "left"
-                    ? "-translate-x-[160px] sm:-translate-x-[220px] md:-translate-x-[280px] scale-85 md:scale-90 opacity-30 md:opacity-40 pointer-events-none"
-                    : pos === "right"
-                      ? "translate-x-[160px] sm:translate-x-[220px] md:translate-x-[280px] scale-85 md:scale-90 opacity-30 md:opacity-40 pointer-events-none"
-                      : "opacity-0 scale-75 pointer-events-none"
-                }
-              `}
+        {/* Year pills */}
+        <div
+          data-aos="fade-up"
+          className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-8 sm:mb-10"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {storyData.map((item, i) => (
+            <button
+              key={item.year}
+              onClick={() => setIndex(i)}
+              className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold tracking-wide transition-all duration-300 border ${
+                i === index
+                  ? "bg-[#07051D] text-white border-[#07051D] shadow-lg shadow-[#07051D]/20"
+                  : "bg-white text-slate-500 border-slate-200 hover:border-[#07051D]/30 hover:text-[#07051D]"
+              }`}
             >
-              <div className="bg-[#090B22] rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] overflow-hidden border border-white/10">
-                {/* Image */}
-                <img
-                  src={item.image}
-                  className="h-[160px] sm:h-[200px] md:h-[220px] w-full object-cover"
-                  alt={item.title}
-                />
+              {item.year}
+            </button>
+          ))}
+        </div>
 
-                {/* Content */}
-                <div className="p-5 md:p-6">
-                  <span className="inline-block bg-[#FEA800]/15 text-[#FEA800] text-[10px] md:text-xs font-bold px-2.5 py-1 rounded-full tracking-[2px]">
-                    {item.year}
+        {/* Featured story panel */}
+        <div
+          data-aos="fade-up"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Image */}
+          <div className="lg:col-span-7 relative rounded-3xl overflow-hidden min-h-[280px] sm:min-h-[360px] lg:min-h-[440px] border border-slate-200/80 shadow-[0_20px_60px_-30px_rgba(7,5,29,0.35)]">
+            {storyData.map((item, i) => (
+              <img
+                key={item.year}
+                src={item.image}
+                alt={item.title}
+                className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${
+                  i === index ? "opacity-100 scale-100" : "opacity-0 scale-105"
+                }`}
+              />
+            ))}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#07051D]/80 via-[#07051D]/20 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 border border-white/20 text-white text-[11px] font-bold uppercase tracking-[0.14em] backdrop-blur-md">
+                <HiOutlineCheckCircle className="w-4 h-4" />
+                {active.highlight}
+              </span>
+              <p className="mt-3 text-white/80 text-sm sm:text-base max-w-lg leading-relaxed hidden sm:block">
+                Milestone {index + 1} of {storyData.length}
+              </p>
+            </div>
+          </div>
+
+          {/* Content card */}
+          <div className="lg:col-span-5 flex">
+            <div className="w-full rounded-3xl bg-[#07051D] text-white p-6 sm:p-8 lg:p-10 flex flex-col justify-between border border-[#07051D] shadow-[0_20px_60px_-30px_rgba(7,5,29,0.5)]">
+              <div>
+                <div className="flex items-center justify-between gap-3 mb-5">
+                  <span className="text-4xl sm:text-5xl font-black tracking-tight text-white/95">
+                    {active.year}
                   </span>
+                  <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/45">
+                    0{index + 1} / 0{storyData.length}
+                  </span>
+                </div>
 
-                  <h3 className="text-lg md:text-2xl font-bold mt-2.5 text-white truncate">
-                    {item.title}
-                  </h3>
+                <h3 className="text-2xl sm:text-3xl font-bold leading-tight min-h-[2.6em]">
+                  {active.title}
+                </h3>
+                <p className="mt-4 text-white/70 text-sm sm:text-base leading-relaxed min-h-[6.5em]">
+                  {active.description}
+                </p>
+              </div>
 
-                  <p className="text-gray-400 mt-2 text-xs md:text-sm leading-relaxed line-clamp-3 md:line-clamp-4">
-                    {item.description}
-                  </p>
+              <div className="mt-8">
+                <div className="h-1 w-full rounded-full bg-white/10 overflow-hidden mb-6">
+                  <div
+                    key={index}
+                    className={`h-full bg-white rounded-full ${!isPaused ? "animate-[storyProgress_5s_linear]" : "w-full"}`}
+                  />
+                </div>
+
+                <div className="flex items-center justify-between gap-4">
+                  <button
+                    onClick={handleNext}
+                    className="inline-flex items-center gap-2 text-sm font-bold text-white hover:text-white/80 transition-colors"
+                  >
+                    Next milestone
+                    <HiArrowRight className="w-4 h-4" />
+                  </button>
+                  <div className="flex gap-1.5">
+                    {storyData.map((item, i) => (
+                      <button
+                        key={`dot-${item.year}`}
+                        onClick={() => setIndex(i)}
+                        aria-label={`Go to ${item.year}`}
+                        className={`h-2 rounded-full transition-all duration-300 ${
+                          i === index ? "w-7 bg-white" : "w-2 bg-white/30 hover:bg-white/50"
+                        }`}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-          );
-        })}
+          </div>
+        </div>
+
+        {/* Bottom trust strip */}
+        <div
+          data-aos="fade-up"
+          className="mt-10 sm:mt-12 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4"
+        >
+          {[
+            { value: "2005", label: "Founded" },
+            { value: "500+", label: "Projects" },
+            { value: "45K+", label: "Clients" },
+            { value: "4.9/5", label: "Rating" },
+          ].map((item) => (
+            <div
+              key={item.label}
+              className="rounded-2xl border border-slate-200 bg-white px-4 py-5 text-center shadow-sm"
+            >
+              <p className="text-xl sm:text-2xl font-extrabold text-[#07051D]">{item.value}</p>
+              <p className="mt-1 text-[11px] sm:text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
+                {item.label}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Manual Indicator Controls */}
-      <div className="flex justify-center items-center gap-2.5 mt-8 relative z-40">
-        {storyData.map((item, i) => (
-          <button
-            key={`dot-${item.year}`}
-            onClick={() => setIndex(i)}
-            className={`transition-all duration-300 rounded-full h-2.5
-              ${index === i ? "bg-[#FEA800] w-7" : "bg-gray-200 hover:bg-gray-300 w-2.5"}`}
-            aria-label={`Go to year ${item.year}`}
-          />
-        ))}
-      </div>
+      <style>{`
+        @keyframes storyProgress {
+          from { width: 0%; }
+          to { width: 100%; }
+        }
+      `}</style>
     </section>
   );
 };

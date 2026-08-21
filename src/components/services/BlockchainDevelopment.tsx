@@ -34,7 +34,7 @@ const BlockchainDevelopment: React.FC = () => {
     {
       id: 2,
       title: 'DApp Development',
-      description: 'Full-stack decentralized applications with secure wallet and backend integrations.',
+      description: 'Full stack decentralized applications with secure wallet and backend integrations.',
       icon: Server,
       tag: 'Fullstack',
       span: 'col-span-1',

@@ -18,7 +18,7 @@ interface GlobalHero2Props {
 const GlobalHero2: React.FC<GlobalHero2Props> = ({
   title = "Premium Selection",
   badge = "Selection",
-  subtitle = "Explore our curated catalog of high-performance electronics. Engineered for those who demand excellence.",
+  subtitle = "Explore our curated catalog of high performance electronics. Engineered for those who demand excellence.",
   images = [],
   theme = 'light',
   primaryLink = '/contact',

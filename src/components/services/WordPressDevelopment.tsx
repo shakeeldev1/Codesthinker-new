@@ -11,7 +11,7 @@ const WordPressDevelopment: React.FC = () => {
       id: 1,
       subtitle: 'CMS & WordPress',
       title: 'Professional WordPress Development',
-      description: 'Custom themes, plugins, and high-performance WordPress sites optimized for content and conversions.',
+      description: 'Custom themes, plugins, and high performance WordPress sites optimized for content and conversions.',
       image: 'https://images.unsplash.com/photo-1559526324-593bc073d938?q=80&w=2070&auto=format&fit=crop',
       primaryLink: '/contact',
       secondaryLink: '/projects',

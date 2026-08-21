@@ -21,7 +21,7 @@ const SoftwareDevelopment = () => {
       id: 1,
       subtitle: "Custom Solutions",
       title: "Building Software That Scales",
-      description: "We deliver high-quality, scalable software solutions tailored to your unique business needs and challenges.",
+      description: "We deliver high quality, scalable software solutions tailored to your unique business needs and challenges.",
       image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop",
       primaryLink: "/contact",
       secondaryLink: "/projects",
@@ -137,7 +137,7 @@ const SoftwareDevelopment = () => {
       <GlobalCapabilitiesSection
         badgeText="Our Services"
         title="Complete Development Solutions"
-        subtitle="From concept to launch, we deliver end-to-end software development excellence engineered for enterprise complexity."
+        subtitle="From concept to launch, we deliver end to end software development excellence engineered for enterprise complexity."
         capabilities={services}
       />
 

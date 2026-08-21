@@ -62,8 +62,8 @@ const FeatureItem: React.FC<{ feature: Feature; index: number; align?: "left" | 
 // --- Main Component ---
 const WhyChoose: React.FC = () => {
   const features = [
-    { title: "Live Project Tracking", description: "Real-time updates on milestones and deployments.", icon: Clock },
-    { title: "Insightful Analytics", description: "Data-driven insights to optimize your growth.", icon: TrendingUp },
+    { title: "Live Project Tracking", description: "Real time updates on milestones and deployments.", icon: Clock },
+    { title: "Insightful Analytics", description: "Data driven insights to optimize your growth.", icon: TrendingUp },
     { title: "Learning Hub", description: "Curated resources for your success.", icon: BookOpen },
     { title: "Award-Winning Solutions", description: "Innovative software recognized by experts.", icon: Award },
     { title: "Scalable Architecture", description: "Flexible systems built for the future.", icon: Briefcase },

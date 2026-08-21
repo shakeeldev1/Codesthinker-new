@@ -86,7 +86,7 @@ const UIUXDesign = () => {
       <GlobalHero2
         badge="Experience"
         title="Elevating User Experience with Precision"
-        subtitle="We blend creativity with user-centric data to design intuitive interfaces that drive engagement and business growth."
+        subtitle="We blend creativity with user centric data to design intuitive interfaces that drive engagement and business growth."
         theme="dark"
         images={[
           "https://images.unsplash.com/photo-1545235617-9465d2a55698?q=80&w=2080&auto=format&fit=crop",

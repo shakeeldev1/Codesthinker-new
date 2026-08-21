@@ -175,7 +175,7 @@ const MobileDevelopment = () => {
       <GlobalCapabilitiesSection
         badgeText="Solutions"
         title="Comprehensive Mobile Solutions"
-        subtitle="End-to-end development services covering every aspect of mobile app creation, optimization, and scaling."
+        subtitle="End to end development services covering every aspect of mobile app creation, optimization, and scaling."
         capabilities={capabilities}
       />
 
@@ -190,7 +190,7 @@ const MobileDevelopment = () => {
         theme="light"
         title="Ready to Launch Your"
         highlightText="Dream Mobile App?"
-        subtitle="We transform your ideas into powerful, high-performance iOS and Android applications for the global market."
+        subtitle="We transform your ideas into powerful, high performance iOS and Android applications for the global market."
       />
     </div>
   );

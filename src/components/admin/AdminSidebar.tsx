@@ -75,7 +75,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
           <div className="sticky top-0 z-10 p-5 border-b border-slate-150 flex items-center justify-between bg-white/90 backdrop-blur-md">
             <div className="flex items-center gap-3">
               <img 
-                src="/logo-blue.png" 
+                src="/logo-blue.webp" 
                 alt="Code's Thinker Logo" 
                 className="h-9 w-auto object-contain" 
               />

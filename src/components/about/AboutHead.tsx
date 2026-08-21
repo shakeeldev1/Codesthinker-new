@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useNavigate } from "react-router-dom";
-import Button from "../common/Button";
 import { SectionBadge } from "../ui/SectionBadge";
 import { motion } from "framer-motion";
 import { HiArrowRight } from "react-icons/hi";
@@ -26,7 +25,7 @@ function AboutHead() {
         className="absolute inset-0 w-full h-full object-cover"
       />
 
-      {/* Increased Dark Overlay Opacity (from /60 to /80) */}
+      {/* Dark Overlay */}
       <div className="absolute inset-0 bg-[#07051D]/80"></div>
 
       {/* Gradient Glow Effects */}
@@ -41,49 +40,50 @@ function AboutHead() {
         <div className="max-w-7xl text-center text-white">
 
           {/* Badge Tag */}
-          <SectionBadge text="Trusted Software Partner" theme="dark" className="mb-4" />
+          <SectionBadge text="Since 2005 · Trusted Software Partner" theme="dark" className="mb-4" />
 
-          {/* Main Heading with text drop shadow */}
+          {/* Main Heading */}
           <h1
             data-aos="zoom-in"
             data-aos-delay="100"
             className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight drop-shadow-lg"
           >
-            Delivering World Class Software <br className="hidden sm:inline" />
-            for <span className="text-[#F49B21]">Global Clients</span>
+            20+ Years Building Software <br className="hidden sm:inline" />
+            Clients <span className="text-white/90">Can Rely On</span>
           </h1>
 
-          {/* Description with enhanced visibility */}
+          {/* Description */}
           <p
             data-aos="fade-up"
             data-aos-delay="200"
             className="mt-6 text-gray-200 text-lg sm:text-xl md:text-xl leading-relaxed max-w-4xl mx-auto drop-shadow-md"
           >
-            We build scalable software, intelligent AI, and intuitive UI/UX to transform complex challenges into high-performance digital products.
+            Founded in 2005, Codes Thinker has delivered <strong className="text-white">500+ projects</strong> and earned the trust of{" "}
+            <strong className="text-white">45,000+ satisfied clients</strong> worldwide from startups to enterprises needing scalable web, mobile, and AI solutions.
           </p>
 
-          {/* Global Client Banner */}
+          {/* Highlighted Global Footprint Banner */}
           <div
             data-aos="fade-up"
             data-aos-delay="300"
-            className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-gray-300 text-sm"
+            className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-sm font-medium"
           >
-            <span className="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-[#F49B21]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 014 0V6a6 6 0 10-12 0v.27c0 .6.13 1.18.33 1.71M12 20a8 8 0 100-16 8 8 0 000 16z" /></svg>
-              Worldwide Clients
-            </span>
-            <span className="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-[#F49B21]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-              Manchester, UK
-            </span>
-            <span className="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-[#F49B21]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-              Bahawalpur, Pakistan
-            </span>
-            <span className="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-[#F49B21]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              1000+ Projects Delivered
-            </span>
+            <div className="flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/15 rounded-full text-white shadow-lg backdrop-blur-md">
+              <span className="flex h-2 w-2 rounded-full bg-white animate-ping" />
+              <span>Est. <strong>2005</strong></span>
+            </div>
+
+            <div className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-gray-300 backdrop-blur-md">
+              <span><strong className="text-white">500+</strong> Projects Delivered</span>
+            </div>
+
+            <div className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-gray-300 backdrop-blur-md">
+              <span><strong className="text-white">45K+</strong> Satisfied Clients</span>
+            </div>
+
+            <div className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-gray-300 backdrop-blur-md">
+              <span>Regional Office: <strong className="text-white">Manchester, UK</strong></span>
+            </div>
           </div>
 
           {/* Buttons */}
@@ -97,7 +97,7 @@ function AboutHead() {
               whileHover={{ scale: 1.02, boxShadow: '0 20px 40px rgba(244,155,33,0.25)' }}
               whileTap={{ scale: 0.98 }}
               onClick={() => navigate("/projects")}
-              className="relative overflow-hidden group flex items-center justify-center gap-2.5 w-full sm:w-auto px-5 py-2 bg-[#F49B21] text-[#08061E] font-bold rounded-2xl shadow-xl text-[15px]"
+              className="relative overflow-hidden group flex items-center justify-center gap-2.5 w-full sm:w-auto px-6 py-3 bg-[#F49B21] text-[#08061E] font-bold rounded-2xl shadow-xl text-[15px]"
             >
               <span className="relative z-10 flex items-center gap-2 transition-colors duration-300 group-hover:text-white">
                 View Our Projects
@@ -108,14 +108,7 @@ function AboutHead() {
                   <HiArrowRight className="w-5 h-5" />
                 </motion.span>
               </span>
-              {/* Slide up dark navy layer */}
               <div className="absolute inset-0 bg-[#08061E] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
-              {/* Shine sweep */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 z-10"
-                animate={{ x: ['-150%', '250%'] }}
-                transition={{ duration: 2, repeat: Infinity, repeatDelay: 2, ease: 'easeInOut' }}
-              />
             </motion.button>
 
             {/* Secondary CTA — Get in Touch */}
@@ -123,12 +116,11 @@ function AboutHead() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => navigate("/contact")}
-              className="relative overflow-hidden group w-full sm:w-auto px-5 py-2 bg-transparent text-white font-bold rounded-2xl border-2 border-white/20 hover:border-[#F49B21] transition-colors duration-300 text-[15px]"
+              className="relative overflow-hidden group w-full sm:w-auto px-6 py-3 bg-transparent text-white font-bold rounded-2xl border-2 border-white/20 hover:border-[#F49B21] transition-colors duration-300 text-[15px]"
             >
               <span className="relative z-10 transition-colors duration-300 group-hover:text-[#08061E]">
                 Get in Touch
               </span>
-              {/* Slide up amber layer */}
               <div className="absolute inset-0 bg-[#F49B21] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
             </motion.button>
           </div>

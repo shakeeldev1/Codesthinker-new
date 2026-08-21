@@ -4,7 +4,6 @@ import {
   FaEnvelope, 
   FaFacebook, 
   FaInstagram, 
-  FaTwitter, 
   FaLinkedin, 
   FaPhoneAlt 
 } from 'react-icons/fa';
@@ -117,7 +116,7 @@ const Contact: React.FC = () => {
       >
         <div className="z-10 animate-fade-in-up">
           <h1 className="text-5xl font-bold mb-4 drop-shadow-lg">Contact us</h1>
-          <p className="text-blue-100 max-w-2xl mx-auto text-lg drop-shadow-md">
+          <p className="text-white max-w-2xl mx-auto text-lg drop-shadow-md">
             We are ready to provide the right solution according to your needs.
           </p>
         </div>
@@ -141,11 +140,11 @@ const Contact: React.FC = () => {
 
       {/* 2. Main Content Card (Overlapping Hero) */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 z-20 w-full mb-16 relative">
-        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row transform transition-all duration-500 hover:shadow-orange-500/10 hover:shadow-3xl">
+        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row transform transition-all duration-500 hover:shadow-[#F49B21]/10 hover:shadow-3xl">
           
           {/* Left Column: Contact Info */}
           <div className="p-8 md:p-12 md:w-5/12 bg-white">
-            <h2 className="text-3xl font-bold text-blue-950 mb-4">Get in touch</h2>
+            <h2 className="text-3xl font-bold text-[#07051D] mb-4">Get in touch</h2>
             <p className="text-gray-600 mb-8">
               Reach out to us for any inquiries or to discuss how we can help your business grow.
             </p>
@@ -155,15 +154,15 @@ const Contact: React.FC = () => {
               {contactInfo.map((item, index) => (
                 <div 
                   key={index} 
-                  className="flex items-center group p-4 -ml-4 rounded-xl hover:bg-yellow-50 transition-colors duration-300 cursor-pointer"
+                  className="flex items-center group p-4 -ml-4 rounded-xl hover:bg-[#F49B21]/10 transition-colors duration-300 cursor-pointer"
                 >
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center text-orange-500 group-hover:bg-orange-500 group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-md group-hover:-translate-y-1">
+                    <div className="w-12 h-12 rounded-full bg-[#F49B21]/10 flex items-center justify-center text-[#F49B21] group-hover:bg-[#F49B21] group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-md group-hover:-translate-y-1">
                       <span className="text-xl">{item.icon}</span>
                     </div>
                   </div>
                   <div className="ml-5">
-                    <h3 className="text-lg font-semibold text-blue-950 group-hover:text-orange-600 transition-colors duration-300">
+                    <h3 className="text-lg font-semibold text-[#07051D] group-hover:text-[#F49B21] transition-colors duration-300">
                       {item.label}
                     </h3>
                     <p className="text-gray-600 mt-1 text-sm font-medium">
@@ -176,24 +175,31 @@ const Contact: React.FC = () => {
 
             {/* Social Media */}
             <div className="mt-10">
-              <h3 className="text-lg font-semibold text-blue-950 mb-4">Follow our social media</h3>
-              <div className="flex space-x-4">
-                {[FaFacebook, FaInstagram, FaTwitter, FaLinkedin].map((Icon, index) => (
-                  <a
-                    key={index}
-                    href="#"
-                    className="w-10 h-10 rounded-full bg-blue-950 text-white flex items-center justify-center hover:bg-orange-500 hover:scale-110 hover:shadow-lg hover:shadow-orange-500/40 transition-all duration-300"
-                  >
-                    <Icon size={18} />
-                  </a>
-                ))}
-              </div>
+              <h3 className="text-lg font-semibold text-[#07051D] mb-4">Follow our social media</h3>
+                <div className="flex space-x-4">
+                  {[
+                    { Icon: FaFacebook, href: "https://www.facebook.com/profile.php?id=61565400934738", label: "Facebook" },
+                    { Icon: FaInstagram, href: "https://www.instagram.com/codesthinker_offical/", label: "Instagram" },
+                    { Icon: FaLinkedin, href: "https://www.linkedin.com/company/codesthinker/", label: "LinkedIn" },
+                  ].map(({ Icon, href, label }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={label}
+                      className="w-10 h-10 rounded-full bg-[#07051D] text-white flex items-center justify-center hover:bg-[#F49B21] hover:scale-110 hover:shadow-lg hover:shadow-[#F49B21]/40 transition-all duration-300"
+                    >
+                      <Icon size={18} />
+                    </a>
+                  ))}
+                </div>
             </div>
           </div>
 
           {/* Right Column: Form */}
           <div className="p-8 md:p-12 md:w-7/12 bg-gray-50 border-l border-gray-100">
-            <h2 className="text-3xl font-bold text-blue-950 mb-8">Send us a message</h2>
+            <h2 className="text-3xl font-bold text-[#07051D] mb-8">Send us a message</h2>
 
             {submitStatus === 'success' && (
               <div className="mb-6 bg-emerald-50 text-emerald-700 px-5 py-3 rounded-xl text-sm font-medium border border-emerald-200 animate-fade-in">
@@ -218,7 +224,7 @@ const Contact: React.FC = () => {
                     value={formData.firstName}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 hover:border-orange-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all duration-300 bg-white shadow-sm"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 hover:border-[#F49B21]/40 focus:ring-2 focus:ring-[#F49B21]/20 focus:border-transparent outline-none transition-all duration-300 bg-white shadow-sm"
                   />
                 </div>
                 <div>
@@ -230,7 +236,7 @@ const Contact: React.FC = () => {
                     value={formData.lastName}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 hover:border-orange-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all duration-300 bg-white shadow-sm"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 hover:border-[#F49B21]/40 focus:ring-2 focus:ring-[#F49B21]/20 focus:border-transparent outline-none transition-all duration-300 bg-white shadow-sm"
                   />
                 </div>
                 <div>
@@ -242,7 +248,7 @@ const Contact: React.FC = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 hover:border-orange-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all duration-300 bg-white shadow-sm"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 hover:border-[#F49B21]/40 focus:ring-2 focus:ring-[#F49B21]/20 focus:border-transparent outline-none transition-all duration-300 bg-white shadow-sm"
                   />
                 </div>
                 <div>
@@ -254,7 +260,7 @@ const Contact: React.FC = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 hover:border-orange-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all duration-300 bg-white shadow-sm"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 hover:border-[#F49B21]/40 focus:ring-2 focus:ring-[#F49B21]/20 focus:border-transparent outline-none transition-all duration-300 bg-white shadow-sm"
                   />
                 </div>
               </div>
@@ -268,7 +274,7 @@ const Contact: React.FC = () => {
                   value={formData.subject}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 hover:border-orange-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all duration-300 bg-white shadow-sm"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 hover:border-[#F49B21]/40 focus:ring-2 focus:ring-[#F49B21]/20 focus:border-transparent outline-none transition-all duration-300 bg-white shadow-sm"
                 />
               </div>
 
@@ -281,14 +287,14 @@ const Contact: React.FC = () => {
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 hover:border-orange-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all duration-300 bg-white resize-none shadow-sm"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 hover:border-[#F49B21]/40 focus:ring-2 focus:ring-[#F49B21]/20 focus:border-transparent outline-none transition-all duration-300 bg-white resize-none shadow-sm"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3.5 px-4 rounded-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl shadow-orange-500/40 focus:ring-4 focus:ring-orange-300 outline-none disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none"
+                className="w-full bg-[#F49B21] hover:bg-[#e08a1d] text-white font-bold py-3.5 px-4 rounded-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl shadow-[#F49B21]/40 focus:ring-4 focus:ring-[#F49B21]/20 outline-none disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none"
               >
                 {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>

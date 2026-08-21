@@ -22,7 +22,7 @@ const slides: SlideContent[] = [
     {
         title: "Welcome to",
         highlight: "Codes Thinker",
-        description: "We craft smart, user-friendly digital solutions that help businesses innovate and grow.",
+        description: "We craft smart, user friendly digital solutions that help businesses innovate and grow.",
         linkTo: "/about",
     },
     {

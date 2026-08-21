@@ -17,7 +17,7 @@ const teamMembers: TeamMember[] = [
     id: "241740",
     name: "Waseem Malik",
     role: "CEO & Founder",
-    description: "Full-stack developer with expertise in React, Next.js, and cloud technologies. Passionate about building scalable web applications.",
+    description: "Full stack developer with expertise in React, Next.js, and cloud technologies. Passionate about building scalable web applications.",
     skills: ["React", "Next.js", "Node.js", "AWS"],
     social: [
       { platform: "linkedin", url: "#", icon: "fab fa-linkedin" },
@@ -83,7 +83,7 @@ const teamMembers: TeamMember[] = [
     id: "241765",
     name: "Faizan Ali",
     role: "Mobile Developer",
-    description: "Mobile app developer specializing in cross-platform solutions.",
+    description: "Mobile app developer specializing in cross platform solutions.",
     skills: ["React Native", "Flutter", "iOS"],
     social: [{ platform: "linkedin", url: "#", icon: "fab fa-linkedin" }],
     avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=300&h=300&auto=format&fit=crop",

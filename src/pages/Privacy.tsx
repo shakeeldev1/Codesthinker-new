@@ -183,7 +183,7 @@ const PrivacyPolicy: React.FC = () => {
                 We employ robust, industry-standard administrative, physical, and technical measures designed to safeguard your personal data from accidental loss, unauthorized access, alteration, or disclosure.
               </p>
               <div className="p-5 rounded-2xl bg-[#F49B21]/10 border border-[#F49B21]/30 text-sm text-[#050416]">
-                🔒 <strong>Encryption Standards:</strong> Security measures include end-to-end data encryption in transit and at rest, automated firewalls, and restricted administrative data access controls.
+                🔒 <strong>Encryption Standards:</strong> Security measures include end to end data encryption in transit and at rest, automated firewalls, and restricted administrative data access controls.
               </div>
             </div>
 

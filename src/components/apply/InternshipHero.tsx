@@ -52,7 +52,7 @@ const InternshipHero: React.FC = () => {
                         </h1>
 
                         <p className="text-gray-200 text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                            We bridge the gap between complex strategy and human-centric execution.
+                            We bridge the gap between complex strategy and human centric execution.
                             Join a global network of innovators dedicated to your professional growth.
                         </p>
 

@@ -52,7 +52,7 @@ const ServicesSection = () => {
       title: "Web Development",
       category: "Web",
       shortDesc: "Modern, scalable web applications built with cutting-edge technologies for exceptional user experiences.",
-      longDesc: "From responsive SPAs to complex enterprise portals, we deliver high-performance web solutions.",
+      longDesc: "From responsive SPAs to complex enterprise portals, we deliver high performance web solutions.",
       tags: ["Requirement Gathering & Planning", "Design & Development", "Testing & Optimization"],
       metrics: { time: "4-8 weeks", rating: "4.9" },
       logos: [
@@ -68,10 +68,10 @@ const ServicesSection = () => {
       id: 2,
       title: "Mobile App Development",
       category: "Mobile",
-      shortDesc: "Native and cross-platform mobile experiences that deliver exceptional performance and user engagement.",
-      longDesc: "iOS, Android, and cross-platform apps with seamless UI/UX and optimized performance.",
+      shortDesc: "Native and cross platform mobile experiences that deliver exceptional performance and user engagement.",
+      longDesc: "iOS, Android, and cross platform apps with seamless UI/UX and optimized performance.",
       tags: ["Conceptualization & Design", "Development", "Testing & Optimization"],
-      metrics: { time: "6-10 weeks", rating: "4.8" },
+      metrics: { time: "6-10 weeks", rating: "4.9" },
       logos: [
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg",
@@ -105,7 +105,7 @@ const ServicesSection = () => {
       shortDesc: "Powerful browser extensions that enhance productivity and streamline workflows.",
       longDesc: "Cross-browser compatible extensions with intuitive interfaces and robust functionality.",
       tags: ["Requirement Analysis", "Development", "Testing & Publishing"],
-      metrics: { time: "2-4 weeks", rating: "4.7" },
+      metrics: { time: "2-4 weeks", rating: "4.9" },
       logos: [
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firefox/firefox-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chrome/chrome-original.svg",
@@ -122,7 +122,7 @@ const ServicesSection = () => {
       shortDesc: "Transform raw data into actionable insights with advanced analytics and machine learning.",
       longDesc: "Predictive modeling, data visualization, and business intelligence solutions.",
       tags: ["Data Collection", "Data Preprocessing", "Model Training & Deployment"],
-      metrics: { time: "8-12 weeks", rating: "4.8" },
+      metrics: { time: "8-12 weeks", rating: "4.9" },
       logos: [
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg",
@@ -156,7 +156,7 @@ const ServicesSection = () => {
       shortDesc: "Scalable, secure, and cost-optimized cloud solutions for modern enterprises.",
       longDesc: "Multi-cloud strategies, serverless architectures, and cloud migration services.",
       tags: ["Cloud Strategy", "Architecture Design", "Migration & Optimization"],
-      metrics: { time: "4-8 weeks", rating: "4.8" },
+      metrics: { time: "4-8 weeks", rating: "4.9" },
       logos: [
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg",
@@ -382,7 +382,7 @@ const ServicesSection = () => {
                           </div>
                           <div className="flex items-center gap-1">
                             <Star className="w-4 h-4 text-[#08061E] fill-current" />
-                            <span className="text-xs font-semibold text-gray-700">{service.metrics.rating}</span>
+                            <span className="text-xs font-semibold text-gray-700">{service.metrics.rating}/5</span>
                           </div>
                         </div>
 

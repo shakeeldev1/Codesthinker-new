@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
     FaFacebookF, 
-    FaTwitter, 
     FaInstagram, 
     FaLinkedinIn, 
     FaEnvelope, 
@@ -39,10 +38,9 @@ const Footer: React.FC = () => {
     ];
 
     const socialLinks = [
-        { icon: <FaFacebookF />, href: "#" },
-        { icon: <FaTwitter />, href: "#" },
-        { icon: <FaInstagram />, href: "#" },
-        { icon: <FaLinkedinIn />, href: "#" },
+        { icon: <FaFacebookF />, href: "https://www.facebook.com/profile.php?id=61565400934738", label: "Facebook" },
+        { icon: <FaInstagram />, href: "https://www.instagram.com/codesthinker_offical/", label: "Instagram" },
+        { icon: <FaLinkedinIn />, href: "https://www.linkedin.com/company/codesthinker/", label: "LinkedIn" },
     ];
 
     return (
@@ -56,7 +54,7 @@ const Footer: React.FC = () => {
 <div className="space-y-6 max-w-md">
     <Link to="/" className="inline-block group">
         <img
-            src="https://codesthinker.com/companylogo.png"
+            src="/logo-white.webp"
             alt="CodesThinker Logo"
             className="h-11 w-auto transition-all duration-300 group-hover:scale-105"
         />
@@ -78,6 +76,9 @@ const Footer: React.FC = () => {
             <motion.a
                 key={index}
                 href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
                 whileHover={{ y: -5, scale: 1.08 }}
                 whileTap={{ scale: 0.95 }}
                 className="w-10 h-10 rounded-2xl bg-white/[0.04] backdrop-blur-md border border-white/[0.08] flex items-center justify-center text-gray-400 hover:bg-[#F69A20] hover:text-[#07051d] hover:border-[#F69A20] hover:shadow-[0_0_20px_rgba(246,154,32,0.35)] transition-all duration-300"

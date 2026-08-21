@@ -32,6 +32,8 @@ const Team: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [hoveredOrb, setHoveredOrb] = useState<number | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [modalMember, setModalMember] = useState<TeamMember | null>(null);
 
   // SSR safe: Initialize with default safe desktop width, update in useEffect
   const [windowSize, setWindowSize] = useState({ width: 1024, height: 768 });
@@ -77,6 +79,29 @@ const Team: React.FC = () => {
     setActiveIndex(index);
     if (autoPlayTimeoutRef.current) clearTimeout(autoPlayTimeoutRef.current);
     autoPlayTimeoutRef.current = setTimeout(() => setIsAutoPlaying(true), 10000);
+  }, []);
+
+  const openMemberModal = useCallback((index: number) => {
+    setIsAutoPlaying(false);
+    setActiveIndex(index);
+    setShowModal(true);
+    setModalMember(executives[index] ?? null);
+  }, []);
+
+  const closeMemberModal = useCallback(() => {
+    setShowModal(false);
+    setModalMember(null);
+    setIsAutoPlaying(true);
+    if (autoPlayTimeoutRef.current) {
+      clearTimeout(autoPlayTimeoutRef.current);
+      autoPlayTimeoutRef.current = undefined;
+    }
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setShowModal(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
   }, []);
 
   // Global timeout cleanup on unmount
@@ -178,7 +203,7 @@ const Team: React.FC = () => {
                   initial={{ x: 0, y: 0, scale: 0 }}
                   animate={{ x, y, scale: 1 }}
                   transition={{ type: "spring", stiffness: 100, damping: 20, delay: index * 0.05 + 0.5 }}
-                  onClick={() => handleManualSelection(index)}
+                  onClick={() => openMemberModal(index)}
                   onMouseEnter={() => setHoveredOrb(index)}
                   onMouseLeave={() => setHoveredOrb(null)}
                   whileHover={{ scale: 1.15 }}
@@ -346,8 +371,7 @@ const Team: React.FC = () => {
             {/* Auto-playing Indicator */}
             {isAutoPlaying && (
               <motion.div className="flex justify-center lg:justify-start gap-1 mt-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                <div className="flex gap-1.5 items-center text-sm text-gray-500">
-                  <span>Auto-playing</span>
+                <div className="flex items-center gap-0.5 text-sm text-gray-500">
                   <div className="flex gap-0.5">
                     {[...Array(3)].map((_, i) => (
                       <motion.div key={i} className="w-1.5 h-1.5 rounded-full bg-gray-400" animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.3 }} />
@@ -375,91 +399,106 @@ const Team: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 max-w-7xl mx-auto">
             {normalStaff.map((member) => {
               const theme = getRoleTheme(member.role);
-              const accentColor = theme.accent; // e.g., '#F49B21'
-
-              // Safe helper to convert hex to RGB strings for dynamic tailwind/CSS shadows
-              const hexToRgb = (hex) => {
-                const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-                const fullHex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b);
-                const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(fullHex);
-                return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '7, 5, 29';
-              };
-
-              const rgbAccent = hexToRgb(accentColor);
+              const accentColor = theme.accent;
+              const rgbAccent = theme.glow || '7, 5, 29';
 
               return (
                 <div
                   key={member.id}
-                  className="group relative bg-white rounded-2xl border border-slate-100/80 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-2 sm:hover:scale-[1.01] overflow-hidden flex flex-col cursor-pointer"
+                  className="group relative bg-white rounded-3xl border border-slate-200/70 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-2 overflow-hidden flex flex-col cursor-pointer hover:border-transparent"
+                  onClick={() => { setModalMember(member); setShowModal(true); setIsAutoPlaying(false); }}
                   style={
                     {
                       '--accent-rgb': rgbAccent,
                       '--accent-color': accentColor,
-                      boxShadow: '0 15px 35px -15px rgba(7, 5, 29, 0.05)'
-                    } as any
+                      boxShadow: '0 12px 40px -18px rgba(7, 5, 29, 0.12)'
+                    } as React.CSSProperties
                   }
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = `0 30px 60px -15px rgba(${rgbAccent}, 0.15)`;
+                    e.currentTarget.style.boxShadow = `0 28px 55px -18px rgba(${rgbAccent}, 0.28)`;
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.boxShadow = '0 15px 35px -15px rgba(7, 5, 29, 0.05)';
+                    e.currentTarget.style.boxShadow = '0 12px 40px -18px rgba(7, 5, 29, 0.12)';
                   }}
                 >
-                  {/* Decorative Gradient Top Line */}
-                  <div className={`absolute top-0 left-0 w-full h-[6px] bg-gradient-to-r ${theme.gradient} z-20`} />
+                  {/* Top accent bar */}
+                  <div className={`absolute top-0 left-0 w-full h-[5px] bg-gradient-to-r ${theme.accentBar || theme.gradient} z-20`} />
+
+                  {/* Soft corner wash */}
+                  <div
+                    className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-30 z-10"
+                    style={{ background: `rgba(${rgbAccent}, 0.45)` }}
+                  />
 
                   {/* 1. TOP IMAGE AREA */}
-                  <div className="relative w-full h-60 xs:h-64 sm:h-72 md:h-80 overflow-hidden bg-slate-50 flex-shrink-0">
+                  <div className="relative w-full h-60 xs:h-64 sm:h-72 md:h-80 overflow-hidden bg-slate-100 flex-shrink-0">
                     <img
                       src={member.avatar}
                       alt={member.name}
-                      className="w-full h-full object-cover object-top transition-transform duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                      className={`w-full h-full object-cover transition-transform duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 ${
+                        member.id === "dev-013" ? "object-[center_18%]" : "object-top"
+                      }`}
                       loading="lazy"
                       onError={(e) => { e.currentTarget.src = FALLBACK_AVATAR; }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-95" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#07051D]/75 via-[#07051D]/20 to-transparent opacity-95" />
+                    <div className={`absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r ${theme.accentBar || theme.gradient} opacity-90`} />
+
+                    {/* Role badge over image */}
+                    <div className="absolute bottom-4 left-4 right-4 z-10">
+                      <span className="inline-flex max-w-full truncate px-3 py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.12em] border border-white/20 backdrop-blur-md bg-[#07051D]/85 text-white shadow-sm">
+                        {member.role}
+                      </span>
+                    </div>
                   </div>
 
                   {/* 2. BOTTOM CONTENT AREA */}
-                  <div className="relative z-10 flex flex-col flex-grow p-5 sm:p-6 md:p-8 bg-white border-t border-slate-50">
+                  <div className="relative z-10 flex flex-col flex-grow p-5 sm:p-6 md:p-7 bg-gradient-to-b from-white to-slate-50/80">
 
                     {/* Header: Profile Name & Role */}
                     <div className="mb-4 sm:mb-5">
                       <h3
-                        className="text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 tracking-tight transition-colors duration-300"
+                        className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#07051D] tracking-tight transition-colors duration-300 group-hover:text-[var(--accent-color)]"
                         style={{ fontFamily: "'Outfit', sans-serif" }}
-                        onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent-color)'}
-                        onMouseLeave={(e) => e.currentTarget.style.color = ''}
                       >
                         {member.name}
                       </h3>
 
-                      <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3 sm:gap-y-2 mt-2.5">
-                        <span className={`${theme.text} font-bold text-[11px] sm:text-xs uppercase tracking-[0.15em] opacity-90`}>
+                      <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3 sm:gap-y-2 mt-3">
+                        <span className={`inline-flex px-2.5 py-1 rounded-lg text-[11px] sm:text-xs font-bold border ${theme.soft}`}>
                           {member.role}
                         </span>
                         {member.location && (
                           <div className="flex items-center gap-1.5 text-slate-400 text-xs sm:text-sm font-medium group-hover:text-slate-600 transition-colors duration-300">
-                            <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
-                            <LuMapPin size={14} className="text-slate-400 group-hover:text-amber-500 transition-colors" />
+                            <LuMapPin size={14} className="transition-colors" style={{ color: accentColor }} />
                             {member.location}
                           </div>
                         )}
                       </div>
                     </div>
 
-                    {/* Description Text */}
-                    <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-normal mb-6 flex-grow transition-colors duration-300 group-hover:text-slate-700">
+                    {/* Description Text (clamped to 3 lines) */}
+                    <p
+                      className="text-slate-600 text-sm sm:text-base leading-relaxed font-normal mb-6 transition-colors duration-300 group-hover:text-slate-700"
+                      style={{
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: 'vertical',
+                        display: '-webkit-box',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        minHeight: 64
+                      }}
+                    >
                       {member.description}
                     </p>
 
                     {/* Skills / Tags */}
-                    <div className="space-y-3 mb-6 relative z-30">
+                    <div className="space-y-3 mb-4 relative z-30" style={{ minHeight: 44 }}>
                       <div className="flex flex-wrap gap-2">
                         {member.skills.slice(0, 4).map(skill => (
                           <span
                             key={skill}
-                            className="px-3 py-1.5 bg-slate-50 text-slate-600 text-[11px] sm:text-xs font-semibold rounded-lg border border-slate-100 group-hover:bg-white group-hover:border-slate-200 transition-all duration-300"
+                            className={`px-3 py-1.5 text-[11px] sm:text-xs font-semibold rounded-lg border transition-all duration-300 ${theme.chip}`}
                           >
                             {skill}
                           </span>
@@ -467,9 +506,27 @@ const Team: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Footer Actions: Social Links & Contact */}
+                    {/* Achievements */}
+                    <div className="mb-4" style={{ minHeight: 56 }}>
+                      <h4 className="text-xs font-extrabold text-gray-400 uppercase tracking-widest flex items-center gap-2 mb-2">
+                        <LuAward className="text-[#07051D]" /> Key Milestones
+                      </h4>
+                      <div className="flex flex-wrap gap-2.5">
+                        {member.achievements && member.achievements.length > 0 ? (
+                          member.achievements.map((achievement, idx) => (
+                            <span key={idx} className={`px-3 py-1.5 border text-[#475569] text-xs font-semibold rounded-full ${theme.soft}`}>
+                              {achievement}
+                            </span>
+                          ))
+                        ) : (
+                          <span className="text-xs text-slate-400">&nbsp;</span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Footer Actions */}
                     <div
-                      className="mt-auto pt-5 border-t border-slate-100 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between relative z-30"
+                      className="mt-auto pt-5 border-t border-slate-100/90 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between relative z-30"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <div className="flex flex-wrap gap-2 sm:gap-2.5">
@@ -482,7 +539,10 @@ const Team: React.FC = () => {
                               target="_blank"
                               rel="noopener noreferrer"
                               aria-label={s.platform}
-                              className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 text-slate-400 hover:text-white hover:bg-slate-900 transition-all duration-300 border border-slate-100 hover:-translate-y-0.5 hover:shadow-sm"
+                              className="w-10 h-10 flex items-center justify-center rounded-xl bg-white text-slate-400 transition-all duration-300 border border-slate-100 hover:-translate-y-0.5 hover:shadow-md hover:text-white"
+                              style={{ ['--hover-bg' as string]: accentColor }}
+                              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = accentColor; e.currentTarget.style.borderColor = accentColor; }}
+                              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = ''; e.currentTarget.style.borderColor = ''; }}
                             >
                               <Icon className="text-base" />
                             </a>
@@ -493,7 +553,8 @@ const Team: React.FC = () => {
                       {member.email && (
                         <a
                           href={`mailto:${member.email}`}
-                          className={`px-5 h-10 flex items-center justify-center gap-1.5 rounded-xl bg-slate-50 text-slate-600 hover:text-white transition-all duration-300 border border-slate-100 hover:-translate-y-0.5 hover:shadow-sm ${theme.hoverFill} font-bold text-[11px] uppercase tracking-wider sm:ml-auto`}
+                          className={`px-5 h-10 flex items-center justify-center gap-1.5 rounded-xl text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md font-bold text-[11px] uppercase tracking-wider sm:ml-auto`}
+                          style={{ backgroundColor: accentColor }}
                         >
                           <LuMail className="text-base" /> Contact
                         </a>
@@ -506,6 +567,76 @@ const Team: React.FC = () => {
           </div>
         </div>
       </div>
+      {/* Member Detail Modal */}
+      <AnimatePresence>
+        {showModal && modalMember && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+              onClick={closeMemberModal}
+              className="fixed inset-0 bg-black z-40"
+            />
+
+            <motion.div
+              initial={{ y: 40, opacity: 0, scale: 0.98 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
+              exit={{ y: 40, opacity: 0, scale: 0.98 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 24 }}
+              className="fixed left-1/2 top-1/2 z-50 w-[90%] max-w-3xl -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl p-6 md:p-8"
+              role="dialog"
+              aria-modal="true"
+            >
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-6">
+                  <div className="relative flex-shrink-0">
+                    <div className="rounded-full p-[6px] bg-gradient-to-tr from-[#07051D] via-amber-400 to-[#F49B21] shadow-xl">
+                      <div className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden bg-white border-[4px] border-white">
+                        <img src={modalMember.avatar} alt={modalMember.name} className="w-full h-full object-cover" />
+                      </div>
+                    </div>
+                    <div className="absolute -bottom-2 -right-2 w-6 h-6 rounded-full bg-[#F49B21] border-2 border-white shadow-md" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl md:text-3xl font-extrabold text-[#07051D]">{modalMember.name}</h3>
+                    <p className="text-sm font-bold text-slate-500 mt-1 uppercase tracking-wider">{modalMember.role}</p>
+                    {modalMember.location && <p className="text-sm text-slate-400 mt-1">{modalMember.location}</p>}
+                  </div>
+                </div>
+
+                <button onClick={closeMemberModal} className="text-slate-500 hover:text-slate-700 text-xl">✕</button>
+              </div>
+
+              <div className="mt-4 text-slate-700">
+                <p className="leading-relaxed">{modalMember.description}</p>
+
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {modalMember.skills.map((s) => (
+                    <span key={s} className="px-3 py-1.5 bg-slate-50 text-slate-600 rounded-md text-sm border border-slate-100">{s}</span>
+                  ))}
+                </div>
+
+                <div className="mt-6 flex items-center gap-3">
+                  {modalMember.email && (
+                    <a href={`mailto:${modalMember.email}`} className="px-4 py-2 bg-[#07051D] text-white rounded-md">Contact</a>
+                  )}
+                  <div className="flex gap-2">
+                    {modalMember.social.map((s, i) => {
+                      const Icon = resolveSocialIcon(s.icon);
+                      return (
+                        <a key={i} href={s.url} target="_blank" rel="noreferrer" className="p-2 rounded-md bg-slate-50 border border-slate-100 text-slate-700">
+                          <Icon />
+                        </a>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

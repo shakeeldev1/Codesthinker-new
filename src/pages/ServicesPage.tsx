@@ -360,7 +360,7 @@ const servicesData = [
   {
     id: 'mobile',
     title: 'Mobile App Development',
-    description: 'Native and cross-platform mobile experiences that users love for iOS and Android.',
+    description: 'Native and cross platform mobile experiences that users love for iOS and Android.',
     icon: Smartphone,
     link: '/services/mobile',
     tag: 'Core',
@@ -420,7 +420,7 @@ const servicesData = [
   {
     id: 'marketing',
     title: 'Digital Marketing',
-    description: 'Data-driven marketing strategies to boost your online presence and drive growth.',
+    description: 'Data driven marketing strategies to boost your online presence and drive growth.',
     icon: TrendingUp,
     link: '/services/marketing',
     tag: 'ROI Focus',
@@ -500,7 +500,7 @@ const ServicesPage = () => {
               badge={{ text: "Our Services" }}
               title="Complete Digital Solutions"
               titleHighlight="Solutions"
-              subtitle="From concept to launch, we deliver end-to-end digital excellence"
+              subtitle="From concept to launch, we deliver end to end digital excellence"
               alignment="center"
               size="lg"
               gradientColors={{ from: 'from-amber-400', to: 'to-orange-500' }}

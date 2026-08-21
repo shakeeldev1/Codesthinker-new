@@ -40,7 +40,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
         {/* Header with Official Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex p-3 bg-[#08061E] rounded-2xl shadow-lg shadow-[#08061E]/15 text-white mb-4">
-            <img src="/logo-blue.png" alt="Code's Thinker Logo" className="h-8 w-auto object-contain" />
+            <img src="/logo-blue.webp" alt="Code's Thinker Logo" className="h-8 w-auto object-contain" />
           </div>
           <h1 className="text-xl font-black text-slate-900 tracking-tight font-outfit">Code's Thinker</h1>
           <p className="text-slate-500 text-xs mt-1 font-medium">Enterprise Management Portal</p>

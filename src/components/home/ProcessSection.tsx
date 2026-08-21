@@ -25,7 +25,7 @@ const processPoints: ProcessPoint[] = [
   {
     id: '03',
     title: 'Digital Marketing',
-    description: 'Data-driven strategies designed to scale your brand and capture high-intent leads effectively.',
+    description: 'Data driven strategies designed to scale your brand and capture high intent leads effectively.',
   },
 ];
 

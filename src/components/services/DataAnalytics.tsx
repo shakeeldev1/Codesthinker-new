@@ -79,7 +79,7 @@ const DataAnalytics: React.FC = () => {
         theme="light"
         title="Make Better"
         highlightText="Decisions with Data"
-        subtitle="We help teams become data-driven using robust analytics and visualization."
+        subtitle="We help teams become data driven using robust analytics and visualization."
       />
     </div>
   );

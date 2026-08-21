@@ -194,7 +194,7 @@ const Careers: React.FC = () => {
                   </div>
                 </div>
                 <p className="text-[11px] text-gray-500 leading-relaxed mb-4">
-                  We build high-performance distributed teams. Join us to build, scale, and push software boundaries.
+                  We build high performance distributed teams. Join us to build, scale, and push software boundaries.
                 </p>
                 <div className="space-y-2">
                   <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
@@ -266,7 +266,7 @@ const Careers: React.FC = () => {
               {
                 icon: <TrendingUp className="text-emerald-500" size={24} />,
                 title: "Cutting-Edge Tech",
-                desc: "Work with modern tech stacks, AI automation pipelines, and high-performance setups."
+                desc: "Work with modern tech stacks, AI automation pipelines, and high performance setups."
               }
             ].map((benefit, idx) => (
               <div 

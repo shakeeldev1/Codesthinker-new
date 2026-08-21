@@ -33,8 +33,8 @@ const navLinks: NavLink[] = [
                 title: 'Engineering & Dev',
                 items: [
                     { name: 'Software Development', to: '/services/software', desc: 'Custom software tailored to your specific business needs.' },
-                    { name: 'Web Development', to: '/services/web', desc: 'Modern, scalable, and high-performance web applications.' },
-                    { name: 'Mobile App Dev', to: '/services/mobile', desc: 'Native and cross-platform mobile experiences.' },
+                    { name: 'Web Development', to: '/services/web', desc: 'Modern, scalable, and high performance web applications.' },
+                    { name: 'Mobile App Dev', to: '/services/mobile', desc: 'Native and cross platform mobile experiences.' },
                     { name: 'WordPress Dev', to: '/services/wordpress', desc: 'Custom themes, plugins, and CMS solutions.' },
                     { name: 'Shopify Dev', to: '/services/shopify', desc: 'High-converting custom e-commerce stores.' },
                     { name: 'eBay Integration', to: '/services/ebay', desc: 'Professional eBay store setup and product syncing.' },
@@ -51,7 +51,7 @@ const navLinks: NavLink[] = [
             {
                 title: 'Design & Marketing',
                 items: [
-                    { name: 'UI/UX Design', to: '/services/ui-ux', desc: 'Intuitive, user-centric interface design.' },
+                    { name: 'UI/UX Design', to: '/services/ui-ux', desc: 'Intuitive, user centric interface design.' },
                     { name: 'Graphic Design', to: '/services/graphic-design', desc: 'Visually stunning branding and digital assets.' },
                     { name: 'Digital Marketing', to: '/services/marketing', desc: 'SEO, social media, and targeted campaign strategies.' },
                 ]
@@ -74,7 +74,7 @@ const navLinks: NavLink[] = [
                 title: 'Opportunities',
                 items: [
                     { name: 'Project Training', to: '/apply/get-services', desc: 'Hands-on tech training and skill development.' },
-                    { name: 'Apply for Internship', to: '/apply/internship', desc: 'Kickstart your career with real-world experience.' },
+                    { name: 'Apply for Internship', to: '/apply/internship', desc: 'Kickstart your career with real world experience.' },
                     { name: 'Careers', to: '/careers', desc: 'Join our team of expert developers and designers.' }
                 ]
             }
@@ -146,10 +146,10 @@ const Navbar: React.FC = () => {
         <nav 
             className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
                 activeHover
-                    ? 'py-4 bg-white/95 backdrop-blur-2xl border-b border-gray-200 shadow-sm'
+                    ? 'py-3 bg-white/95 backdrop-blur-2xl border-b border-gray-200 shadow-sm'
                     : scrolled 
-                        ? 'py-2 bg-[#08061E]/95 backdrop-blur-xl shadow-[0_4px_20px_rgba(8,6,30,0.15)] border-b border-transparent' 
-                        : 'py-4 bg-transparent border-b border-transparent'
+                        ? 'py-3 bg-[#08061E]/95 backdrop-blur-xl shadow-[0_4px_20px_rgba(8,6,30,0.15)] border-b border-transparent' 
+                        : 'py-3 bg-transparent border-b border-transparent'
             }`}
         >
             <div className="container mx-auto px-4 lg:px-8 flex items-center justify-between gap-4">
@@ -158,14 +158,14 @@ const Navbar: React.FC = () => {
                 <Link
                     to="/"
                     onClick={handleLinkClick}
-                    className="flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded-xl transition-all duration-300"
+                    className="flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded-xl"
                 >
-                    <motion.img
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        src={useWhiteLinks ? "https://codesthinker.com/companylogo.png" : "/logo-blue.png"}
+                    <img
+                        src={useWhiteLinks ? "/logo-white.webp" : "/logo-blue.webp"}
                         alt="CodesThinker Logo"
-                        className="h-7 sm:h-9 w-auto object-contain transition-all duration-300"
+                        className="h-8 sm:h-9 w-[7.5rem] sm:w-[9rem] object-contain object-left"
+                        width={144}
+                        height={36}
                     />
                 </Link>
 
@@ -208,10 +208,10 @@ const Navbar: React.FC = () => {
                                     {(link.subLinks || link.megaMenu) ? (
                                         <div className="group static">
                                             <button 
-                                                className={`px-4 py-2 text-[13px] font-semibold transition-colors flex items-center gap-1.5 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-[#08061E] ${linkColorClass}`}
+                                                className={`px-4 py-2 text-[13px] leading-5 font-semibold tracking-normal transition-colors flex items-center gap-1.5 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-[#08061E] ${linkColorClass}`}
                                             >
                                                 {link.name}
-                                                <HiChevronDown className={`text-xs transition-transform duration-300 ${activeHover === link.name ? 'rotate-180' : ''}`} />
+                                                <HiChevronDown className={`text-xs shrink-0 w-3 h-3 transition-transform duration-300 ${activeHover === link.name ? 'rotate-180' : ''}`} />
                                             </button>
 
                                             {/* Standard Dropdown Menu logic */}
@@ -219,21 +219,28 @@ const Navbar: React.FC = () => {
                                                 {activeHover === link.name && !link.megaMenu && link.subLinks && (
                                                     /* STANDARD DROPDOWN */
                                                     <motion.div
-                                                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                                        initial={{ opacity: 0, y: 10, scale: 0.96 }}
                                                         animate={{ opacity: 1, y: 0, scale: 1 }}
-                                                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                                        exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                                                        transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                                                         className="absolute top-[calc(100%+10px)] left-1/2 -translate-x-1/2 bg-white border border-gray-100 p-2 shadow-xl backdrop-blur-xl w-52 flex flex-col rounded-2xl z-[110]"
                                                     >
-                                                        {link.subLinks.map((sub) => (
-                                                            <Link
+                                                        {link.subLinks.map((sub, i) => (
+                                                            <motion.div
                                                                 key={sub.name}
-                                                                to={sub.to}
-                                                                onClick={handleLinkClick}
-                                                                className={`px-4 py-2.5 text-sm transition-all rounded-xl font-medium
-                                                                ${isActive(sub.to) ? 'bg-[#08061E]/5 text-[#08061E]' : 'text-[#08061E]/70 hover:bg-gray-50 hover:text-[#08061E]'}`}
+                                                                initial={{ opacity: 0, x: -8 }}
+                                                                animate={{ opacity: 1, x: 0 }}
+                                                                transition={{ duration: 0.2, delay: 0.04 + i * 0.04 }}
                                                             >
-                                                                {sub.name}
-                                                            </Link>
+                                                                <Link
+                                                                    to={sub.to}
+                                                                    onClick={handleLinkClick}
+                                                                    className={`block px-4 py-2.5 text-sm transition-colors rounded-xl font-medium
+                                                                    ${isActive(sub.to) ? 'bg-[#08061E]/5 text-[#08061E]' : 'text-[#08061E]/70 hover:bg-gray-50 hover:text-[#08061E]'}`}
+                                                                >
+                                                                    {sub.name}
+                                                                </Link>
+                                                            </motion.div>
                                                         ))}
                                                     </motion.div>
                                                 )}
@@ -243,7 +250,7 @@ const Navbar: React.FC = () => {
                                         <Link
                                             to={link.to}
                                             onClick={handleLinkClick}
-                                            className={`block px-4 py-2 text-[13px] font-semibold transition-colors rounded-full outline-none focus-visible:ring-2 focus-visible:ring-[#08061E] ${linkColorClass}`}
+                                            className={`block px-4 py-2 text-[13px] leading-5 font-semibold tracking-normal transition-colors rounded-full outline-none focus-visible:ring-2 focus-visible:ring-[#08061E] ${linkColorClass}`}
                                         >
                                             {link.name}
                                         </Link>
@@ -259,7 +266,7 @@ const Navbar: React.FC = () => {
                     <Link 
                         to="/apply/get-services" 
                         onClick={handleLinkClick} 
-                        className={`hidden sm:flex items-center justify-center px-6 py-2.5 text-[13px] font-bold transition-all active:scale-95 shadow-md rounded-2xl border select-none ${
+                        className={`hidden sm:flex items-center justify-center px-6 py-2.5 text-[13px] leading-5 font-bold tracking-normal transition-colors shadow-md rounded-2xl border border-solid select-none ${
                             useWhiteLinks
                                 ? 'bg-white text-[#08061E] border-white hover:bg-amber-500 hover:text-white hover:border-amber-500 shadow-white/10'
                                 : 'bg-white text-[#08061E] border-gray-200 hover:bg-amber-500 hover:text-white hover:border-amber-500 shadow-sm'
@@ -435,83 +442,132 @@ const Navbar: React.FC = () => {
         <AnimatePresence>
             {activeHover && navLinks.find(l => l.name === activeHover)?.megaMenu && (
                 <motion.div
+                    key={`mega-${activeHover}`}
                     onMouseEnter={() => setActiveHover(activeHover)}
                     onMouseLeave={() => setActiveHover(null)}
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: -12 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.2 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                     className="fixed top-[70px] lg:top-[80px] left-0 w-screen bg-white border-b border-gray-200 shadow-2xl overflow-hidden pointer-events-auto z-[120]"
                 >
+                    {/* Top accent line */}
+                    <motion.div
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        exit={{ scaleX: 0 }}
+                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                        className="h-0.5 w-full origin-left bg-gradient-to-r from-amber-500 via-[#08061E] to-amber-500"
+                    />
+
                     <div className="container mx-auto max-w-[1440px] flex shadow-[inset_0_10px_20px_rgba(0,0,0,0.02)]">
                         {/* Left: Categories */}
-                        <div className="w-1/4 border-r border-gray-100 py-8 px-6 bg-gray-50/50">
+                        <motion.div
+                            initial={{ opacity: 0, x: -16 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.35, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+                            className="w-1/4 border-r border-gray-100 py-8 px-6 bg-gray-50/50"
+                        >
                             <ul className="flex flex-col gap-2">
                                 {navLinks.find(l => l.name === activeHover)!.megaMenu!.map((cat, idx) => (
-                                    <li key={idx}>
+                                    <motion.li
+                                        key={idx}
+                                        initial={{ opacity: 0, x: -12 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ duration: 0.3, delay: 0.08 + idx * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                                    >
                                         <button
                                             onMouseEnter={() => setActiveMegaCategory(idx)}
-                                            className={`w-full text-left px-4 py-3 flex items-center justify-between transition-all duration-300 border-l-2 rounded-r-xl
-                                                ${activeMegaCategory === idx ? 'bg-white text-[#08061E] font-bold border-[#08061E] shadow-sm' : 'text-[#08061E]/60 hover:text-[#08061E] hover:bg-gray-100/50 border-transparent'}`}
+                                            className={`w-full text-left px-4 py-3 flex items-center justify-between gap-2 text-sm font-semibold leading-5 transition-colors duration-300 border-l-2 rounded-r-xl
+                                                ${activeMegaCategory === idx ? 'bg-white text-[#08061E] border-[#08061E] shadow-sm' : 'text-[#08061E]/60 hover:text-[#08061E] hover:bg-gray-100/50 border-transparent'}`}
                                         >
                                             {cat.title}
-                                            {activeMegaCategory === idx && <HiArrowRight className="text-[#08061E]" />}
+                                            <HiArrowRight className={`shrink-0 w-4 h-4 transition-opacity duration-200 ${activeMegaCategory === idx ? 'opacity-100 text-[#08061E]' : 'opacity-0'}`} />
                                         </button>
-                                    </li>
+                                    </motion.li>
                                 ))}
                             </ul>
-                        </div>
+                        </motion.div>
 
                         {/* Middle: Services Grid */}
-                        <div className="w-2/4 py-8 px-10 bg-white">
-                            <div className="grid grid-cols-2 gap-x-8 gap-y-6">
-                                {navLinks.find(l => l.name === activeHover)!.megaMenu![activeMegaCategory].items.map((sub, sIdx) => (
-                                    <Link
-                                        key={sIdx}
-                                        to={sub.to}
-                                        onClick={handleLinkClick}
-                                        className="group flex flex-col gap-1 p-3 hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-100 rounded-xl"
-                                    >
-                                        <span className="text-[#08061E] font-bold flex items-center gap-2">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-amber-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                            {sub.name}
-                                        </span>
-                                        {sub.desc && (
-                                            <span className="text-[#08061E]/60 text-xs leading-relaxed group-hover:text-[#08061E]/80 transition-colors">
-                                                {sub.desc}
-                                            </span>
-                                        )}
-                                    </Link>
-                                ))}
-                            </div>
-                            {activeHover === 'Services' && (
-                                <div className="mt-8 pt-6 border-t border-gray-100">
-                                    <Link to="/services" onClick={handleLinkClick} className="text-[#08061E] hover:text-amber-500 text-sm font-bold flex items-center gap-2 hover:gap-3 transition-all">
-                                        View all {navLinks.find(l => l.name === activeHover)!.megaMenu![activeMegaCategory].title} services <HiArrowRight />
-                                    </Link>
-                                </div>
-                            )}
+                        <div className="w-2/4 py-8 px-10 bg-white min-h-[320px]">
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={`${activeHover}-${activeMegaCategory}`}
+                                    initial={{ opacity: 0, y: 14 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                                >
+                                    <div className="grid grid-cols-2 gap-x-8 gap-y-6">
+                                        {navLinks.find(l => l.name === activeHover)!.megaMenu![activeMegaCategory].items.map((sub, sIdx) => (
+                                            <motion.div
+                                                key={sub.to}
+                                                initial={{ opacity: 0, y: 12 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ duration: 0.28, delay: 0.04 + sIdx * 0.04, ease: [0.22, 1, 0.36, 1] }}
+                                            >
+                                                <Link
+                                                    to={sub.to}
+                                                    onClick={handleLinkClick}
+                                                    className="group flex flex-col gap-1 p-3 pl-5 relative hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-100 rounded-xl"
+                                                >
+                                                    <span className="text-[#08061E] text-sm font-semibold leading-5 flex items-center">
+                                                        <span className="absolute left-3 top-[18px] w-1.5 h-1.5 rounded-full bg-amber-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                        {sub.name}
+                                                    </span>
+                                                    {sub.desc && (
+                                                        <span className="text-[#08061E]/60 text-xs leading-relaxed group-hover:text-[#08061E]/80 transition-colors">
+                                                            {sub.desc}
+                                                        </span>
+                                                    )}
+                                                </Link>
+                                            </motion.div>
+                                        ))}
+                                    </div>
+                                    {activeHover === 'Services' && (
+                                        <motion.div
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            transition={{ delay: 0.2, duration: 0.25 }}
+                                            className="mt-8 pt-6 border-t border-gray-100"
+                                        >
+                                            <Link to="/services" onClick={handleLinkClick} className="text-[#08061E] hover:text-amber-500 text-sm font-semibold leading-5 flex items-center gap-2 transition-colors group/view">
+                                                View all {navLinks.find(l => l.name === activeHover)!.megaMenu![activeMegaCategory].title} services
+                                                <HiArrowRight className="shrink-0 w-4 h-4 transition-transform duration-300 group-hover/view:translate-x-1" />
+                                            </Link>
+                                        </motion.div>
+                                    )}
+                                </motion.div>
+                            </AnimatePresence>
                         </div>
 
                         {/* Right: Spotlight */}
-                        <div className="w-1/4 bg-gradient-to-br from-gray-50 to-white py-8 px-8 border-l border-gray-100 flex flex-col">
+                        <motion.div
+                            initial={{ opacity: 0, x: 16 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.35, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+                            className="w-1/4 bg-gradient-to-br from-gray-50 to-white py-8 px-8 border-l border-gray-100 flex flex-col"
+                        >
                             <span className="text-xs font-bold tracking-widest text-[#08061E]/40 uppercase mb-4">Spotlight</span>
                             {posts && posts.length > 0 && (
                                 <Link 
                                     to={`/blog/${posts[0].slug}`} 
                                     onClick={handleLinkClick}
-                                    className="flex-1 overflow-hidden relative group cursor-pointer border border-gray-200 rounded-2xl shadow-sm block"
+                                    className="flex-1 overflow-hidden relative group cursor-pointer border border-gray-200 rounded-2xl shadow-sm block min-h-[200px]"
                                 >
                                     <img src={posts[0].image} alt={posts[0].title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                                     <div className="absolute inset-0 bg-gradient-to-tr from-[#08061E]/80 to-[#1a1440]/90 z-0" />
                                     <div className="relative h-full p-6 flex flex-col justify-end z-10">
                                         <h4 className="text-white font-bold text-sm mb-1.5 leading-snug line-clamp-2 group-hover:text-amber-300 transition-colors">{posts[0].title}</h4>
                                         <p className="text-white/80 text-[10px] mb-3 line-clamp-2 leading-relaxed">{posts[0].excerpt}</p>
-                                        <span className="text-amber-400 group-hover:text-amber-300 transition-colors text-xs font-bold flex items-center gap-1">Read Guide <HiArrowRight /></span>
+                                        <span className="text-amber-400 group-hover:text-amber-300 transition-colors text-xs font-bold flex items-center gap-1">
+                                            Read Guide <HiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
+                                        </span>
                                     </div>
                                 </Link>
                             )}
-                        </div>
+                        </motion.div>
                     </div>
                 </motion.div>
             )}

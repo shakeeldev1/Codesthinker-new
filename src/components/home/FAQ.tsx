@@ -38,7 +38,7 @@ const FAQ: React.FC = () => {
     {
       id: 1,
       question: "What makes Code's Thinker different?",
-      answer: "We combine technical excellence with strategic thinking. Unlike traditional agencies, we act as partners rather than vendors, focusing on long-term success through collaborative approaches and transparent communication.",
+      answer: "We combine technical excellence with strategic thinking. Unlike traditional agencies, we act as partners rather than vendors, focusing on long term success through collaborative approaches and transparent communication.",
       category: "general",
     },
     {
@@ -56,7 +56,7 @@ const FAQ: React.FC = () => {
     {
       id: 4,
       question: "Do you offer ongoing maintenance?",
-      answer: "Yes! We provide comprehensive post-launch support including 24/7 monitoring, security updates, and performance optimization to ensure your solution stays ahead of the curve.",
+      answer: "Yes! We provide comprehensive post launch support including 24/7 monitoring, security updates, and performance optimization to ensure your solution stays ahead of the curve.",
       category: "services",
     },
     {
@@ -218,7 +218,7 @@ const FAQ: React.FC = () => {
                 className="relative z-10 rounded-2xl overflow-hidden shadow-2xl ring-1 ring-gray-900/5 group"
               >
                 <img
-                  src="/ct.png" 
+                  src="/ct.webp" 
                   alt="Code's Thinker Support Team"
                   className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-102"
                   loading="lazy"

@@ -64,7 +64,7 @@ const Hero: React.FC = () => {
               variants={itemVariants} 
               className="text-sm md:text-xl mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed text-gray-200"
             >
-              We bridge the gap between complex strategy and human-centric execution. 
+              We bridge the gap between complex strategy and human centric execution. 
               Join a global network of innovators dedicated to your growth.
             </motion.p>
 
