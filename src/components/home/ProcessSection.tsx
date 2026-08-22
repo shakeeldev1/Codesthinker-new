@@ -130,10 +130,7 @@ const ProcessSection: React.FC = () => {
             <div className="absolute bottom-6 left-6 right-6 sm:right-auto bg-white/95 backdrop-blur-md rounded-xl px-5 py-2 shadow-xl ring-1 ring-black/5 max-w-xs transform translate-y-0 group-hover:-translate-y-1 transition-transform duration-300">
               <div className="flex flex-col gap-1">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="flex h-2 w-2 relative">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F69A20] opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#F69A20]"></span>
-                  </span>
+                  <span className="inline-flex rounded-full h-2 w-2 bg-[#F69A20]"></span>
                   <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Our Mission</span>
                 </div>
                 <p className="text-gray-900 font-extrabold text-xl leading-tight">

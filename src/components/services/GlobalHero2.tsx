@@ -60,11 +60,6 @@ const GlobalHero2: React.FC<GlobalHero2Props> = ({
 
   return (
     <div className={`relative min-h-screen ${isDark ? 'bg-[#07051d]' : 'bg-white'} overflow-hidden pt-28 pb-12 md:pt-20 flex items-center`}>
-      {/* Unique Tech Dot Pattern */}
-      <div className="absolute inset-0 z-0">
-        <div className={`absolute inset-0 ${isDark ? 'bg-[radial-gradient(#ffffff10_1px,transparent_1px)]' : 'bg-[radial-gradient(#0f172a10_1px,transparent_1px)]'} [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]`} />
-      </div>
-
       {/* Subtle Background Glows */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className={`absolute -top-24 -left-24 w-64 h-64 md:w-96 md:h-96 ${isDark ? 'bg-amber-500/10' : 'bg-blue-100/40'} rounded-full blur-[80px] md:blur-[100px]`} />

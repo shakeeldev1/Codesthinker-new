@@ -123,7 +123,7 @@ const CanvasMockup = () => (
         <span className="font-bold text-white">Design-Canvas</span>
       </div>
       <div className="flex items-center gap-1">
-        <div className="w-1 h-1 rounded-full bg-[#F49B21] animate-ping"></div>
+        <div className="w-1 h-1 rounded-full bg-[#F49B21]"></div>
         <span className="text-[7px] text-[#F49B21]">Active</span>
       </div>
     </div>
@@ -192,10 +192,9 @@ const SecurityMockup = () => (
 
 const NeuralNetworkMockup = () => (
   <div className="w-full h-32 flex items-center justify-center relative overflow-hidden select-none">
-    <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#ffffff15_1px,transparent_1px)] [background-size:10px_10px]" />
     <div className="flex items-center gap-4 relative z-10 scale-90">
       <div className="space-y-3">
-        <div className="w-1.5 h-1.5 rounded-full bg-[#F49B21] animate-ping" />
+        <div className="w-1.5 h-1.5 rounded-full bg-[#F49B21]" />
         <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
       </div>
       <div className="relative">
@@ -205,7 +204,7 @@ const NeuralNetworkMockup = () => (
       </div>
       <div className="space-y-3">
         <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
-        <div className="w-1.5 h-1.5 rounded-full bg-[#F49B21] animate-ping" style={{ animationDelay: '1s' }} />
+        <div className="w-1.5 h-1.5 rounded-full bg-[#F49B21]" />
       </div>
     </div>
   </div>
@@ -276,7 +275,7 @@ const BlockchainMockup = () => (
         </div>
         {i < 2 && (
           <div className="w-3 h-0.5 bg-white/20 relative">
-            <div className="absolute inset-0 bg-[#F49B21] animate-ping opacity-25" />
+            <div className="absolute inset-0 bg-[#F49B21] opacity-25" />
           </div>
         )}
       </div>

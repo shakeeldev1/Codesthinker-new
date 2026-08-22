@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { LuTrophy, LuStar, LuGraduationCap } from 'react-icons/lu';
+import { LuTrophy, LuGraduationCap } from 'react-icons/lu';
 import { MapPin, ArrowLeft, Calendar } from 'lucide-react';
 import ApplyForJobForm from '../components/apply/ApplyForJobForm';
 import { API_BASE_URL } from '../config';
@@ -160,10 +160,7 @@ const ApplyForJob: React.FC = () => {
                       {/* Floating Badge */}
                       <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md rounded-xl px-4 py-2 shadow-xl ring-1 ring-black/5">
                         <div className="flex items-center gap-3">
-                          <span className="relative flex h-3 w-3">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F69A20] opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-3 w-3 bg-[#F69A20]"></span>
-                          </span>
+                          <span className="inline-flex rounded-full h-3 w-3 bg-[#F69A20]"></span>
                           <span className="text-sm font-semibold text-gray-800">Current Openings</span>
                         </div>
                       </div>
@@ -189,8 +186,8 @@ const ApplyForJob: React.FC = () => {
                         <span className="text-[10px] font-bold text-gray-700 uppercase">Top Rated</span>
                       </div>
                       <div className="flex flex-col items-center gap-1">
-                        <LuStar className="text-[#F69A20]" size={20} />
-                        <span className="text-[10px] font-bold text-gray-700 uppercase">4.9/5 Rating</span>
+                        <LuGraduationCap className="text-gray-900" size={20} />
+                        <span className="text-[10px] font-bold text-gray-700 uppercase">Hands-on Training</span>
                       </div>
                       <div className="flex flex-col items-center gap-1">
                         <LuGraduationCap className="text-gray-900" size={20} />

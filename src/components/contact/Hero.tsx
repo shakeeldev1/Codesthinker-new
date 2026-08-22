@@ -72,10 +72,7 @@ const ContactHeader: React.FC = () => {
             className="w-full lg:w-3/5 space-y-7 text-center lg:text-left"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-500/5 border border-amber-500/20 backdrop-blur-sm">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-500 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
-              </span>
+              <span className="inline-flex rounded-full h-2 w-2 bg-amber-500" />
               <span className="text-xs font-bold text-amber-500 uppercase tracking-[0.2em]">Available 24/7</span>
             </div>
 

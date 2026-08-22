@@ -217,7 +217,7 @@ const Team: React.FC = () => {
                     <img src={member.avatar} alt={member.name} className="w-full h-full object-cover" loading="lazy" onError={(e) => { e.currentTarget.src = FALLBACK_AVATAR; }} />
                     {isHovered && !isActive && (
                       <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                        <div className="w-2.5 h-2.5 rounded-full bg-[#F49B21] animate-ping" />
+                        <div className="w-2.5 h-2.5 rounded-full bg-[#F49B21]" />
                       </div>
                     )}
                   </motion.div>
@@ -265,10 +265,7 @@ const Team: React.FC = () => {
                         )}
                         {activeMember.experience && (
                           <span className="flex items-center gap-2 text-slate-500 text-sm font-bold uppercase tracking-widest">
-                            <span className="relative flex h-2.5 w-2.5 mr-1">
-                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F49B21] opacity-75"></span>
-                              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#F49B21]"></span>
-                            </span>
+                            <span className="inline-flex rounded-full h-2.5 w-2.5 mr-1 bg-[#F49B21]"></span>
                             {activeMember.experience} Exp
                           </span>
                         )}
@@ -374,7 +371,7 @@ const Team: React.FC = () => {
                 <div className="flex items-center gap-0.5 text-sm text-gray-500">
                   <div className="flex gap-0.5">
                     {[...Array(3)].map((_, i) => (
-                      <motion.div key={i} className="w-1.5 h-1.5 rounded-full bg-gray-400" animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.3 }} />
+                      <div key={i} className="w-1.5 h-1.5 rounded-full bg-gray-400" />
                     ))}
                   </div>
                 </div>

@@ -13,7 +13,6 @@ import {
   Layers,
   CheckCircle2,
   ArrowRight,
-  Star,
   TrendingUp,
   Clock,
   Briefcase,
@@ -54,12 +53,15 @@ const ServicesSection = () => {
       shortDesc: "Modern, scalable web applications built with cutting-edge technologies for exceptional user experiences.",
       longDesc: "From responsive SPAs to complex enterprise portals, we deliver high performance web solutions.",
       tags: ["Requirement Gathering & Planning", "Design & Development", "Testing & Optimization"],
-      metrics: { time: "4-8 weeks", rating: "4.9" },
       logos: [
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg",
       ],
       icon: Code2,
       gradient: "from-[#08061E] to-[#08061E]",
@@ -71,12 +73,14 @@ const ServicesSection = () => {
       shortDesc: "Native and cross platform mobile experiences that deliver exceptional performance and user engagement.",
       longDesc: "iOS, Android, and cross platform apps with seamless UI/UX and optimized performance.",
       tags: ["Conceptualization & Design", "Development", "Testing & Optimization"],
-      metrics: { time: "6-10 weeks", rating: "4.9" },
       logos: [
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg"
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg",
       ],
       icon: Smartphone,
       gradient: "from-[#08061E] to-[#08061E]",
@@ -88,12 +92,14 @@ const ServicesSection = () => {
       shortDesc: "Automated, efficient, and scalable infrastructure solutions for modern application deployment.",
       longDesc: "CI/CD pipelines, container orchestration, and cloud-native architectures.",
       tags: ["CI/CD Pipelines Setup", "Infrastructure as Code (IaC)", "Monitoring & Alerting"],
-      metrics: { time: "3-6 weeks", rating: "4.9" },
       logos: [
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg",
-        "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg",
+        "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg",
       ],
       icon: Cloud,
       gradient: "from-[#08061E] to-[#08061E]",
@@ -105,12 +111,13 @@ const ServicesSection = () => {
       shortDesc: "Powerful browser extensions that enhance productivity and streamline workflows.",
       longDesc: "Cross-browser compatible extensions with intuitive interfaces and robust functionality.",
       tags: ["Requirement Analysis", "Development", "Testing & Publishing"],
-      metrics: { time: "2-4 weeks", rating: "4.9" },
       logos: [
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firefox/firefox-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chrome/chrome-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firefox/firefox-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/webpack/webpack-original.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
       ],
       icon: Layers,
       gradient: "from-[#08061E] to-[#08061E]",
@@ -122,12 +129,14 @@ const ServicesSection = () => {
       shortDesc: "Transform raw data into actionable insights with advanced analytics and machine learning.",
       longDesc: "Predictive modeling, data visualization, and business intelligence solutions.",
       tags: ["Data Collection", "Data Preprocessing", "Model Training & Deployment"],
-      metrics: { time: "8-12 weeks", rating: "4.9" },
       logos: [
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg"
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jupyter/jupyter-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
       ],
       icon: Database,
       gradient: "from-[#08061E] to-[#08061E]",
@@ -139,12 +148,13 @@ const ServicesSection = () => {
       shortDesc: "Cutting-edge AI solutions that automate creativity and enhance decision-making.",
       longDesc: "Custom LLM implementation, RAG systems, and AI agent development.",
       tags: ["Model Fine-tuning", "Prompt Engineering", "Custom LLM Development"],
-      metrics: { time: "6-10 weeks", rating: "4.9" },
       logos: [
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/keras/keras-original.svg",
         "https://static.cdnlogo.com/logos/o/38/openai.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/keras/keras-original.svg"
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",
       ],
       icon: Brain,
       gradient: "from-[#08061E] to-[#08061E]",
@@ -156,12 +166,13 @@ const ServicesSection = () => {
       shortDesc: "Scalable, secure, and cost-optimized cloud solutions for modern enterprises.",
       longDesc: "Multi-cloud strategies, serverless architectures, and cloud migration services.",
       tags: ["Cloud Strategy", "Architecture Design", "Migration & Optimization"],
-      metrics: { time: "4-8 weeks", rating: "4.9" },
       logos: [
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg",
+        "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg"
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
       ],
       icon: Cloud,
       gradient: "from-[#08061E] to-[#08061E]",
@@ -178,7 +189,7 @@ const ServicesSection = () => {
     [filteredServices, visibleCards]
   );
 
-  const getLoopingLogos = useCallback((logos: string[]) => [...logos, ...logos, ...logos], []);
+  const getLoopingLogos = useCallback((logos: string[]) => [...logos, ...logos], []);
 
   // Update slider position when active tab changes
   useEffect(() => {
@@ -231,14 +242,6 @@ const ServicesSection = () => {
       ref={sectionRef}
       className="relative w-full bg-gradient-to-br from-gray-50 via-white to-gray-50 py-12 overflow-hidden"
     >
-      {/* Animated Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 2px 2px, ${colors.primary} 1px, transparent 1px)`,
-          backgroundSize: '40px 40px'
-        }} />
-      </div>
-
       {/* Decorative Elements */}
       <div className="absolute top-20 left-10 w-72 h-72 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
       <div className="absolute top-40 right-10 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
@@ -374,30 +377,21 @@ const ServicesSection = () => {
                           ))}
                         </div>
 
-                        {/* Metrics Badges */}
-                        <div className="flex justify-between items-center mb-6 pt-4 border-t border-gray-100">
-                          <div className="flex items-center gap-2">
-                            <Clock className="w-4 h-4 text-gray-400" />
-                            <span className="text-xs text-gray-500">{service.metrics.time}</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Star className="w-4 h-4 text-[#08061E] fill-current" />
-                            <span className="text-xs font-semibold text-gray-700">{service.metrics.rating}/5</span>
-                          </div>
-                        </div>
-
-                        {/* Tech stack logos with improved animation */}
-                        <div className="overflow-hidden pt-2">
-                          <div className="flex gap-6 animate-slide group-hover:animation-pause">
-                            {getLoopingLogos(service.logos).map((logo, lIdx) => (
-                              <img
-                                key={lIdx}
-                                src={logo}
-                                alt="technology logo"
-                                className="h-6 w-6 opacity-40 group-hover:opacity-100 transition-all duration-300 hover:scale-110"
-                                loading="lazy"
-                              />
-                            ))}
+                        {/* Tech stack skills */}
+                        <div className="pt-4 border-t border-gray-100">
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Technologies We Use</p>
+                          <div className="overflow-hidden">
+                            <div className="flex gap-5 animate-tech-slide w-max">
+                              {getLoopingLogos(service.logos).map((logo, lIdx) => (
+                                <img
+                                  key={lIdx}
+                                  src={logo}
+                                  alt="technology logo"
+                                  className="h-6 w-6 opacity-100 flex-shrink-0"
+                                  loading="lazy"
+                                />
+                              ))}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -435,14 +429,8 @@ const ServicesSection = () => {
           </motion.div>
         )}
 
-        {/* Enhanced Stats Section - Compact Unified Design */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          viewport={{ once: true }}
-          className="mt-16 relative"
-        >
+        {/* Stats Section */}
+        <div className="mt-16 relative">
           <div className="relative bg-[#0B0929] rounded-2xl shadow-xl overflow-hidden border border-white/5">
             <div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-white/5">
               {[
@@ -453,12 +441,8 @@ const ServicesSection = () => {
               ].map((stat, i) => {
                 const Icon = stat.icon;
                 return (
-                  <motion.div
+                  <div
                     key={i}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
                     className="group relative px-4 py-8 flex flex-col items-center justify-center overflow-hidden transition-all duration-500"
                   >
                     {/* Elegant animated top accent line */}
@@ -475,32 +459,30 @@ const ServicesSection = () => {
 
                     <div className="text-3xl font-extrabold mb-1.5 text-white/90 group-hover:text-white transition-colors duration-300 tracking-tight relative z-10">{stat.val}</div>
                     <div className="text-[9px] font-bold text-gray-500 group-hover:text-gray-300 tracking-[0.15em] uppercase transition-colors duration-300 relative z-10">{stat.label}</div>
-                  </motion.div>
+                  </div>
                 );
               })}
             </div>
           </div>
-        </motion.div>
+        </div>
 
 
       </div>
 
       <style jsx global>{`
-        @keyframes slide {
+        @keyframes tech-slide {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
-        
+
+        .animate-tech-slide {
+          animation: tech-slide 25s linear infinite;
+        }
+
         @keyframes blob {
           0%, 100% { transform: translate(0, 0) scale(1); }
           33% { transform: translate(30px, -50px) scale(1.1); }
           66% { transform: translate(-20px, 20px) scale(0.9); }
-        }
-        
-        .animate-slide {
-          display: flex;
-          width: max-content;
-          animation: slide 20s linear infinite;
         }
         
         .animate-blob {
@@ -513,10 +495,6 @@ const ServicesSection = () => {
         
         .animation-delay-4000 {
           animation-delay: 4s;
-        }
-        
-        .animation-pause {
-          animation-play-state: paused;
         }
         
         /* Smooth scrolling */

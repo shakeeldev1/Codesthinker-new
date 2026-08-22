@@ -14,7 +14,6 @@ import {
   LuCreditCard,
   LuUser,
   LuChevronRight,
-  LuStar,
 } from "react-icons/lu";
 import { LucideCheckCircle } from "lucide-react";
 import { SectionBadge } from "../ui/SectionBadge";
@@ -128,23 +127,12 @@ const AboutUs: React.FC = () => {
               <img
                 src="/ct.webp"
                 alt="Code's Thinker Team"
-                className="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-full transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"
               />
               
               {/* Overlay Gradient */}
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900/40 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500"></div>
-
-              {/* Floating badge */}
-              <div className="absolute bottom-6 right-6 bg-white/95 backdrop-blur-md rounded-xl px-4 py-2 shadow-xl ring-1 ring-black/5 transform translate-y-0 group-hover:-translate-y-1 transition-transform duration-300">
-                <div className="flex items-center gap-3">
-                  <span className="relative flex h-3 w-3">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F69A20] opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-[#F69A20] "></span>
-                  </span>
-                  <span className="text-sm font-semibold text-gray-800">Est. 2020</span>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -253,14 +241,10 @@ const AboutUs: React.FC = () => {
                     ))}
                   </div>
                   <div className="flex flex-col">
-                    <div className="flex gap-0.5">
-                      {[...Array(5)].map((_, i) => (
-                        <LuStar key={i} size={16} className="text-yellow-400 fill-yellow-400" />
-                      ))}
-                    </div>
+                    <span className="text-sm font-semibold text-gray-900">Expert Development Team</span>
                     <div className="flex items-center gap-1.5 mt-1">
                       <LucideCheckCircle size={14} className="text-emerald-500" />
-                      <span className="text-sm font-medium text-gray-700">4.9/5 Rating</span>
+                      <span className="text-sm font-medium text-gray-600">React, Node.js, Python & more</span>
                     </div>
                   </div>
                 </div>

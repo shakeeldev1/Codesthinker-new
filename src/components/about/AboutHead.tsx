@@ -69,7 +69,7 @@ function AboutHead() {
             className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-sm font-medium"
           >
             <div className="flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/15 rounded-full text-white shadow-lg backdrop-blur-md">
-              <span className="flex h-2 w-2 rounded-full bg-white animate-ping" />
+              <span className="flex h-2 w-2 rounded-full bg-white" />
               <span>Est. <strong>2005</strong></span>
             </div>
 

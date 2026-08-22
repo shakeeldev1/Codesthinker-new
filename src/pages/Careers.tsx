@@ -124,10 +124,7 @@ const Careers: React.FC = () => {
           <div className="lg:col-span-7 space-y-6 text-left" data-aos="fade-right">
             
             <div className="inline-flex items-center gap-2 bg-orange-50/80 border border-orange-200/55 rounded-full px-3.5 py-1.5 text-xs text-[#F49B21] font-bold shadow-sm shadow-orange-100/50">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
+              <span className="inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               We're Hiring!
             </div>
 

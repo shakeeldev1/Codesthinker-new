@@ -92,15 +92,23 @@ export const teamMembers: TeamMember[] = [
     achievements: ["AWS & Dev Ops Certified Solutions Architect", "Full Stack Developer Award"],
   },
   {
-    id: "dev-002", name: "M Jahanzaib", role: "Mern Stack Developer",
-    description: "API architect building robust, scalable backend systems. Focused on clean API design, testability and optimized data flows for large-scale applications.",
-    skills: ["Python", "Django", "PostgreSQL", "Redis", "Celery", "Docker"],
+    id: "dev-019", name: "Ayaz Aslam", role: "DevOps Engineer",
+    description: "DevOps Engineer specializing in CI/CD pipelines, cloud infrastructure, and automated deployments. Builds reliable, scalable environments with Docker, Kubernetes, and modern cloud platforms.",
+    skills: ["AWS", "Docker", "Kubernetes", "CI/CD", "Terraform", "Linux"],
     social: [
-      { platform: "linkedin", url: "https://www.linkedin.com/in/sadiq-hussain-9a85a2334", icon: "FaLinkedinIn" },
+      { platform: "linkedin", url: "#", icon: "FaLinkedinIn" },
       { platform: "github", url: "#", icon: "FaGithub" },
     ],
-    avatar: "/team/Jahanzaib_Frontend.webp", location: "Pakistan", experience: "3+ years", email: "jahanzaibmahar18@gmail.com",
+    avatar: "/team/ayaz aslam.png", location: "Pakistan", experience: "2+ years", email: "ayaz@company.com",
   },
+  //   description: "API architect building robust, scalable backend systems. Focused on clean API design, testability and optimized data flows for large-scale applications.",
+  //   skills: ["Python", "Django", "PostgreSQL", "Redis", "Celery", "Docker"],
+  //   social: [
+  //     { platform: "linkedin", url: "https://www.linkedin.com/in/sadiq-hussain-9a85a2334", icon: "FaLinkedinIn" },
+  //     { platform: "github", url: "#", icon: "FaGithub" },
+  //   ],
+  //   avatar: "/team/Jahanzaib_Frontend.webp", location: "Pakistan", experience: "3+ years", email: "jahanzaibmahar18@gmail.com",
+  // },
   {
     id: "dev-003", name: "M Abdullah", role: "Mobile Application Developer",
     description: "Cross-platform mobile expert building beautiful, performant apps with a strong focus on UX and battery/network efficiency. Experienced with React Native and Flutter for rapid delivery.",
@@ -121,36 +129,36 @@ export const teamMembers: TeamMember[] = [
     ],
     avatar: "/team/zahid.webp", location: "Pakistan", experience: "2+ years", email: "abdullahrajpoot2476@gmail.com",
   },
-  {
-    id: "dev-004", name: "Farhan Ahmad", role: "Mern Stack Developer",
-    description: "Passionate MERN Stack Developer building responsive and scalable web applications. Enjoys performance tuning, writing maintainable code and collaborating across product teams.",
-    skills: ["Python", "ReactJS", "TypeScript", "SQL", "Pandas", "Tableau"],
-    social: [
-      { platform: "linkedin", url: "https://www.linkedin.com/in/farhan-ahmad-dev", icon: "FaLinkedinIn" },
-      { platform: "github", url: "https://github.com/farhan493495", icon: "FaGithub" },
-    ],
-    avatar: "/team/farhandev.webp", location: "Pakistan", experience: "4+ years", email: "farhan@company.com",
-  },
-  {
-    id: "dev-005", name: "Zulqarnain Saeed", role: "Frontend Developer",
-    description: "Frontend specialist crafting pixel perfect interfaces with a focus on accessibility and performance. Familiar with modern frameworks and component driven design systems.",
-    skills: ["Next.js", "ReactJS", "TypeScript", "JavaScript", "Redux"],
-    social: [
-      { platform: "linkedin", url: "#", icon: "FaLinkedinIn" },
-      { platform: "github", url: "#", icon: "FaGithub" },
-    ],
-    avatar: "/team/Zulqarnain_Frontend_Developer.webp", location: "Pakistan", experience: "4+ years", email: "zulqarnain@company.com",
-  },
-  {
-    id: "dev-015", name: "Zeeshan Munir", role: "Frontend Developer",
-    description: "Frontend Developer crafting responsive, accessible interfaces with modern React tooling. Focused on clean UI, performance, and polished user experiences.",
-    skills: ["React", "Next.js", "TypeScript", "JavaScript", "Tailwind CSS", "Redux"],
-    social: [
-      { platform: "linkedin", url: "#", icon: "FaLinkedinIn" },
-      { platform: "github", url: "#", icon: "FaGithub" },
-    ],
-    avatar: "/team/zeeshan.webp", location: "Pakistan", experience: "2+ years", email: "zeeshan@company.com",
-  },
+  // {
+  //   id: "dev-004", name: "Farhan Ahmad", role: "Mern Stack Developer",
+  //   description: "Passionate MERN Stack Developer building responsive and scalable web applications. Enjoys performance tuning, writing maintainable code and collaborating across product teams.",
+  //   skills: ["Python", "ReactJS", "TypeScript", "SQL", "Pandas", "Tableau"],
+  //   social: [
+  //     { platform: "linkedin", url: "https://www.linkedin.com/in/farhan-ahmad-dev", icon: "FaLinkedinIn" },
+  //     { platform: "github", url: "https://github.com/farhan493495", icon: "FaGithub" },
+  //   ],
+  //   avatar: "/team/farhandev.webp", location: "Pakistan", experience: "4+ years", email: "farhan@company.com",
+  // },
+  // {
+  //   id: "dev-005", name: "Zulqarnain Saeed", role: "Frontend Developer",
+  //   description: "Frontend specialist crafting pixel perfect interfaces with a focus on accessibility and performance. Familiar with modern frameworks and component driven design systems.",
+  //   skills: ["Next.js", "ReactJS", "TypeScript", "JavaScript", "Redux"],
+  //   social: [
+  //     { platform: "linkedin", url: "#", icon: "FaLinkedinIn" },
+  //     { platform: "github", url: "#", icon: "FaGithub" },
+  //   ],
+  //   avatar: "/team/Zulqarnain_Frontend_Developer.webp", location: "Pakistan", experience: "4+ years", email: "zulqarnain@company.com",
+  // },
+  // {
+  //   id: "dev-015", name: "Zeeshan Munir", role: "Frontend Developer",
+  //   description: "Frontend Developer crafting responsive, accessible interfaces with modern React tooling. Focused on clean UI, performance, and polished user experiences.",
+  //   skills: ["React", "Next.js", "TypeScript", "JavaScript", "Tailwind CSS", "Redux"],
+  //   social: [
+  //     { platform: "linkedin", url: "#", icon: "FaLinkedinIn" },
+  //     { platform: "github", url: "#", icon: "FaGithub" },
+  //   ],
+  //   avatar: "/team/zeeshan.webp", location: "Pakistan", experience: "2+ years", email: "zeeshan@company.com",
+  // },
   {
     id: "dev-016", name: "James Thornton", role: "DevOps Engineer",
     description: "DevOps Engineer focused on CI/CD pipelines, cloud infrastructure, and reliable deployments. Builds secure, automated environments that keep products stable as they scale.",
@@ -190,16 +198,16 @@ export const teamMembers: TeamMember[] = [
     experience: "5+ years",
     email: "alicia@company.com",
   },
-  {
-    id: "des-001", name: "Riffat Tahira", role: "UI Designer",
-    description: "Creative designer crafting intuitive, beautiful interfaces that balance aesthetics with usability. Experienced in Figma and design systems, she focuses on accessibility and polished micro-interactions.",
-    skills: ["Figma", "Adobe XD", "Sketch", "Prototyping", "User Research", "Design Systems"],
-    social: [
-      { platform: "linkedin", url: "https://www.linkedin.com/in/sadiq-hussain-9a85a2334", icon: "FaLinkedinIn" },
-      { platform: "dribbble", url: "#", icon: "FaDribbble" },
-    ],
-    avatar: "https://i.pinimg.com/736x/5a/36/ef/5a36efe61ddc00a587af33cfd4d24d07.jpg", location: "Pakistan", experience: "3+ years", email: "riffat@company.com",
-  },
+  // {
+  //   id: "des-001", name: "Riffat Tahira", role: "UI Designer",
+  //   description: "Creative designer crafting intuitive, beautiful interfaces that balance aesthetics with usability. Experienced in Figma and design systems, she focuses on accessibility and polished micro-interactions.",
+  //   skills: ["Figma", "Adobe XD", "Sketch", "Prototyping", "User Research", "Design Systems"],
+  //   social: [
+  //     { platform: "linkedin", url: "https://www.linkedin.com/in/sadiq-hussain-9a85a2334", icon: "FaLinkedinIn" },
+  //     { platform: "dribbble", url: "#", icon: "FaDribbble" },
+  //   ],
+  //   avatar: "https://i.pinimg.com/736x/5a/36/ef/5a36efe61ddc00a587af33cfd4d24d07.jpg", location: "Pakistan", experience: "3+ years", email: "riffat@company.com",
+  // },
   {
     id: "dev-013", name: "Kinz Ul Iman", role: "Mobile Application Developer",
     description: "Mobile Application Developer building smooth, user friendly apps for iOS and Android. Focused on clean UI, performance, and reliable cross platform delivery with modern mobile frameworks.",
@@ -240,13 +248,13 @@ export const teamMembers: TeamMember[] = [
     ],
     avatar: "/team/Kiran_Saif_wordpress.webp", location: "Pakistan", experience: "8+ years", email: "kiran@company.com",
   },
-  {
-    id: "dev-006", name: "Alishba Iqbal", role: "Full Stack Developer",
-    description: "Versatile developer building end to end solutions from database schema to production deployments. Advocates for automated testing and CI/CD to reduce delivery friction.",
-    skills: ["React", "Next.js", "TypeScript", "Node.js", "Express.js", "MongoDB"],
-    social: [{ platform: "linkedin", url: "https://www.linkedin.com/in/sadiq-hussain-9a85a2334", icon: "linkedin" }],
-    avatar: "/team/Alishba_Iqbal_fullstack.webp", location: "Pakistan", experience: "4+ years", email: "alishba@company.com",
-  },
+  // {
+  //   id: "dev-006", name: "Alishba Iqbal", role: "Full Stack Developer",
+  //   description: "Versatile developer building end to end solutions from database schema to production deployments. Advocates for automated testing and CI/CD to reduce delivery friction.",
+  //   skills: ["React", "Next.js", "TypeScript", "Node.js", "Express.js", "MongoDB"],
+  //   social: [{ platform: "linkedin", url: "https://www.linkedin.com/in/sadiq-hussain-9a85a2334", icon: "linkedin" }],
+  //   avatar: "/team/Alishba_Iqbal_fullstack.webp", location: "Pakistan", experience: "4+ years", email: "alishba@company.com",
+  // },
   // {
   //   id: "dev-008", name: "Ayesha Choudary", role: "Frontend Developer",
   //   description: "Passionate frontend developer specializing in responsive web applications.",

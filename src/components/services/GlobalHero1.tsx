@@ -69,11 +69,6 @@ const GlobalHero1: React.FC<GlobalHero1Props> = ({
       animate="visible"
       variants={containerVariants}
     >
-      {/* Background Grid Pattern */}
-      <div className="absolute inset-0 z-0">
-        <div className={`absolute inset-0 ${isDark ? 'bg-[radial-gradient(#ffffff10_1px,transparent_1px)]' : 'bg-[radial-gradient(#0f172a10_1px,transparent_1px)]'} [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]`} />
-      </div>
-
       {/* Animated Background Blobs */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <div className={`absolute -top-20 -right-20 md:-top-40 md:-right-40 w-[300px] h-[300px] md:w-[600px] md:h-[600px] ${isDark ? 'bg-amber-500/10' : 'bg-blue-100/40'} rounded-full blur-[60px] md:blur-[100px] animate-blob`}></div>
