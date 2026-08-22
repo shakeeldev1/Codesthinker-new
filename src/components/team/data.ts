@@ -111,7 +111,7 @@ export const teamMembers: TeamMember[] = [
   // },
   {
     id: "dev-003", name: "M Abdullah", role: "Mobile Application Developer",
-    description: "Cross-platform mobile expert building beautiful, performant apps with a strong focus on UX and battery/network efficiency. Experienced with React Native and Flutter for rapid delivery.",
+    description: "Cross platform mobile expert building beautiful, performant apps with a strong focus on UX and battery/network efficiency. Experienced with React Native and Flutter for rapid delivery.",
     skills: ["iOS", "Flutter",  "Android", "Problem Solving", "Swift"],
     social: [
       { platform: "linkedin", url: "https://www.linkedin.com/in/muhammad-abdullah2476/", icon: "FaLinkedinIn" },
