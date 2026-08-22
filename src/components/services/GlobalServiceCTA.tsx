@@ -36,11 +36,11 @@ const GlobalServiceCTA: React.FC<GlobalServiceCTAProps> = ({
       glowBottom: 'bg-amber-100',
       textPrimary: 'text-[#07051d]',
       textSecondary: 'text-gray-600',
-      highlightText: 'text-amber-500',
-      badgeBg: 'bg-amber-50',
-      badgeBorder: 'border-amber-200',
-      badgeText: 'text-amber-700',
-      badgeIcon: 'text-amber-600',
+      highlightText: 'text-[#F69A20]',
+      badgeBg: 'bg-orange-50',
+      badgeBorder: 'border-orange-200/60',
+      badgeText: 'text-gray-700',
+      badgeIcon: 'text-[#F69A20]',
       secondaryBtnBg: 'bg-transparent',
       secondaryBtnBorder: 'border-[#07051d]',
       secondaryBtnText: 'text-[#07051d]',
@@ -90,7 +90,7 @@ const GlobalServiceCTA: React.FC<GlobalServiceCTAProps> = ({
   };
 
   return (
-    <section className="relative py-6 md:py-8 overflow-hidden bg-white">
+    <section className="relative py-6 md:py-8 overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-50">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className={`
           relative rounded-3xl p-4 md:p-7 lg:p-9 overflow-hidden border-2 transition-all duration-500
@@ -172,7 +172,7 @@ const GlobalServiceCTA: React.FC<GlobalServiceCTAProps> = ({
               {/* Primary button */}
               <Link
                 to={primaryLink}
-                className="relative inline-flex items-center justify-center font-bold rounded-xl transition-all duration-300 cursor-pointer overflow-hidden shadow-lg focus:outline-none px-6 py-2 md:px-8 text-sm md:text-base bg-amber-500 text-[#07051d] hover:bg-amber-400 group"
+                className="relative inline-flex items-center justify-center font-bold rounded-full transition-all duration-300 cursor-pointer overflow-hidden shadow-lg focus:outline-none px-6 py-2.5 md:px-8 text-sm md:text-base bg-[#08061E] text-white hover:bg-white hover:text-[#08061E] border-2 border-[#08061E] group"
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   {primaryBtnText}
@@ -183,7 +183,7 @@ const GlobalServiceCTA: React.FC<GlobalServiceCTAProps> = ({
               {/* Secondary button */}
               <Link
                 to={secondaryLink}
-                className={`px-6 py-2 md:px-8 text-sm md:text-base font-bold rounded-xl border-2 transition-all duration-300 shadow-lg cursor-pointer ${colors.secondaryBtnBg} ${colors.secondaryBtnBorder} ${colors.secondaryBtnText} ${colors.secondaryBtnHover}`}
+                className={`px-6 py-2.5 md:px-8 text-sm md:text-base font-bold rounded-full border-2 transition-all duration-300 shadow-md cursor-pointer ${colors.secondaryBtnBg} ${colors.secondaryBtnBorder} ${colors.secondaryBtnText} ${colors.secondaryBtnHover}`}
               >
                 {secondaryBtnText}
               </Link>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { allProjects } from './ProjectsData';
+import { allProjects, projectCategories } from './ProjectsData';
 
 // Types
 interface AosAnimation {
@@ -32,8 +32,6 @@ interface ProjectCardProps {
   [key: string]: any; // Allow remaining project properties spread via {...proj}
 }
 
-const categories: string[] = ['All', ...new Set(allProjects.map((p) => p.category))];
-
 // 🎨 Helper function to assign distinct AOS animations based on category
 const getAosAnimation = (category: string, index: number): AosAnimation => {
   switch (category) {
@@ -41,8 +39,10 @@ const getAosAnimation = (category: string, index: number): AosAnimation => {
       return { cardAos: 'fade-up', textAos: 'fade-left' };
     case 'Mobile Apps':
       return { cardAos: 'zoom-in-up', textAos: 'zoom-in' };
-    case 'UI/UX Design':
+    case 'UI/UX':
       return { cardAos: 'flip-left', textAos: 'fade-right' };
+    case 'SEO':
+      return { cardAos: 'fade-up', textAos: 'fade-left' };
     default:
       // Alternating animations for 'All' or unhandled categories
       return index % 2 === 0
@@ -148,7 +148,7 @@ export default function ProjectHome() {
 
       {/* Category Buttons */}
       <div className='flex justify-center items-center flex-wrap mt-6'>
-        {categories.map((item, index) => (
+        {projectCategories.map((item, index) => (
           <button
             key={index}
             onClick={() => {

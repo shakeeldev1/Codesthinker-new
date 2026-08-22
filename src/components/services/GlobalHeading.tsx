@@ -62,8 +62,8 @@ const GlobalHeading: React.FC<GlobalHeadingProps> = ({
       {/* Sleek Minimalist Badge */}
       {badgeText && (
         <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/5 border border-amber-500/10 backdrop-blur-sm">
-          <span className="inline-flex rounded-full h-1.5 w-1.5 bg-amber-500"></span>
-          <span className="text-[9px] md:text-[10px] uppercase tracking-[0.25em] font-black text-amber-600 dark:text-amber-400">
+          <span className="inline-flex rounded-full h-1.5 w-1.5 bg-[#F69A20]"></span>
+          <span className="text-[9px] md:text-[10px] uppercase tracking-[0.25em] font-black text-[#F69A20]">
             {badgeText}
           </span>
         </div>
@@ -77,7 +77,7 @@ const GlobalHeading: React.FC<GlobalHeadingProps> = ({
           {titleHighlight && title.includes(titleHighlight) ? (
             <>
               {title.split(titleHighlight)[0]}
-              <span className="text-amber-500">
+              <span className="text-[#F69A20]">
                 {titleHighlight}
               </span>
               {title.split(titleHighlight)[1]}

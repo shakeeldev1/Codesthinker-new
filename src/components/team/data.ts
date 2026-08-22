@@ -89,12 +89,12 @@ export const teamMembers: TeamMember[] = [
     ],
     avatar: "/team/Sadiq_Hussain_Full-Satack-Developer.webp", location: "Pakistan", experience: "6+ years", email: "sadiqhussain31304@gmail.com",
     phones: ["+92 320 3036988", "+92 329 9235015"],
-    achievements: ["AWS & Dev Ops Certified Solutions Architect", "Full Stack Developer Award"],
+    // achievements: ["AWS & Dev Ops Certified Solutions Architect", "Full Stack Developer Award"],
   },
   {
-    id: "dev-019", name: "Ayaz Aslam", role: "DevOps Engineer",
-    description: "DevOps Engineer specializing in CI/CD pipelines, cloud infrastructure, and automated deployments. Builds reliable, scalable environments with Docker, Kubernetes, and modern cloud platforms.",
-    skills: ["AWS", "Docker", "Kubernetes", "CI/CD", "Terraform", "Linux"],
+    id: "dev-019", name: "Ayaz Aslam", role: "Senior App Developer",
+    description: "Senior App Developer building high quality mobile applications for iOS and Android. Experienced in cross-platform development with a strong focus on performance, clean UI, and reliable app delivery.",
+    skills: ["React Native", "Flutter", "iOS", "Android", "Firebase", "Dart"],
     social: [
       { platform: "linkedin", url: "#", icon: "FaLinkedinIn" },
       { platform: "github", url: "#", icon: "FaGithub" },

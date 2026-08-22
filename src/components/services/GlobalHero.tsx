@@ -143,7 +143,7 @@ const GlobalHero = ({ data, height = "h-screen" }) => {
                     >
                       <Link 
                         to={slide.primaryLink || '/contact'} 
-                        className="relative overflow-hidden group flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-3.5 bg-[#F49B21] text-[#08061E] font-bold rounded-2xl shadow-lg text-[15px] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] select-none"
+                        className="relative overflow-hidden group flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-3.5 bg-[#F69A20] text-[#08061E] font-bold rounded-2xl shadow-lg text-[15px] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] select-none"
                       >
                         <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
                           {slide.primaryBtnText || 'Explore Now'}
@@ -153,12 +153,12 @@ const GlobalHero = ({ data, height = "h-screen" }) => {
 
                       <Link 
                         to={slide.secondaryLink || '/contact'} 
-                        className="relative overflow-hidden group flex items-center justify-center w-full sm:w-auto px-8 py-3.5 bg-transparent text-white font-bold rounded-2xl border-2 border-white/20 hover:border-[#F49B21] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] select-none"
+                        className="relative overflow-hidden group flex items-center justify-center w-full sm:w-auto px-8 py-3.5 bg-transparent text-white font-bold rounded-2xl border-2 border-white/20 hover:border-[#F69A20] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] select-none"
                       >
                         <span className="relative z-10 transition-colors duration-300 group-hover:text-[#08061E]">
                           {slide.secondaryBtnText || 'Learn More'}
                         </span>
-                        <div className="absolute inset-0 bg-[#F49B21] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
+                        <div className="absolute inset-0 bg-[#F69A20] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
                       </Link>
                     </motion.div>
                   </motion.div>

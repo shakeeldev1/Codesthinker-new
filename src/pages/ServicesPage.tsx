@@ -18,8 +18,8 @@ import {
   Database
 } from 'lucide-react';
 import GlobalHero from '../components/services/GlobalHero';
-import GlobalHeading from '../components/services/GlobalHeading';
 import GlobalServiceCTA from '../components/services/GlobalServiceCTA';
+import { SectionBadge } from '../components/ui/SectionBadge';
 
 const servicesHeroData = [
   {
@@ -480,30 +480,27 @@ const servicesData = [
 
 const ServicesPage = () => {
   return (
-    <div className="bg-white min-h-screen overflow-x-hidden font-sans">
+    <div className="bg-gradient-to-br from-gray-50 via-white to-gray-50 min-h-screen overflow-x-hidden font-sans">
       {/* Hero Section */}
       <GlobalHero data={servicesHeroData} height="100vh" />
 
       {/* Services Bento Grid */}
-      <section className="py-24 sm:py-32 px-4 sm:px-6 relative z-10 bg-white">
-        
-        {/* Glow Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-          <div className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-amber-500/5 rounded-full filter blur-[120px]" />
-          <div className="absolute top-2/3 left-0 w-[500px] h-[500px] bg-blue-900/5 rounded-full filter blur-[100px]" />
-        </div>
+      <section className="py-16 sm:py-24 px-4 sm:px-6 relative z-10 overflow-hidden">
+
+        {/* Decorative blobs — matches home Services section */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 pointer-events-none" />
+        <div className="absolute top-40 right-10 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 pointer-events-none" />
+        <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 pointer-events-none" />
 
         <div className="w-full max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-20">
-            <GlobalHeading
-              badge={{ text: "Our Services" }}
-              title="Complete Digital Solutions"
-              titleHighlight="Solutions"
-              subtitle="From concept to launch, we deliver end to end digital excellence"
-              alignment="center"
-              size="lg"
-              gradientColors={{ from: 'from-amber-400', to: 'to-orange-500' }}
-            />
+          <div className="text-center mb-16">
+            <SectionBadge text="Our Services" theme="light" className="mb-2" />
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 py-2 leading-tight bg-gradient-to-r from-gray-900 to-gray-800 bg-clip-text text-transparent">
+              Complete Digital <span className="text-[#F69A20]">Solutions</span>
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+              From concept to launch, we deliver end to end digital excellence
+            </p>
           </div>
 
           {/* Bento Grid */}
@@ -515,31 +512,23 @@ const ServicesPage = () => {
                 <div 
                   key={service.id} 
                   className={`
-                    group relative overflow-hidden rounded-[2.2rem] border border-gray-100/80
+                    group relative overflow-hidden rounded-2xl bg-white ring-1 ring-gray-900/5
                     p-8 md:p-9 flex flex-col justify-between cursor-pointer h-auto lg:h-[390px] lg:min-h-[390px]
-                    shadow-[0_4px_24px_rgba(7,5,29,0.03)] hover:shadow-[0_24px_60px_-15px_rgba(244,155,33,0.15)]
-                    hover:border-[#F49B21]/50 hover:-translate-y-2.5 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]
+                    shadow-md hover:shadow-2xl hover:-translate-y-1
+                    transition-all duration-500 ease-out
                     ${service.isLarge ? 'lg:col-span-2' : 'lg:col-span-1'}
                   `}
                   onClick={() => window.location.href = service.link}
                 >
-                  {/* Default Background Layer (Prominent Navy Blue to White) */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#07051d]/18 via-[#07051d]/03 to-white group-hover:opacity-0 transition-opacity duration-300 z-0" />
-
-                  {/* Hover Background Layer (Prominent Amber to White) */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-orange-100/70 via-amber-50/30 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0" />
-
-                  {/* Animated radial halo glow in the background */}
-                  <div className="absolute -inset-10 opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(244,155,33,0.12)_0%,transparent_60%)] blur-2xl z-0" />
+                  {/* Top accent bar — matches home service cards */}
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#08061E] to-[#08061E] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
 
                   {/* Top Row: Icon + Tag */}
                   <div className="flex justify-between items-center mb-6 relative z-10">
-                    <div className="w-12 h-12 rounded-2xl bg-white border border-slate-100 shadow-sm flex items-center justify-center transition-all duration-500 group-hover:bg-gradient-to-tr group-hover:from-amber-400 group-hover:to-[#F49B21] group-hover:border-transparent group-hover:text-[#07051d] text-[#F49B21]">
-                      <div className="transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">
-                        <Icon size={20} className="pointer-events-none" />
-                      </div>
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#08061E] to-[#08061E] shadow-lg flex items-center justify-center text-white transition-transform duration-500 group-hover:scale-105">
+                      <Icon size={28} className="pointer-events-none" strokeWidth={1.5} />
                     </div>
-                    <span className="text-[9px] font-extrabold uppercase tracking-widest px-3 py-1.5 rounded-full bg-slate-50 border border-slate-100 text-slate-500 group-hover:bg-[#F49B21] group-hover:text-[#07051d] group-hover:border-transparent transition-all duration-300">
+                    <span className="text-[9px] font-extrabold uppercase tracking-widest px-3 py-1.5 rounded-full bg-gray-50 border border-gray-200 text-gray-600 group-hover:bg-[#F69A20] group-hover:text-white group-hover:border-transparent transition-all duration-300">
                       {service.tag}
                     </span>
                   </div>
@@ -548,21 +537,18 @@ const ServicesPage = () => {
                   {service.isLarge ? (
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center flex-grow relative z-10 mb-4">
                       <div className="lg:col-span-7 space-y-3.5 pr-2">
-                        <h3 
-                          className="text-2xl font-bold tracking-tight text-[#07051d] group-hover:text-[#F49B21] transition-colors duration-300"
-                          style={{ fontFamily: "'Outfit', sans-serif" }}
-                        >
+                        <h3 className="text-2xl font-bold tracking-tight text-gray-900 group-hover:text-[#08061E] transition-colors duration-300">
                           {service.title}
                         </h3>
-                        <p className="text-xs text-slate-600 leading-relaxed font-sans group-hover:text-slate-800 transition-colors duration-300">
+                        <p className="text-sm text-gray-500 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
                           {service.description}
                         </p>
 
                         {/* Service Scope Checklist */}
                         <ul className="space-y-1.5 pt-1">
                           {service.features.map((feature, fIdx) => (
-                            <li key={fIdx} className="flex items-center gap-2 text-xs text-slate-500 font-medium group-hover:text-slate-700 transition-colors">
-                              <CheckCircle2 size={13} className="text-[#F49B21]" />
+                            <li key={fIdx} className="flex items-center gap-2 text-sm text-gray-700 font-medium">
+                              <CheckCircle2 size={16} className="text-[#08061E] flex-shrink-0" />
                               <span>{feature}</span>
                             </li>
                           ))}
@@ -578,21 +564,18 @@ const ServicesPage = () => {
                     // Single width card layout
                     <div className="flex flex-col flex-grow relative z-10 lg:pr-24 pr-0 mb-4">
                       <div className="space-y-3">
-                        <h3 
-                          className="text-xl font-bold tracking-tight text-[#07051d] group-hover:text-[#F49B21] transition-colors duration-300"
-                          style={{ fontFamily: "'Outfit', sans-serif" }}
-                        >
+                        <h3 className="text-xl font-bold tracking-tight text-gray-900 group-hover:text-[#08061E] transition-colors duration-300">
                           {service.title}
                         </h3>
-                        <p className="text-xs text-slate-600 leading-relaxed font-sans group-hover:text-slate-800 transition-colors duration-300">
+                        <p className="text-sm text-gray-500 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
                           {service.description}
                         </p>
 
                         {/* Service Scope Checklist */}
                         <ul className="space-y-1.5 pt-1">
                           {service.features.map((feature, fIdx) => (
-                            <li key={fIdx} className="flex items-center gap-2 text-xs text-slate-500 font-medium group-hover:text-slate-700 transition-colors">
-                              <CheckCircle2 size={13} className="text-[#F49B21]" />
+                            <li key={fIdx} className="flex items-center gap-2 text-sm text-gray-700 font-medium">
+                              <CheckCircle2 size={16} className="text-[#08061E] flex-shrink-0" />
                               <span>{feature}</span>
                             </li>
                           ))}
@@ -607,7 +590,7 @@ const ServicesPage = () => {
                   )}
 
                   {/* Explore Link */}
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#F49B21] opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-out relative z-10 mt-6 lg:mt-auto">
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#F69A20] opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-out relative z-10 mt-6 lg:mt-auto">
                     <span>Explore Service</span>
                     <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
