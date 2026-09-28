@@ -31,7 +31,7 @@ const contactInfo = [
   },
   {
     icon: <MdLocationOn />,
-    text: "Manchester, UK (Regional)",
+    text: "United Kingdom",
     label: "Location",
   },
   {
@@ -313,10 +313,9 @@ const Contact: React.FC = () => {
           scrolling="no" 
           marginHeight={0} 
           marginWidth={0} 
-          src="https://maps.google.com/maps?width=100%25&height=600&hl=en&q=London+(Your%20Business%20Name)&t=&z=13&ie=UTF8&iwloc=B&output=embed"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9585113.955767183!2d-15.013177863334903!3d54.089423765905124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x25a3b1142c791a9%3A0xc4f8a0433288257a!2sUnited%20Kingdom!5e0!3m2!1sen!2s!4v1790588295706!5m2!1sen!2s"
         />
       </div>
-
       {/* dsjndjs */}
     </div>
   );

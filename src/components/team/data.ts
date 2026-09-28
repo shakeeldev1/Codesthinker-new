@@ -173,17 +173,17 @@ export const teamMembers: TeamMember[] = [
     email: "james@company.com",
   },
   {
-    id: "dev-017", name: "Oliver Hayes", role: "AI Specialist",
-    description: "AI Specialist designing intelligent systems with machine learning, NLP, and automation. Helps businesses turn data into practical AI features that improve products and operations.",
-    skills: ["Python", "Machine Learning", "NLP", "TensorFlow", "PyTorch", "OpenAI"],
+    id: "dev-017", name: "Jahanzaib Mahar", role: "Web Developer",
+    description: "Web Developer with a passion for creating modern, responsive websites and applications. Skilled in various programming languages and frameworks, with a focus on delivering high-quality user experiences.",
+    skills: ["JavaScript", "React", "Node.js", "Python", "Django", "Flask"],
     social: [
       { platform: "linkedin", url: "#", icon: "FaLinkedinIn" },
       { platform: "github", url: "#", icon: "FaGithub" },
     ],
-    avatar: "https://i.pinimg.com/1200x/b5/de/d1/b5ded1b360966492b3b2f1aa5055b8bf.jpg",
+    avatar: "../team/Jahanzaib_Frontend.webp",
     location: "Manchester, UK",
     experience: "6+ years",
-    email: "oliver@company.com",
+    email: "jahanzaib@company.com",
   },
   {
     id: "dev-018", name: "Alicia Hartley", role: "AI Automation Expert",

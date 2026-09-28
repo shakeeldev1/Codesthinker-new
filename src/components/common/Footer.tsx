@@ -146,7 +146,7 @@ const Footer: React.FC = () => {
                                 </div>
                                 <div className="text-gray-400">
                                     <p className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-0.5">Regional Office</p>
-                                    <p className="text-xs leading-relaxed">Bartle House 9 Oxford Court, Manchester M23WQ United Kingdom</p>
+                                    <p className="text-xs leading-relaxed">United Kingdom</p>
                                 </div>
                             </div>
 

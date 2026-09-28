@@ -43,7 +43,7 @@
 //     },
 //     {
 //       icon: <MdLocationOn className="text-white text-xl" />,
-//       text: "Manchester, UK (Regional)",
+//       text: "United Kingdom",
 //       label: "Location",
 //     },
 //     {
@@ -331,7 +331,7 @@ export default function ContactFormAlternative() {
               </div>
               <div>
                 <h4 className="font-bold text-[#091a44]">Location</h4>
-                <p className="text-gray-500 text-sm mt-0.5">Manchester, UK (Regional)</p>
+                <p className="text-gray-500 text-sm mt-0.5">United Kingdom</p>
               </div>
             </div>
 
