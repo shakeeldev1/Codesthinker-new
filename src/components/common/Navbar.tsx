@@ -162,7 +162,7 @@ const Navbar: React.FC = () => {
                 >
                     <img
                         src={useWhiteLinks ? "/logo-white.webp" : "/logo-blue.webp"}
-                        alt="CodesThinker Logo"
+                        alt="Code's Thinker logo"
                         className="h-8 sm:h-9 w-[7.5rem] sm:w-[9rem] object-contain object-left"
                         width={144}
                         height={36}

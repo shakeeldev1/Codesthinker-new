@@ -55,7 +55,7 @@ const Footer: React.FC = () => {
     <Link to="/" className="inline-block group">
         <img
             src="/logo-white.webp"
-            alt="CodesThinker Logo"
+            alt="Code's Thinker logo"
             className="h-11 w-auto transition-all duration-300 group-hover:scale-105"
         />
     </Link>
